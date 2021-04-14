@@ -8,12 +8,13 @@
 import UIKit
 
 class TableViewCell: UITableViewCell {
-    @IBOutlet weak var productImageView: UIImageView!
+    
+    @IBOutlet var productImageView: UIImageView!
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productPriceLabel: UILabel!
     @IBOutlet weak var peopleLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
-    
+
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,3 +28,4 @@ class TableViewCell: UITableViewCell {
     }
     
 }
+

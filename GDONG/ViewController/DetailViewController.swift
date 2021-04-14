@@ -8,22 +8,57 @@
 import UIKit
 
 class DetailViewController: UIViewController {
+    
+    var productname = ""
+    var productprice = ""
+    var dtime = ""
+    var dpeople = ""
+    
+    
+    @IBOutlet var detailName: UILabel!
+    @IBOutlet var detailTime: UILabel!
+    @IBOutlet var detailCategory: UILabel!
+    @IBOutlet var detailImage: UIImageView!
+    @IBOutlet var chatButton: UIButton!
+    @IBOutlet var likeButton: UIButton!
+    @IBOutlet var detailPeople: UILabel!
+    
+    @IBAction func btnParticipate(_ sender: UIButton) {
+        return
+    }
 
+    @IBAction func btnLike(_ sender: UIButton) {
+        return
+    }
+
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        detailName.text = productname
+        detailTime.text = dtime
+        detailPeople.text = dpeople
+        detailImage.image = UIImage(named: "apple.jpg")
+        
+        
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+//    func productname(_ productName: String){
+//        productname = productName
+//        }
+//
+//    func productprice(_ productPrice: String){
+//        productprice = productPrice
+//        }
+//
+//    func dtime(_ time: String){
+//        dtime = time
+//        }
+//
+//    func dpeople(_ people: String){
+//        dpeople = people
+//        }
 
 }

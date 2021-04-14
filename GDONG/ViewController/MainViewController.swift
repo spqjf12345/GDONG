@@ -9,11 +9,14 @@ import UIKit
 
 class MainViewController : UIViewController {
     
-    var arr1: Array<String> = ["상품1","상품2"]
-    var arr2: Array<String> = ["3000","4000"]
-    var arr3: Array<String> = ["1시간전","2시간전"]
-    var arr4: Array<String> = ["1/4","1/5"]
-        
+    var productName: Array<String> = ["상품1입니다","사과 공구 하실 분"]
+    var productPrice: Array<String> = ["₩3000","₩4000"]
+    var time: Array<String> = ["1시간전","2시간전"]
+    var people: Array<String> = ["1/30","1/5"]
+    var image = ["apple.jpg","bigapple.jpg"]
+    
+    
+
     
     
     
@@ -36,15 +39,46 @@ class MainViewController : UIViewController {
    
     }
     
-   
     
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "detail" {
+//            let cell = sender as! UITableViewCell
+//            let indexPath = self.tableView.indexPath(for: cell)
+//            let detailView = segue.destination as! DetailViewController
+//
+//            detailView.productname(productName[((indexPath as NSIndexPath?)?.row)!])
+//            detailView.productprice(productPrice[((indexPath as NSIndexPath?)?.row)!])
+//            detailView.dtime(time[((indexPath as NSIndexPath?)?.row)!])
+//            detailView.dpeople(people[((indexPath as NSIndexPath?)?.row)!])
+//
+//    }
+    
+ 
+//}
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+        
+        }
+    
+    
+    
+    
+    
+   
+
 }
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource{
-   
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 120
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arr1.count
+        return productName.count
     }
     
 
@@ -52,15 +86,27 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
 
             let cell = tableView.dequeueReusableCell(withIdentifier: "productCell", for: indexPath) as! TableViewCell
 
-            cell.productNameLabel.text = arr1[indexPath.row]
-            cell.productPriceLabel.text = arr2[indexPath.row]
-            cell.timeLabel.text = arr3[indexPath.row]
-            cell.peopleLabel.text = arr4[indexPath.row]
-            cell.productImageView.image = UIImage(named: "apple.jpg")
-            //cell.productImageView.sizeToFit()
+            cell.productNameLabel.text = productName[indexPath.row]
+            cell.productPriceLabel.text = productPrice[indexPath.row]
+            cell.timeLabel.text = time[indexPath.row]
+            cell.peopleLabel.text = people[indexPath.row]
+            cell.productImageView.image = UIImage(named: image[(indexPath as NSIndexPath).row])
+
+        
+            
+            cell.productNameLabel.sizeToFit()
+            cell.productPriceLabel.sizeToFit()
+            cell.timeLabel.sizeToFit()
+            cell.peopleLabel.sizeToFit()
+            
+        
             return cell
 
         }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "detail", sender: nil)
+    }
 
 }
 
