@@ -7,6 +7,7 @@
 
 import Foundation
 
+//추후 mvvm 변경 예정
 
 
 

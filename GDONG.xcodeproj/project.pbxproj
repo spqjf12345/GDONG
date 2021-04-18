@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4012A2D72620C588007D7FB1 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012A2D62620C588007D7FB1 /* DetailViewController.swift */; };
+		402AD2E7262C769B00AB16A1 /* cero.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 402AD2E6262C769B00AB16A1 /* cero.jpg */; };
 		405373F526231CE2003E54AE /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405373F426231CE2003E54AE /* MainViewModel.swift */; };
 		4053740126232421003E54AE /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405373FF26232421003E54AE /* TableViewCell.swift */; };
 		4053740226232421003E54AE /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4053740026232421003E54AE /* TableViewCell.xib */; };
@@ -23,7 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4012A2D62620C588007D7FB1 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		402AD2E6262C769B00AB16A1 /* cero.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cero.jpg; sourceTree = "<group>"; };
 		405373F426231CE2003E54AE /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		405373FF26232421003E54AE /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		4053740026232421003E54AE /* TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
@@ -72,6 +72,7 @@
 		4053740A26233908003E54AE /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				402AD2E6262C769B00AB16A1 /* cero.jpg */,
 				408246F92626084A00A211D6 /* apple.jpg */,
 				40956EBA2625B48200397930 /* bigapple.jpg */,
 			);
@@ -89,7 +90,6 @@
 			isa = PBXGroup;
 			children = (
 				407D0677262077EC000B7400 /* MainViewController.swift */,
-				4012A2D62620C588007D7FB1 /* DetailViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -195,6 +195,7 @@
 			files = (
 				8E42FF00261D958800763B61 /* LaunchScreen.storyboard in Resources */,
 				4053740226232421003E54AE /* TableViewCell.xib in Resources */,
+				402AD2E7262C769B00AB16A1 /* cero.jpg in Resources */,
 				8E42FEFD261D958800763B61 /* Assets.xcassets in Resources */,
 				8E42FEF8261D958100763B61 /* Main.storyboard in Resources */,
 				408246FA2626084A00A211D6 /* apple.jpg in Resources */,
@@ -211,7 +212,6 @@
 			files = (
 				8E42FEFB261D958100763B61 /* GDONG.xcdatamodeld in Sources */,
 				8E42FEF1261D958100763B61 /* AppDelegate.swift in Sources */,
-				4012A2D72620C588007D7FB1 /* DetailViewController.swift in Sources */,
 				8E42FEF3261D958100763B61 /* SceneDelegate.swift in Sources */,
 				407D0678262077EC000B7400 /* MainViewController.swift in Sources */,
 				4053740126232421003E54AE /* TableViewCell.swift in Sources */,

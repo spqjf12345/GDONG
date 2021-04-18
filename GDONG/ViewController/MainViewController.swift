@@ -1,5 +1,5 @@
 //
-//  HomeViewController.swift
+//  MainViewController.swift
 //  GDONG
 //
 //  Created by 이연서 on 2021/04/09.
@@ -13,18 +13,30 @@ class MainViewController : UIViewController {
     var productPrice: Array<String> = ["₩3000","₩4000"]
     var time: Array<String> = ["1시간전","2시간전"]
     var people: Array<String> = ["1/30","1/5"]
-    var image = ["apple.jpg","bigapple.jpg"]
+    var image = ["cero.jpg","bigapple.jpg"]
     
     
-
-    
-    
+    @IBOutlet var search: UIBarButtonItem!
+    @IBOutlet var add: UIBarButtonItem!
     
     @IBOutlet weak var segmentedcontrol: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
-                
+        
+        if let navigationBar = self.navigationController?.navigationBar {
+            let positionFrame = CGRect(x: 20, y: 0, width: navigationBar.frame.width/2, height: navigationBar.frame.height)
+            
+
+            let positionLabel = UILabel(frame: positionFrame)
+            positionLabel.text = "서울시 강남구"
+
+
+            navigationBar.addSubview(positionLabel)
+        }
+        //네비게이션바의 왼쪽에 현위치라벨 적용
+        
+
         let nibName = UINib(nibName: "TableViewCell", bundle: nil)
 
         tableView.register(nibName, forCellReuseIdentifier: "productCell")
@@ -39,42 +51,19 @@ class MainViewController : UIViewController {
    
     }
     
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "detail" {
-//            let cell = sender as! UITableViewCell
-//            let indexPath = self.tableView.indexPath(for: cell)
-//            let detailView = segue.destination as! DetailViewController
-//
-//            detailView.productname(productName[((indexPath as NSIndexPath?)?.row)!])
-//            detailView.productprice(productPrice[((indexPath as NSIndexPath?)?.row)!])
-//            detailView.dtime(time[((indexPath as NSIndexPath?)?.row)!])
-//            detailView.dpeople(people[((indexPath as NSIndexPath?)?.row)!])
-//
-//    }
-    
- 
-//}
-    
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
         
         }
     
-    
-    
-    
-    
-   
 
 }
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
+        return 150
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -98,15 +87,27 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
             cell.productPriceLabel.sizeToFit()
             cell.timeLabel.sizeToFit()
             cell.peopleLabel.sizeToFit()
+        
             
         
             return cell
 
         }
+    //테이블뷰 설정
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "detail", sender: nil)
-    }
+    
+
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        performSegue(withIdentifier: "detail", sender: nil)
+//
+//
+//
+//
+//    }
+// 디테일뷰 넘어가는 함수
+    
+        
+       
 
 }
 
