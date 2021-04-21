@@ -13,7 +13,70 @@ import KakaoOpenSDK
 import GoogleSignIn
 
 class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding, GIDSignInDelegate {
+    let viewModel = AuthenticationViewModel()
+    var user: [User] = []
     
+    //temp button
+    private let loginButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("login", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.backgroundColor = .systemBlue
+        button.addTarget(self, action: #selector(didTapLoginButton), for: .touchUpInside)
+        return button
+    }()
+
+    //for apple login button view
+    private var appleLoginButtonView: UIStackView = {
+        let appleLoginButtonView = UIStackView()
+        appleLoginButtonView.backgroundColor = .systemGray
+        return appleLoginButtonView
+    }()
+    
+    //apple login button
+    private let appleLoginButton:ASAuthorizationAppleIDButton = {
+        let appleLoginButton = ASAuthorizationAppleIDButton(type: .signIn, style: .white)
+        appleLoginButton.addTarget(self, action: #selector(appleLoginButtonClick), for: .touchUpInside)
+        return appleLoginButton
+    }()
+    
+    private let kakaoTalkLoginButton:KOLoginButton = {
+        let button = KOLoginButton()
+        button.addTarget(self, action: #selector(onKakaoLoginByAppTouched), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private let googleLoginButton: GIDSignInButton = {
+        let button = GIDSignInButton()
+        button.style = .standard
+        return button
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        GIDSignIn.sharedInstance()?.presentingViewController = self
+        GIDSignIn.sharedInstance()?.delegate = self
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        googleLoginButton.frame = CGRect(x: 70, y: 300, width: 250, height: 40)
+        kakaoTalkLoginButton.frame = CGRect(x: 70, y: googleLoginButton.bottom + 20, width: 250, height: 40)
+        
+        appleLoginButtonView.frame = CGRect(x: 70, y: kakaoTalkLoginButton.bottom + 20, width: 250, height: 40)
+        appleLoginButton.frame = CGRect(x: 0, y: 0, width: 250, height: 50)
+        loginButton.frame = CGRect(x: 70, y: appleLoginButtonView.bottom + 20, width: 250, height: 40)
+        
+        appleLoginButtonView.addArrangedSubview(appleLoginButton)
+        view.addSubview(appleLoginButtonView)
+        view.addSubview(kakaoTalkLoginButton)
+        view.addSubview(googleLoginButton)
+        view.addSubview(loginButton)
+    }
+    
+    
+    //Apple Login
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return self.view.window!
     }
@@ -31,7 +94,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
 //            Apple login
 //            User ID : 001607.55c65d33ebb84ff184c665342a5eaa79.0712
 //            User Email : spqjf12345@naver.com
-//            User Name : givenName: SoJeong familyName: Jo 
+//            User Name : givenName: SoJeong familyName: Jo
         default:
             break;
         }
@@ -44,21 +107,6 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
         // Handle error.
     }
     
-
-    //for apple login button view
-    private var appleLoginButtonView: UIStackView = {
-        let appleLoginButtonView = UIStackView()
-        appleLoginButtonView.backgroundColor = .systemGray
-        return appleLoginButtonView
-    }()
-    
-    //apple login button
-    private let appleLoginButton:ASAuthorizationAppleIDButton = {
-        let appleLoginButton = ASAuthorizationAppleIDButton(type: .signIn, style: .white)
-        appleLoginButton.addTarget(self, action: #selector(appleLoginButtonClick), for: .touchUpInside)
-        return appleLoginButton
-    }()
-    
     @objc func appleLoginButtonClick(){
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
@@ -68,42 +116,10 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
         authorizationController.performRequests()
-        
     }
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        GIDSignIn.sharedInstance()?.presentingViewController = self
-        GIDSignIn.sharedInstance()?.delegate = self
-        //view.backgroundColor = .blue
-        //appleLoginButtonView.backgroundColor = .cyan
 
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-       
-        googleLoginButton.frame = CGRect(x: 70, y: 300, width: 250, height: 40)
-        kakaoTalkLoginButton.frame = CGRect(x: 70, y: googleLoginButton.bottom + 20, width: 250, height: 40)
-        
-        appleLoginButtonView.frame = CGRect(x: 70, y: kakaoTalkLoginButton.bottom + 20, width: 250, height: 40)
-        appleLoginButton.frame = CGRect(x: 0, y: 0, width: 250, height: 50)
-        
-        appleLoginButtonView.addArrangedSubview(appleLoginButton)
-        view.addSubview(appleLoginButtonView)
-        view.addSubview(kakaoTalkLoginButton)
-        view.addSubview(googleLoginButton)
-        
-        
-        
-       
-    }
-    
-    var userName = ""
-    
-    //연도. 시도시 불러오는 메소드
+    //google login
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if let error = error {
             if(error as NSError).code == GIDSignInErrorCode.hasNoAuthInKeychain.rawValue {
@@ -119,14 +135,12 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
                 let idToken = user.authentication.idToken, // Safe to send to the server
                 let fullName = user.profile.name,
                 let email = user.profile.email {
-                userName = fullName
                 print("google login:")
-                print("Token : \(idToken)")
-                print("User ID : \(userId)")
+//                print("Token : \(idToken)")
+//                print("User ID : \(userId)")
                 print("User Email : \(email)")
                 print("User Name : \((fullName))")
-                //postUSer()
-         
+                self.MoveToDetailView()
             } else {
                 print("Error : User Data Not Found")
             }
@@ -138,22 +152,13 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
         print("Disconnect")
     }
     
+    @objc func didTapLoginButton(){
+        self.MoveToDetailView()
+    }
     
     
-    private let kakaoTalkLoginButton:KOLoginButton = {
-        let button = KOLoginButton()
-        button.addTarget(self, action: #selector(onKakaoLoginByAppTouched), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    private let googleLoginButton: GIDSignInButton = {
-        let button = GIDSignInButton()
-        button.style = .standard
-//        button.addTarget(self, action: #selector(onGoogleLoginByAppTouched), for: .touchUpInside)
-        return button
-    }()
-    
+   
+    //kakao login
     @objc func onKakaoLoginByAppTouched(_ sender: Any) {
         if(UserApi.isKakaoTalkLoginAvailable()){ // 이용가능하다면
             UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
@@ -174,8 +179,6 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
                 }
         }
     }
-    
-    
     
     func setUserInfo(){
         UserApi.shared.me(){(user, error) in
@@ -208,8 +211,14 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
             }
         }
     }
-        
-        
-
+    
+    func MoveToDetailView(){
+//        print("moveto detailview")
+        let detailVC = DetailNoteViewController()
+        let navVC = UINavigationController(rootViewController: detailVC)
+        UIApplication.shared.windows.first?.rootViewController = navVC
+        UIApplication.shared.windows.first?.makeKeyAndVisible()
+//        navVC.pushViewController(detailVC, animated: true)
+    }
 
 }
