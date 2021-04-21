@@ -12,7 +12,8 @@
 		4053740126232421003E54AE /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405373FF26232421003E54AE /* TableViewCell.swift */; };
 		4053740226232421003E54AE /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4053740026232421003E54AE /* TableViewCell.xib */; };
 		407D0678262077EC000B7400 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407D0677262077EC000B7400 /* MainViewController.swift */; };
-		408246FA2626084A00A211D6 /* apple.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 408246F92626084A00A211D6 /* apple.jpg */; };
+		408BF5EA2630615E006054CD /* strawberry.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 408BF5E92630615E006054CD /* strawberry.jpg */; };
+		408BF5ED26306214006054CD /* perfume.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 408BF5EC26306214006054CD /* perfume.jpg */; };
 		40956EBB2625B48200397930 /* bigapple.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 40956EBA2625B48200397930 /* bigapple.jpg */; };
 		8E42FEF1261D958100763B61 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E42FEF0261D958100763B61 /* AppDelegate.swift */; };
 		8E42FEF3261D958100763B61 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E42FEF2261D958100763B61 /* SceneDelegate.swift */; };
@@ -28,7 +29,8 @@
 		405373FF26232421003E54AE /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		4053740026232421003E54AE /* TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
 		407D0677262077EC000B7400 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		408246F92626084A00A211D6 /* apple.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = apple.jpg; sourceTree = "<group>"; };
+		408BF5E92630615E006054CD /* strawberry.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = strawberry.jpg; sourceTree = "<group>"; };
+		408BF5EC26306214006054CD /* perfume.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = perfume.jpg; sourceTree = "<group>"; };
 		40956EBA2625B48200397930 /* bigapple.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bigapple.jpg; sourceTree = "<group>"; };
 		8E42FEED261D958100763B61 /* GDONG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GDONG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E42FEF0261D958100763B61 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -73,8 +75,9 @@
 			isa = PBXGroup;
 			children = (
 				402AD2E6262C769B00AB16A1 /* cero.jpg */,
-				408246F92626084A00A211D6 /* apple.jpg */,
 				40956EBA2625B48200397930 /* bigapple.jpg */,
+				408BF5E92630615E006054CD /* strawberry.jpg */,
+				408BF5EC26306214006054CD /* perfume.jpg */,
 			);
 			path = Image;
 			sourceTree = "<group>";
@@ -194,11 +197,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E42FF00261D958800763B61 /* LaunchScreen.storyboard in Resources */,
+				408BF5ED26306214006054CD /* perfume.jpg in Resources */,
 				4053740226232421003E54AE /* TableViewCell.xib in Resources */,
+				408BF5EA2630615E006054CD /* strawberry.jpg in Resources */,
 				402AD2E7262C769B00AB16A1 /* cero.jpg in Resources */,
 				8E42FEFD261D958800763B61 /* Assets.xcassets in Resources */,
 				8E42FEF8261D958100763B61 /* Main.storyboard in Resources */,
-				408246FA2626084A00A211D6 /* apple.jpg in Resources */,
 				40956EBB2625B48200397930 /* bigapple.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

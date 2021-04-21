@@ -39,6 +39,9 @@
                                     <segment title="구매글"/>
                                     <segment title="판매글"/>
                                 </segments>
+                                <connections>
+                                    <action selector="segmentedControlChange:" destination="DWI-AC-DRm" eventType="valueChanged" id="bl0-Yj-jvX"/>
+                                </connections>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ugd-8G-Bu1">
                                 <rect key="frame" x="0.0" y="119" width="414" height="694"/>
@@ -80,13 +83,13 @@
                     <connections>
                         <outlet property="add" destination="FKf-81-HXK" id="eDG-Dc-65g"/>
                         <outlet property="search" destination="r8h-AU-1nF" id="wgI-rc-29z"/>
-                        <outlet property="segmentedcontrol" destination="BGE-ei-e1p" id="bve-pI-LVy"/>
+                        <outlet property="segmentedControl" destination="BGE-ei-e1p" id="N0g-dm-b0C"/>
                         <outlet property="tableView" destination="ugd-8G-Bu1" id="rQ7-wM-FXl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bHM-TJ-21C" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="896" y="-1165"/>
+            <point key="canvasLocation" x="895.6521739130435" y="-1165.1785714285713"/>
         </scene>
         <!--Item-->
         <scene sceneID="UfK-tl-Ey2">

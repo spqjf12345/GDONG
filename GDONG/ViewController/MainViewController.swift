@@ -9,18 +9,35 @@ import UIKit
 
 class MainViewController : UIViewController {
     
-    var productName: Array<String> = ["상품1입니다","사과 공구 하실 분"]
-    var productPrice: Array<String> = ["₩3000","₩4000"]
-    var time: Array<String> = ["1시간전","2시간전"]
-    var people: Array<String> = ["1/30","1/5"]
+    var productName = ["공구해여","사과 공구 하실 분"]
+    var productPrice = ["₩3000","₩4000"]
+    var time = ["1시간전","2시간전"]
+    var people = ["1/30","1/5"]
     var image = ["cero.jpg","bigapple.jpg"]
+    
+    
+    var sellproductName: Array<String> = ["초특가 행사 상품! 딸기 팔아요","향수 타임세일!"]
+    var sellproductPrice: Array<String> = ["₩5000","₩70000"]
+    var selltime: Array<String> = ["10시간전","22시간전"]
+    var sellpeople: Array<String> = ["1/300","1/10"]
+    var sellimage = ["strawberry.jpg","perfume.jpg"]
+    
     
     
     @IBOutlet var search: UIBarButtonItem!
     @IBOutlet var add: UIBarButtonItem!
     
-    @IBOutlet weak var segmentedcontrol: UISegmentedControl!
+    @IBOutlet var segmentedControl: UISegmentedControl!
+    
+    @IBOutlet var sellTableView: UIView!
     @IBOutlet weak var tableView: UITableView!
+    
+    @IBAction func segmentedControlChange(_ sender: UISegmentedControl) {
+        tableView.reloadData()
+    }
+    //segmented control 연결(버튼 클릭할때마다 reload)
+    
+    
     
     override func viewDidLoad() {
         
@@ -48,8 +65,9 @@ class MainViewController : UIViewController {
         super.viewDidLoad()
         //Do any additional setup after loading the view.
 
-   
     }
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -62,38 +80,66 @@ class MainViewController : UIViewController {
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource{
     
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
     }
-
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return productName.count
+
+        var returnValue = 0
+
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            returnValue = productName.count
+        case 1:
+            returnValue = sellproductName.count
+        default:
+            break
+        }
+
+        return returnValue
     }
     
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-            let cell = tableView.dequeueReusableCell(withIdentifier: "productCell", for: indexPath) as! TableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "productCell", for: indexPath) as! TableViewCell
 
+        
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
             cell.productNameLabel.text = productName[indexPath.row]
             cell.productPriceLabel.text = productPrice[indexPath.row]
             cell.timeLabel.text = time[indexPath.row]
             cell.peopleLabel.text = people[indexPath.row]
             cell.productImageView.image = UIImage(named: image[(indexPath as NSIndexPath).row])
 
-        
-            
             cell.productNameLabel.sizeToFit()
             cell.productPriceLabel.sizeToFit()
             cell.timeLabel.sizeToFit()
             cell.peopleLabel.sizeToFit()
-        
-            
-        
-            return cell
 
+        case 1:
+            cell.productNameLabel.text = sellproductName[indexPath.row]
+            cell.productPriceLabel.text = sellproductPrice[indexPath.row]
+            cell.timeLabel.text = selltime[indexPath.row]
+            cell.peopleLabel.text = sellpeople[indexPath.row]
+            cell.productImageView.image = UIImage(named: sellimage[(indexPath as NSIndexPath).row])
+
+            cell.productNameLabel.sizeToFit()
+            cell.productPriceLabel.sizeToFit()
+            cell.timeLabel.sizeToFit()
+            cell.peopleLabel.sizeToFit()
+        default:
+            break
         }
-    //테이블뷰 설정
+        
+       return cell
+
+    }
+    //segmented control 인덱스에 따른 테이블뷰 설정
     
     
 
@@ -105,11 +151,12 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
 //
 //    }
 // 디테일뷰 넘어가는 함수
-    
         
-       
-
+    
 }
+
+
+
 
 
 
