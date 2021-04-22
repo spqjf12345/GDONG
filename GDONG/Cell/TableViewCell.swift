@@ -17,6 +17,9 @@ class TableViewCell: UITableViewCell {
 
     
     override func awakeFromNib() {
+        productImageView.layer.cornerRadius = 10
+        //imageview 모서리 설정
+        
         super.awakeFromNib()
         // Initialization code
     }

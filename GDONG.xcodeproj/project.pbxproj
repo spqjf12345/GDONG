@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		402AD2E7262C769B00AB16A1 /* cero.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 402AD2E6262C769B00AB16A1 /* cero.jpg */; };
+		4034342126319F4800470FF2 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4034342026319F4800470FF2 /* MainModel.swift */; };
 		405373F526231CE2003E54AE /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405373F426231CE2003E54AE /* MainViewModel.swift */; };
 		4053740126232421003E54AE /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405373FF26232421003E54AE /* TableViewCell.swift */; };
 		4053740226232421003E54AE /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4053740026232421003E54AE /* TableViewCell.xib */; };
@@ -25,6 +26,7 @@
 
 /* Begin PBXFileReference section */
 		402AD2E6262C769B00AB16A1 /* cero.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cero.jpg; sourceTree = "<group>"; };
+		4034342026319F4800470FF2 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		405373F426231CE2003E54AE /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		405373FF26232421003E54AE /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		4053740026232421003E54AE /* TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
@@ -53,6 +55,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4034341F26319F2B00470FF2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4034342026319F4800470FF2 /* MainModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		405373FE262323E8003E54AE /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -80,13 +90,6 @@
 				408BF5EC26306214006054CD /* perfume.jpg */,
 			);
 			path = Image;
-			sourceTree = "<group>";
-		};
-		407D0673262074D8000B7400 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		407D0674262074FA000B7400 /* ViewController */ = {
@@ -129,7 +132,7 @@
 				405373FE262323E8003E54AE /* Cell */,
 				407D067526207505000B7400 /* ViewModel */,
 				407D0674262074FA000B7400 /* ViewController */,
-				407D0673262074D8000B7400 /* Model */,
+				4034341F26319F2B00470FF2 /* Model */,
 				8E42FEF0261D958100763B61 /* AppDelegate.swift */,
 				8E42FEF2261D958100763B61 /* SceneDelegate.swift */,
 				8E42FEFC261D958800763B61 /* Assets.xcassets */,
@@ -217,6 +220,7 @@
 				8E42FEFB261D958100763B61 /* GDONG.xcdatamodeld in Sources */,
 				8E42FEF1261D958100763B61 /* AppDelegate.swift in Sources */,
 				8E42FEF3261D958100763B61 /* SceneDelegate.swift in Sources */,
+				4034342126319F4800470FF2 /* MainModel.swift in Sources */,
 				407D0678262077EC000B7400 /* MainViewController.swift in Sources */,
 				4053740126232421003E54AE /* TableViewCell.swift in Sources */,
 				405373F526231CE2003E54AE /* MainViewModel.swift in Sources */,

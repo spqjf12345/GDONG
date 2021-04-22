@@ -29,7 +29,6 @@ class MainViewController : UIViewController {
     
     @IBOutlet var segmentedControl: UISegmentedControl!
     
-    @IBOutlet var sellTableView: UIView!
     @IBOutlet weak var tableView: UITableView!
     
     @IBAction func segmentedControlChange(_ sender: UISegmentedControl) {
