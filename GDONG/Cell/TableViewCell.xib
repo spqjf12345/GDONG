@@ -39,7 +39,7 @@
                         <rect key="frame" x="20" y="7" width="81.5" height="136"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pta-jM-dqp">
-                        <rect key="frame" x="295" y="123" width="35" height="20"/>
+                        <rect key="frame" x="295" y="116" width="35" height="27"/>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -53,12 +53,13 @@
                     <constraint firstItem="jmq-Mh-ZmD" firstAttribute="top" secondItem="75A-mO-6qU" secondAttribute="bottom" constant="3.5" id="HLO-mv-TDr"/>
                     <constraint firstItem="75A-mO-6qU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="7" id="IUf-ee-EB8"/>
                     <constraint firstItem="75A-mO-6qU" firstAttribute="leading" secondItem="xwQ-Jc-frK" secondAttribute="trailing" constant="10" id="Jwr-AC-Btc"/>
+                    <constraint firstItem="pta-jM-dqp" firstAttribute="leading" relation="lessThanOrEqual" secondItem="I5j-fT-AZB" secondAttribute="trailing" constant="140" id="NbJ-R2-R9x"/>
                     <constraint firstItem="jmq-Mh-ZmD" firstAttribute="leading" secondItem="xwQ-Jc-frK" secondAttribute="trailing" constant="10" id="PKG-35-Gye"/>
                     <constraint firstAttribute="bottom" secondItem="xwQ-Jc-frK" secondAttribute="bottom" constant="7" id="VXn-Z9-fBm"/>
                     <constraint firstItem="I5j-fT-AZB" firstAttribute="top" secondItem="jmq-Mh-ZmD" secondAttribute="bottom" constant="68" id="avY-xH-Wdu"/>
                     <constraint firstAttribute="trailing" secondItem="xwQ-Jc-frK" secondAttribute="trailing" constant="248.5" id="dih-9l-B4s"/>
                     <constraint firstItem="xwQ-Jc-frK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="esb-5S-94N"/>
-                    <constraint firstItem="pta-jM-dqp" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="123" id="fpz-ro-0Gc"/>
+                    <constraint firstItem="pta-jM-dqp" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="116" id="fpz-ro-0Gc"/>
                     <constraint firstItem="I5j-fT-AZB" firstAttribute="leading" secondItem="xwQ-Jc-frK" secondAttribute="trailing" constant="10" id="rqF-H3-hH5"/>
                 </constraints>
             </tableViewCellContentView>

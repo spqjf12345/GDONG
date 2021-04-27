@@ -12,6 +12,9 @@
 		405373F526231CE2003E54AE /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405373F426231CE2003E54AE /* MainViewModel.swift */; };
 		4053740126232421003E54AE /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405373FF26232421003E54AE /* TableViewCell.swift */; };
 		4053740226232421003E54AE /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4053740026232421003E54AE /* TableViewCell.xib */; };
+		407C42C02638495B008940B1 /* ChatListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407C42BE2638495B008940B1 /* ChatListCell.swift */; };
+		407C42C12638495B008940B1 /* ChatListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 407C42BF2638495B008940B1 /* ChatListCell.xib */; };
+		407C42C426384A21008940B1 /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407C42C326384A21008940B1 /* ChatListViewController.swift */; };
 		407D0678262077EC000B7400 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407D0677262077EC000B7400 /* MainViewController.swift */; };
 		408BF5EA2630615E006054CD /* strawberry.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 408BF5E92630615E006054CD /* strawberry.jpg */; };
 		408BF5ED26306214006054CD /* perfume.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 408BF5EC26306214006054CD /* perfume.jpg */; };
@@ -30,6 +33,9 @@
 		405373F426231CE2003E54AE /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		405373FF26232421003E54AE /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		4053740026232421003E54AE /* TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
+		407C42BE2638495B008940B1 /* ChatListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListCell.swift; sourceTree = "<group>"; };
+		407C42BF2638495B008940B1 /* ChatListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatListCell.xib; sourceTree = "<group>"; };
+		407C42C326384A21008940B1 /* ChatListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
 		407D0677262077EC000B7400 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		408BF5E92630615E006054CD /* strawberry.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = strawberry.jpg; sourceTree = "<group>"; };
 		408BF5EC26306214006054CD /* perfume.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = perfume.jpg; sourceTree = "<group>"; };
@@ -68,6 +74,8 @@
 			children = (
 				405373FF26232421003E54AE /* TableViewCell.swift */,
 				4053740026232421003E54AE /* TableViewCell.xib */,
+				407C42BE2638495B008940B1 /* ChatListCell.swift */,
+				407C42BF2638495B008940B1 /* ChatListCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -96,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				407D0677262077EC000B7400 /* MainViewController.swift */,
+				407C42C326384A21008940B1 /* ChatListViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -205,6 +214,7 @@
 				408BF5EA2630615E006054CD /* strawberry.jpg in Resources */,
 				402AD2E7262C769B00AB16A1 /* cero.jpg in Resources */,
 				8E42FEFD261D958800763B61 /* Assets.xcassets in Resources */,
+				407C42C12638495B008940B1 /* ChatListCell.xib in Resources */,
 				8E42FEF8261D958100763B61 /* Main.storyboard in Resources */,
 				40956EBB2625B48200397930 /* bigapple.jpg in Resources */,
 			);
@@ -218,10 +228,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E42FEFB261D958100763B61 /* GDONG.xcdatamodeld in Sources */,
+				407C42C02638495B008940B1 /* ChatListCell.swift in Sources */,
 				8E42FEF1261D958100763B61 /* AppDelegate.swift in Sources */,
 				8E42FEF3261D958100763B61 /* SceneDelegate.swift in Sources */,
 				4034342126319F4800470FF2 /* MainModel.swift in Sources */,
 				407D0678262077EC000B7400 /* MainViewController.swift in Sources */,
+				407C42C426384A21008940B1 /* ChatListViewController.swift in Sources */,
 				4053740126232421003E54AE /* TableViewCell.swift in Sources */,
 				405373F526231CE2003E54AE /* MainViewModel.swift in Sources */,
 			);
