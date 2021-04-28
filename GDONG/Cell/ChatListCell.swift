@@ -9,11 +9,15 @@ import UIKit
 
 class ChatListCell: UITableViewCell {
 
-    
-    @IBOutlet weak var vtlabel: UILabel!
+    @IBOutlet var thumbnail: UIImageView!
+    @IBOutlet var roomName: UILabel!
+    @IBOutlet var participants: UILabel!
+    @IBOutlet var latestMessageTime: UILabel!
     
     
     override func awakeFromNib() {
+        thumbnail.layer.cornerRadius = 10
+        
         super.awakeFromNib()
         // Initialization code
     }

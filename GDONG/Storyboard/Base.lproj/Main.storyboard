@@ -43,7 +43,7 @@
             </objects>
             <point key="canvasLocation" x="125" y="-402"/>
         </scene>
-        <!--chatting-->
+        <!--채팅-->
         <scene sceneID="o8e-Ln-5Uc">
             <objects>
                 <viewController id="Sgz-Yi-rJe" customClass="ChatListViewController" customModule="GDONG" customModuleProvider="target" sceneMemberID="viewController">
@@ -76,7 +76,7 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="chatting" image="message.fill" catalog="system" id="Iq4-Vh-he8"/>
-                    <navigationItem key="navigationItem" id="Awm-ke-i5g"/>
+                    <navigationItem key="navigationItem" title="채팅" id="Awm-ke-i5g"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="chatListTableView" destination="oo9-dK-OSc" id="jY2-DR-reK"/>

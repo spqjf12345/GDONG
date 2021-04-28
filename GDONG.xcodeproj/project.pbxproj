@@ -12,6 +12,7 @@
 		405373F526231CE2003E54AE /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405373F426231CE2003E54AE /* MainViewModel.swift */; };
 		4053740126232421003E54AE /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405373FF26232421003E54AE /* TableViewCell.swift */; };
 		4053740226232421003E54AE /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4053740026232421003E54AE /* TableViewCell.xib */; };
+		407B641D2639A4AB00DBCA9D /* ChatListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407B641C2639A4AB00DBCA9D /* ChatListModel.swift */; };
 		407C42C02638495B008940B1 /* ChatListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407C42BE2638495B008940B1 /* ChatListCell.swift */; };
 		407C42C12638495B008940B1 /* ChatListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 407C42BF2638495B008940B1 /* ChatListCell.xib */; };
 		407C42C426384A21008940B1 /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407C42C326384A21008940B1 /* ChatListViewController.swift */; };
@@ -33,6 +34,7 @@
 		405373F426231CE2003E54AE /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		405373FF26232421003E54AE /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		4053740026232421003E54AE /* TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
+		407B641C2639A4AB00DBCA9D /* ChatListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListModel.swift; sourceTree = "<group>"; };
 		407C42BE2638495B008940B1 /* ChatListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListCell.swift; sourceTree = "<group>"; };
 		407C42BF2638495B008940B1 /* ChatListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatListCell.xib; sourceTree = "<group>"; };
 		407C42C326384A21008940B1 /* ChatListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 			isa = PBXGroup;
 			children = (
 				4034342026319F4800470FF2 /* MainModel.swift */,
+				407B641C2639A4AB00DBCA9D /* ChatListModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -232,6 +235,7 @@
 				8E42FEF1261D958100763B61 /* AppDelegate.swift in Sources */,
 				8E42FEF3261D958100763B61 /* SceneDelegate.swift in Sources */,
 				4034342126319F4800470FF2 /* MainModel.swift in Sources */,
+				407B641D2639A4AB00DBCA9D /* ChatListModel.swift in Sources */,
 				407D0678262077EC000B7400 /* MainViewController.swift in Sources */,
 				407C42C426384A21008940B1 /* ChatListViewController.swift in Sources */,
 				4053740126232421003E54AE /* TableViewCell.swift in Sources */,

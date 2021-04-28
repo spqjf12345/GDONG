@@ -9,7 +9,10 @@ import UIKit
 
 class ChatListViewController: UIViewController {
     
-    var lb = ["안녕","헬로"]
+    var roomName = ["딸기사실분 선착 순입니다!","향수 공동구매 해요"]
+    var thumnail = ["strawberry.jpg", "perfume.jpg"]
+    var latestMessageTime = ["1시간전", "2021년 4월 28일"]
+    var participants = ["1/5", "1/80"]
 
     
     @IBOutlet var chatListTableView: UITableView!
@@ -42,15 +45,22 @@ class ChatListViewController: UIViewController {
 }
 
 extension ChatListViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return lb.count
+        return roomName.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = chatListTableView.dequeueReusableCell(withIdentifier: "chatList", for: indexPath) as! ChatListCell
         
-        cell.vtlabel.text = lb[indexPath.row]
+        cell.roomName.text = roomName[indexPath.row]
+        cell.latestMessageTime.text = latestMessageTime[indexPath.row]
+        cell.participants.text = participants[indexPath.row]
+        cell.thumbnail.image = UIImage(named: thumnail[(indexPath as NSIndexPath).row])
+        
         
         return cell
         
