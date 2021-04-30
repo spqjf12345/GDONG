@@ -19,7 +19,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+        
         guard let _ = (scene as? UIWindowScene) else { return }
+        
+    
     }
 
     //scene의 연결이 해제될 때 호출
@@ -54,21 +57,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
     
-//    // 카카오톡 로그인 페이지
-//    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-//        if let url = URLContexts.first?.url {
-//            if (AuthApi.isKakaoTalkLoginUrl(url)){
-//                _ = AuthController.handleOpenUrl(url: url)
-//            }
-//        }
-//        
-//        guard let scheme = URLContexts.first?.url.scheme else { return }
-//        if scheme.contains("com.googleusercontent.apps") {
-//            GIDSignIn.sharedInstance().handle(URLContexts.first?.url)
-//        }
-//        
-//    
-//    }
+    // 카카오톡 로그인 페이지
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        if let url = URLContexts.first?.url {
+            if (AuthApi.isKakaoTalkLoginUrl(url)){
+                _ = AuthController.handleOpenUrl(url: url)
+            }
+        }
+        
+        guard let scheme = URLContexts.first?.url.scheme else { return }
+        if scheme.contains("com.googleusercontent.apps") {
+            GIDSignIn.sharedInstance().handle(URLContexts.first?.url)
+        }
+        
+    
+    }
 
 
 }

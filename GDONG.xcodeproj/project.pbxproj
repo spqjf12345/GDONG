@@ -10,7 +10,6 @@
 		54E1529344D75E72330A0B5F /* Pods_GDONG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5CB9861EE62390BC891B506 /* Pods_GDONG.framework */; };
 		8E42FEF1261D958100763B61 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E42FEF0261D958100763B61 /* AppDelegate.swift */; };
 		8E42FEF3261D958100763B61 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E42FEF2261D958100763B61 /* SceneDelegate.swift */; };
-		8E42FEF5261D958100763B61 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E42FEF4261D958100763B61 /* ViewController.swift */; };
 		8E42FEF8261D958100763B61 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E42FEF6261D958100763B61 /* Main.storyboard */; };
 		8E42FEFB261D958100763B61 /* GDONG.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E42FEF9261D958100763B61 /* GDONG.xcdatamodeld */; };
 		8E42FEFD261D958800763B61 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E42FEFC261D958800763B61 /* Assets.xcassets */; };
@@ -23,13 +22,13 @@
 		8E61FDFB26301D3A008CCB8A /* TitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E61FDF926301D3A008CCB8A /* TitleTableViewCell.xib */; };
 		8E6C081626240E97009CE9C3 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6C081526240E96009CE9C3 /* Extension.swift */; };
 		8E6C083D2624B1D0009CE9C3 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6C083C2624B1D0009CE9C3 /* AuthenticationViewModel.swift */; };
+		8E9D5C642639B9FE0014C1F0 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9D5C632639B9FE0014C1F0 /* SearchViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8E42FEED261D958100763B61 /* GDONG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GDONG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E42FEF0261D958100763B61 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8E42FEF2261D958100763B61 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		8E42FEF4261D958100763B61 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8E42FEF7261D958100763B61 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8E42FEFA261D958100763B61 /* GDONG.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GDONG.xcdatamodel; sourceTree = "<group>"; };
 		8E42FEFC261D958800763B61 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -44,6 +43,7 @@
 		8E61FDF926301D3A008CCB8A /* TitleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleTableViewCell.xib; sourceTree = "<group>"; };
 		8E6C081526240E96009CE9C3 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		8E6C083C2624B1D0009CE9C3 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
+		8E9D5C632639B9FE0014C1F0 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		B5CB9861EE62390BC891B506 /* Pods_GDONG.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GDONG.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED3C4B96BF1AF2716918D5A6 /* Pods-GDONG.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GDONG.release.xcconfig"; path = "Target Support Files/Pods-GDONG/Pods-GDONG.release.xcconfig"; sourceTree = "<group>"; };
 		EDB6198BF78650B9DC772EC0 /* Pods-GDONG.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GDONG.debug.xcconfig"; path = "Target Support Files/Pods-GDONG/Pods-GDONG.debug.xcconfig"; sourceTree = "<group>"; };
@@ -99,13 +99,13 @@
 		8E42FEEF261D958100763B61 /* GDONG */ = {
 			isa = PBXGroup;
 			children = (
+				8E9D5C672639BD550014C1F0 /* Search */,
 				8E61FDD726301721008CCB8A /* Model */,
 				8E61FDD3263015F7008CCB8A /* DetailNote */,
 				8E42FF462620B4BD00763B61 /* GDONG.entitlements */,
 				8E42FF08261D9B2F00763B61 /* Login */,
 				8E42FEF0261D958100763B61 /* AppDelegate.swift */,
 				8E42FEF2261D958100763B61 /* SceneDelegate.swift */,
-				8E42FEF4261D958100763B61 /* ViewController.swift */,
 				8E42FEF6261D958100763B61 /* Main.storyboard */,
 				8E42FEFC261D958800763B61 /* Assets.xcassets */,
 				8E42FEFE261D958800763B61 /* LaunchScreen.storyboard */,
@@ -152,6 +152,14 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		8E9D5C672639BD550014C1F0 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				8E9D5C632639B9FE0014C1F0 /* SearchViewController.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -186,6 +194,7 @@
 				TargetAttributes = {
 					8E42FEEC261D958100763B61 = {
 						CreatedOnToolsVersion = 12.4;
+						LastSwiftMigration = 1240;
 					};
 				};
 			};
@@ -285,8 +294,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E42FEF5261D958100763B61 /* ViewController.swift in Sources */,
 				8E42FEFB261D958100763B61 /* GDONG.xcdatamodeld in Sources */,
+				8E9D5C642639B9FE0014C1F0 /* SearchViewController.swift in Sources */,
 				8E61FDDD26301797008CCB8A /* Dummy.swift in Sources */,
 				8E61FDFA26301D3A008CCB8A /* TitleTableViewCell.swift in Sources */,
 				8E61FDD52630167A008CCB8A /* DetailNoteViewController.swift in Sources */,
@@ -443,6 +452,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = GDONG/GDONG.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FJ57DUH592;
@@ -453,6 +463,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Develop.com-GDONG";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -464,6 +475,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = GDONG/GDONG.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FJ57DUH592;

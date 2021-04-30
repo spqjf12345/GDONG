@@ -16,6 +16,8 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
     let viewModel = AuthenticationViewModel()
     var user: [User] = []
     
+    let tabBarViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "tabbar") as! UITabBarController
+    
     //temp button
     private let loginButton: UIButton = {
         let button = UIButton()
@@ -53,28 +55,34 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
         return button
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        checkAutoLogin()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         GIDSignIn.sharedInstance()?.presentingViewController = self
         GIDSignIn.sharedInstance()?.delegate = self
+
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+      
         googleLoginButton.frame = CGRect(x: 70, y: 300, width: 250, height: 40)
         kakaoTalkLoginButton.frame = CGRect(x: 70, y: googleLoginButton.bottom + 20, width: 250, height: 40)
-        
+
         appleLoginButtonView.frame = CGRect(x: 70, y: kakaoTalkLoginButton.bottom + 20, width: 250, height: 40)
         appleLoginButton.frame = CGRect(x: 0, y: 0, width: 250, height: 50)
         loginButton.frame = CGRect(x: 70, y: appleLoginButtonView.bottom + 20, width: 250, height: 40)
-        
+      
         appleLoginButtonView.addArrangedSubview(appleLoginButton)
         view.addSubview(appleLoginButtonView)
         view.addSubview(kakaoTalkLoginButton)
         view.addSubview(googleLoginButton)
         view.addSubview(loginButton)
     }
-    
     
     //Apple Login
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
@@ -91,6 +99,8 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
             print("User ID : \(userIdentifier)")
             print("User Email : \(email)")
             print("User Name : \(fullName)")
+            self.autoLogin(UN: fullName.givenName! + fullName.familyName!, UE: email)
+
 //            Apple login
 //            User ID : 001607.55c65d33ebb84ff184c665342a5eaa79.0712
 //            User Email : spqjf12345@naver.com
@@ -125,22 +135,18 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
             if(error as NSError).code == GIDSignInErrorCode.hasNoAuthInKeychain.rawValue {
                 print("the user has not signed in before or they have since signed out ")
             }else {
-                print("\(error.localizedDescription)")
+                print("error : \(error.localizedDescription)")
             }
             return
         }
         
         // 사용자 정보 가져오기
-            if let userId = user.userID,                  // For client-side use only!
-                let idToken = user.authentication.idToken, // Safe to send to the server
-                let fullName = user.profile.name,
-                let email = user.profile.email {
+            if let userName = user.profile.name,
+               let userEmail = user.profile.email {
                 print("google login:")
-//                print("Token : \(idToken)")
-//                print("User ID : \(userId)")
-                print("User Email : \(email)")
-                print("User Name : \((fullName))")
-                self.MoveToDetailView()
+                print("User Email : \(userEmail)")
+                print("User Name : \((userName))")
+                self.autoLogin(UN: userName, UE: userEmail)
             } else {
                 print("Error : User Data Not Found")
             }
@@ -153,7 +159,10 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
     }
     
     @objc func didTapLoginButton(){
-        self.MoveToDetailView()
+        //self.MoveToDetailView()
+        //self.MoveToSearchView()
+        
+        self.MoveToTabbar()
     }
     
     
@@ -186,31 +195,34 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
                 print(error)
             }else{
                 print("me() success")
+                
                 _ = user
                 guard let userId = user?.id else { return }
                 guard let userName = user?.kakaoAccount?.profile?.nickname else { return }
                 guard let userEmail = user?.kakaoAccount?.email else { return }
-                
                 print("user info : \(userId) \(userName) \(userEmail)")
-                self.getToken()
+                self.autoLogin(UN: userName, UE: userEmail)
+
+                
+                //self.getToken()
             }
         }
        
     }
     
-    func getToken(){
-        UserApi.shared.accessTokenInfo {(accessTokenInfo, error) in
-            if let error = error {
-                print(error)
-            }
-            else {
-                print("accessTokenInfo() success.")
-                guard let token = accessTokenInfo else { return }
-                print("login token \(token)")
-                
-            }
-        }
-    }
+//    func getToken(){
+//        UserApi.shared.accessTokenInfo {(accessTokenInfo, error) in
+//            if let error = error {
+//                print(error)
+//            }
+//            else {
+//                print("accessTokenInfo() success.")
+//                guard let token = accessTokenInfo else { return }
+//                print("login token \(token)")
+//
+//            }
+//        }
+//    }
     
     func MoveToDetailView(){
 //        print("moveto detailview")
@@ -219,6 +231,48 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
         UIApplication.shared.windows.first?.rootViewController = navVC
         UIApplication.shared.windows.first?.makeKeyAndVisible()
 //        navVC.pushViewController(detailVC, animated: true)
+    }
+    
+    func MoveToSearchView(){
+        let searchVC = SearchViewController()
+        let navVC = UINavigationController(rootViewController: searchVC)
+        UIApplication.shared.windows.first?.rootViewController = navVC
+        UIApplication.shared.windows.first?.makeKeyAndVisible()
+    }
+    
+    func MoveToTabbar(){
+     
+        let home = tabBarViewController.viewControllers![0] as! UINavigationController
+        let chat = tabBarViewController.viewControllers![1] as! UINavigationController
+        let recommend = tabBarViewController.viewControllers![2] as! UINavigationController
+        let profile = tabBarViewController.viewControllers![3] as! UINavigationController
+     
+        tabBarViewController.setViewControllers([home, chat, recommend, profile], animated: true)
+        
+        UIApplication.shared.windows.first?.rootViewController = tabBarViewController
+        UIApplication.shared.windows.first?.makeKeyAndVisible()
+        
+//        tabBarViewController.modalPresentationStyle = .fullScreen
+//        tabBarViewController.selectedViewController = home
+//        present(tabBarViewController, animated: true, completion: nil)
+    }
+    
+    func autoLogin(UN: String, UE: String){
+        print("auto Login did")
+        UserDefaults.standard.set(UN, forKey: "userName")
+        UserDefaults.standard.set(UE, forKey: "userEmail")
+    }
+    
+    func checkAutoLogin(){
+        if let userName = UserDefaults.standard.string(forKey: "userName") {
+            if let useremail = UserDefaults.standard.string(forKey: "userEmail") {
+                print("has value in userDefaults")
+                self.MoveToTabbar()
+          }
+        }else{
+            print("meet the condition")
+        }
+        
     }
 
 }
