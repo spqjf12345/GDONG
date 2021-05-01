@@ -9,7 +9,7 @@ import UIKit
 
 class ChatListViewController: UIViewController {
     
-    var roomName = ["딸기사실분 선착 순입니다!","향수 공동구매 해요"]
+    var roomName = ["딸기사실분 선착순입니다!","향수 공동구매 해요"]
     var thumnail = ["strawberry.jpg", "perfume.jpg"]
     var latestMessageTime = ["1시간전", "2021년 4월 28일"]
     var participants = ["1/5", "1/80"]
@@ -20,6 +20,8 @@ class ChatListViewController: UIViewController {
     
 
     override func viewDidLoad() {
+        super.viewDidLoad()
+
         
         let nibName = UINib(nibName: "ChatListCell", bundle: nil)
 
@@ -30,8 +32,6 @@ class ChatListViewController: UIViewController {
         chatListTableView.delegate = self
         chatListTableView.dataSource = self
         
-        
-        super.viewDidLoad()
 
         
     }
@@ -71,11 +71,10 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource {
             if editingStyle == .delete {
                 
                 roomName.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .fade)
-                
-            } else if editingStyle == .insert {
+                tableView.deleteRows(at: [indexPath], with: .fade) // 이 로직 호출하기 전에 연동된 데이터를 함께 지워준 다음 호출해야함
                 
             }
+
         }
     //swipe 하여 채팅방 목록 삭제
     

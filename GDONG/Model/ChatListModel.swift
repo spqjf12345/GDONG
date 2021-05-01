@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+
+struct ChatList {
+    var roomName: Array<String>
+    var thumnail: Array<String>
+    var latestMessageTime: Array<String>
+    var participants: Array<Int>
+}

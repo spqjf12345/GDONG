@@ -16,10 +16,13 @@ class ChatListCell: UITableViewCell {
     
     
     override func awakeFromNib() {
-        thumbnail.layer.cornerRadius = 10
-        
         super.awakeFromNib()
         // Initialization code
+        
+        thumbnail.layer.cornerRadius = 10
+        //이미지뷰 모서리 설정
+        
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

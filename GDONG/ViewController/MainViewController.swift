@@ -9,7 +9,7 @@ import UIKit
 
 class MainViewController : UIViewController {
     
-    var productName = ["공구해여","사과 공구 하실 분"]
+    var productName = ["공구해요","사과 공구 하실 분"]
     var productPrice = ["₩3000","₩4000"]
     var time = ["1시간전","2시간전"]
     var people = ["1/30","1/5"]
@@ -39,6 +39,8 @@ class MainViewController : UIViewController {
     
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        //Do any additional setup after loading the view.
         
         if let navigationBar = self.navigationController?.navigationBar {
             let positionFrame = CGRect(x: 20, y: 0, width: navigationBar.frame.width/2, height: navigationBar.frame.height)
@@ -61,8 +63,8 @@ class MainViewController : UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-        super.viewDidLoad()
-        //Do any additional setup after loading the view.
+//        super.viewDidLoad()
+//        //Do any additional setup after loading the view.
 
     }
     

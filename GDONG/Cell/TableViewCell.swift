@@ -17,11 +17,16 @@ class TableViewCell: UITableViewCell {
 
     
     override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+        
         productImageView.layer.cornerRadius = 10
         //imageview 모서리 설정
         
-        super.awakeFromNib()
-        // Initialization code
+        
+        
+        
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
