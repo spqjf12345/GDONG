@@ -15,8 +15,7 @@ import GoogleSignIn
 class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding, GIDSignInDelegate {
     let viewModel = AuthenticationViewModel()
     var user: [User] = []
-    
-    let tabBarViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "tabbar") as! UITabBarController
+ 
     
     //temp button
     private let loginButton: UIButton = {
@@ -62,6 +61,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         GIDSignIn.sharedInstance()?.presentingViewController = self
         GIDSignIn.sharedInstance()?.delegate = self
 
@@ -233,34 +233,46 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
 //        navVC.pushViewController(detailVC, animated: true)
     }
     
-    func MoveToSearchView(){
-        let searchVC = SearchViewController()
-        let navVC = UINavigationController(rootViewController: searchVC)
-        UIApplication.shared.windows.first?.rootViewController = navVC
-        UIApplication.shared.windows.first?.makeKeyAndVisible()
-    }
+//    func MoveToSearchView(){
+//        let searchVC = SearchViewController()
+//        let navVC = UINavigationController(rootViewController: searchVC)
+//        UIApplication.shared.windows.first?.rootViewController = navVC
+//        UIApplication.shared.windows.first?.makeKeyAndVisible()
+//    }
     
     func MoveToTabbar(){
-     
+        
+//        guard let tabBarViewController = self.storyboard?.instantiateViewController(withIdentifier: "tabbar") else{
+//            return
+//        }
+        //let tabBarViewController = UITabBarController()
+        let tabBarViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "tabbar") as! UITabBarController
         let home = tabBarViewController.viewControllers![0] as! UINavigationController
+        home.viewControllers.append(ViewController())
         let chat = tabBarViewController.viewControllers![1] as! UINavigationController
         let recommend = tabBarViewController.viewControllers![2] as! UINavigationController
         let profile = tabBarViewController.viewControllers![3] as! UINavigationController
-     
+        profile.viewControllers.append(ProfileViewController())
         tabBarViewController.setViewControllers([home, chat, recommend, profile], animated: true)
         
+
+//        let tabBarViewController = self.storyboard?.instantiateViewController(identifier: "tabbar")
+//
+//
+
+      
+        //tabBarViewController.modalPresentationStyle = .fullScreen
         UIApplication.shared.windows.first?.rootViewController = tabBarViewController
         UIApplication.shared.windows.first?.makeKeyAndVisible()
-        
-//        tabBarViewController.modalPresentationStyle = .fullScreen
-//        tabBarViewController.selectedViewController = home
-//        present(tabBarViewController, animated: true, completion: nil)
+        //present(tabBarViewController, animated: true, completion: nil)
+ 
     }
-    
+
     func autoLogin(UN: String, UE: String){
         print("auto Login did")
         UserDefaults.standard.set(UN, forKey: "userName")
         UserDefaults.standard.set(UE, forKey: "userEmail")
+        self.MoveToTabbar()
     }
     
     func checkAutoLogin(){
@@ -270,7 +282,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
                 self.MoveToTabbar()
           }
         }else{
-            print("meet the condition")
+            print("need to meet the condition")
         }
         
     }

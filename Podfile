@@ -14,4 +14,6 @@ pod 'KakaoOpenSDK'
 
 pod 'GoogleSignIn' #구글 로그인
 
+pod "TTGTagCollectionView"
+
 end

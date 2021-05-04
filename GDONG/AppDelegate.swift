@@ -10,6 +10,15 @@ import CoreData
 import KakaoSDKCommon
 import GoogleSignIn
 
+extension UIApplication {
+    
+    /** The activityTypes are included in your Info.plist file under the `NSUserActivityTypes` array.
+        More info: https://developer.apple.com/documentation/foundation/nsuseractivity
+    */
+    static var userActivitiyTypes: [String]? {
+        return Bundle.main.object(forInfoDictionaryKey: "NSUserActivityTypes") as? [String]
+    }
+}
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
