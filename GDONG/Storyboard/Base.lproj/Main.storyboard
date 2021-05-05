@@ -20,11 +20,12 @@
                     <connections>
                         <segue destination="rcO-yL-Cuz" kind="relationship" relationship="viewControllers" id="e1c-gB-0ig"/>
                         <segue destination="cAf-TI-0d7" kind="relationship" relationship="viewControllers" id="tU3-8T-W6K"/>
+                        <segue destination="ZAp-5z-yUy" kind="relationship" relationship="viewControllers" id="FXo-4s-A00"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xzm-op-rtV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-701" y="-1165"/>
+            <point key="canvasLocation" x="-1413" y="-660"/>
         </scene>
         <!--Item-->
         <scene sceneID="L5T-vL-0Xr">
@@ -41,7 +42,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fut-cd-FUd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="125" y="-402"/>
+            <point key="canvasLocation" x="125" y="-660"/>
         </scene>
         <!--채팅-->
         <scene sceneID="o8e-Ln-5Uc">
@@ -84,7 +85,58 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pxg-rX-nv0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1042" y="-402"/>
+            <point key="canvasLocation" x="1003" y="-660"/>
+        </scene>
+        <!--추천-->
+        <scene sceneID="qPW-Xb-MBU">
+            <objects>
+                <tableViewController id="zoS-r2-Na4" customClass="RecommendViewController" customModule="GDONG" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="QgG-um-OYL">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="C8C-VG-JQk" customClass="TableViewCell" customModule="GDONG" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="C8C-VG-JQk" id="Bck-Dm-aRH">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="zoS-r2-Na4" id="Gpr-HI-vrJ"/>
+                            <outlet property="delegate" destination="zoS-r2-Na4" id="tVl-Xg-Lnu"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="Recommend" image="star.fill" catalog="system" id="Iut-Ke-7fg"/>
+                    <navigationItem key="navigationItem" title="추천" id="RvF-Rt-Tto"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="recommendTableVIew" destination="QgG-um-OYL" id="hhW-lQ-0yb"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fDv-IQ-gDQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1003" y="106"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="fII-de-rqi">
+            <objects>
+                <navigationController id="ZAp-5z-yUy" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="e2H-3K-aYA"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="hUt-tq-ru9">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="zoS-r2-Na4" kind="relationship" relationship="rootViewController" id="npd-cO-1Yt"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sVj-Zk-9at" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="125" y="106"/>
         </scene>
         <!--Main-->
         <scene sceneID="Ncv-mZ-yfp">
@@ -150,7 +202,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bHM-TJ-21C" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1063.768115942029" y="-1387.5"/>
+            <point key="canvasLocation" x="977" y="-1388"/>
         </scene>
         <!--Item-->
         <scene sceneID="UfK-tl-Ey2">
@@ -173,6 +225,7 @@
     <resources>
         <image name="list.bullet" catalog="system" width="128" height="88"/>
         <image name="message.fill" catalog="system" width="128" height="113"/>
+        <image name="star.fill" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

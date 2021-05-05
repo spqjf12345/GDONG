@@ -31,17 +31,19 @@ class MainViewController : UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    @IBAction func segmentedControlChange(_ sender: UISegmentedControl) {
-        tableView.reloadData()
-    }
     //segmented control 연결(버튼 클릭할때마다 reload)
+    @IBAction func segmentedControlChange(_ sender: UISegmentedControl) {
+        tableView.reloadData() 
+    }
+    
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //Do any additional setup after loading the view.
         
+        
+        //네비게이션바의 왼쪽에 현위치라벨 적용
         if let navigationBar = self.navigationController?.navigationBar {
             let positionFrame = CGRect(x: 20, y: 0, width: navigationBar.frame.width/2, height: navigationBar.frame.height)
             
@@ -52,19 +54,18 @@ class MainViewController : UIViewController {
 
             navigationBar.addSubview(positionLabel)
         }
-        //네비게이션바의 왼쪽에 현위치라벨 적용
         
 
+        // 테이블뷰와 테이블뷰 셀인 xib 파일과 연결
         let nibName = UINib(nibName: "TableViewCell", bundle: nil)
 
         tableView.register(nibName, forCellReuseIdentifier: "productCell")
-        // 테이블뷰와 테이블뷰 셀인 xib 파일과 연결
+        
         
         tableView.delegate = self
         tableView.dataSource = self
         
-//        super.viewDidLoad()
-//        //Do any additional setup after loading the view.
+
 
     }
     
@@ -86,7 +87,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
         return 150
     }
     
-    
+    //segmented control 인덱스에 따른 테이블뷰 설정
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         var returnValue = 0
@@ -140,7 +141,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
        return cell
 
     }
-    //segmented control 인덱스에 따른 테이블뷰 설정
+    
     
     
 

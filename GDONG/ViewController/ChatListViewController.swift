@@ -11,8 +11,8 @@ class ChatListViewController: UIViewController {
     
     var roomName = ["딸기사실분 선착순입니다!","향수 공동구매 해요"]
     var thumnail = ["strawberry.jpg", "perfume.jpg"]
-    var latestMessageTime = ["1시간전", "2021년 4월 28일"]
-    var participants = ["1/5", "1/80"]
+    var latestMessageTime = ["1시간전", "2021.4.28"]
+    var message = ["안녕하세요 채팅내용 입니다 이건 마지막 채팅내용이 나타날 자리 입니다.", "1/80"]
 
     
     @IBOutlet var chatListTableView: UITableView!
@@ -23,10 +23,10 @@ class ChatListViewController: UIViewController {
         super.viewDidLoad()
 
         
+        // 테이블뷰와 테이블뷰 셀인 xib 파일과 연결
         let nibName = UINib(nibName: "ChatListCell", bundle: nil)
 
         chatListTableView.register(nibName, forCellReuseIdentifier: "chatList")
-        // 테이블뷰와 테이블뷰 셀인 xib 파일과 연결
         
         
         chatListTableView.delegate = self
@@ -58,14 +58,20 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.roomName.text = roomName[indexPath.row]
         cell.latestMessageTime.text = latestMessageTime[indexPath.row]
-        cell.participants.text = participants[indexPath.row]
+        cell.message.text = message[indexPath.row]
         cell.thumbnail.image = UIImage(named: thumnail[(indexPath as NSIndexPath).row])
+        
+        cell.roomName.sizeToFit()
+        cell.latestMessageTime.sizeToFit()
+        cell.message.sizeToFit()
+        cell.thumbnail.sizeToFit()
         
         
         return cell
         
     }
     
+    //swipe 하여 채팅방 목록 삭제
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
             
             if editingStyle == .delete {
@@ -76,7 +82,7 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource {
             }
 
         }
-    //swipe 하여 채팅방 목록 삭제
+    
     
     
 }
