@@ -90,21 +90,25 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        
         switch authorization.credential {
         case  let appleIDCredential as ASAuthorizationAppleIDCredential:
             let userIdentifier = appleIDCredential.user
+            guard let identifyToken = appleIDCredential.identityToken else { return }
+            guard let authoredCode = appleIDCredential.authorizationCode else { return }
             guard let fullName = appleIDCredential.fullName else { return }
             guard let email = appleIDCredential.email else { return }
+            guard let tokeStr = String(data: identifyToken, encoding: .utf8) else { return }
+            guard let codeStr = String(data: authoredCode, encoding: .utf8) else { return }
+            
             print("Apple login")
+            print("identifyToken : \(tokeStr)")
+            print("authoredCode : \(codeStr)")
             print("User ID : \(userIdentifier)")
             print("User Email : \(email)")
             print("User Name : \(fullName)")
             self.autoLogin(UN: fullName.givenName! + fullName.familyName!, UE: email, FROM: "apple")
 
-//            Apple login
-//            User ID : 001607.55c65d33ebb84ff184c665342a5eaa79.0712
-//            User Email : spqjf12345@naver.com
-//            User Name : givenName: SoJeong familyName: Jo
         default:
             break;
         }
@@ -139,11 +143,12 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
             }
             return
         }
-        
         // 사용자 정보 가져오기
             if let userName = user.profile.name,
-               let userEmail = user.profile.email {
+               let userEmail = user.profile.email,
+               let idToken = user.authentication.idToken {
                 print("google login:")
+                print("google token \(idToken)")
                 print("User Email : \(userEmail)")
                 print("User Name : \((userName))")
                 self.autoLogin(UN: userName, UE: userEmail, FROM: "google")
@@ -181,6 +186,8 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
                         guard let gettoken = token else {
                             return
                         }
+                        
+                        
                         print("login token \(gettoken)")
                         self.setUserInfo()
                     }
@@ -196,32 +203,31 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
                 print("me() success")
                 
                 _ = user
+                print("kakao login")
                 guard let userId = user?.id else { return }
                 guard let userName = user?.kakaoAccount?.profile?.nickname else { return }
                 guard let userEmail = user?.kakaoAccount?.email else { return }
                 print("user info : \(userId) \(userName) \(userEmail)")
+                self.getToken()
                 self.autoLogin(UN: userName, UE: userEmail, FROM: "kakao")
-
-                
-                //self.getToken()
             }
         }
        
     }
     
-//    func getToken(){
-//        UserApi.shared.accessTokenInfo {(accessTokenInfo, error) in
-//            if let error = error {
-//                print(error)
-//            }
-//            else {
-//                print("accessTokenInfo() success.")
-//                guard let token = accessTokenInfo else { return }
-//                print("login token \(token)")
-//
-//            }
-//        }
-//    }
+    func getToken(){
+        UserApi.shared.accessTokenInfo {(accessTokenInfo, error) in
+            if let error = error {
+                print(error)
+            }
+            else {
+                print("accessTokenInfo() success.")
+                guard let token = accessTokenInfo else { return }
+                print("kakao login token \(token)")
+
+            }
+        }
+    }
     
     func MoveToDetailView(){
 //        print("moveto detailview")

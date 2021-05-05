@@ -11,8 +11,6 @@ class RecentSearchViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
