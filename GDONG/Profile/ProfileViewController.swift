@@ -6,6 +6,11 @@
 //
 
 import UIKit
+import AuthenticationServices
+import KakaoSDKAuth
+import KakaoSDKUser
+import KakaoOpenSDK
+import GoogleSignIn
 
 class ProfileViewController: UIViewController {
 
@@ -68,12 +73,43 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 2 && indexPath.row == 0 { // 로그 아웃
             
+            if(UserDefaults.standard.string(forKey: "from") == "kakao"){
+                UserApi.shared.logout {(error) in
+                    if let error = error {
+                        print(error)
+                    }
+                    else {
+                        print("logout() success.")
+                        self.autoLogout()
+                    }
+                }
+
+            }else if(UserDefaults.standard.string(forKey: "from") == "google"){
+                guard let signIn = GIDSignIn.sharedInstance() else { return }
+                signIn.signOut()
+                autoLogout()
+            }else if(UserDefaults.standard.string(forKey: "from") == "apple"){
+                autoLogout()
+            }
         }else if indexPath.section == 2 && indexPath.row == 1 { //회원 탈퇴
-        
+            autoLogout()
+            //user delete 
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
+    
+    func autoLogout(){
+        UserDefaults.standard.removeObject(forKey: "userName")
+        UserDefaults.standard.removeObject(forKey: "userEmail")
+        UserDefaults.standard.removeObject(forKey: "from")
+        
+        let loginVC = LoginViewController()
+        UIApplication.shared.windows.first?.rootViewController = loginVC
+        UIApplication.shared.windows.first?.makeKeyAndVisible()
+    }
 }
+
+

@@ -10,25 +10,18 @@ import CoreData
 import KakaoSDKCommon
 import GoogleSignIn
 
-extension UIApplication {
-    
-    /** The activityTypes are included in your Info.plist file under the `NSUserActivityTypes` array.
-        More info: https://developer.apple.com/documentation/foundation/nsuseractivity
-    */
-    static var userActivitiyTypes: [String]? {
-        return Bundle.main.object(forInfoDictionaryKey: "NSUserActivityTypes") as? [String]
-    }
-}
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+  
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         KakaoSDKCommon.initSDK(appKey: "1cb2a37d6920168105b844b889d7766f") // native key
         GIDSignIn.sharedInstance()?.clientID = "966907908166-emcm81mpq4217qoqtkl9c3ndjcdl5to5.apps.googleusercontent.com"
+    
         return true
     }
+    
 
     // MARK: UISceneSession Lifecycle
 

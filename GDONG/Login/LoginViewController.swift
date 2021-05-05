@@ -99,7 +99,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
             print("User ID : \(userIdentifier)")
             print("User Email : \(email)")
             print("User Name : \(fullName)")
-            self.autoLogin(UN: fullName.givenName! + fullName.familyName!, UE: email)
+            self.autoLogin(UN: fullName.givenName! + fullName.familyName!, UE: email, FROM: "apple")
 
 //            Apple login
 //            User ID : 001607.55c65d33ebb84ff184c665342a5eaa79.0712
@@ -146,7 +146,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
                 print("google login:")
                 print("User Email : \(userEmail)")
                 print("User Name : \((userName))")
-                self.autoLogin(UN: userName, UE: userEmail)
+                self.autoLogin(UN: userName, UE: userEmail, FROM: "google")
             } else {
                 print("Error : User Data Not Found")
             }
@@ -161,7 +161,6 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
     @objc func didTapLoginButton(){
         //self.MoveToDetailView()
         //self.MoveToSearchView()
-        
         self.MoveToTabbar()
     }
     
@@ -201,7 +200,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
                 guard let userName = user?.kakaoAccount?.profile?.nickname else { return }
                 guard let userEmail = user?.kakaoAccount?.email else { return }
                 print("user info : \(userId) \(userName) \(userEmail)")
-                self.autoLogin(UN: userName, UE: userEmail)
+                self.autoLogin(UN: userName, UE: userEmail, FROM: "kakao")
 
                 
                 //self.getToken()
@@ -233,19 +232,15 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
 //        navVC.pushViewController(detailVC, animated: true)
     }
     
-//    func MoveToSearchView(){
-//        let searchVC = SearchViewController()
-//        let navVC = UINavigationController(rootViewController: searchVC)
-//        UIApplication.shared.windows.first?.rootViewController = navVC
-//        UIApplication.shared.windows.first?.makeKeyAndVisible()
-//    }
+    func MoveToSearchView(){
+        let searchVC = SearchViewController()
+        let navVC = UINavigationController(rootViewController: searchVC)
+        UIApplication.shared.windows.first?.rootViewController = navVC
+        UIApplication.shared.windows.first?.makeKeyAndVisible()
+    }
     
     func MoveToTabbar(){
         
-//        guard let tabBarViewController = self.storyboard?.instantiateViewController(withIdentifier: "tabbar") else{
-//            return
-//        }
-        //let tabBarViewController = UITabBarController()
         let tabBarViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "tabbar") as! UITabBarController
         let home = tabBarViewController.viewControllers![0] as! UINavigationController
         home.viewControllers.append(ViewController())
@@ -254,24 +249,17 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
         let profile = tabBarViewController.viewControllers![3] as! UINavigationController
         profile.viewControllers.append(ProfileViewController())
         tabBarViewController.setViewControllers([home, chat, recommend, profile], animated: true)
-        
 
-//        let tabBarViewController = self.storyboard?.instantiateViewController(identifier: "tabbar")
-//
-//
-
-      
-        //tabBarViewController.modalPresentationStyle = .fullScreen
         UIApplication.shared.windows.first?.rootViewController = tabBarViewController
         UIApplication.shared.windows.first?.makeKeyAndVisible()
-        //present(tabBarViewController, animated: true, completion: nil)
  
     }
 
-    func autoLogin(UN: String, UE: String){
+    func autoLogin(UN: String, UE: String, FROM: String){
         print("auto Login did")
         UserDefaults.standard.set(UN, forKey: "userName")
         UserDefaults.standard.set(UE, forKey: "userEmail")
+        UserDefaults.standard.set(FROM, forKey: "from")
         self.MoveToTabbar()
     }
     

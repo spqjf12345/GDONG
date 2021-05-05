@@ -7,22 +7,43 @@
 
 import UIKit
 
-// This protocol helps inform MainTableViewController that a suggested search or product was selected.
-//protocol SuggestedSearch: class {
-//    // A suggested search was selected; inform our delegate that the selected search token was selected.
-//    func didSelectSuggestedSearch(token: UISearchToken)
-//
-//    // A product was selected; inform our delgeate that a product was selected to view.
-//    func didSelectProduct(product: Product)
-//}
-
-class SearchResultViewController: UITableViewController {
+class SearchResultViewController: UIViewController {
     var searchWord = ""
     var categoryWord = ""
     var filteredBoard = [Board]()
+    var searchHistory = [Array<String>]()
+    
+    var HeaderView: UIView = {
+        let view = UIView()
+        var filterButton = UIButton()
+        filterButton.setTitle("검색 필터", for: .normal)
+        view.addSubview(filterButton)
+        filterButton.frame = CGRect(x: 10, y: 0, width: 100, height: 30)
+        filterButton.setTitleColor(UIColor.black, for: .normal)
+        filterButton.addTarget(self, action: #selector(didTapFilteringButton), for: .touchUpInside)
+        return view
+    }()
+    
+    @objc func didTapFilteringButton(){
+        print("didTapFilteringButton")
+    }
+    
+    var FrameTableView: UITableView = {
+        let table = UITableView()
+        return table
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+       // view.addSubview(HeaderView)
+        view.addSubview(FrameTableView)
+        FrameTableView.dataSource = self
+        FrameTableView.delegate = self
+        
+        HeaderView.frame = CGRect(x: 0, y: 00, width: view.width, height: 50)
+        FrameTableView.tableHeaderView = HeaderView
+        FrameTableView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
         filteredBoard = Dummy.shared.Boards(model: filteredBoard)
         print("search word \(searchWord)")
         print("search category \(categoryWord)")
@@ -33,15 +54,20 @@ class SearchResultViewController: UITableViewController {
         }
         
         filteredBoard = filteredBoard.filter{($0.titleBoard.lowercased().contains(searchWord)) || ($0.categoryBoard.lowercased().contains(categoryWord))}
-        tableView.reloadData()
+        FrameTableView.reloadData()
         
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+}
+
+extension SearchResultViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredBoard.count
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
         cell.textLabel?.text = filteredBoard[indexPath.row].titleBoard
@@ -50,7 +76,7 @@ class SearchResultViewController: UITableViewController {
         
 
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+       //go to detail view
     }
 }

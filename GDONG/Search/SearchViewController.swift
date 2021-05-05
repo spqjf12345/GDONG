@@ -53,6 +53,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         return scroll
     }()
     
+    let notificationCenter:NotificationCenter = NotificationCenter.default
+    
       
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
@@ -72,7 +74,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
+//        notificationCenter.addObserver(<#T##observer: Any##Any#>, selector: <#T##Selector#>, name: <#T##NSNotification.Name?#>, object: <#T##Any?#>)
         initSearchController()
         let layout = UICollectionViewFlowLayout()
         
@@ -84,10 +86,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
 //        tagCollectionview.delegate = self
 //        tagCollectionview.register(categoryCollectionViewCell.nib(), forCellWithReuseIdentifier: categoryCollectionViewCell.identifier)
         
-
-
-        
-     
         
         categoryCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         categoryCollectionView.register(categoryCollectionViewCell.nib(), forCellWithReuseIdentifier: categoryCollectionViewCell.identifier)
@@ -113,10 +111,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         self.categoryList = Dummy.shared.categoryList(model: categoryList)
         self.user = Dummy.shared.oneUser(model: user)
 
-
-      
-  
-       
         layout.itemSize = CGSize(width: (categoryCollectionView.width / 3) - 10, height: (categoryCollectionView.width / 3) - 10)
 
 
@@ -126,8 +120,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     
     func makeLayout(layout: UICollectionViewFlowLayout){
-//        layout.scrollDirection = .vertical
-//        layout.minimumLineSpacing = 15
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 15
     }
     
 
@@ -144,7 +138,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
      
-        // Monitor when the search controller is presented and dismissed.
         searchController.delegate = self
 
         // Monitor when the search button is tapped, and start/end editing.
@@ -174,13 +167,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
 
         categoryView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20).isActive = true
         categoryView.heightAnchor.constraint(equalToConstant: 500).isActive = true
-        
-//        categoryCollectionView.trailingAnchor.constraint(equalTo: categoryView.trailingAnchor, constant: 10).isActive = true
-//        categoryCollectionView.leadingAnchor.constraint(equalTo: categoryView.leadingAnchor, constant: 10).isActive = true
-//        categoryCollectionView.topAnchor.constraint
-////        categoryCollectionView.centerYAnchor.constraint(equalTo: categoryView.centerYAnchor).isActive = true
-////        categoryCollectionView.widthAnchor.constraint(equalTo: categoryView.widthAnchor, constant: 10).isActive = true
-////        categoryCollectionView.heightAnchor.constraint(equalTo: categoryView.heightAnchor, constant: 10).isActive = true
 
         bottomMostView.translatesAutoresizingMaskIntoConstraints = false
 
