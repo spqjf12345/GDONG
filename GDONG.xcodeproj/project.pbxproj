@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -20,15 +20,29 @@
 		408BF5EA2630615E006054CD /* strawberry.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 408BF5E92630615E006054CD /* strawberry.jpg */; };
 		408BF5ED26306214006054CD /* perfume.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 408BF5EC26306214006054CD /* perfume.jpg */; };
 		40956EBB2625B48200397930 /* bigapple.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 40956EBA2625B48200397930 /* bigapple.jpg */; };
+		665A0484BB91D6D007D0F516 /* Pods_GDONG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A4436EB40FC72EF51B18E4 /* Pods_GDONG.framework */; };
 		8E42FEF1261D958100763B61 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E42FEF0261D958100763B61 /* AppDelegate.swift */; };
 		8E42FEF3261D958100763B61 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E42FEF2261D958100763B61 /* SceneDelegate.swift */; };
 		8E42FEF8261D958100763B61 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E42FEF6261D958100763B61 /* Main.storyboard */; };
 		8E42FEFB261D958100763B61 /* GDONG.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E42FEF9261D958100763B61 /* GDONG.xcdatamodeld */; };
 		8E42FEFD261D958800763B61 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E42FEFC261D958800763B61 /* Assets.xcassets */; };
 		8E42FF00261D958800763B61 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E42FEFE261D958800763B61 /* LaunchScreen.storyboard */; };
+		8E782A492643BFB200D93D89 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E782A482643BFB200D93D89 /* ProfileViewController.swift */; };
+		8E782A5A2643C0FD00D93D89 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E782A592643C0FD00D93D89 /* Extension.swift */; };
+		8E782A5E2643C17E00D93D89 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E782A5D2643C17E00D93D89 /* SearchViewController.swift */; };
+		8E782A612643C18900D93D89 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E782A602643C18900D93D89 /* SearchResultViewController.swift */; };
+		8E782A642643C19000D93D89 /* RecentSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E782A632643C18F00D93D89 /* RecentSearchViewController.swift */; };
+		8E782A682643C29B00D93D89 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E782A662643C29A00D93D89 /* Model.swift */; };
+		8E782A692643C29B00D93D89 /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E782A672643C29A00D93D89 /* Dummy.swift */; };
+		8E782A6D2643C36200D93D89 /* categoryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E782A6B2643C36200D93D89 /* categoryCollectionViewCell.xib */; };
+		8E782A6E2643C36200D93D89 /* categoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E782A6C2643C36200D93D89 /* categoryCollectionViewCell.swift */; };
+		8E782A712643C7A700D93D89 /* DetailNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E782A702643C7A700D93D89 /* DetailNoteViewController.swift */; };
+		8E782A752643C7B600D93D89 /* TitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E782A732643C7B600D93D89 /* TitleTableViewCell.swift */; };
+		8E782A762643C7B600D93D89 /* TitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E782A742643C7B600D93D89 /* TitleTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		09C64EB47FEAB69C467CF2DF /* Pods-GDONG.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GDONG.release.xcconfig"; path = "Target Support Files/Pods-GDONG/Pods-GDONG.release.xcconfig"; sourceTree = "<group>"; };
 		402AD2E6262C769B00AB16A1 /* cero.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cero.jpg; sourceTree = "<group>"; };
 		4034342026319F4800470FF2 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		405373F426231CE2003E54AE /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -42,6 +56,7 @@
 		408BF5E92630615E006054CD /* strawberry.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = strawberry.jpg; sourceTree = "<group>"; };
 		408BF5EC26306214006054CD /* perfume.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = perfume.jpg; sourceTree = "<group>"; };
 		40956EBA2625B48200397930 /* bigapple.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bigapple.jpg; sourceTree = "<group>"; };
+		76A4436EB40FC72EF51B18E4 /* Pods_GDONG.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GDONG.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E42FEED261D958100763B61 /* GDONG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GDONG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E42FEF0261D958100763B61 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8E42FEF2261D958100763B61 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -50,6 +65,19 @@
 		8E42FEFC261D958800763B61 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8E42FEFF261D958800763B61 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8E42FF01261D958800763B61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8E782A482643BFB200D93D89 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		8E782A592643C0FD00D93D89 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		8E782A5D2643C17E00D93D89 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		8E782A602643C18900D93D89 /* SearchResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
+		8E782A632643C18F00D93D89 /* RecentSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentSearchViewController.swift; sourceTree = "<group>"; };
+		8E782A662643C29A00D93D89 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		8E782A672643C29A00D93D89 /* Dummy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dummy.swift; sourceTree = "<group>"; };
+		8E782A6B2643C36200D93D89 /* categoryCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = categoryCollectionViewCell.xib; sourceTree = "<group>"; };
+		8E782A6C2643C36200D93D89 /* categoryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = categoryCollectionViewCell.swift; sourceTree = "<group>"; };
+		8E782A702643C7A700D93D89 /* DetailNoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailNoteViewController.swift; sourceTree = "<group>"; };
+		8E782A732643C7B600D93D89 /* TitleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleTableViewCell.swift; sourceTree = "<group>"; };
+		8E782A742643C7B600D93D89 /* TitleTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TitleTableViewCell.xib; sourceTree = "<group>"; };
+		EECC471BF5CDA869CB6B4745 /* Pods-GDONG.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GDONG.debug.xcconfig"; path = "Target Support Files/Pods-GDONG/Pods-GDONG.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				665A0484BB91D6D007D0F516 /* Pods_GDONG.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,6 +95,8 @@
 		4034341F26319F2B00470FF2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				8E782A672643C29A00D93D89 /* Dummy.swift */,
+				8E782A662643C29A00D93D89 /* Model.swift */,
 				4034342026319F4800470FF2 /* MainModel.swift */,
 				407B641C2639A4AB00DBCA9D /* ChatListModel.swift */,
 			);
@@ -75,6 +106,10 @@
 		405373FE262323E8003E54AE /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				8E782A732643C7B600D93D89 /* TitleTableViewCell.swift */,
+				8E782A742643C7B600D93D89 /* TitleTableViewCell.xib */,
+				8E782A6C2643C36200D93D89 /* categoryCollectionViewCell.swift */,
+				8E782A6B2643C36200D93D89 /* categoryCollectionViewCell.xib */,
 				405373FF26232421003E54AE /* TableViewCell.swift */,
 				4053740026232421003E54AE /* TableViewCell.xib */,
 				407C42BE2638495B008940B1 /* ChatListCell.swift */,
@@ -106,8 +141,13 @@
 		407D0674262074FA000B7400 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				8E782A702643C7A700D93D89 /* DetailNoteViewController.swift */,
+				8E782A632643C18F00D93D89 /* RecentSearchViewController.swift */,
+				8E782A602643C18900D93D89 /* SearchResultViewController.swift */,
+				8E782A5D2643C17E00D93D89 /* SearchViewController.swift */,
 				407D0677262077EC000B7400 /* MainViewController.swift */,
 				407C42C326384A21008940B1 /* ChatListViewController.swift */,
+				8E782A482643BFB200D93D89 /* ProfileViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -120,11 +160,22 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		77EC247AC326BE2D6064B059 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EECC471BF5CDA869CB6B4745 /* Pods-GDONG.debug.xcconfig */,
+				09C64EB47FEAB69C467CF2DF /* Pods-GDONG.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		8E42FEE4261D958100763B61 = {
 			isa = PBXGroup;
 			children = (
 				8E42FEEF261D958100763B61 /* GDONG */,
 				8E42FEEE261D958100763B61 /* Products */,
+				77EC247AC326BE2D6064B059 /* Pods */,
+				9DF50A56E5EB86E4B544CEEE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -139,6 +190,7 @@
 		8E42FEEF261D958100763B61 /* GDONG */ = {
 			isa = PBXGroup;
 			children = (
+				8E782A582643C0EE00D93D89 /* Extension */,
 				4053740A26233908003E54AE /* Image */,
 				4053740526232AA0003E54AE /* Storyboard */,
 				405373FE262323E8003E54AE /* Cell */,
@@ -154,6 +206,22 @@
 			path = GDONG;
 			sourceTree = "<group>";
 		};
+		8E782A582643C0EE00D93D89 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				8E782A592643C0FD00D93D89 /* Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		9DF50A56E5EB86E4B544CEEE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				76A4436EB40FC72EF51B18E4 /* Pods_GDONG.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -161,9 +229,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8E42FF04261D958800763B61 /* Build configuration list for PBXNativeTarget "GDONG" */;
 			buildPhases = (
+				C24C823DC80B6580488D24AB /* [CP] Check Pods Manifest.lock */,
 				8E42FEE9261D958100763B61 /* Sources */,
 				8E42FEEA261D958100763B61 /* Frameworks */,
 				8E42FEEB261D958100763B61 /* Resources */,
+				ADEECD08B22BC0892FDA9C8B /* [CP] Embed Pods Frameworks */,
+				8AEA73430822F6ECD767FDA5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -211,6 +282,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E782A762643C7B600D93D89 /* TitleTableViewCell.xib in Resources */,
 				8E42FF00261D958800763B61 /* LaunchScreen.storyboard in Resources */,
 				408BF5ED26306214006054CD /* perfume.jpg in Resources */,
 				4053740226232421003E54AE /* TableViewCell.xib in Resources */,
@@ -219,23 +291,93 @@
 				8E42FEFD261D958800763B61 /* Assets.xcassets in Resources */,
 				407C42C12638495B008940B1 /* ChatListCell.xib in Resources */,
 				8E42FEF8261D958100763B61 /* Main.storyboard in Resources */,
+				8E782A6D2643C36200D93D89 /* categoryCollectionViewCell.xib in Resources */,
 				40956EBB2625B48200397930 /* bigapple.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		8AEA73430822F6ECD767FDA5 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GDONG/Pods-GDONG-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GDONG/Pods-GDONG-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GDONG/Pods-GDONG-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ADEECD08B22BC0892FDA9C8B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GDONG/Pods-GDONG-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GDONG/Pods-GDONG-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GDONG/Pods-GDONG-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C24C823DC80B6580488D24AB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GDONG-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		8E42FEE9261D958100763B61 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E782A752643C7B600D93D89 /* TitleTableViewCell.swift in Sources */,
 				8E42FEFB261D958100763B61 /* GDONG.xcdatamodeld in Sources */,
+				8E782A692643C29B00D93D89 /* Dummy.swift in Sources */,
 				407C42C02638495B008940B1 /* ChatListCell.swift in Sources */,
+				8E782A712643C7A700D93D89 /* DetailNoteViewController.swift in Sources */,
 				8E42FEF1261D958100763B61 /* AppDelegate.swift in Sources */,
+				8E782A5A2643C0FD00D93D89 /* Extension.swift in Sources */,
 				8E42FEF3261D958100763B61 /* SceneDelegate.swift in Sources */,
 				4034342126319F4800470FF2 /* MainModel.swift in Sources */,
 				407B641D2639A4AB00DBCA9D /* ChatListModel.swift in Sources */,
+				8E782A682643C29B00D93D89 /* Model.swift in Sources */,
+				8E782A642643C19000D93D89 /* RecentSearchViewController.swift in Sources */,
+				8E782A6E2643C36200D93D89 /* categoryCollectionViewCell.swift in Sources */,
+				8E782A492643BFB200D93D89 /* ProfileViewController.swift in Sources */,
+				8E782A612643C18900D93D89 /* SearchResultViewController.swift in Sources */,
+				8E782A5E2643C17E00D93D89 /* SearchViewController.swift in Sources */,
 				407D0678262077EC000B7400 /* MainViewController.swift in Sources */,
 				407C42C426384A21008940B1 /* ChatListViewController.swift in Sources */,
 				4053740126232421003E54AE /* TableViewCell.swift in Sources */,
@@ -383,18 +525,21 @@
 		};
 		8E42FF05261D958800763B61 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EECC471BF5CDA869CB6B4745 /* Pods-GDONG.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = J2Z4ZN37P4;
+				DEVELOPMENT_TEAM = FJ57DUH592;
 				INFOPLIST_FILE = GDONG/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Develop.GDONG;
+				PRODUCT_BUNDLE_IDENTIFIER = "Develop.GDONG-merge";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -402,18 +547,21 @@
 		};
 		8E42FF06261D958800763B61 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 09C64EB47FEAB69C467CF2DF /* Pods-GDONG.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = J2Z4ZN37P4;
+				DEVELOPMENT_TEAM = FJ57DUH592;
 				INFOPLIST_FILE = GDONG/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Develop.GDONG;
+				PRODUCT_BUNDLE_IDENTIFIER = "Develop.GDONG-merge";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

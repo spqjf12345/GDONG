@@ -22,9 +22,16 @@ class MainViewController : UIViewController {
     var sellpeople: Array<String> = ["1/300","1/10"]
     var sellimage = ["strawberry.jpg","perfume.jpg"]
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let searchVC = segue.destination as? SearchViewController else { return }
+        guard let detailVC = segue.destination as? DetailNoteViewController else { return }
+      
+    }
     
+    @IBAction func search(_ sender: Any) {
+        performSegue(withIdentifier: "searchButton", sender: self)
+    }
     
-    @IBOutlet var search: UIBarButtonItem!
     @IBOutlet var add: UIBarButtonItem!
     
     @IBOutlet var segmentedControl: UISegmentedControl!
@@ -41,17 +48,19 @@ class MainViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //Do any additional setup after loading the view.
+  
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "서울시 강남구", style: .plain, target: self, action: nil)
         
-        if let navigationBar = self.navigationController?.navigationBar {
-            let positionFrame = CGRect(x: 20, y: 0, width: navigationBar.frame.width/2, height: navigationBar.frame.height)
-            
-
-            let positionLabel = UILabel(frame: positionFrame)
-            positionLabel.text = "서울시 강남구"
-
-
-            navigationBar.addSubview(positionLabel)
-        }
+//        if let navigationBar = self.navigationController?.navigationBar {
+//            let positionFrame = CGRect(x: 20, y: 0, width: navigationBar.frame.width/2, height: navigationBar.frame.height)
+//
+//
+//            let positionLabel = UILabel(frame: positionFrame)
+//            positionLabel.text = "서울시 강남구"
+//
+//
+//            navigationBar.addSubview(positionLabel)
+//        }
         //네비게이션바의 왼쪽에 현위치라벨 적용
         
 
@@ -144,13 +153,13 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
     
     
 
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        performSegue(withIdentifier: "detail", sender: nil)
-//
-//
-//
-//
-//    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "detail", sender: nil)
+        
+
+
+
+    }
 // 디테일뷰 넘어가는 함수
         
     
