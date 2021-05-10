@@ -15,7 +15,18 @@ class RecommendViewController: UIViewController {
     var recommendPeople = ["1/30","1/5"]
     var recommendImage = ["cero.jpg","bigapple.jpg"]
 
-    @IBOutlet var recommendTableVIew: UITableView!
+    @IBOutlet var recommendTableView: UITableView!
+    
+    
+    //당겨서 새로고침시 갱신되어야 할 내용
+    @objc func pullToRefresh(_ sender: Any) {
+        
+        self.recommendTableView.refreshControl?.endRefreshing() // 당겨서 새로고침 종료
+        self.recommendTableView.reloadData() // Reload하여 뷰를 비워주기
+
+    }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,19 +34,29 @@ class RecommendViewController: UIViewController {
         // 테이블뷰와 테이블뷰 셀인 xib 파일과 연결
         let nibName = UINib(nibName: "TableViewCell", bundle: nil)
 
-        recommendTableVIew.register(nibName, forCellReuseIdentifier: "productCell")
+        recommendTableView.register(nibName, forCellReuseIdentifier: "productCell")
         
         
-        recommendTableVIew.delegate = self
-        recommendTableVIew.dataSource = self
+        recommendTableView.delegate = self
+        recommendTableView.dataSource = self
+        
+        
+        //당겨서 새로고침
+        recommendTableView.refreshControl = UIRefreshControl()
+        recommendTableView.refreshControl?.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        recommendTableVIew.reloadData()
+        recommendTableView.reloadData()
         
         }
     
+    
+    
+   
 }
 
 extension RecommendViewController: UITableViewDelegate, UITableViewDataSource {
@@ -65,4 +86,7 @@ extension RecommendViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     
+    
 }
+
+

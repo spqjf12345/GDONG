@@ -87,7 +87,7 @@
             </objects>
             <point key="canvasLocation" x="1003" y="-660"/>
         </scene>
-        <!--추천-->
+        <!--Title-->
         <scene sceneID="qPW-Xb-MBU">
             <objects>
                 <tableViewController id="zoS-r2-Na4" customClass="RecommendViewController" customModule="GDONG" customModuleProvider="target" sceneMemberID="viewController">
@@ -111,10 +111,10 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Recommend" image="star.fill" catalog="system" id="Iut-Ke-7fg"/>
-                    <navigationItem key="navigationItem" title="추천" id="RvF-Rt-Tto"/>
+                    <navigationItem key="navigationItem" title="Title" id="X1c-V6-O5f"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="recommendTableVIew" destination="QgG-um-OYL" id="hhW-lQ-0yb"/>
+                        <outlet property="recommendTableView" destination="QgG-um-OYL" id="s7i-BL-XxA"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fDv-IQ-gDQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

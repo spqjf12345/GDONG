@@ -9,14 +9,13 @@ import UIKit
 
 class ChatListViewController: UIViewController {
     
-    var roomName = ["딸기사실분 선착순입니다!","향수 공동구매 해요"]
+    var roomName = ["딸기사실분 선착순입니다!어서어서 들어오세요","향수 공동구매 해요!어서어서 들어오세요"]
     var thumnail = ["strawberry.jpg", "perfume.jpg"]
     var latestMessageTime = ["1시간전", "2021.4.28"]
     var message = ["안녕하세요 채팅내용 입니다 이건 마지막 채팅내용이 나타날 자리 입니다.", "1/80"]
 
     
     @IBOutlet var chatListTableView: UITableView!
-    
     
 
     override func viewDidLoad() {
