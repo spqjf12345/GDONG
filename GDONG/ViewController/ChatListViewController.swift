@@ -71,17 +71,21 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     //swipe 하여 채팅방 목록 삭제
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: "나가기") { (action, view, success) in
             
-            if editingStyle == .delete {
-                
-                roomName.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .fade) // 이 로직 호출하기 전에 연동된 데이터를 함께 지워준 다음 호출해야함
-                
-            }
-
+            //swipe 할 때의 action 정의
+            self.roomName.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        
         }
-    
-    
+        
+        let config = UISwipeActionsConfiguration(actions: [deleteAction])
+
+        return config
+        
+    }
+
     
 }

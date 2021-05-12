@@ -19,7 +19,7 @@ class RecommendViewController: UIViewController {
     
     
     //당겨서 새로고침시 갱신되어야 할 내용
-    @objc func pullToRefresh(_ sender: Any) {
+    @objc func pullToRefresh(_ sender: UIRefreshControl) {
         
         self.recommendTableView.refreshControl?.endRefreshing() // 당겨서 새로고침 종료
         self.recommendTableView.reloadData() // Reload하여 뷰를 비워주기
