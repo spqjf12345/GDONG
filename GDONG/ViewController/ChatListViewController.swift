@@ -70,7 +70,7 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource {
         
     }
     
-    //swipe 하여 채팅방 목록 삭제
+    //swipe 하여 채팅방 나가기
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let deleteAction = UIContextualAction(style: .destructive, title: "나가기") { (action, view, success) in

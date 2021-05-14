@@ -7,6 +7,7 @@
 
 import Foundation
 
+//구매글 데이터 모델 구조
 struct Main {
     var productName: String
     var productPrice: String
@@ -14,8 +15,9 @@ struct Main {
     var people: Int
     var image: String
 }
-//구매글 데이터 모델 구조
 
+
+//판매글 데이터 모델 구조
 struct Sell {
     var sellproductName: String
     var sellproductPrice: String
@@ -23,4 +25,3 @@ struct Sell {
     var sellpeople: Int
     var sellimage: String
 }
-//판매글 데이터 모델 구조
