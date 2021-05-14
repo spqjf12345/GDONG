@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		401E05AA2642C37100B9796A /* RecommendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401E05A92642C37100B9796A /* RecommendViewController.swift */; };
 		402AD2E7262C769B00AB16A1 /* cero.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 402AD2E6262C769B00AB16A1 /* cero.jpg */; };
 		4034342126319F4800470FF2 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4034342026319F4800470FF2 /* MainModel.swift */; };
 		405373F526231CE2003E54AE /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405373F426231CE2003E54AE /* MainViewModel.swift */; };
@@ -20,6 +21,7 @@
 		408BF5EA2630615E006054CD /* strawberry.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 408BF5E92630615E006054CD /* strawberry.jpg */; };
 		408BF5ED26306214006054CD /* perfume.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 408BF5EC26306214006054CD /* perfume.jpg */; };
 		40956EBB2625B48200397930 /* bigapple.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 40956EBA2625B48200397930 /* bigapple.jpg */; };
+		40E5228D264E98790036EB3A /* RecommendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E5228C264E98790036EB3A /* RecommendModel.swift */; };
 		665A0484BB91D6D007D0F516 /* Pods_GDONG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A4436EB40FC72EF51B18E4 /* Pods_GDONG.framework */; };
 		8E42FEF1261D958100763B61 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E42FEF0261D958100763B61 /* AppDelegate.swift */; };
 		8E42FEF3261D958100763B61 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E42FEF2261D958100763B61 /* SceneDelegate.swift */; };
@@ -42,6 +44,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		401E05A92642C37100B9796A /* RecommendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendViewController.swift; sourceTree = "<group>"; };
 		09C64EB47FEAB69C467CF2DF /* Pods-GDONG.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GDONG.release.xcconfig"; path = "Target Support Files/Pods-GDONG/Pods-GDONG.release.xcconfig"; sourceTree = "<group>"; };
 		402AD2E6262C769B00AB16A1 /* cero.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cero.jpg; sourceTree = "<group>"; };
 		4034342026319F4800470FF2 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
@@ -56,6 +59,7 @@
 		408BF5E92630615E006054CD /* strawberry.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = strawberry.jpg; sourceTree = "<group>"; };
 		408BF5EC26306214006054CD /* perfume.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = perfume.jpg; sourceTree = "<group>"; };
 		40956EBA2625B48200397930 /* bigapple.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bigapple.jpg; sourceTree = "<group>"; };
+		40E5228C264E98790036EB3A /* RecommendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendModel.swift; sourceTree = "<group>"; };
 		76A4436EB40FC72EF51B18E4 /* Pods_GDONG.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GDONG.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E42FEED261D958100763B61 /* GDONG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GDONG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E42FEF0261D958100763B61 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -99,6 +103,7 @@
 				8E782A662643C29A00D93D89 /* Model.swift */,
 				4034342026319F4800470FF2 /* MainModel.swift */,
 				407B641C2639A4AB00DBCA9D /* ChatListModel.swift */,
+				40E5228C264E98790036EB3A /* RecommendModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -147,6 +152,7 @@
 				8E782A5D2643C17E00D93D89 /* SearchViewController.swift */,
 				407D0677262077EC000B7400 /* MainViewController.swift */,
 				407C42C326384A21008940B1 /* ChatListViewController.swift */,
+				401E05A92642C37100B9796A /* RecommendViewController.swift */,
 				8E782A482643BFB200D93D89 /* ProfileViewController.swift */,
 			);
 			path = ViewController;
@@ -382,6 +388,8 @@
 				407C42C426384A21008940B1 /* ChatListViewController.swift in Sources */,
 				4053740126232421003E54AE /* TableViewCell.swift in Sources */,
 				405373F526231CE2003E54AE /* MainViewModel.swift in Sources */,
+				40E5228D264E98790036EB3A /* RecommendModel.swift in Sources */,
+				401E05AA2642C37100B9796A /* RecommendViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

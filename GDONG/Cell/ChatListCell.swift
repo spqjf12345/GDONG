@@ -11,9 +11,10 @@ class ChatListCell: UITableViewCell {
 
     @IBOutlet var thumbnail: UIImageView!
     @IBOutlet var roomName: UILabel!
-    @IBOutlet var participants: UILabel!
+   
     @IBOutlet var latestMessageTime: UILabel!
     
+    @IBOutlet var message: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

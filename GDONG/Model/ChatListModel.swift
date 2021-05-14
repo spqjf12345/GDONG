@@ -7,10 +7,10 @@
 
 import Foundation
 
-
+//채팅목록 데이터 구조
 struct ChatList {
-    var roomName: Array<String>
-    var thumnail: Array<String>
-    var latestMessageTime: Array<String>
-    var participants: Array<Int>
+    var roomName: String
+    var thumnail: String
+    var latestMessageTime: String
+    var message: String
 }
