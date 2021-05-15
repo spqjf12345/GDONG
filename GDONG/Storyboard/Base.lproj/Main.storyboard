@@ -227,19 +227,44 @@
             </objects>
             <point key="canvasLocation" x="125" y="21"/>
         </scene>
-        <!--recommend-->
+        <!--추천-->
         <scene sceneID="VqW-gx-rtc">
             <objects>
-                <viewController id="T8c-n8-bu2" sceneMemberID="viewController">
+                <viewController id="T8c-n8-bu2" customClass="RecommendViewController" customModule="GDONG" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RfT-uA-bAG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xoz-AO-3aH">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="LwW-r1-HNu" customClass="TableViewCell" customModule="GDONG" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LwW-r1-HNu" id="Lh4-ea-5AP">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="BYq-Gd-AoS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="xoz-AO-3aH" firstAttribute="top" secondItem="BYq-Gd-AoS" secondAttribute="top" id="0xt-lB-4DZ"/>
+                            <constraint firstItem="BYq-Gd-AoS" firstAttribute="trailing" secondItem="xoz-AO-3aH" secondAttribute="trailing" id="5hD-uq-1g6"/>
+                            <constraint firstItem="xoz-AO-3aH" firstAttribute="leading" secondItem="BYq-Gd-AoS" secondAttribute="leading" id="KuN-Eq-By1"/>
+                            <constraint firstItem="BYq-Gd-AoS" firstAttribute="bottom" secondItem="xoz-AO-3aH" secondAttribute="bottom" id="Y6E-l8-8c6"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="recommend" image="rectangle.grid.2x2.fill" catalog="system" id="0Rt-nB-b2u"/>
-                    <navigationItem key="navigationItem" id="FgZ-SM-jq5"/>
+                    <navigationItem key="navigationItem" title="추천" id="FgZ-SM-jq5"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="recommendTableView" destination="xoz-AO-3aH" id="hX5-ON-pQ2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ggD-gc-vPN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

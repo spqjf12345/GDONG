@@ -77,6 +77,10 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource {
             
             //swipe 할 때의 action 정의
             self.roomName.remove(at: indexPath.row)
+            self.latestMessageTime.remove(at: indexPath.row)
+            self.message.remove(at: indexPath.row)
+            self.thumnail.remove(at: indexPath.row)
+            
             tableView.deleteRows(at: [indexPath], with: .fade)
         
         }
