@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="140" id="YoY-MK-Kto" customClass="PhotoCell" customModule="GDONG" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YoY-MK-Kto" id="0Ug-Bd-PIH">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fBW-Lv-E1o">
+                        <rect key="frame" x="20" y="22.5" width="95" height="95"/>
+                        <subviews>
+                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fEo-3x-ZTM" userLabel="CameraImage">
+                                <rect key="frame" x="31.5" y="35" width="32" height="25"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="camera.fill" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="22" scale="default"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vml-5P-raN" userLabel="ImagePickerButton">
+                                <rect key="frame" x="0.0" y="0.0" width="95" height="95"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemGray3Color"/>
+                        <constraints>
+                            <constraint firstItem="Vml-5P-raN" firstAttribute="top" secondItem="fBW-Lv-E1o" secondAttribute="top" id="599-wd-AbE"/>
+                            <constraint firstItem="Vml-5P-raN" firstAttribute="leading" secondItem="fBW-Lv-E1o" secondAttribute="leading" id="OM7-78-yAt"/>
+                            <constraint firstItem="fEo-3x-ZTM" firstAttribute="top" secondItem="fBW-Lv-E1o" secondAttribute="top" constant="35" id="QTa-sT-T0s"/>
+                            <constraint firstItem="fEo-3x-ZTM" firstAttribute="leading" secondItem="fBW-Lv-E1o" secondAttribute="leading" constant="31.5" id="eep-we-jcs"/>
+                            <constraint firstAttribute="trailing" secondItem="Vml-5P-raN" secondAttribute="trailing" id="ezt-Jt-plg"/>
+                            <constraint firstAttribute="bottom" secondItem="fEo-3x-ZTM" secondAttribute="bottom" constant="35" id="gls-8u-dDP"/>
+                            <constraint firstAttribute="width" secondItem="fBW-Lv-E1o" secondAttribute="height" multiplier="1:1" id="oTc-qg-znM"/>
+                            <constraint firstAttribute="bottom" secondItem="Vml-5P-raN" secondAttribute="bottom" id="vdn-BT-SeT"/>
+                            <constraint firstAttribute="trailing" secondItem="fEo-3x-ZTM" secondAttribute="trailing" constant="31.5" id="woM-CY-8Gt"/>
+                        </constraints>
+                    </view>
+                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="lA4-ZK-IxS">
+                        <rect key="frame" x="123" y="22.5" width="271" height="95"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fKF-cC-Ntg">
+                            <size key="itemSize" width="98" height="94"/>
+                            <size key="estimatedItemSize" width="95" height="95"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="UGn-UI-odo">
+                                <rect key="frame" x="0.0" y="0.0" width="98" height="94"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="eNw-sP-ZBS">
+                                    <rect key="frame" x="0.0" y="0.0" width="98" height="94"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </collectionViewCellContentView>
+                                <size key="customSize" width="98" height="94"/>
+                            </collectionViewCell>
+                        </cells>
+                    </collectionView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="lA4-ZK-IxS" secondAttribute="trailing" constant="20" symbolic="YES" id="F7F-yg-YDW"/>
+                    <constraint firstItem="lA4-ZK-IxS" firstAttribute="centerY" secondItem="fBW-Lv-E1o" secondAttribute="centerY" id="HrX-hT-WDj"/>
+                    <constraint firstItem="fBW-Lv-E1o" firstAttribute="leading" secondItem="0Ug-Bd-PIH" secondAttribute="leading" constant="20" symbolic="YES" id="OLV-NP-1Qd"/>
+                    <constraint firstItem="fBW-Lv-E1o" firstAttribute="top" secondItem="0Ug-Bd-PIH" secondAttribute="top" constant="22.5" id="PCu-XI-egr"/>
+                    <constraint firstAttribute="bottom" secondItem="fBW-Lv-E1o" secondAttribute="bottom" constant="22.5" id="WfX-CZ-X5x"/>
+                    <constraint firstItem="lA4-ZK-IxS" firstAttribute="leading" secondItem="fBW-Lv-E1o" secondAttribute="trailing" constant="8" symbolic="YES" id="eWv-ae-9NV"/>
+                    <constraint firstItem="lA4-ZK-IxS" firstAttribute="height" secondItem="fBW-Lv-E1o" secondAttribute="height" id="jk7-LJ-ulQ"/>
+                    <constraint firstItem="fBW-Lv-E1o" firstAttribute="centerY" secondItem="0Ug-Bd-PIH" secondAttribute="centerY" id="nFm-fr-Sk8"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="imagePickerButton" destination="Vml-5P-raN" id="N6q-Zg-JMZ"/>
+            </connections>
+            <point key="canvasLocation" x="118.84057971014494" y="-15.401785714285714"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="camera.fill" catalog="system" width="128" height="94"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray3Color">
+            <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

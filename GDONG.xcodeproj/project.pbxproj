@@ -43,6 +43,16 @@
 		8E782A712643C7A700D93D89 /* DetailNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E782A702643C7A700D93D89 /* DetailNoteViewController.swift */; };
 		8E782A752643C7B600D93D89 /* TitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E782A732643C7B600D93D89 /* TitleTableViewCell.swift */; };
 		8E782A762643C7B600D93D89 /* TitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E782A742643C7B600D93D89 /* TitleTableViewCell.xib */; };
+		DDCFE2B926516CB50026EE2D /* PriceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDCFE2AF26516CB50026EE2D /* PriceCell.xib */; };
+		DDCFE2BA26516CB50026EE2D /* ViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCFE2B026516CB50026EE2D /* ViewCells.swift */; };
+		DDCFE2BB26516CB50026EE2D /* PhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDCFE2B126516CB50026EE2D /* PhotoCell.xib */; };
+		DDCFE2BC26516CB50026EE2D /* CreateNewItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCFE2B226516CB50026EE2D /* CreateNewItemViewController.swift */; };
+		DDCFE2BD26516CB50026EE2D /* CreateNewItem.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDCFE2B326516CB50026EE2D /* CreateNewItem.storyboard */; };
+		DDCFE2BE26516CB50026EE2D /* CategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDCFE2B426516CB50026EE2D /* CategoryCell.xib */; };
+		DDCFE2BF26516CB50026EE2D /* TitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDCFE2B526516CB50026EE2D /* TitleCell.xib */; };
+		DDCFE2C026516CB50026EE2D /* CategoryTableView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDCFE2B626516CB50026EE2D /* CategoryTableView.storyboard */; };
+		DDCFE2C126516CB50026EE2D /* CategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCFE2B726516CB50026EE2D /* CategoryTableViewController.swift */; };
+		DDCFE2C226516CB50026EE2D /* EntityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDCFE2B826516CB50026EE2D /* EntityCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,6 +95,16 @@
 		8E782A702643C7A700D93D89 /* DetailNoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailNoteViewController.swift; sourceTree = "<group>"; };
 		8E782A732643C7B600D93D89 /* TitleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleTableViewCell.swift; sourceTree = "<group>"; };
 		8E782A742643C7B600D93D89 /* TitleTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TitleTableViewCell.xib; sourceTree = "<group>"; };
+		DDCFE2AF26516CB50026EE2D /* PriceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PriceCell.xib; sourceTree = "<group>"; };
+		DDCFE2B026516CB50026EE2D /* ViewCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewCells.swift; sourceTree = "<group>"; };
+		DDCFE2B126516CB50026EE2D /* PhotoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PhotoCell.xib; sourceTree = "<group>"; };
+		DDCFE2B226516CB50026EE2D /* CreateNewItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateNewItemViewController.swift; sourceTree = "<group>"; };
+		DDCFE2B326516CB50026EE2D /* CreateNewItem.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CreateNewItem.storyboard; sourceTree = "<group>"; };
+		DDCFE2B426516CB50026EE2D /* CategoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryCell.xib; sourceTree = "<group>"; };
+		DDCFE2B526516CB50026EE2D /* TitleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TitleCell.xib; sourceTree = "<group>"; };
+		DDCFE2B626516CB50026EE2D /* CategoryTableView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CategoryTableView.storyboard; sourceTree = "<group>"; };
+		DDCFE2B726516CB50026EE2D /* CategoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryTableViewController.swift; sourceTree = "<group>"; };
+		DDCFE2B826516CB50026EE2D /* EntityCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EntityCell.xib; sourceTree = "<group>"; };
 		EECC471BF5CDA869CB6B4745 /* Pods-GDONG.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GDONG.debug.xcconfig"; path = "Target Support Files/Pods-GDONG/Pods-GDONG.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -202,6 +222,7 @@
 		8E42FEEF261D958100763B61 /* GDONG */ = {
 			isa = PBXGroup;
 			children = (
+				DDCFE2AE26516CB50026EE2D /* CreateNewItem */,
 				8E782A582643C0EE00D93D89 /* Extension */,
 				4053740A26233908003E54AE /* Image */,
 				4053740526232AA0003E54AE /* Storyboard */,
@@ -232,6 +253,23 @@
 				76A4436EB40FC72EF51B18E4 /* Pods_GDONG.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DDCFE2AE26516CB50026EE2D /* CreateNewItem */ = {
+			isa = PBXGroup;
+			children = (
+				DDCFE2AF26516CB50026EE2D /* PriceCell.xib */,
+				DDCFE2B026516CB50026EE2D /* ViewCells.swift */,
+				DDCFE2B126516CB50026EE2D /* PhotoCell.xib */,
+				DDCFE2B226516CB50026EE2D /* CreateNewItemViewController.swift */,
+				DDCFE2B326516CB50026EE2D /* CreateNewItem.storyboard */,
+				DDCFE2B426516CB50026EE2D /* CategoryCell.xib */,
+				DDCFE2B526516CB50026EE2D /* TitleCell.xib */,
+				DDCFE2B626516CB50026EE2D /* CategoryTableView.storyboard */,
+				DDCFE2B726516CB50026EE2D /* CategoryTableViewController.swift */,
+				DDCFE2B826516CB50026EE2D /* EntityCell.xib */,
+			);
+			path = CreateNewItem;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -292,13 +330,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDCFE2BF26516CB50026EE2D /* TitleCell.xib in Resources */,
 				8E782A762643C7B600D93D89 /* TitleTableViewCell.xib in Resources */,
+				DDCFE2BB26516CB50026EE2D /* PhotoCell.xib in Resources */,
 				8E42FF00261D958800763B61 /* LaunchScreen.storyboard in Resources */,
+				DDCFE2C226516CB50026EE2D /* EntityCell.xib in Resources */,
+				DDCFE2C026516CB50026EE2D /* CategoryTableView.storyboard in Resources */,
 				408BF5ED26306214006054CD /* perfume.jpg in Resources */,
 				4053740226232421003E54AE /* TableViewCell.xib in Resources */,
 				408BF5EA2630615E006054CD /* strawberry.jpg in Resources */,
+				DDCFE2B926516CB50026EE2D /* PriceCell.xib in Resources */,
 				402AD2E7262C769B00AB16A1 /* cero.jpg in Resources */,
+				DDCFE2BD26516CB50026EE2D /* CreateNewItem.storyboard in Resources */,
 				8E42FEFD261D958800763B61 /* Assets.xcassets in Resources */,
+				DDCFE2BE26516CB50026EE2D /* CategoryCell.xib in Resources */,
 				407C42C12638495B008940B1 /* ChatListCell.xib in Resources */,
 				8E003BDC2650F0B600CB5802 /* RecentSearchTableViewCell.xib in Resources */,
 				8E42FEF8261D958100763B61 /* Main.storyboard in Resources */,
@@ -347,6 +392,7 @@
 				8E42FEF1261D958100763B61 /* AppDelegate.swift in Sources */,
 				8E782A5A2643C0FD00D93D89 /* Extension.swift in Sources */,
 				8E42FEF3261D958100763B61 /* SceneDelegate.swift in Sources */,
+				DDCFE2BC26516CB50026EE2D /* CreateNewItemViewController.swift in Sources */,
 				4034342126319F4800470FF2 /* MainModel.swift in Sources */,
 				407B641D2639A4AB00DBCA9D /* ChatListModel.swift in Sources */,
 				8E782A682643C29B00D93D89 /* Model.swift in Sources */,
@@ -354,6 +400,8 @@
 				8E782A6E2643C36200D93D89 /* categoryCollectionViewCell.swift in Sources */,
 				8E782A492643BFB200D93D89 /* ProfileViewController.swift in Sources */,
 				8E782A612643C18900D93D89 /* SearchResultViewController.swift in Sources */,
+				DDCFE2BA26516CB50026EE2D /* ViewCells.swift in Sources */,
+				DDCFE2C126516CB50026EE2D /* CategoryTableViewController.swift in Sources */,
 				8E782A5E2643C17E00D93D89 /* SearchViewController.swift in Sources */,
 				407D0678262077EC000B7400 /* MainViewController.swift in Sources */,
 				407C42C426384A21008940B1 /* ChatListViewController.swift in Sources */,
