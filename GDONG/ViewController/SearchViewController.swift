@@ -15,6 +15,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
 
     var categoryList:[Category] = []
     static let activitySuffix = "mainRestored"
+    
     /// Data model for the table view.
     var board = [Board]()
     var user = [User]()
@@ -140,16 +141,19 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
      
         searchController.delegate = self
 
-        // Monitor when the search button is tapped, and start/end editing.
         searchController.searchBar.delegate = self
         definesPresentationContext = true
     }
     
-    func setToSuggestedSearches() {
-        if searchController.searchBar.searchTextField.tokens.isEmpty {
-            recentController.tableView.delegate = recentController
-        }
-    }
+//    func setToSuggestedSearches() {
+//        //recentController.tableView.delegate = recentController
+////        if searchController.searchBar.searchTextField.tokens.isEmpty {
+////            recentController.tableView.delegate = recentController
+////            print("is empty")
+////        }else{
+////            print("not empty")
+////        }
+//    }
     
 
     func auto_layout(){
@@ -213,9 +217,8 @@ extension SearchViewController: UISearchControllerDelegate {
     // We are being asked to present the search controller, so from the start - show suggested searches.
     func presentSearchController(_ searchController: UISearchController) {
         print("presentSearchController")
-        
         searchController.showsSearchResultsController = true
-        setToSuggestedSearches()
+        //setToSuggestedSearches()
     }
 }
 

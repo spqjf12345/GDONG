@@ -11,7 +11,9 @@ class SearchResultViewController: UIViewController {
     var searchWord = ""
     var categoryWord = ""
     var filteredBoard = [Board]()
-    var searchHistory = [Array<String>]()
+    
+    let recentSearchVC = RecentSearchViewController()
+    
     
     var HeaderView: UIView = {
         let view = UIView()
@@ -44,6 +46,11 @@ class SearchResultViewController: UIViewController {
         FrameTableView.tableHeaderView = HeaderView
         FrameTableView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
         filteredBoard = Dummy.shared.Boards(model: filteredBoard)
+        
+        
+        recentSearchVC.searchHistory.append(searchWord)
+        UserDefaults.standard.set(searchWord, forKey: "historyWord")
+        
         print("search word \(searchWord)")
         print("search category \(categoryWord)")
         if(searchWord != ""){
@@ -67,13 +74,16 @@ extension SearchResultViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
+        tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "productCell")
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "productCell")!
         cell.textLabel?.text = filteredBoard[indexPath.row].titleBoard
         return cell
     }
         
-
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 150
+    }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
        //go to detail view

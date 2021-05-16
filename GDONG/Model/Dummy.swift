@@ -30,6 +30,8 @@ class Dummy {
        boards.append(Board(titleBoard: "title1", contentBoard: "content", dateBoard: "21.04.20", categoryBoard: "과일", price: "20000", viewBoard: 20, interestBoard: 4, needPeople: 5, nowPeople: 1))
        boards.append(Board(titleBoard: "title1", contentBoard: "content", dateBoard: "21.04.20", categoryBoard: "과일", price: "20000", viewBoard: 20, interestBoard: 4, needPeople: 5, nowPeople: 1))
        boards.append(Board(titleBoard: "title1", contentBoard: "content", dateBoard: "21.04.20", categoryBoard: "과일", price: "20000", viewBoard: 20, interestBoard: 4, needPeople: 5, nowPeople: 1))
+        boards.append(Board(titleBoard: "공구해요", contentBoard: "content", dateBoard: "21.04.20", categoryBoard: "과일", price: "20000", viewBoard: 20, interestBoard: 4, needPeople: 5, nowPeople: 1))
+        boards.append(Board(titleBoard: "사과 공구 하실 분", contentBoard: "content", dateBoard: "21.04.20", categoryBoard: "과일", price: "20000", viewBoard: 20, interestBoard: 4, needPeople: 5, nowPeople: 1))
         return boards
     }
     

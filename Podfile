@@ -7,12 +7,12 @@ target 'GDONG' do
 
   # Pods for GDONG
 
-pod 'KakaoSDKAuth'  # 카카오 로그인
-pod 'KakaoSDKUser'
-pod 'KakaoSDKCommon'
-pod 'KakaoOpenSDK'
+#pod 'KakaoSDKAuth'  # 카카오 로그인
+#pod 'KakaoSDKUser'
+#pod 'KakaoSDKCommon'
+#pod 'KakaoOpenSDK'
 
-pod 'GoogleSignIn' #구글 로그인
+#pod 'GoogleSignIn' #구글 로그인
 
 post_install do |installer_representation|
     installer_representation.pods_project.targets.each do |target|

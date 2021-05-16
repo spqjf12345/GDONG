@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -23,6 +23,8 @@
 		408BF5ED26306214006054CD /* perfume.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 408BF5EC26306214006054CD /* perfume.jpg */; };
 		40956EBB2625B48200397930 /* bigapple.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 40956EBA2625B48200397930 /* bigapple.jpg */; };
 		40E5228D264E98790036EB3A /* RecommendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E5228C264E98790036EB3A /* RecommendModel.swift */; };
+		8E003BDB2650F0B600CB5802 /* RecentSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E003BD92650F0B600CB5802 /* RecentSearchTableViewCell.swift */; };
+		8E003BDC2650F0B600CB5802 /* RecentSearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E003BDA2650F0B600CB5802 /* RecentSearchTableViewCell.xib */; };
 		8E42FEF1261D958100763B61 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E42FEF0261D958100763B61 /* AppDelegate.swift */; };
 		8E42FEF3261D958100763B61 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E42FEF2261D958100763B61 /* SceneDelegate.swift */; };
 		8E42FEF8261D958100763B61 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E42FEF6261D958100763B61 /* Main.storyboard */; };
@@ -61,6 +63,8 @@
 		40956EBA2625B48200397930 /* bigapple.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bigapple.jpg; sourceTree = "<group>"; };
 		40E5228C264E98790036EB3A /* RecommendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendModel.swift; sourceTree = "<group>"; };
 		76A4436EB40FC72EF51B18E4 /* Pods_GDONG.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GDONG.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E003BD92650F0B600CB5802 /* RecentSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchTableViewCell.swift; sourceTree = "<group>"; };
+		8E003BDA2650F0B600CB5802 /* RecentSearchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecentSearchTableViewCell.xib; sourceTree = "<group>"; };
 		8E42FEED261D958100763B61 /* GDONG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GDONG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E42FEF0261D958100763B61 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8E42FEF2261D958100763B61 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -119,6 +123,8 @@
 				4053740026232421003E54AE /* TableViewCell.xib */,
 				407C42BE2638495B008940B1 /* ChatListCell.swift */,
 				407C42BF2638495B008940B1 /* ChatListCell.xib */,
+				8E003BD92650F0B600CB5802 /* RecentSearchTableViewCell.swift */,
+				8E003BDA2650F0B600CB5802 /* RecentSearchTableViewCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -239,8 +245,6 @@
 				8E42FEE9261D958100763B61 /* Sources */,
 				8E42FEEA261D958100763B61 /* Frameworks */,
 				8E42FEEB261D958100763B61 /* Resources */,
-				ADEECD08B22BC0892FDA9C8B /* [CP] Embed Pods Frameworks */,
-				8AEA73430822F6ECD767FDA5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -296,6 +300,7 @@
 				402AD2E7262C769B00AB16A1 /* cero.jpg in Resources */,
 				8E42FEFD261D958800763B61 /* Assets.xcassets in Resources */,
 				407C42C12638495B008940B1 /* ChatListCell.xib in Resources */,
+				8E003BDC2650F0B600CB5802 /* RecentSearchTableViewCell.xib in Resources */,
 				8E42FEF8261D958100763B61 /* Main.storyboard in Resources */,
 				8E782A6D2643C36200D93D89 /* categoryCollectionViewCell.xib in Resources */,
 				40956EBB2625B48200397930 /* bigapple.jpg in Resources */,
@@ -305,40 +310,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8AEA73430822F6ECD767FDA5 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GDONG/Pods-GDONG-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GDONG/Pods-GDONG-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GDONG/Pods-GDONG-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		ADEECD08B22BC0892FDA9C8B /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GDONG/Pods-GDONG-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GDONG/Pods-GDONG-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GDONG/Pods-GDONG-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		C24C823DC80B6580488D24AB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -389,6 +360,7 @@
 				4053740126232421003E54AE /* TableViewCell.swift in Sources */,
 				405373F526231CE2003E54AE /* MainViewModel.swift in Sources */,
 				40E5228D264E98790036EB3A /* RecommendModel.swift in Sources */,
+				8E003BDB2650F0B600CB5802 /* RecentSearchTableViewCell.swift in Sources */,
 				401E05AA2642C37100B9796A /* RecommendViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
