@@ -28,3 +28,8 @@ struct User {
     var userLocation: String
     var likePage: [String]
 }
+
+struct Category {
+    var categoryImage: String
+    var categoryText: String
+}

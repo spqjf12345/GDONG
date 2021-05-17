@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Vs7-ti-RSY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Vs7-ti-RSY">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -58,7 +58,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="chatListCell" id="8UC-PV-HOB" customClass="ChatListCell" customModule="GDONG" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="chatList" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8UC-PV-HOB" id="L3q-3y-Ugi" customClass="ChatListCell" customModule="GDONG" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -111,7 +111,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="tableViewCell" id="65B-yR-EKP">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="customcell" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="65B-yR-EKP" id="9ZD-6G-afG" customClass="TableViewCell" customModule="GDONG" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -142,7 +142,11 @@
                     <tabBarItem key="tabBarItem" title="Main" image="list.bullet" catalog="system" id="LlI-ha-YiK"/>
                     <navigationItem key="navigationItem" id="SG3-qu-nfN">
                         <rightBarButtonItems>
-                            <barButtonItem systemItem="compose" id="FKf-81-HXK"/>
+                            <barButtonItem systemItem="compose" id="FKf-81-HXK">
+                                <connections>
+                                    <segue destination="rRv-nn-T1y" kind="show" id="5qs-LM-Ryg"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem systemItem="search" id="r8h-AU-1nF">
                                 <connections>
                                     <action selector="search:" destination="DWI-AC-DRm" id="DyN-Uh-C0t"/>
@@ -152,14 +156,23 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
-                        <outlet property="add" destination="FKf-81-HXK" id="eDG-Dc-65g"/>
                         <outlet property="segmentedControl" destination="BGE-ei-e1p" id="N0g-dm-b0C"/>
                         <outlet property="tableView" destination="ugd-8G-Bu1" id="rQ7-wM-FXl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bHM-TJ-21C" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1063.768115942029" y="-1387.5"/>
+            <point key="canvasLocation" x="814" y="-1388"/>
+        </scene>
+        <!--CreateNewItemViewController-->
+        <scene sceneID="U0I-GL-Mfz">
+            <objects>
+                <viewControllerPlaceholder storyboardName="CreateNewItem" referencedIdentifier="CreateNewItemViewController" id="rRv-nn-T1y" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="BJl-Yg-EWc"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4EG-IO-srl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1425" y="-1219"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="oz4-Bm-6X5">
@@ -176,6 +189,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nO0-IQ-HLE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1784" y="-1966"/>
+        </scene>
+        <!--Recent Search All Table View Controller-->
+        <scene sceneID="4nI-6p-19P">
+            <objects>
+                <viewController id="L6E-IM-AL5" customClass="RecentSearchAllTableViewController" customModule="GDONG" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="s07-Ha-tZC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="IX6-tM-9GK"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aBc-kO-1Sv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2550" y="-1958"/>
         </scene>
         <!--Detail Note View Controller-->
         <scene sceneID="eFE-Up-XjB">
@@ -240,7 +268,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="LwW-r1-HNu" customClass="TableViewCell" customModule="GDONG" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="24.5" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LwW-r1-HNu" id="Lh4-ea-5AP">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>

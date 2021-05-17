@@ -32,7 +32,9 @@ class MainViewController : UIViewController {
         performSegue(withIdentifier: "searchButton", sender: self)
     }
     
-    @IBOutlet var add: UIBarButtonItem!
+    @IBAction func add(_ sender: Any) {
+        performSegue(withIdentifier: "searchButton", sender: self)
+    }
     
     @IBOutlet var segmentedControl: UISegmentedControl!
     
@@ -168,12 +170,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "detail", sender: nil)
-        
-
-
-
     }
-// 디테일뷰 넘어가는 함수
+
         
     
 }

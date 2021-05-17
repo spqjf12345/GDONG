@@ -43,6 +43,8 @@
 		8E782A712643C7A700D93D89 /* DetailNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E782A702643C7A700D93D89 /* DetailNoteViewController.swift */; };
 		8E782A752643C7B600D93D89 /* TitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E782A732643C7B600D93D89 /* TitleTableViewCell.swift */; };
 		8E782A762643C7B600D93D89 /* TitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E782A742643C7B600D93D89 /* TitleTableViewCell.xib */; };
+		8EF00F052651922B00AA1EEA /* RecentSearchAllTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF00F042651922B00AA1EEA /* RecentSearchAllTableViewController.swift */; };
+		8EF00F0726524D4E00AA1EEA /* SearchFilter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EF00F0626524D4E00AA1EEA /* SearchFilter.storyboard */; };
 		DDCFE2B926516CB50026EE2D /* PriceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDCFE2AF26516CB50026EE2D /* PriceCell.xib */; };
 		DDCFE2BA26516CB50026EE2D /* ViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCFE2B026516CB50026EE2D /* ViewCells.swift */; };
 		DDCFE2BB26516CB50026EE2D /* PhotoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDCFE2B126516CB50026EE2D /* PhotoCell.xib */; };
@@ -95,6 +97,8 @@
 		8E782A702643C7A700D93D89 /* DetailNoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailNoteViewController.swift; sourceTree = "<group>"; };
 		8E782A732643C7B600D93D89 /* TitleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleTableViewCell.swift; sourceTree = "<group>"; };
 		8E782A742643C7B600D93D89 /* TitleTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TitleTableViewCell.xib; sourceTree = "<group>"; };
+		8EF00F042651922B00AA1EEA /* RecentSearchAllTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchAllTableViewController.swift; sourceTree = "<group>"; };
+		8EF00F0626524D4E00AA1EEA /* SearchFilter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SearchFilter.storyboard; sourceTree = "<group>"; };
 		DDCFE2AF26516CB50026EE2D /* PriceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PriceCell.xib; sourceTree = "<group>"; };
 		DDCFE2B026516CB50026EE2D /* ViewCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewCells.swift; sourceTree = "<group>"; };
 		DDCFE2B126516CB50026EE2D /* PhotoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PhotoCell.xib; sourceTree = "<group>"; };
@@ -180,6 +184,8 @@
 				407C42C326384A21008940B1 /* ChatListViewController.swift */,
 				401E05A92642C37100B9796A /* RecommendViewController.swift */,
 				8E782A482643BFB200D93D89 /* ProfileViewController.swift */,
+				8EF00F042651922B00AA1EEA /* RecentSearchAllTableViewController.swift */,
+				8EF00F0626524D4E00AA1EEA /* SearchFilter.storyboard */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -332,6 +338,7 @@
 			files = (
 				DDCFE2BF26516CB50026EE2D /* TitleCell.xib in Resources */,
 				8E782A762643C7B600D93D89 /* TitleTableViewCell.xib in Resources */,
+				8EF00F0726524D4E00AA1EEA /* SearchFilter.storyboard in Resources */,
 				DDCFE2BB26516CB50026EE2D /* PhotoCell.xib in Resources */,
 				8E42FF00261D958800763B61 /* LaunchScreen.storyboard in Resources */,
 				DDCFE2C226516CB50026EE2D /* EntityCell.xib in Resources */,
@@ -403,6 +410,7 @@
 				DDCFE2BA26516CB50026EE2D /* ViewCells.swift in Sources */,
 				DDCFE2C126516CB50026EE2D /* CategoryTableViewController.swift in Sources */,
 				8E782A5E2643C17E00D93D89 /* SearchViewController.swift in Sources */,
+				8EF00F052651922B00AA1EEA /* RecentSearchAllTableViewController.swift in Sources */,
 				407D0678262077EC000B7400 /* MainViewController.swift in Sources */,
 				407C42C426384A21008940B1 /* ChatListViewController.swift in Sources */,
 				4053740126232421003E54AE /* TableViewCell.swift in Sources */,

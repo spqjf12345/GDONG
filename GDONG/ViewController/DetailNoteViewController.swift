@@ -59,8 +59,6 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         return view
     }()
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(FrameTableView)

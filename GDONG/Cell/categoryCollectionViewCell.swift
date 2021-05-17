@@ -7,10 +7,6 @@
 
 import UIKit
 
-struct Category {
-    var categoryImage: String
-    var categoryText: String
-}
 class categoryCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {

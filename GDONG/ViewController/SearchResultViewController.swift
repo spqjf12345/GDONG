@@ -12,8 +12,6 @@ class SearchResultViewController: UIViewController {
     var categoryWord = ""
     var filteredBoard = [Board]()
     
-    let recentSearchVC = RecentSearchViewController()
-    
     
     var HeaderView: UIView = {
         let view = UIView()
@@ -47,9 +45,6 @@ class SearchResultViewController: UIViewController {
         FrameTableView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
         filteredBoard = Dummy.shared.Boards(model: filteredBoard)
         
-        
-        recentSearchVC.searchHistory.append(searchWord)
-        UserDefaults.standard.set(searchWord, forKey: "historyWord")
         
         print("search word \(searchWord)")
         print("search category \(categoryWord)")

@@ -12,20 +12,14 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     var searchController: UISearchController!
     var resultsTableController: SearchResultViewController!
     var recentController : RecentSearchViewController!
+    
 
     var categoryList:[Category] = []
-    static let activitySuffix = "mainRestored"
     
     /// Data model for the table view.
     var board = [Board]()
     var user = [User]()
     var filteredBoard = [Board]()
-    
-    private let tableView : UITableView = {
-        let tableview = UITableView()
-        tableview.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        return tableview
-    }()
     
     let categoryView: UIView = {
         let view = UIView()
@@ -53,20 +47,21 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         let scroll = UIScrollView()
         return scroll
     }()
-    
-    let notificationCenter:NotificationCenter = NotificationCenter.default
-    
-      
+
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         if (searchBar.text?.isEmpty == false){
             let searchResult = SearchResultViewController()
             searchResult.searchWord = searchBar.text!
+            recentController.searchHistory.append(searchBar.text!)
+//            print("is added \(recentController.searchHistory)")
+            recentController.tableView.reloadData()
+            UserDefaults.standard.set(searchBar.text!, forKey: "historyWord")
+            searchBar.text = ""
             self.navigationController?.pushViewController(searchResult, animated: true)
         }
         
     }
-
 
     var categoryCollectionView: UICollectionView!
     
@@ -78,9 +73,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         view.backgroundColor = .white
         initSearchController()
         let layout = UICollectionViewFlowLayout()
-        
-        tableView.dataSource = self
-        tableView.delegate = self
         
 //        tagCollectionview = UICollectionView(frame: .zero, collectionViewLayout: layout)
 //        tagCollectionview.dataSource = self
@@ -95,7 +87,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         makeLayout(layout: layout)
 
         categoryCollectionView.backgroundColor = .clear
-
         categoryView.addSubview(categoryCollectionView)
 
         categoryCollectionView.frame = CGRect(x: 20, y: 80, width: view.width - 40, height: 300)
@@ -116,9 +107,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
 
 
     }
-    
 
-    
     
     func makeLayout(layout: UICollectionViewFlowLayout){
         layout.scrollDirection = .vertical
@@ -130,7 +119,9 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         
         resultsTableController = SearchResultViewController()
         recentController = RecentSearchViewController()
+        
         searchController = UISearchController(searchResultsController: recentController)
+        
         searchController.searchResultsUpdater = self
         searchController.searchBar.autocapitalizationType = .none
         searchController.searchBar.searchTextField.placeholder = NSLocalizedString("검색어 입력", comment: "")
@@ -214,7 +205,6 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
 extension SearchViewController: UISearchControllerDelegate {
     
-    // We are being asked to present the search controller, so from the start - show suggested searches.
     func presentSearchController(_ searchController: UISearchController) {
         print("presentSearchController")
         searchController.showsSearchResultsController = true
@@ -224,28 +214,12 @@ extension SearchViewController: UISearchControllerDelegate {
 
 extension SearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        print(searchController.searchBar.text!)
+        print("updateSearchResults : \(searchController.searchBar.text!)")
+        
     }
+    
 }
 
-extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
-        cell.textLabel?.text = "temp"
-        return cell
-    }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
-    }
-    
-    
-}
 
 
 
