@@ -37,15 +37,14 @@ class TitleTableViewCell: UITableViewCell {
     }
     
     public func configure(with modelBoard: Board, modelUser: User){
-        self.titleBoard.text = modelBoard.titleBoard
-        self.dateBoard.text = modelBoard.dateBoard
+        self.titleBoard.text = modelBoard.title
+        self.dateBoard.text = modelBoard.date
         self.userName.text = modelUser.usetName
-        self.categoryBoard.setTitle(modelBoard.categoryBoard, for: .normal)
+        self.categoryBoard.setTitle(modelBoard.category, for: .normal)
     }
     
     func settingForLabel(){
         self.titleBoard.font = UIFont.boldSystemFont(ofSize: 25)
-        
         self.categoryBoard.setTitleColor(UIColor.white, for: .normal)
         self.categoryBoard.backgroundColor = UIColor.systemOrange
         self.categoryBoard.layer.cornerRadius = 5

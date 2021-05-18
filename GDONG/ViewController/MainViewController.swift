@@ -22,9 +22,29 @@ class MainViewController : UIViewController {
     var sellpeople: Array<String> = ["1/300","1/10"]
     var sellimage = ["strawberry.jpg","perfume.jpg"]
     
+    var itemBoard = [Board]()
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let searchVC = segue.destination as? SearchViewController else { return }
-        guard let detailVC = segue.destination as? DetailNoteViewController else { return }
+        if let searchVC = segue.destination as? SearchViewController {
+            
+        }
+        
+        guard let index = tableView.indexPathForSelectedRow else {
+            return
+        }
+
+        if let detailVC = segue.destination as? DetailNoteViewController {
+            detailVC.oneBoard = itemBoard[index.row]
+        }
+        
+//        if let createItemVC = segue.destination as? CreateNewItemViewController {
+//            navigationController?.navigationBar.isHidden = true
+//        }
+//
+      
+        
+        
       
     }
     
@@ -33,7 +53,11 @@ class MainViewController : UIViewController {
     }
     
     @IBAction func add(_ sender: Any) {
-        performSegue(withIdentifier: "searchButton", sender: self)
+        let createItemVC = UIStoryboard.init(name: "CreateNewItem", bundle: nil).instantiateViewController(withIdentifier: "CreateNewItemViewController")
+        createItemVC.modalPresentationStyle = .fullScreen
+        self.present(createItemVC, animated: true, completion: nil)
+        
+      
     }
     
     @IBOutlet var segmentedControl: UISegmentedControl!
@@ -61,6 +85,8 @@ class MainViewController : UIViewController {
         //Do any additional setup after loading the view.
   
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "서울시 강남구", style: .plain, target: self, action: nil)
+        
+        itemBoard = Dummy.shared.oneBoardDummy(model: itemBoard)
         
 //        if let navigationBar = self.navigationController?.navigationBar {
 //            let positionFrame = CGRect(x: 20, y: 0, width: navigationBar.frame.width/2, height: navigationBar.frame.height)
@@ -100,6 +126,8 @@ class MainViewController : UIViewController {
         
         }
     
+    
+    
 
 }
 
@@ -135,11 +163,12 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
         
         switch segmentedControl.selectedSegmentIndex {
         case 0:
-            cell.productNameLabel.text = productName[indexPath.row]
-            cell.productPriceLabel.text = productPrice[indexPath.row]
-            cell.timeLabel.text = time[indexPath.row]
-            cell.peopleLabel.text = people[indexPath.row]
-            cell.productImageView.image = UIImage(named: image[(indexPath as NSIndexPath).row])
+            cell.productNameLabel.text = itemBoard[indexPath.row].title
+            cell.productPriceLabel.text = itemBoard[indexPath.row].price
+            cell.timeLabel.text = itemBoard[indexPath.row].date
+            
+            cell.peopleLabel.text = "\(itemBoard[indexPath.row].nowPeople)/ \(itemBoard[indexPath.row].needPeople)"
+            cell.productImageView.image = UIImage(named: itemBoard[(indexPath as NSIndexPath).row].profileImage)
 
             cell.productNameLabel.sizeToFit()
             cell.productPriceLabel.sizeToFit()
@@ -147,11 +176,11 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
             cell.peopleLabel.sizeToFit()
 
         case 1:
-            cell.productNameLabel.text = sellproductName[indexPath.row]
-            cell.productPriceLabel.text = sellproductPrice[indexPath.row]
-            cell.timeLabel.text = selltime[indexPath.row]
-            cell.peopleLabel.text = sellpeople[indexPath.row]
-            cell.productImageView.image = UIImage(named: sellimage[(indexPath as NSIndexPath).row])
+            cell.productNameLabel.text = itemBoard[indexPath.row].title
+            cell.productPriceLabel.text = itemBoard[indexPath.row].price
+            cell.timeLabel.text = itemBoard[indexPath.row].date
+            cell.peopleLabel.text = "\(itemBoard[indexPath.row].nowPeople)/ \(itemBoard[indexPath.row].needPeople)"
+            cell.productImageView.image = UIImage(named: itemBoard[(indexPath as NSIndexPath).row].profileImage)
 
             cell.productNameLabel.sizeToFit()
             cell.productPriceLabel.sizeToFit()
@@ -169,8 +198,11 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
     
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         performSegue(withIdentifier: "detail", sender: nil)
     }
+    
+
 
         
     

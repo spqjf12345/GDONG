@@ -7,16 +7,19 @@
 
 import Foundation
 
+
 struct Board {
-    var titleBoard: String // 글 제목
-    var contentBoard: String // 글 내용
-    var dateBoard: String // 글 작성 날짜
-    var categoryBoard: String // 글 카테고리
+    var profileImage: String
+    var title: String // 글 제목
+    var content: String // 글 내용
+    var date: String // 글 작성 날짜
+    var category: String // 글 카테고리
     var price: String //가격
-    var viewBoard: Int // 조회수
-    var interestBoard: Int // 관심수
+    var view: Int // 조회수
+    var interest: Int // 관심수
     var needPeople: Int // 모집 인원
     var nowPeople: Int // 모집된 인원
+    var likeButton: Bool // 좋아요 한 글
     
 }
 
@@ -27,6 +30,7 @@ struct User {
     var userImage: String
     var userLocation: String
     var likePage: [String]
+    var chatRoomList: [Int] // 참여 중인 채팅 방 ID
 }
 
 struct Category {

@@ -26,7 +26,7 @@
                                     <navigationItem title="공동구매 글쓰기" id="Vwe-z9-7iv">
                                         <barButtonItem key="leftBarButtonItem" title="닫기" id="BdI-Jx-eYb">
                                             <connections>
-                                                <action selector="backToMainView:" destination="nKM-UP-cP4" id="ubW-aN-w7q"/>
+                                                <action selector="backToPreviousView:" destination="nKM-UP-cP4" id="a99-Xw-bVk"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="완료" id="tAi-Ho-TrH">

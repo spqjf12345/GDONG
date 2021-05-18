@@ -10,7 +10,7 @@
 import UIKit
 
 class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
-    var oneBoard: [Board] = []
+    var oneBoard: Board?
     var oneUser: [User] = []
     
     var FrameTableView: UITableView = {
@@ -68,7 +68,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
      
         
         // - dummy data
-        oneBoard = Dummy.shared.oneBoardDummy(model: oneBoard)
+        //oneBoard = Dummy.shared.oneBoardDummy(model: oneBoard)
         oneUser = Dummy.shared.oneUser(model: oneUser)
         
     
@@ -79,13 +79,13 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         priceView.frame = CGRect(x: 0, y: 0, width: view.width, height: 100)
         
         let priceLabel = UILabel()
-        priceLabel.text = "가격 : \(oneBoard[0].price)원"
+        priceLabel.text = "가격 : \(String(oneBoard!.price))원"
         priceLabel.font = .boldSystemFont(ofSize: 20)
         priceView.addSubview(priceLabel)
         priceLabel.frame = CGRect(x: 20, y: 30, width: 150, height: 30)
         
         let needPersonLabel = UILabel()
-        needPersonLabel.text = " \(oneBoard[0].nowPeople) /\(oneBoard[0].needPeople) 명"
+        needPersonLabel.text = " \(oneBoard!.nowPeople) /\(oneBoard!.needPeople) 명"
         needPersonLabel.font = .systemFont(ofSize: 20)
         priceView.addSubview(needPersonLabel)
         needPersonLabel.frame = CGRect(x: view.width - 100 , y: 30, width: 150, height: 30)
@@ -95,12 +95,12 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         footerView.frame = CGRect(x: 0, y: 0, width: view.width, height: 200)
        
         let viewCount = UILabel()
-        viewCount.text = "조회수 \(oneBoard[0].viewBoard)"
+        viewCount.text = "조회수 \(oneBoard!.view)"
         viewCount.textColor = UIColor.systemGray
         viewCount.frame = CGRect(x: 20, y: 20, width: 100, height: 25)
         
         let interestCount = UILabel()
-        interestCount.text = "관심수 \(oneBoard[0].interestBoard)"
+        interestCount.text = "관심수 \(oneBoard!.interest)"
         interestCount.textColor = UIColor.systemGray
         interestCount.frame = CGRect(x: viewCount.frame.maxX + 10, y: 20, width: 100, height: 25)
         
@@ -192,7 +192,7 @@ extension DetailNoteViewController: UITableViewDelegate, UITableViewDataSource {
         //titleCell
         if(indexPath.row == 0){
             let cell = tableView.dequeueReusableCell(withIdentifier: TitleTableViewCell.identifier) as! TitleTableViewCell
-            cell.configure(with: oneBoard[0], modelUser: oneUser[0])
+            cell.configure(with: oneBoard!, modelUser: oneUser[0])
             return cell
         }else if(indexPath.row == 1){
             cell.addSubview(contentTextview)

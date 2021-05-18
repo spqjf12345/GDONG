@@ -43,7 +43,7 @@ class SearchResultViewController: UIViewController {
         HeaderView.frame = CGRect(x: 0, y: 00, width: view.width, height: 50)
         FrameTableView.tableHeaderView = HeaderView
         FrameTableView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
-        filteredBoard = Dummy.shared.Boards(model: filteredBoard)
+        //filteredBoard = Dummy.shared.Boards(model: filteredBoard)
         
         
         print("search word \(searchWord)")
@@ -54,7 +54,7 @@ class SearchResultViewController: UIViewController {
             title = categoryWord
         }
         
-        filteredBoard = filteredBoard.filter{($0.titleBoard.lowercased().contains(searchWord)) || ($0.categoryBoard.lowercased().contains(categoryWord))}
+        filteredBoard = filteredBoard.filter{($0.title.lowercased().contains(searchWord)) || ($0.category.lowercased().contains(categoryWord))}
         FrameTableView.reloadData()
         
     }
@@ -72,7 +72,7 @@ extension SearchResultViewController: UITableViewDelegate, UITableViewDataSource
         tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "productCell")
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "productCell")!
-        cell.textLabel?.text = filteredBoard[indexPath.row].titleBoard
+        cell.textLabel?.text = filteredBoard[indexPath.row].title
         return cell
     }
         

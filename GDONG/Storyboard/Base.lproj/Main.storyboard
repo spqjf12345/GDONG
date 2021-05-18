@@ -144,7 +144,7 @@
                         <rightBarButtonItems>
                             <barButtonItem systemItem="compose" id="FKf-81-HXK">
                                 <connections>
-                                    <segue destination="rRv-nn-T1y" kind="show" id="5qs-LM-Ryg"/>
+                                    <action selector="add:" destination="DWI-AC-DRm" id="qsf-Zr-Ahd"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem systemItem="search" id="r8h-AU-1nF">
@@ -163,16 +163,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bHM-TJ-21C" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="814" y="-1388"/>
-        </scene>
-        <!--CreateNewItemViewController-->
-        <scene sceneID="U0I-GL-Mfz">
-            <objects>
-                <viewControllerPlaceholder storyboardName="CreateNewItem" referencedIdentifier="CreateNewItemViewController" id="rRv-nn-T1y" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="BJl-Yg-EWc"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4EG-IO-srl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1425" y="-1219"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="oz4-Bm-6X5">
