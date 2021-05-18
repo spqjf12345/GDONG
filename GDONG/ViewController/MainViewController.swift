@@ -6,23 +6,19 @@
 //
 
 import UIKit
+import Tabman
+import Pageboy
 
-class MainViewController : UIViewController {
+class MainViewController : TabmanViewController {
     
-    var productName = ["공구해요","사과 공구 하실 분"]
-    var productPrice = ["₩3000","₩4000"]
-    var time = ["1시간전","2시간전"]
-    var people = ["1/30","1/5"]
-    var image = ["cero.jpg","bigapple.jpg"]
+    @IBOutlet var search: UIBarButtonItem!
     
-    
-    var sellproductName: Array<String> = ["초특가 행사 상품! 딸기 팔아요","향수 타임세일!"]
-    var sellproductPrice: Array<String> = ["₩5000","₩70000"]
-    var selltime: Array<String> = ["10시간전","22시간전"]
-    var sellpeople: Array<String> = ["1/300","1/10"]
-    var sellimage = ["strawberry.jpg","perfume.jpg"]
+    @IBOutlet var add: UIBarButtonItem!
     
     var itemBoard = [Board]()
+    
+    //view array
+    private var viewControllers: Array<UIViewController> = []
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -60,30 +56,12 @@ class MainViewController : UIViewController {
       
     }
     
-    @IBOutlet var segmentedControl: UISegmentedControl!
-    
-    @IBOutlet weak var tableView: UITableView!
-    
-    //segmented control 연결(버튼 클릭할때마다 reload)
-    @IBAction func segmentedControlChange(_ sender: UISegmentedControl) {
-        tableView.reloadData() 
-    }
-    
-    
-    
-    //당겨서 새로고침시 갱신되어야 할 내용
-    @objc func pullToRefresh(_ sender: UIRefreshControl) {
-        
-        self.tableView.refreshControl?.endRefreshing() // 당겨서 새로고침 종료
-        self.tableView.reloadData() // Reload하여 뷰를 비워주기
-
-    }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //Do any additional setup after loading the view.
   
+        //네비게이션바 왼쪽에 현재 위치
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "서울시 강남구", style: .plain, target: self, action: nil)
         
         itemBoard = Dummy.shared.oneBoardDummy(model: itemBoard)
@@ -98,22 +76,25 @@ class MainViewController : UIViewController {
 //
 //            navigationBar.addSubview(positionLabel)
 //        }
-        //네비게이션바의 왼쪽에 현위치라벨 적용
+    
         
+        //view array에 추가
+        let buyViewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BuyViewController") as! BuyViewController
+        let sellViewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SellViewController") as! SellViewController
+        
+                
+        viewControllers.append(buyViewController)
+        viewControllers.append(sellViewController)
+        
+        self.dataSource = self
 
-        // 테이블뷰와 테이블뷰 셀인 xib 파일과 연결
-        let nibName = UINib(nibName: "TableViewCell", bundle: nil)
+        // Create bar
+        let bar = TMBar.ButtonBar()
+        bar.layout.transitionStyle = .snap // Customize
+        bar.layout.contentMode = .fit
 
-        tableView.register(nibName, forCellReuseIdentifier: "productCell")
-        
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        
-        //당겨서 새로고침
-        tableView.refreshControl = UIRefreshControl()
-        tableView.refreshControl?.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
+        // Add to view
+        addBar(bar, dataSource: self, at: .top)
 
 
     }
@@ -131,81 +112,35 @@ class MainViewController : UIViewController {
 
 }
 
-extension MainViewController: UITableViewDelegate, UITableViewDataSource{
+extension MainViewController : PageboyViewControllerDataSource, TMBarDataSource {
     
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
-    }
-    
-    //segmented control 인덱스에 따른 테이블뷰 설정
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
-        var returnValue = 0
-
-        switch segmentedControl.selectedSegmentIndex {
-        case 0:
-            returnValue = productName.count
-        case 1:
-            returnValue = sellproductName.count
-        default:
-            break
-        }
-
-        return returnValue
-    }
-    
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        let cell = tableView.dequeueReusableCell(withIdentifier: "productCell", for: indexPath) as! TableViewCell
-
+    func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
+        let item = TMBarItem(title: "")
         
-        switch segmentedControl.selectedSegmentIndex {
+        switch index {
         case 0:
-            cell.productNameLabel.text = itemBoard[indexPath.row].title
-            cell.productPriceLabel.text = itemBoard[indexPath.row].price
-            cell.timeLabel.text = itemBoard[indexPath.row].date
-            
-            cell.peopleLabel.text = "\(itemBoard[indexPath.row].nowPeople)/ \(itemBoard[indexPath.row].needPeople)"
-            cell.productImageView.image = UIImage(named: itemBoard[(indexPath as NSIndexPath).row].profileImage)
-
-            cell.productNameLabel.sizeToFit()
-            cell.productPriceLabel.sizeToFit()
-            cell.timeLabel.sizeToFit()
-            cell.peopleLabel.sizeToFit()
-
+            item.title = "구매글"
         case 1:
-            cell.productNameLabel.text = itemBoard[indexPath.row].title
-            cell.productPriceLabel.text = itemBoard[indexPath.row].price
-            cell.timeLabel.text = itemBoard[indexPath.row].date
-            cell.peopleLabel.text = "\(itemBoard[indexPath.row].nowPeople)/ \(itemBoard[indexPath.row].needPeople)"
-            cell.productImageView.image = UIImage(named: itemBoard[(indexPath as NSIndexPath).row].profileImage)
-
-            cell.productNameLabel.sizeToFit()
-            cell.productPriceLabel.sizeToFit()
-            cell.timeLabel.sizeToFit()
-            cell.peopleLabel.sizeToFit()
+            item.title = "판매글"
         default:
             break
         }
         
-       return cell
-
+        return item
     }
     
-    
-    
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        performSegue(withIdentifier: "detail", sender: nil)
+    func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
+        return viewControllers.count
     }
-    
 
+    func viewController(for pageboyViewController: PageboyViewController,
+                        at index: PageboyViewController.PageIndex) -> UIViewController? {
+        return viewControllers[index]
+    }
 
-        
-    
+    func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
+        return nil
+    }
 }
 
 

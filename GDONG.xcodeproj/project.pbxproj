@@ -22,6 +22,8 @@
 		408BF5EA2630615E006054CD /* strawberry.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 408BF5E92630615E006054CD /* strawberry.jpg */; };
 		408BF5ED26306214006054CD /* perfume.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 408BF5EC26306214006054CD /* perfume.jpg */; };
 		40956EBB2625B48200397930 /* bigapple.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 40956EBA2625B48200397930 /* bigapple.jpg */; };
+		40ACB71D265415460025EDAC /* SellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40ACB71C265415460025EDAC /* SellViewController.swift */; };
+		40ACB720265415520025EDAC /* BuyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40ACB71F265415520025EDAC /* BuyViewController.swift */; };
 		40E5228D264E98790036EB3A /* RecommendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40E5228C264E98790036EB3A /* RecommendModel.swift */; };
 		8E003BDB2650F0B600CB5802 /* RecentSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E003BD92650F0B600CB5802 /* RecentSearchTableViewCell.swift */; };
 		8E003BDC2650F0B600CB5802 /* RecentSearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E003BDA2650F0B600CB5802 /* RecentSearchTableViewCell.xib */; };
@@ -73,6 +75,8 @@
 		408BF5E92630615E006054CD /* strawberry.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = strawberry.jpg; sourceTree = "<group>"; };
 		408BF5EC26306214006054CD /* perfume.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = perfume.jpg; sourceTree = "<group>"; };
 		40956EBA2625B48200397930 /* bigapple.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bigapple.jpg; sourceTree = "<group>"; };
+		40ACB71C265415460025EDAC /* SellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SellViewController.swift; path = ../../../GDONG/GDONG/ViewController/SellViewController.swift; sourceTree = "<group>"; };
+		40ACB71F265415520025EDAC /* BuyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuyViewController.swift; path = ../../../GDONG/GDONG/ViewController/BuyViewController.swift; sourceTree = "<group>"; };
 		40E5228C264E98790036EB3A /* RecommendModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendModel.swift; sourceTree = "<group>"; };
 		76A4436EB40FC72EF51B18E4 /* Pods_GDONG.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GDONG.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E003BD92650F0B600CB5802 /* RecentSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchTableViewCell.swift; sourceTree = "<group>"; };
@@ -186,6 +190,8 @@
 				8E782A482643BFB200D93D89 /* ProfileViewController.swift */,
 				8EF00F042651922B00AA1EEA /* RecentSearchAllTableViewController.swift */,
 				8EF00F0626524D4E00AA1EEA /* SearchFilter.storyboard */,
+				40ACB71C265415460025EDAC /* SellViewController.swift */,
+				40ACB71F265415520025EDAC /* BuyViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -397,6 +403,7 @@
 				407C42C02638495B008940B1 /* ChatListCell.swift in Sources */,
 				8E782A712643C7A700D93D89 /* DetailNoteViewController.swift in Sources */,
 				8E42FEF1261D958100763B61 /* AppDelegate.swift in Sources */,
+				40ACB720265415520025EDAC /* BuyViewController.swift in Sources */,
 				8E782A5A2643C0FD00D93D89 /* Extension.swift in Sources */,
 				8E42FEF3261D958100763B61 /* SceneDelegate.swift in Sources */,
 				DDCFE2BC26516CB50026EE2D /* CreateNewItemViewController.swift in Sources */,
@@ -405,6 +412,7 @@
 				8E782A682643C29B00D93D89 /* Model.swift in Sources */,
 				8E782A642643C19000D93D89 /* RecentSearchViewController.swift in Sources */,
 				8E782A6E2643C36200D93D89 /* categoryCollectionViewCell.swift in Sources */,
+				40ACB71D265415460025EDAC /* SellViewController.swift in Sources */,
 				8E782A492643BFB200D93D89 /* ProfileViewController.swift in Sources */,
 				8E782A612643C18900D93D89 /* SearchResultViewController.swift in Sources */,
 				DDCFE2BA26516CB50026EE2D /* ViewCells.swift in Sources */,
