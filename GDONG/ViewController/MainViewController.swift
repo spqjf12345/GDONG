@@ -26,13 +26,13 @@ class MainViewController : TabmanViewController {
             
         }
         
-        guard let index = tableView.indexPathForSelectedRow else {
-            return
-        }
-
-        if let detailVC = segue.destination as? DetailNoteViewController {
-            detailVC.oneBoard = itemBoard[index.row]
-        }
+//        guard let index = .indexPathForSelectedRow else {
+//            return
+//        }
+//
+//        if let detailVC = segue.destination as? DetailNoteViewController {
+//            detailVC.oneBoard = itemBoard[index.row]
+//        }
         
 //        if let createItemVC = segue.destination as? CreateNewItemViewController {
 //            navigationController?.navigationBar.isHidden = true
@@ -99,17 +99,6 @@ class MainViewController : TabmanViewController {
 
     }
     
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        tableView.reloadData()
-        
-        }
-    
-    
-    
-
 }
 
 extension MainViewController : PageboyViewControllerDataSource, TMBarDataSource {

@@ -7,6 +7,7 @@ target 'GDONG' do
 
   # Pods for GDONG
 
+pod 'Tabman', '~> 2.11'
 #pod 'KakaoSDKAuth'  # 카카오 로그인
 #pod 'KakaoSDKUser'
 #pod 'KakaoSDKCommon'
