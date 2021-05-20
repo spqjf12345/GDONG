@@ -43,7 +43,7 @@ class SearchResultViewController: UIViewController {
         HeaderView.frame = CGRect(x: 0, y: 00, width: view.width, height: 50)
         FrameTableView.tableHeaderView = HeaderView
         FrameTableView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
-        //filteredBoard = Dummy.shared.Boards(model: filteredBoard)
+        filteredBoard = Dummy.shared.oneBoardDummy(model: filteredBoard)
         
         
         print("search word \(searchWord)")
@@ -69,10 +69,19 @@ extension SearchResultViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        tableView.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "productCell")
+        let nibName = UINib(nibName: "TableViewCell", bundle: nil)
+
+        tableView.register(nibName, forCellReuseIdentifier: "productCell")
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "productCell")!
-        cell.textLabel?.text = filteredBoard[indexPath.row].title
+        let cell = tableView.dequeueReusableCell(withIdentifier: "productCell", for: indexPath) as! TableViewCell
+
+
+        cell.productNameLabel.text = filteredBoard[indexPath.row].title
+        cell.productImageView.image = UIImage(named: filteredBoard[indexPath.row].profileImage)
+        cell.productPriceLabel.text = String(filteredBoard[indexPath.row].price)
+        cell.timeLabel.text = filteredBoard[indexPath.row].date
+        cell.peopleLabel.text = "\(filteredBoard[indexPath.row].nowPeople)/ \(filteredBoard[indexPath.row].needPeople)"
+        
         return cell
     }
         
@@ -81,6 +90,9 @@ extension SearchResultViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       //go to detail view
+        
+        let detailVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "detail") as! DetailNoteViewController
+        detailVC.oneBoard = filteredBoard[indexPath.row]
+        navigationController?.pushViewController(detailVC, animated: true)
     }
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		249983B5694237119CE23CB6 /* Pods_GDONG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A4436EB40FC72EF51B18E4 /* Pods_GDONG.framework */; };
 		401E05AA2642C37100B9796A /* RecommendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401E05A92642C37100B9796A /* RecommendViewController.swift */; };
 		402AD2E7262C769B00AB16A1 /* cero.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 402AD2E6262C769B00AB16A1 /* cero.jpg */; };
 		4034342126319F4800470FF2 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4034342026319F4800470FF2 /* MainModel.swift */; };
@@ -120,6 +121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				249983B5694237119CE23CB6 /* Pods_GDONG.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
