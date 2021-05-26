@@ -57,6 +57,8 @@
 		DDCFE2C026516CB50026EE2D /* CategoryTableView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDCFE2B626516CB50026EE2D /* CategoryTableView.storyboard */; };
 		DDCFE2C126516CB50026EE2D /* CategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCFE2B726516CB50026EE2D /* CategoryTableViewController.swift */; };
 		DDCFE2C226516CB50026EE2D /* EntityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDCFE2B826516CB50026EE2D /* EntityCell.xib */; };
+		DDE5D681265E1076002D4C7D /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE5D67F265E1076002D4C7D /* PhotoCollectionViewCell.swift */; };
+		DDE5D682265E1076002D4C7D /* PhotoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDE5D680265E1076002D4C7D /* PhotoCollectionViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -113,6 +115,8 @@
 		DDCFE2B626516CB50026EE2D /* CategoryTableView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CategoryTableView.storyboard; sourceTree = "<group>"; };
 		DDCFE2B726516CB50026EE2D /* CategoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryTableViewController.swift; sourceTree = "<group>"; };
 		DDCFE2B826516CB50026EE2D /* EntityCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EntityCell.xib; sourceTree = "<group>"; };
+		DDE5D67F265E1076002D4C7D /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
+		DDE5D680265E1076002D4C7D /* PhotoCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoCollectionViewCell.xib; sourceTree = "<group>"; };
 		EECC471BF5CDA869CB6B4745 /* Pods-GDONG.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GDONG.debug.xcconfig"; path = "Target Support Files/Pods-GDONG/Pods-GDONG.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -273,6 +277,8 @@
 				DDCFE2AF26516CB50026EE2D /* PriceCell.xib */,
 				DDCFE2B026516CB50026EE2D /* ViewCells.swift */,
 				DDCFE2B126516CB50026EE2D /* PhotoCell.xib */,
+				DDE5D67F265E1076002D4C7D /* PhotoCollectionViewCell.swift */,
+				DDE5D680265E1076002D4C7D /* PhotoCollectionViewCell.xib */,
 				DDCFE2B226516CB50026EE2D /* CreateNewItemViewController.swift */,
 				DDCFE2B326516CB50026EE2D /* CreateNewItem.storyboard */,
 				DDCFE2B426516CB50026EE2D /* CategoryCell.xib */,
@@ -361,6 +367,7 @@
 				407C42C12638495B008940B1 /* ChatListCell.xib in Resources */,
 				8E003BDC2650F0B600CB5802 /* RecentSearchTableViewCell.xib in Resources */,
 				8E42FEF8261D958100763B61 /* Main.storyboard in Resources */,
+				DDE5D682265E1076002D4C7D /* PhotoCollectionViewCell.xib in Resources */,
 				8E782A6D2643C36200D93D89 /* categoryCollectionViewCell.xib in Resources */,
 				40956EBB2625B48200397930 /* bigapple.jpg in Resources */,
 			);
@@ -426,6 +433,7 @@
 				8E42FEF3261D958100763B61 /* SceneDelegate.swift in Sources */,
 				DDCFE2BC26516CB50026EE2D /* CreateNewItemViewController.swift in Sources */,
 				4034342126319F4800470FF2 /* MainModel.swift in Sources */,
+				DDE5D681265E1076002D4C7D /* PhotoCollectionViewCell.swift in Sources */,
 				407B641D2639A4AB00DBCA9D /* ChatListModel.swift in Sources */,
 				8E782A682643C29B00D93D89 /* Model.swift in Sources */,
 				8E782A642643C19000D93D89 /* RecentSearchViewController.swift in Sources */,

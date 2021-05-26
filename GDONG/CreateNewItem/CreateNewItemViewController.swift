@@ -26,15 +26,18 @@ private enum InvalidValueError: Error {
 
 class CreateNewItemViewController: UIViewController {
   
+  @IBOutlet private weak var photoCollectionView: UICollectionView!
   @IBOutlet private weak var tableView: UITableView!
   @IBOutlet weak var toolBar: UIToolbar!
   @IBOutlet weak var photoPickButton: UIButton!
+  @IBOutlet weak var photoCountingLabel: UILabel!
   
   @IBOutlet weak var titleTextField: UITextField!
   @IBOutlet weak var categoryLabel: UILabel!
   @IBOutlet weak var priceCell: PriceCell! // 값을 두개 가져오기 위해서 이것은 cell 로 가져옴
   @IBOutlet weak var entityTextView: UITextView!
   
+  var token: NSObjectProtocol?
   
   private let phPickerVC: PHPickerViewController = {
     var configuration = PHPickerConfiguration()
@@ -47,9 +50,13 @@ class CreateNewItemViewController: UIViewController {
   
   private var userSelectedPhotoImageList: [UIImage] = [] {
     didSet {
-      
+      DispatchQueue.main.async {
+        self.photoCollectionView.reloadData()
+        self.photoCountingLabel.text = "\(self.userSelectedPhotoImageList.count)/10"
+      }
     }
   }
+
   
   /// AllCases of enum `Cells`, the list used as tableview Layout order.
   private let cellList = Cells.allCases
@@ -64,6 +71,23 @@ class CreateNewItemViewController: UIViewController {
     phPickerVC.delegate = self
     
     regitserCells()
+    
+    token = NotificationCenter.default.addObserver(forName: Notification.Name.UserDidDeletePhotoFromPhotoList, object: nil, queue: OperationQueue.main, using: { [weak self] noti in
+      // 더 좋은 방법은 없을까?
+      guard let cell = noti.object as? PhotoCollectionViewCell else { return }
+      
+      for index in 0..<(self?.photoCollectionView.visibleCells.count)! {
+        if cell === self?.photoCollectionView.visibleCells[index] {
+          
+          let cellIndexPath = self?.photoCollectionView.indexPathsForVisibleItems[index]
+          self?.userSelectedPhotoImageList.remove(at: (cellIndexPath?.item)!)
+        }
+      }
+    })
+  }
+  
+  deinit {
+    NotificationCenter.default.removeObserver(token as Any)
   }
   
   @IBAction func backToPreviousView(_ sender: Any) {
@@ -136,6 +160,10 @@ class CreateNewItemViewController: UIViewController {
     present(phPickerVC, animated: true, completion: nil)
   }
   
+  @objc func deletePhotoFromPhotoList() {
+    
+  }
+  
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     
     if segue.identifier == "CategorySegue" {
@@ -167,8 +195,14 @@ extension CreateNewItemViewController: UITableViewDataSource {
     
     switch Cells(rawValue: reuseIdentifier) {
       case .PhotoCell:
-        if let cell = cell as? PhotoCell {
+        if let cell = cell as? PhotoPickerCell {
           cell.imagePickerButton.addTarget(self, action: #selector(presentPHPicker), for: .touchUpInside)
+          self.photoCountingLabel = cell.photoCountingLabel
+          
+          self.photoCollectionView = cell.collectionView
+          
+          cell.collectionView.dataSource = self
+          cell.collectionView.delegate = self
           
           return cell
         }
@@ -258,12 +292,13 @@ extension CreateNewItemViewController: UITextViewDelegate {
 extension CreateNewItemViewController: PHPickerViewControllerDelegate {
   
   func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-    dismiss(animated: true, completion: nil)
     
+    dismiss(animated: true)
     guard !results.isEmpty else { return }
     
     results.forEach { (pickerResult) in
       
+      if self.userSelectedPhotoImageList.count == 10 { return }
       let itemProvider = pickerResult.itemProvider
       if itemProvider.canLoadObject(ofClass: UIImage.self) {
         itemProvider.loadObject(ofClass: UIImage.self) { [weak self] (image, error) in
@@ -271,15 +306,42 @@ extension CreateNewItemViewController: PHPickerViewControllerDelegate {
           if let image = image as? UIImage {
             self?.userSelectedPhotoImageList.append(image)
           }
-          
-          print(self?.userSelectedPhotoImageList.count)
         }
       }
     }
-    
-    return
   }
-  
 }
 
+extension CreateNewItemViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+  
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return userSelectedPhotoImageList.count
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    guard let item = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCollectionViewCell", for: indexPath) as? PhotoCollectionViewCell else {
+      return UICollectionViewCell()
+    }
 
+    item.imageView.image = userSelectedPhotoImageList[indexPath.item]
+    item.backgroundColor = .systemRed
+    
+    return item
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    print("\(#function)")
+  }
+}
+
+extension CreateNewItemViewController: UICollectionViewDelegateFlowLayout {
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    
+    let height = Double(collectionView.bounds.height)
+    let width = height
+    
+    return CGSize(width: width, height: height)
+  }
+
+}

@@ -7,14 +7,22 @@
 
 import UIKit
 
-class PhotoCell: UITableViewCell {
+class PhotoPickerCell: UITableViewCell {
   
   @IBOutlet weak var imagePickerButton: UIButton!
+  @IBOutlet weak var collectionView: UICollectionView!
+  @IBOutlet weak var photoCountingLabel: UILabel!
+//  @IBOutlet weak var photoCell: UICollectionViewCell!
   
   override func awakeFromNib() {
     super.awakeFromNib()
+    
     self.selectionStyle = .none
-    self.reuseIdentifier
+    
+    let cellNib = UINib(nibName: "PhotoCollectionViewCell", bundle: nil)
+    collectionView.register(cellNib, forCellWithReuseIdentifier: "PhotoCollectionViewCell")
+    
+    
   }
 }
 
