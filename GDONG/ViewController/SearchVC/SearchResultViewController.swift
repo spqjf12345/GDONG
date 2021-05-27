@@ -26,6 +26,11 @@ class SearchResultViewController: UIViewController {
     
     @objc func didTapFilteringButton(){
         print("didTapFilteringButton")
+        let filteringVC = UIStoryboard.init(name: "SearchFilter", bundle: nil).instantiateViewController(withIdentifier: "searchFilter")
+        filteringVC.modalPresentationStyle = .fullScreen
+        self.present(filteringVC, animated: true, completion: nil)
+        //self.navigationController?.pushViewController(filteringVC, animated: true)
+        //self.present(filteringVC, animated: true, completion: nil)
     }
     
     var FrameTableView: UITableView = {

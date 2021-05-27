@@ -45,6 +45,8 @@
 		8E782A712643C7A700D93D89 /* DetailNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E782A702643C7A700D93D89 /* DetailNoteViewController.swift */; };
 		8E782A752643C7B600D93D89 /* TitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E782A732643C7B600D93D89 /* TitleTableViewCell.swift */; };
 		8E782A762643C7B600D93D89 /* TitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E782A742643C7B600D93D89 /* TitleTableViewCell.xib */; };
+		8E93387C265E47B1002B9C66 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E93387B265E47B1002B9C66 /* API.swift */; };
+		8E93387F265E5F75002B9C66 /* SearchFilteringViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E93387E265E5F75002B9C66 /* SearchFilteringViewController.swift */; };
 		8EF00F052651922B00AA1EEA /* RecentSearchAllTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF00F042651922B00AA1EEA /* RecentSearchAllTableViewController.swift */; };
 		8EF00F0726524D4E00AA1EEA /* SearchFilter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EF00F0626524D4E00AA1EEA /* SearchFilter.storyboard */; };
 		DDCFE2B926516CB50026EE2D /* PriceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDCFE2AF26516CB50026EE2D /* PriceCell.xib */; };
@@ -101,6 +103,8 @@
 		8E782A702643C7A700D93D89 /* DetailNoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailNoteViewController.swift; sourceTree = "<group>"; };
 		8E782A732643C7B600D93D89 /* TitleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitleTableViewCell.swift; sourceTree = "<group>"; };
 		8E782A742643C7B600D93D89 /* TitleTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TitleTableViewCell.xib; sourceTree = "<group>"; };
+		8E93387B265E47B1002B9C66 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		8E93387E265E5F75002B9C66 /* SearchFilteringViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilteringViewController.swift; sourceTree = "<group>"; };
 		8EF00F042651922B00AA1EEA /* RecentSearchAllTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchAllTableViewController.swift; sourceTree = "<group>"; };
 		8EF00F0626524D4E00AA1EEA /* SearchFilter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SearchFilter.storyboard; sourceTree = "<group>"; };
 		DDCFE2AF26516CB50026EE2D /* PriceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PriceCell.xib; sourceTree = "<group>"; };
@@ -136,6 +140,7 @@
 				4034342026319F4800470FF2 /* MainModel.swift */,
 				407B641C2639A4AB00DBCA9D /* ChatListModel.swift */,
 				40E5228C264E98790036EB3A /* RecommendModel.swift */,
+				8E93387B265E47B1002B9C66 /* API.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -180,16 +185,12 @@
 		407D0674262074FA000B7400 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				8E93387D265E5F42002B9C66 /* SearchVC */,
 				8E782A702643C7A700D93D89 /* DetailNoteViewController.swift */,
-				8E782A632643C18F00D93D89 /* RecentSearchViewController.swift */,
-				8E782A602643C18900D93D89 /* SearchResultViewController.swift */,
-				8E782A5D2643C17E00D93D89 /* SearchViewController.swift */,
 				407D0677262077EC000B7400 /* MainViewController.swift */,
 				407C42C326384A21008940B1 /* ChatListViewController.swift */,
 				401E05A92642C37100B9796A /* RecommendViewController.swift */,
 				8E782A482643BFB200D93D89 /* ProfileViewController.swift */,
-				8EF00F042651922B00AA1EEA /* RecentSearchAllTableViewController.swift */,
-				8EF00F0626524D4E00AA1EEA /* SearchFilter.storyboard */,
 				40ACB72726541AD90025EDAC /* SellViewController.swift */,
 				40ACB72A26541AE40025EDAC /* BuyViewController.swift */,
 			);
@@ -257,6 +258,19 @@
 				8E782A592643C0FD00D93D89 /* Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		8E93387D265E5F42002B9C66 /* SearchVC */ = {
+			isa = PBXGroup;
+			children = (
+				8E782A632643C18F00D93D89 /* RecentSearchViewController.swift */,
+				8E782A602643C18900D93D89 /* SearchResultViewController.swift */,
+				8E782A5D2643C17E00D93D89 /* SearchViewController.swift */,
+				8EF00F042651922B00AA1EEA /* RecentSearchAllTableViewController.swift */,
+				8EF00F0626524D4E00AA1EEA /* SearchFilter.storyboard */,
+				8E93387E265E5F75002B9C66 /* SearchFilteringViewController.swift */,
+			);
+			path = SearchVC;
 			sourceTree = "<group>";
 		};
 		9DF50A56E5EB86E4B544CEEE /* Frameworks */ = {
@@ -418,7 +432,9 @@
 				8E782A752643C7B600D93D89 /* TitleTableViewCell.swift in Sources */,
 				8E42FEFB261D958100763B61 /* GDONG.xcdatamodeld in Sources */,
 				8E782A692643C29B00D93D89 /* Dummy.swift in Sources */,
+				8E93387F265E5F75002B9C66 /* SearchFilteringViewController.swift in Sources */,
 				407C42C02638495B008940B1 /* ChatListCell.swift in Sources */,
+				8E93387C265E47B1002B9C66 /* API.swift in Sources */,
 				8E782A712643C7A700D93D89 /* DetailNoteViewController.swift in Sources */,
 				8E42FEF1261D958100763B61 /* AppDelegate.swift in Sources */,
 				40ACB72B26541AE40025EDAC /* BuyViewController.swift in Sources */,

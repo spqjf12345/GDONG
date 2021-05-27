@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchViewController: UIViewController, UISearchBarDelegate {
+class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate {
     
     var searchController: UISearchController!
     var resultsTableController: SearchResultViewController!
@@ -133,18 +133,27 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         searchController.delegate = self
 
         searchController.searchBar.delegate = self
-        definesPresentationContext = true
+        //definesPresentationContext = true
     }
     
-//    func setToSuggestedSearches() {
-//        //recentController.tableView.delegate = recentController
-////        if searchController.searchBar.searchTextField.tokens.isEmpty {
-////            recentController.tableView.delegate = recentController
-////            print("is empty")
-////        }else{
-////            print("not empty")
-////        }
-//    }
+    func setToSuggestedSearches() {
+        if searchController.searchBar.searchTextField.tokens.isEmpty {
+            recentController.tableView.delegate = self
+            print("is empty")
+        }else{
+            print("not empty")
+        }
+    }
+    
+    //delegate 활용한 여기서 push navi 처리 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let text = recentController.searchHistory[indexPath.row]
+        print(text)
+        let searchResult = SearchResultViewController()
+        searchResult.searchWord = text
+        self.navigationController?.pushViewController(searchResult, animated: true)
+    }
     
 
     func auto_layout(){
@@ -208,7 +217,7 @@ extension SearchViewController: UISearchControllerDelegate {
     func presentSearchController(_ searchController: UISearchController) {
         print("presentSearchController")
         searchController.showsSearchResultsController = true
-        //setToSuggestedSearches()
+        setToSuggestedSearches()
     }
 }
 

@@ -48,6 +48,15 @@ class RecentSearchViewController: UITableViewController, RecentSearchTableViewCe
         tableView.backgroundColor = .white
     }
     
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        let searchResult = SearchResultViewController()
+//        if let index = tableView.indexPathForSelectedRow {
+//            searchResult.searchWord = searchHistory[index.row]
+//        }
+//
+//
+//    }
+    
     @objc func didTapAllSearch(){
 //        let allSearchVC = RecentSearchAllTableViewController()
 //        allSearchVC.historyWord = searchHistory
@@ -76,16 +85,6 @@ class RecentSearchViewController: UITableViewController, RecentSearchTableViewCe
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let text = searchHistory[indexPath.row]
-        
-        let searchResult = SearchResultViewController()
-        searchResult.searchWord = text
-
-        self.navigationController?.pushViewController(searchResult, animated: true)
-    }
-  
     
 
 }
