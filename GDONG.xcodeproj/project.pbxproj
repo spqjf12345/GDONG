@@ -29,6 +29,13 @@
 		8EC4BA99263FEB050041B993 /* categoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC4BA97263FEB050041B993 /* categoryCollectionViewCell.swift */; };
 		8EC4BA9A263FEB060041B993 /* categoryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EC4BA98263FEB050041B993 /* categoryCollectionViewCell.xib */; };
 		8EC4BA9D263FF22E0041B993 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC4BA9C263FF22E0041B993 /* SearchResultViewController.swift */; };
+		8EF00F18265785B700AA1EEA /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF00F17265785B700AA1EEA /* API.swift */; };
+		8EF2886F2660DF0100840302 /* AdditionalInfo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EF2886E2660DF0100840302 /* AdditionalInfo.storyboard */; };
+		8EF288712660EC9500840302 /* NickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF288702660EC9500840302 /* NickNameViewController.swift */; };
+		8EF288732660EE3F00840302 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF288722660EE3F00840302 /* LocationViewController.swift */; };
+		8EF2887526627DDF00840302 /* detailLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF2887426627DDF00840302 /* detailLocationViewController.swift */; };
+		8EF2887C2662A97500840302 /* JusoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF2887A2662A97500840302 /* JusoTableViewCell.swift */; };
+		8EF2887D2662A97500840302 /* JusoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EF2887B2662A97500840302 /* JusoTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +63,13 @@
 		8EC4BA97263FEB050041B993 /* categoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = categoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		8EC4BA98263FEB050041B993 /* categoryCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = categoryCollectionViewCell.xib; sourceTree = "<group>"; };
 		8EC4BA9C263FF22E0041B993 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
+		8EF00F17265785B700AA1EEA /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		8EF2886E2660DF0100840302 /* AdditionalInfo.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AdditionalInfo.storyboard; sourceTree = "<group>"; };
+		8EF288702660EC9500840302 /* NickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameViewController.swift; sourceTree = "<group>"; };
+		8EF288722660EE3F00840302 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
+		8EF2887426627DDF00840302 /* detailLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = detailLocationViewController.swift; sourceTree = "<group>"; };
+		8EF2887A2662A97500840302 /* JusoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JusoTableViewCell.swift; sourceTree = "<group>"; };
+		8EF2887B2662A97500840302 /* JusoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JusoTableViewCell.xib; sourceTree = "<group>"; };
 		B5CB9861EE62390BC891B506 /* Pods_GDONG.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GDONG.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED3C4B96BF1AF2716918D5A6 /* Pods-GDONG.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GDONG.release.xcconfig"; path = "Target Support Files/Pods-GDONG/Pods-GDONG.release.xcconfig"; sourceTree = "<group>"; };
 		EDB6198BF78650B9DC772EC0 /* Pods-GDONG.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GDONG.debug.xcconfig"; path = "Target Support Files/Pods-GDONG/Pods-GDONG.debug.xcconfig"; sourceTree = "<group>"; };
@@ -134,6 +148,12 @@
 			children = (
 				8E42FF09261D9B4600763B61 /* LoginViewController.swift */,
 				8E6C083C2624B1D0009CE9C3 /* AuthenticationViewModel.swift */,
+				8EF2886E2660DF0100840302 /* AdditionalInfo.storyboard */,
+				8EF288702660EC9500840302 /* NickNameViewController.swift */,
+				8EF288722660EE3F00840302 /* LocationViewController.swift */,
+				8EF2887426627DDF00840302 /* detailLocationViewController.swift */,
+				8EF2887A2662A97500840302 /* JusoTableViewCell.swift */,
+				8EF2887B2662A97500840302 /* JusoTableViewCell.xib */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -150,6 +170,7 @@
 		8E61FDD726301721008CCB8A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				8EF00F17265785B700AA1EEA /* API.swift */,
 				8E6C081526240E96009CE9C3 /* Extension.swift */,
 				8E61FDD826301739008CCB8A /* Model.swift */,
 				8E61FDDC26301797008CCB8A /* Dummy.swift */,
@@ -257,6 +278,8 @@
 			files = (
 				8E61FDFB26301D3A008CCB8A /* TitleTableViewCell.xib in Resources */,
 				8E42FF00261D958800763B61 /* LaunchScreen.storyboard in Resources */,
+				8EF2887D2662A97500840302 /* JusoTableViewCell.xib in Resources */,
+				8EF2886F2660DF0100840302 /* AdditionalInfo.storyboard in Resources */,
 				8E42FEFD261D958800763B61 /* Assets.xcassets in Resources */,
 				8EC4BA9A263FEB060041B993 /* categoryCollectionViewCell.xib in Resources */,
 				8E42FEF8261D958100763B61 /* Main.storyboard in Resources */,
@@ -330,14 +353,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E782A162641481100D93D89 /* ViewController.swift in Sources */,
+				8EF00F18265785B700AA1EEA /* API.swift in Sources */,
 				8E42FEFB261D958100763B61 /* GDONG.xcdatamodeld in Sources */,
+				8EF2887C2662A97500840302 /* JusoTableViewCell.swift in Sources */,
 				8E782A22264182B600D93D89 /* RecentSearchViewController.swift in Sources */,
 				8E9D5C642639B9FE0014C1F0 /* SearchViewController.swift in Sources */,
 				8EC4BA99263FEB050041B993 /* categoryCollectionViewCell.swift in Sources */,
 				8E61FDDD26301797008CCB8A /* Dummy.swift in Sources */,
+				8EF288732660EE3F00840302 /* LocationViewController.swift in Sources */,
+				8EF2887526627DDF00840302 /* detailLocationViewController.swift in Sources */,
 				8E61FDFA26301D3A008CCB8A /* TitleTableViewCell.swift in Sources */,
 				8E61FDD52630167A008CCB8A /* DetailNoteViewController.swift in Sources */,
 				8E42FEF1261D958100763B61 /* AppDelegate.swift in Sources */,
+				8EF288712660EC9500840302 /* NickNameViewController.swift in Sources */,
 				8EC4BA93263FE26F0041B993 /* ProfileViewController.swift in Sources */,
 				8EC4BA9D263FF22E0041B993 /* SearchResultViewController.swift in Sources */,
 				8E61FDD926301739008CCB8A /* Model.swift in Sources */,

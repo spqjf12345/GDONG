@@ -8,6 +8,7 @@
 import UIKit
 import CoreData
 import KakaoSDKCommon
+import KakaoSDKUser
 import GoogleSignIn
 
 

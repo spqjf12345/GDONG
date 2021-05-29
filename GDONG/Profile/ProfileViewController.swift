@@ -16,6 +16,7 @@ class ProfileViewController: UIViewController {
 
     private let sec = ["알림", "설정", "계정 설정"]
     var tempLogout = ["로그아웃", "회원 탈퇴", "앱 정보"]
+    
     private let FrameTableView: UITableView = {
         let tableview = UITableView(frame: .zero, style: .insetGrouped)
         tableview.register(UITableViewCell.self, forCellReuseIdentifier: "cell")

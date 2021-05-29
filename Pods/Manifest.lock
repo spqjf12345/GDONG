@@ -50,6 +50,7 @@ PODS:
   - TTGTagCollectionView (1.11.1)
 
 DEPENDENCIES:
+  - Alamofire (~> 5.2)
   - GoogleSignIn
   - KakaoOpenSDK
   - KakaoSDKAuth
@@ -82,6 +83,6 @@ SPEC CHECKSUMS:
   KakaoSDKUser: 11955811d99d1ff1f1dfd5428afe69937e31ccef
   TTGTagCollectionView: 86fcbfa6a7493c9e860b01c2e693cffc8acf6de1
 
-PODFILE CHECKSUM: a70487037e807954882bde6e4486ffe1bca80dc1
+PODFILE CHECKSUM: fa6b6c4005413f1215f8d5859a66f0975ae0b36a
 
 COCOAPODS: 1.10.1

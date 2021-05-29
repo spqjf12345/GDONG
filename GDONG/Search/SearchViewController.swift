@@ -14,7 +14,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     var recentController : RecentSearchViewController!
 
     var categoryList:[Category] = []
-    static let activitySuffix = "mainRestored"
+
     /// Data model for the table view.
     var board = [Board]()
     var user = [User]()

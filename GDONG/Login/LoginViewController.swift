@@ -11,8 +11,10 @@ import KakaoSDKAuth
 import KakaoSDKUser
 import KakaoOpenSDK
 import GoogleSignIn
+import Alamofire
+import CoreLocation
 
-class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding, GIDSignInDelegate {
+class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding, GIDSignInDelegate, CLLocationManagerDelegate {
     let viewModel = AuthenticationViewModel()
     var user: [User] = []
  
@@ -62,8 +64,17 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        GIDSignIn.sharedInstance()?.presentingViewController = self
+        GIDSignIn.sharedInstance()?.presentingViewController = self // 로그인화면 불러오기
+        GIDSignIn.sharedInstance().restorePreviousSignIn() // 자동 로그인
         GIDSignIn.sharedInstance()?.delegate = self
+        var locationManager: CLLocationManager!
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        
+        //foreground 일때 위치 추적 권한 요청
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
 
     }
     
@@ -146,12 +157,15 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
         // 사용자 정보 가져오기
             if let userName = user.profile.name,
                let userEmail = user.profile.email,
-               let idToken = user.authentication.idToken {
+               let idToken = user.authentication.idToken,
+               let accessToken = user.authentication.accessToken { //send to server
+                
                 print("google login:")
                 print("google token \(idToken)")
                 print("User Email : \(userEmail)")
                 print("User Name : \((userName))")
                 self.autoLogin(UN: userName, UE: userEmail, FROM: "google")
+                API.shared.oAuth(from: "google", access_token: accessToken, name: userName)
             } else {
                 print("Error : User Data Not Found")
             }
@@ -260,13 +274,26 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
         UIApplication.shared.windows.first?.makeKeyAndVisible()
  
     }
+    
+    func MoveToAdditionalInfo(){
+       
+        let nickVC = UIStoryboard.init(name: "AdditionalInfo", bundle: nil).instantiateViewController(withIdentifier: "nickName")
+        
+        let additionalNavVC = UINavigationController(rootViewController: nickVC)
+       
+        UIApplication.shared.windows.first?.rootViewController = additionalNavVC
+        UIApplication.shared.windows.first?.makeKeyAndVisible()
+    }
 
     func autoLogin(UN: String, UE: String, FROM: String){
         print("auto Login did")
         UserDefaults.standard.set(UN, forKey: "userName")
         UserDefaults.standard.set(UE, forKey: "userEmail")
         UserDefaults.standard.set(FROM, forKey: "from")
-        self.MoveToTabbar()
+        //if user is new
+        self.MoveToAdditionalInfo()
+        //else
+        //self.MoveToTabbar()
     }
     
     func checkAutoLogin(){
