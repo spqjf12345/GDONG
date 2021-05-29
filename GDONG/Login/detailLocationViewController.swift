@@ -89,9 +89,8 @@ class detailLocationViewController: UIViewController {
     }
     
     func alertController(juso: String, completion: @escaping ((String) -> Void)){
-        let alertVC = UIAlertController()
-        alertVC.title = "현재 위치 확인"
-        alertVC.message = "\(juso)를 현재 위치로 설정하시겠습니까?"
+        let alertVC = UIAlertController(title: "현재 위치 확인", message: "\(juso)를 현재 위치로 설정하시겠습니까?", preferredStyle: .alert)
+        
         
         let okAction = UIAlertAction(title: "OK", style: .default, handler: { action in
            completion("OK")
