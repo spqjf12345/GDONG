@@ -34,14 +34,14 @@ class RecentSearchViewController: UITableViewController, RecentSearchTableViewCe
             label.text = "최근 검색"
             label.frame = CGRect(x: 10, y: 0, width: 100, height: 30)
             
-            let allButton = UIButton()
-            allButton.setTitle("모두 보기", for: .normal)
-            allButton.addTarget(self, action: #selector(didTapAllSearch), for: .touchUpInside)
-            allButton.setTitleColor(UIColor.blue, for: .normal)
-            allButton.frame = CGRect(x: 300, y: 0, width: 100, height: 30)
+//            let allButton = UIButton()
+//            allButton.setTitle("모두 보기", for: .normal)
+//            allButton.addTarget(self, action: #selector(didTapAllSearch), for: .touchUpInside)
+//            allButton.setTitleColor(UIColor.blue, for: .normal)
+//            allButton.frame = CGRect(x: 300, y: 0, width: 100, height: 30)
             view.backgroundColor = UIColor.lightGray
             view.addSubview(label)
-            view.addSubview(allButton)
+            //view.addSubview(allButton)
             return view
         }()
         tableView.tableFooterView = UIView(frame: CGRect.zero)
@@ -57,15 +57,15 @@ class RecentSearchViewController: UITableViewController, RecentSearchTableViewCe
 //
 //    }
     
-    @objc func didTapAllSearch(){
+//    @objc func didTapAllSearch(){
 //        let allSearchVC = RecentSearchAllTableViewController()
 //        allSearchVC.historyWord = searchHistory
 //
 //        allSearchVC.tableView.reloadData()
 //
 //        navVC.pushViewController(allSearchVC, animated: true)
-        //self.present(allSearchVC, animated: true, completion: nil)
-    }
+//        self.present(allSearchVC, animated: true, completion: nil)
+//    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchHistory.count

@@ -28,9 +28,9 @@ class SearchResultViewController: UIViewController {
         print("didTapFilteringButton")
         let filteringVC = UIStoryboard.init(name: "SearchFilter", bundle: nil).instantiateViewController(withIdentifier: "searchFilter")
         filteringVC.modalPresentationStyle = .fullScreen
-        self.present(filteringVC, animated: true, completion: nil)
-        //self.navigationController?.pushViewController(filteringVC, animated: true)
-        //self.present(filteringVC, animated: true, completion: nil)
+        filteringVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(filteringVC, animated: true)
+
     }
     
     var FrameTableView: UITableView = {
