@@ -379,11 +379,22 @@
                         <outlet property="FrameTableView" destination="EAA-2p-zVk" id="cB7-pS-lA7"/>
                         <outlet property="userLocation" destination="UM5-ea-cbe" id="GCs-nh-CjT"/>
                         <outlet property="userName" destination="o1d-F6-y8Z" id="ef2-jN-gzr"/>
+                        <segue destination="Iz0-bL-Nmi" kind="show" identifier="myPost" id="iej-XA-6FL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CER-hL-fgm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1005.7971014492755" y="786.83035714285711"/>
+        </scene>
+        <!--myPost-->
+        <scene sceneID="VIC-lX-v5C">
+            <objects>
+                <viewControllerPlaceholder storyboardName="MyPost" referencedIdentifier="myPost" id="Iz0-bL-Nmi" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="FLU-Br-NIp"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KIk-zu-78u" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1780" y="775"/>
         </scene>
         <!--Buy View Controller-->
         <scene sceneID="Pnd-P9-Pgl">

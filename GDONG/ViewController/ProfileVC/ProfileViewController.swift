@@ -7,26 +7,34 @@
 
 import UIKit
 import AuthenticationServices
+import CoreLocation
 //import KakaoSDKAuth
 //import KakaoSDKUser
 //import KakaoOpenSDK
 //import GoogleSignIn
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, CLLocationManagerDelegate {
 
+    var locationManager: CLLocationManager!
     @IBOutlet weak var userName: UILabel!
     
     @IBOutlet weak var userLocation: UILabel!
     
     @IBAction func editButton(_ sender: Any) {
-        alertEditVC()
+        alertEditName()
     }
     
     @IBAction func locationEditbutton(_ sender: Any) {
+        alertEditLocation()
     }
     
     @IBAction func connectAccount(_ sender: Any) {
-        print("find connect Account")
+        //get user account
+        let connectedAccountVC = UIStoryboard.init(name: "MyPost", bundle: nil).instantiateViewController(withIdentifier: "connectAccount")
+            connectedAccountVC.modalPresentationStyle = .fullScreen
+            self.present(connectedAccountVC, animated: true, completion: nil)
+        
+        
     }
     
     private var nameTextField: UITextField = {
@@ -35,7 +43,7 @@ class ProfileViewController: UIViewController {
     }()
     
     //alertVC with textfield
-    func alertEditVC(){
+    func alertEditName(){
         let alertVC = UIAlertController(title:"회원 정보 수정", message: nil, preferredStyle: .alert)
        
         alertVC.addTextField(configurationHandler: { (textField) -> Void in
@@ -78,6 +86,21 @@ class ProfileViewController: UIViewController {
         
     }
     
+    func alertEditLocation(){
+        let alertVC = UIAlertController(title:"위치 정보 수정", message: nil, preferredStyle: .alert)
+        let OkAction = UIAlertAction(title: "OK", style: .default, handler: {
+            (okAction) in
+            //get Location func called
+            self.getLocation()
+        })
+        let cancelAction =  UIAlertAction(title: "CANCEL", style: .cancel)
+        alertVC.addAction(OkAction)
+        alertVC.addAction(cancelAction)
+        self.present(alertVC, animated: true, completion: nil)
+        
+        
+    }
+    
     //check for validate name from server
     func haveSamenickName(name: String) -> Bool{
         if name == "jouureee"{
@@ -87,13 +110,13 @@ class ProfileViewController: UIViewController {
     }
     
     private let sec = ["사용자 정보", "알림", "계정 설정"]
-    var sec1 = ["내가 쓴 글", "내가 찜한 글"]
+    var sec1 = ["내가 쓴 글"]
     var sec2 = ["알림 허용"]
     var sec3 = ["로그아웃", "회원 탈퇴", "앱 정보"]
     
     
     @IBOutlet weak var FrameTableView: UITableView!
-   
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,6 +127,50 @@ class ProfileViewController: UIViewController {
         FrameTableView.delegate = self
         FrameTableView.dataSource = self
         userName.text = "jouureee"
+        
+        
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        
+        //foreground 일때 위치 추적 권한 요청
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
+
+    }
+    
+    
+    func getLocation(){
+        let coor = locationManager.location?.coordinate
+        let latitude = coor?.latitude
+        let longitude = coor?.longitude
+        
+        print(latitude!)
+        print(longitude!)
+        
+        let findLocation = CLLocation(latitude: latitude!, longitude: longitude!)
+        let geocoder = CLGeocoder()
+        let locale = Locale(identifier: "Ko-kr")
+        
+        geocoder.reverseGeocodeLocation(findLocation, preferredLocale: locale, completionHandler: {(place, error) in
+            if let address: [CLPlacemark] = place {
+                if let name: String = address.last?.name{
+                    print(name)
+                    self.userLocation.text = name
+                }
+            }
+        })
+    }
+
+    @objc func didTapnoti(_ sender: UISwitch){
+        if sender.isOn {
+            print("turn")
+            UserDefaults.standard.set(sender.isOn, forKey: "notiState")
+
+        }else{
+            print("turn off")
+            
+        }
     }
 
 
@@ -144,6 +211,13 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             let text = UILabel()
             text.text = sec2[indexPath.row]
             cell.textLabel?.text = text.text
+            if(indexPath.row == 0){
+                let mySwitch = UISwitch()
+                //value store in userDefaults
+                mySwitch.isOn = UserDefaults.standard.bool(forKey: "notiState")
+                mySwitch.addTarget(self, action: #selector(didTapnoti), for: .touchUpInside)
+                cell.accessoryView = mySwitch
+            }
         }else if indexPath.section == 2 {
             let text = UILabel()
             text.text = sec3[indexPath.row]
@@ -154,7 +228,15 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath.section == 0 && indexPath.row == 0 { // 내가 쓴 글, 찜한 글
+           performSegue(withIdentifier: "myPost", sender: nil)
+        }
+        if indexPath.section == 1 && indexPath.row == 0 { // 알림 허용
+            
+        }
         if indexPath.section == 2 && indexPath.row == 0 { // 로그 아웃
             
 //            if(UserDefaults.standard.string(forKey: "from") == "kakao"){
@@ -193,6 +275,19 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
 //        let loginVC = LoginViewController()
 //        UIApplication.shared.windows.first?.rootViewController = loginVC
 //        UIApplication.shared.windows.first?.makeKeyAndVisible()
+    }
+}
+
+class ConnectedViewController: UIViewController {
+   
+    @IBAction func closeButton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        print("view did load")
+        //get user info
     }
 }
 
