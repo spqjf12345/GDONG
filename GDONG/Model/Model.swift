@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Board {
+struct Board: Codable {
     var titleBoard: String // 글 제목
     var contentBoard: String // 글 내용
     var dateBoard: String // 글 작성 날짜

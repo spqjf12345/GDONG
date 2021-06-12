@@ -104,6 +104,9 @@
                                 <state key="normal" title="다음">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="nextButton:" destination="YxW-fr-NRq" eventType="touchUpInside" id="5sb-C7-96h"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Afv-b7-F0g"/>
@@ -201,7 +204,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Hs9-pf-0yQ"/>
+        <segue reference="Get-aM-TFT"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="location" catalog="system" width="128" height="121"/>

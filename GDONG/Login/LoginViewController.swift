@@ -292,10 +292,13 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
         UserDefaults.standard.set(UN, forKey: "userName")
         UserDefaults.standard.set(UE, forKey: "userEmail")
         UserDefaults.standard.set(FROM, forKey: "from")
-        //if user is new
-        self.MoveToAdditionalInfo()
-        //else
-        //self.MoveToTabbar()
+        //if user is new --> 1
+        if UserDefaults.standard.integer(forKey: UserDefaultKey.isNewUser) == 1 {
+            self.MoveToAdditionalInfo()
+        }else {
+            self.MoveToTabbar()
+        }
+
     }
     
     func checkAutoLogin(){

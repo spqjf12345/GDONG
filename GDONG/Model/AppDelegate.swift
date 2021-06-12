@@ -63,9 +63,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
               print("Permission granted: \(granted)")
               
           }
-          // APNS 등록
-          application.registerForRemoteNotifications()
-        
+        // APNS 등록
+        application.registerForRemoteNotifications()
     
         return true
     }
@@ -74,27 +73,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
            print("failed to register for notifications")
        }
        
-       func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-           let tokenParts = deviceToken.map {
-               data in String(format: "%02.2hhx", data) }
-           let token = tokenParts.joined()
-           print("Device Token: \(token)")
-           
-       }
+   func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+       let tokenParts = deviceToken.map {
+           data in String(format: "%02.2hhx", data) }
+       let token = tokenParts.joined()
+       print("Device Token: \(token)")
        
-       //foreground에서 알림이 온 상태
-       func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-           // 푸시가 오면 alert, badge, sound표시를 하라는 의미
-           completionHandler([.alert, .badge, .sound])
-       }
+   }
        
-       //TODO
-       //push 온 경우 (보내는 쪽)
-       func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+   //foreground에서 알림이 온 상태
+   func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+       // 푸시가 오면 alert, badge, sound표시를 하라는 의미
+       completionHandler([.alert, .badge, .sound])
+   }
+   
+   //TODO
+   //push 온 경우 (보내는 쪽)
+   func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
 
-           //post
-           NotificationCenter.default.post(name: .message, object: nil)
-        }
+       //post
+       NotificationCenter.default.post(name: .message, object: nil)
+    }
 
     
 
