@@ -77,6 +77,7 @@ class detailLocationViewController: UIViewController {
         if let jsonData = try? JSONSerialization.data(withJSONObject: object) {
                     let decoder = JSONDecoder()
                     
+                    
                     if let result = try? decoder.decode(T.self, from: jsonData) {
                         return result
                     } else {

@@ -119,6 +119,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
             print("User Email : \(email)")
             print("User Name : \(fullName)")
             self.autoLogin(UN: fullName.givenName! + fullName.familyName!, UE: email, FROM: "apple")
+           // API.shared.oAuth(from: "apple", access_token: accessToken, name: userName)
 
         default:
             break;
@@ -133,7 +134,9 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
     }
     
     @objc func appleLoginButtonClick(){
+        //apple id 기반으로 사용자 인증 요청
         let appleIDProvider = ASAuthorizationAppleIDProvider()
+        
         let request = appleIDProvider.createRequest()
         request.requestedScopes = [.fullName, .email]
         
@@ -180,7 +183,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
     @objc func didTapLoginButton(){
         //self.MoveToDetailView()
         //self.MoveToSearchView()
-        self.MoveToTabbar()
+        self.MoveToAdditionalInfo()
     }
     
     
@@ -197,59 +200,58 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
 
                         //do something
                         let token = oauthToken
-                        guard let gettoken = token else {
+                        guard let accessToken = token?.accessToken else {
                             return
                         }
-                        
-                        
-                        print("login token \(gettoken)")
-                        self.setUserInfo()
+
+                        print("login token \(accessToken)")
+                        self.setUserInfo(accessToken: accessToken)
                     }
                 }
         }
     }
     
-    func setUserInfo(){
+    func setUserInfo(accessToken: String){
         UserApi.shared.me(){(user, error) in
             if let error = error {
                 print(error)
             }else{
                 print("me() success")
-                
                 _ = user
                 print("kakao login")
                 guard let userId = user?.id else { return }
                 guard let userName = user?.kakaoAccount?.profile?.nickname else { return }
                 guard let userEmail = user?.kakaoAccount?.email else { return }
-                print("user info : \(userId) \(userName) \(userEmail)")
-                self.getToken()
+                
+                API.shared.oAuth(from: "kakao", access_token: accessToken, name: userName)
+
                 self.autoLogin(UN: userName, UE: userEmail, FROM: "kakao")
             }
         }
        
     }
     
-    func getToken(){
-        UserApi.shared.accessTokenInfo {(accessTokenInfo, error) in
-            if let error = error {
-                print(error)
-            }
-            else {
-                print("accessTokenInfo() success.")
-                guard let token = accessTokenInfo else { return }
-                print("kakao login token \(token)")
-
-            }
-        }
-    }
+//    func getToken(userName: String){
+//        UserApi.shared.accessTokenInfo {(accessTokenInfo, error) in
+//            if let error = error {
+//                print(error)
+//            }
+//            else {
+//                print("accessTokenInfo() success.")
+//                guard let accessToken = accessTokenInfo else { return }
+//                print(type(of: accessToken))
+//                //API.shared.oAuth(from: "kakao", access_token: accessToken, name: userName)
+//                print("kakao login token \(accessToken)")
+//
+//            }
+//        }
+//    }
     
     func MoveToDetailView(){
-//        print("moveto detailview")
         let detailVC = DetailNoteViewController()
         let navVC = UINavigationController(rootViewController: detailVC)
         UIApplication.shared.windows.first?.rootViewController = navVC
         UIApplication.shared.windows.first?.makeKeyAndVisible()
-//        navVC.pushViewController(detailVC, animated: true)
     }
     
     func MoveToSearchView(){
@@ -309,3 +311,16 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
     }
 
 }
+
+extension UIViewController {
+    
+    func showLoginViewController() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let loginViewController = storyboard.instantiateViewController(withIdentifier: "login") as? LoginViewController {
+            loginViewController.modalPresentationStyle = .fullScreen
+            loginViewController.isModalInPresentation = true
+            self.present(loginViewController, animated: true, completion: nil)
+        }
+    }
+}
+

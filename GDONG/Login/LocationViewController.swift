@@ -66,7 +66,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
         print(latitude!)
         print(longitude!)
         
-        let findLocation = CLLocation(latitude: latitude!, longitude: longitude!)
+        let findLocation = CLLocation(latitude: 37.715133, longitude: 126.734086)
         let geocoder = CLGeocoder()
         let locale = Locale(identifier: "Ko-kr")
         

@@ -20,13 +20,23 @@ struct Board {
     
 }
 
-struct User {
-    var isNomal: Bool
-    var usetName: String
-    var userEmail: String
-    var userImage: String
-    var userLocation: String
-    var likePage: [String]
+
+struct User: Codable {
+    var email: String // 유저 이메일
+    var name: String //유저 네임
+    var authProvider: String //소셜 로그인 정보
+    var isSeller: Bool //판매 권한
+    var chatRoomList: [Int] // 참여 중인 채팅 방 ID
+    var recentHistory: [String] // 최근 검색어
+    var nickName: String //유저 닉네임
+    var profileImageUrl: String // 유저 프로필 이미지 url
+    var followers: [String] //내가 follow 하는 nickName
+    var following: [String] //내가 following 하는 사람
+    //유저 위치
+    var latitude: Double
+    var longitude: Double
+    var posts:[Int]
+    var likes: [Int]
 }
 
 //juso

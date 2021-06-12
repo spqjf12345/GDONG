@@ -39,7 +39,7 @@ class TitleTableViewCell: UITableViewCell {
     public func configure(with modelBoard: Board, modelUser: User){
         self.titleBoard.text = modelBoard.titleBoard
         self.dateBoard.text = modelBoard.dateBoard
-        self.userName.text = modelUser.usetName
+        self.userName.text = modelUser.nickName
         self.categoryBoard.setTitle(modelBoard.categoryBoard, for: .normal)
     }
     
