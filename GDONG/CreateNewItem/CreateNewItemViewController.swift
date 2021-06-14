@@ -16,7 +16,7 @@ private enum Cells: String, CaseIterable {
   case EntityCell
 }
 
-private enum InvalidValueError: Error {
+private enum InvalidValueError: String, Error {
   case invalidPhoto
   case invalidTitle
   case invalidCategory
@@ -97,7 +97,6 @@ class CreateNewItemViewController: UIViewController {
   @IBAction func userDidFinishedWriting(_ sender: Any) {
     
     do {
-      
       try validateWriting()
       
       //TODO: Post Function
@@ -105,14 +104,18 @@ class CreateNewItemViewController: UIViewController {
       
       dismiss(animated: true, completion: nil)
     } catch {
-      presentAlert(with: error)
+      print(error)
+      
+      presentAlert(with: error as! InvalidValueError)
     }
   }
   
-  /// 글 유효성 검사
+  // 유효한 글인지 검사하는 메서드
   private func validateWriting() throws {
     
-    //TODO: ADD Photo Validation
+    if userSelectedPhotoImageList.isEmpty {
+      throw InvalidValueError.invalidPhoto
+    }
     
     guard let text = titleTextField.text, text.count > 0 else {
       throw InvalidValueError.invalidTitle
@@ -122,8 +125,17 @@ class CreateNewItemViewController: UIViewController {
       throw InvalidValueError.invalidCategory
     }
     
-    guard let priceText = priceCell.priceTextField.text, Int(priceText.filter{ $0 != ","})! > 0 else {
+    guard let priceText = priceCell.priceTextField.text, !priceText.isEmpty else {
       throw InvalidValueError.invalidePrice
+    }
+    
+    // price charater list without ','(comma)
+    let priceCharList = [Character](priceText.filter { $0 != "," })
+    
+    for char in priceCharList {
+      if !char.isNumber {
+        throw InvalidValueError.invalidePrice
+      }
     }
     
     /// 글을 아무것도 작성하지 않을 시, lighgray 색상으로 placeholer text 가 채워진다.
@@ -133,11 +145,9 @@ class CreateNewItemViewController: UIViewController {
     
   }
   
-  func presentAlert(with error: Error) {
+  fileprivate func presentAlert(with error: InvalidValueError) {
     
-    guard error is InvalidValueError else { assertionFailure(#function); return }
-    
-    let alert = UIAlertController(title: "비어있는 곳들을 채워주세요🥺", message: nil, preferredStyle: .alert)
+    let alert = UIAlertController(title: "비어있는 곳들을 채워주세요🥺", message: error.rawValue , preferredStyle: .alert)
     
     let action = UIAlertAction(title: "확인", style: .default, handler: nil)
     
