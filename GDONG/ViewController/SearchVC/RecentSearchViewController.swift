@@ -34,29 +34,38 @@ class RecentSearchViewController: UITableViewController, RecentSearchTableViewCe
             label.text = "최근 검색"
             label.frame = CGRect(x: 10, y: 0, width: 100, height: 30)
             
-            let allButton = UIButton()
-            allButton.setTitle("모두 보기", for: .normal)
-            allButton.addTarget(self, action: #selector(didTapAllSearch), for: .touchUpInside)
-            allButton.setTitleColor(UIColor.blue, for: .normal)
-            allButton.frame = CGRect(x: 300, y: 0, width: 100, height: 30)
+//            let allButton = UIButton()
+//            allButton.setTitle("모두 보기", for: .normal)
+//            allButton.addTarget(self, action: #selector(didTapAllSearch), for: .touchUpInside)
+//            allButton.setTitleColor(UIColor.blue, for: .normal)
+//            allButton.frame = CGRect(x: 300, y: 0, width: 100, height: 30)
             view.backgroundColor = UIColor.lightGray
             view.addSubview(label)
-            view.addSubview(allButton)
+            //view.addSubview(allButton)
             return view
         }()
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         tableView.backgroundColor = .white
     }
     
-    @objc func didTapAllSearch(){
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        let searchResult = SearchResultViewController()
+//        if let index = tableView.indexPathForSelectedRow {
+//            searchResult.searchWord = searchHistory[index.row]
+//        }
+//
+//
+//    }
+    
+//    @objc func didTapAllSearch(){
 //        let allSearchVC = RecentSearchAllTableViewController()
 //        allSearchVC.historyWord = searchHistory
 //
 //        allSearchVC.tableView.reloadData()
 //
 //        navVC.pushViewController(allSearchVC, animated: true)
-        //self.present(allSearchVC, animated: true, completion: nil)
-    }
+//        self.present(allSearchVC, animated: true, completion: nil)
+//    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchHistory.count
@@ -76,16 +85,6 @@ class RecentSearchViewController: UITableViewController, RecentSearchTableViewCe
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let text = searchHistory[indexPath.row]
-        
-        let searchResult = SearchResultViewController()
-        searchResult.searchWord = text
-
-        self.navigationController?.pushViewController(searchResult, animated: true)
-    }
-  
     
 
 }

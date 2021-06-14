@@ -8,10 +8,13 @@ target 'GDONG' do
   # Pods for GDONG
 
 pod 'Tabman', '~> 2.11'
+pod 'PagingTableView'
 #pod 'KakaoSDKAuth'  # 카카오 로그인
 #pod 'KakaoSDKUser'
 #pod 'KakaoSDKCommon'
 #pod 'KakaoOpenSDK'
+pod 'DLRadioButton', '~> 1.4'
+pod 'Alamofire', '~> 5.2'
 
 #pod 'GoogleSignIn' #구글 로그인
 
