@@ -22,6 +22,7 @@
 		8E61FDFB26301D3A008CCB8A /* TitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E61FDF926301D3A008CCB8A /* TitleTableViewCell.xib */; };
 		8E6C081626240E97009CE9C3 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6C081526240E96009CE9C3 /* Extension.swift */; };
 		8E6C083D2624B1D0009CE9C3 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6C083C2624B1D0009CE9C3 /* AuthenticationViewModel.swift */; };
+		8E772B11267A0D420034C2BF /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E772B10267A0D420034C2BF /* Login.storyboard */; };
 		8E782A162641481100D93D89 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E782A152641481100D93D89 /* ViewController.swift */; };
 		8E782A22264182B600D93D89 /* RecentSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E782A21264182B600D93D89 /* RecentSearchViewController.swift */; };
 		8E9D5C642639B9FE0014C1F0 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9D5C632639B9FE0014C1F0 /* SearchViewController.swift */; };
@@ -58,6 +59,7 @@
 		8E61FDF926301D3A008CCB8A /* TitleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleTableViewCell.xib; sourceTree = "<group>"; };
 		8E6C081526240E96009CE9C3 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		8E6C083C2624B1D0009CE9C3 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
+		8E772B10267A0D420034C2BF /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		8E782A152641481100D93D89 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8E782A21264182B600D93D89 /* RecentSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchViewController.swift; sourceTree = "<group>"; };
 		8E9D5C632639B9FE0014C1F0 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -67,7 +69,6 @@
 		8EC4BA9C263FF22E0041B993 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
 		8EC87290266616DF00C1B7C5 /* KeychainItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeychainItem.swift; path = "../../../../ImplementingUserAuthenticationWithSignInWithApple/Juice/Supporting Files/KeychainItem.swift"; sourceTree = "<group>"; };
 		8EDD9A192674B045003AFE65 /* UserDefaultKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKey.swift; sourceTree = "<group>"; };
-		8EDD9A1B2674CC02003AFE65 /* push_notification_setting.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = push_notification_setting.md; sourceTree = "<group>"; };
 		8EF00F17265785B700AA1EEA /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		8EF2886E2660DF0100840302 /* AdditionalInfo.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AdditionalInfo.storyboard; sourceTree = "<group>"; };
 		8EF288702660EC9500840302 /* NickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameViewController.swift; sourceTree = "<group>"; };
@@ -112,7 +113,6 @@
 		8E42FEE4261D958100763B61 = {
 			isa = PBXGroup;
 			children = (
-				8EDD9A1B2674CC02003AFE65 /* push_notification_setting.md */,
 				8E42FEEF261D958100763B61 /* GDONG */,
 				8E42FEEE261D958100763B61 /* Products */,
 				795BEC70C24FBCA4FDD295F1 /* Pods */,
@@ -151,6 +151,7 @@
 		8E42FF08261D9B2F00763B61 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				8E772B10267A0D420034C2BF /* Login.storyboard */,
 				8EC87290266616DF00C1B7C5 /* KeychainItem.swift */,
 				8E42FF09261D9B4600763B61 /* LoginViewController.swift */,
 				8E6C083C2624B1D0009CE9C3 /* AuthenticationViewModel.swift */,
@@ -284,6 +285,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E772B11267A0D420034C2BF /* Login.storyboard in Resources */,
 				8E61FDFB26301D3A008CCB8A /* TitleTableViewCell.xib in Resources */,
 				8E42FF00261D958800763B61 /* LaunchScreen.storyboard in Resources */,
 				8EF2887D2662A97500840302 /* JusoTableViewCell.xib in Resources */,

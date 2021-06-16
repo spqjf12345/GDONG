@@ -10,7 +10,6 @@ import Alamofire
 
 class API {
     static var shared = API()
-
     
     func oAuth(from: String, access_token: String, name: String){
         let params: Parameters = [
@@ -24,26 +23,41 @@ class API {
             switch response.result {
             case .success(let obj):
                 print(obj)
+                print(type(of:obj))
                     do{
-                        let dataJSON = try JSONSerialization.data(withJSONObject: obj, options: .prettyPrinted)
+        
+                        let response = obj as! NSDictionary
+                        guard let user = response["user"] as? Dictionary<String, Any> else { return }
+                        let isNew = response["isNew"]
                         
-                        let isNew = 1 // true
+                        let dataJSON = try JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
+
                         let UserData = try JSONDecoder().decode(User.self, from: dataJSON)
-                        print(UserData.authProvider)
-                        print(access_token)
-                        print(UserData.name)
-                        print(UserData.email)
+                        print(UserData)
+
                         UserDefaults.standard.set(UserData.email, forKey: UserDefaultKey.userEmail)
                         UserDefaults.standard.set(access_token, forKey: UserDefaultKey.accessToken)
                         UserDefaults.standard.set(isNew, forKey: UserDefaultKey.isNewUser)
-//                        UserDefaults.standard.set(UserData.name, forKey: UserDefaultKey.userName)
-//                        UserDefaults.standard.set(UserData.nickName, forKey: UserDefaultKey.userNickName)
-                    }catch {
-                        print(error.localizedDescription)
+                        UserDefaults.standard.set(UserData.name, forKey: UserDefaultKey.userName)
+                        UserDefaults.standard.set(UserData.nickName, forKey: UserDefaultKey.userNickName)
                     }
-                case .failure(let e):
-                    print(e.localizedDescription)
-            }
+                    catch let DecodingError.dataCorrupted(context) {
+                            print(context)
+                    } catch let DecodingError.keyNotFound(key, context) {
+                        print("Key '\(key)' not found:", context.debugDescription)
+                        print("codingPath:", context.codingPath)
+                    } catch let DecodingError.valueNotFound(value, context) {
+                        print("Value '\(value)' not found:", context.debugDescription)
+                        print("codingPath:", context.codingPath)
+                    } catch let DecodingError.typeMismatch(type, context)  {
+                        print("Type '\(type)' mismatch:", context.debugDescription)
+                        print("codingPath:", context.codingPath)
+                    } catch {
+                        print("error: ", error)
+                    }
+                        case .failure(let e):
+                            print(e.localizedDescription)
+                    }
             
             
             
@@ -71,8 +85,10 @@ class API {
 
 
 struct Config {
-    static let baseUrl = "http://192.168.35.192:5000/api/v0" // test server url
+    static let baseUrl = "http://192.168.35.236:5000/api/v0" // test server url
 }
+
+//192.168.35.23
 // 172.30.1.1
 //192.168.35.192
 //192.168.35.139

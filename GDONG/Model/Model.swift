@@ -22,6 +22,8 @@ struct Board: Codable {
 
 
 struct User: Codable {
+    var __v: Int
+    var _id: String
     var email: String // 유저 이메일
     var name: String //유저 네임
     var authProvider: String //소셜 로그인 정보
@@ -32,11 +34,37 @@ struct User: Codable {
     var profileImageUrl: String // 유저 프로필 이미지 url
     var followers: [String] //내가 follow 하는 nickName
     var following: [String] //내가 following 하는 사람
+    var createdAt: String
+    var updatedAt: String
+    var deviceToken: String
     //유저 위치
-    var latitude: Double
-    var longitude: Double
+    var latitude: Int
+    var longitude: Int
     var posts:[Int]
     var likes: [Int]
+    
+    enum CodingKeys: String, CodingKey {
+        case __v
+        case _id
+        case email
+        case name
+        case authProvider
+        case isSeller
+        case chatRoomList = "chatroomList"
+        case recentHistory
+        case nickName = "nickname"
+        case profileImageUrl
+        case followers
+        case following
+        case createdAt
+        case updatedAt
+        case deviceToken
+        case latitude
+        case longitude
+        case posts
+        case likes
+
+    }
 }
 
 //juso
