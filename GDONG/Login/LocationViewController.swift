@@ -34,7 +34,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
     @IBAction func nextButton(_ sender: Any) {
         //post location
     
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let storyboard: UIStoryboard = UIStoryboard(name: "Login", bundle: nil)
         let loginVC = storyboard.instantiateViewController(identifier: "login")
         UIApplication.shared.windows.first?.rootViewController = loginVC
         UIApplication.shared.windows.first?.makeKeyAndVisible()

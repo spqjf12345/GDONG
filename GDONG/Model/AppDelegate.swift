@@ -43,13 +43,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         //화면 분기
         if (UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != nil) {
             print("access token yes")
-            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let storyboard: UIStoryboard = UIStoryboard(name: "Login", bundle: nil)
             let tabbarVC = storyboard.instantiateViewController(identifier: "tabbar")
             window?.rootViewController = tabbarVC
             window?.makeKeyAndVisible()
         }else{
             print("access token nil")
-            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let storyboard: UIStoryboard = UIStoryboard(name: "Login", bundle: nil)
             let loginVC = storyboard.instantiateViewController(identifier: "login")
             window?.rootViewController = loginVC
             window?.makeKeyAndVisible()
