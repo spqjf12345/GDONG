@@ -47,13 +47,16 @@ PODS:
   - KakaoSDKUser (2.4.1):
     - KakaoSDKAuth (= 2.4.1)
     - KakaoSDKCommon (= 2.4.1)
+  - TTGTagCollectionView (1.11.1)
 
 DEPENDENCIES:
+  - Alamofire (~> 5.2)
   - GoogleSignIn
   - KakaoOpenSDK
   - KakaoSDKAuth
   - KakaoSDKCommon
   - KakaoSDKUser
+  - TTGTagCollectionView
 
 SPEC REPOS:
   trunk:
@@ -66,6 +69,7 @@ SPEC REPOS:
     - KakaoSDKAuth
     - KakaoSDKCommon
     - KakaoSDKUser
+    - TTGTagCollectionView
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
@@ -77,7 +81,8 @@ SPEC CHECKSUMS:
   KakaoSDKAuth: fcba1c9ede431683f5bdd84c835a96981cb115a5
   KakaoSDKCommon: 0912aa0c7db051ae8dc07a35395cf644f7728f95
   KakaoSDKUser: 11955811d99d1ff1f1dfd5428afe69937e31ccef
+  TTGTagCollectionView: 86fcbfa6a7493c9e860b01c2e693cffc8acf6de1
 
-PODFILE CHECKSUM: 3a700faf31202aabd9a5ea402f937b57e6e0ee26
+PODFILE CHECKSUM: fa6b6c4005413f1215f8d5859a66f0975ae0b36a
 
 COCOAPODS: 1.10.1
