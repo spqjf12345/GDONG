@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="RecentSearchTableViewCell" customModule="GDONG" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jM3-TD-ur9">
+                        <rect key="frame" x="282" y="10" width="12" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="TFX-Lu-udv"/>
+                            <constraint firstAttribute="width" constant="12" id="ax2-Uf-feh"/>
+                        </constraints>
+                        <state key="normal" title="X">
+                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
+                        <connections>
+                            <action selector="deleteButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="qvJ-PK-FdR"/>
+                        </connections>
+                    </button>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PM7-lm-e0O">
+                        <rect key="frame" x="7" y="10" width="32" height="24"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qMW-xD-0Gq">
+                        <rect key="frame" x="58" y="10" width="42" height="24"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="jM3-TD-ur9" secondAttribute="bottom" constant="19" id="1LZ-uD-3DH"/>
+                    <constraint firstItem="PM7-lm-e0O" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="7" id="3bM-gq-AOv"/>
+                    <constraint firstItem="jM3-TD-ur9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="5XY-3k-jcU"/>
+                    <constraint firstItem="qMW-xD-0Gq" firstAttribute="leading" secondItem="PM7-lm-e0O" secondAttribute="trailing" constant="19" id="5ve-jr-6bb"/>
+                    <constraint firstAttribute="bottom" secondItem="qMW-xD-0Gq" secondAttribute="bottom" constant="10" id="KYc-A2-GJ3"/>
+                    <constraint firstItem="PM7-lm-e0O" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="U3P-ko-7m6"/>
+                    <constraint firstAttribute="bottom" secondItem="PM7-lm-e0O" secondAttribute="bottom" constant="10" id="Zkp-al-TL3"/>
+                    <constraint firstItem="qMW-xD-0Gq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="ajU-ZQ-SDk"/>
+                    <constraint firstItem="jM3-TD-ur9" firstAttribute="leading" secondItem="qMW-xD-0Gq" secondAttribute="trailing" constant="182" id="en6-YD-5fi"/>
+                    <constraint firstAttribute="trailing" secondItem="jM3-TD-ur9" secondAttribute="trailing" constant="26" id="kdr-mE-q1m"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="categoryImage" destination="PM7-lm-e0O" id="DTn-wG-6ov"/>
+                <outlet property="searchWord" destination="qMW-xD-0Gq" id="8kt-lr-542"/>
+            </connections>
+            <point key="canvasLocation" x="155.07246376811597" y="68.303571428571431"/>
+        </tableViewCell>
+    </objects>
+</document>
