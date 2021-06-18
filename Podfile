@@ -6,7 +6,6 @@ target 'GDONG' do
   use_frameworks!
 
   # Pods for GDONG
-
 pod 'Tabman', '~> 2.11'
 pod 'PagingTableView'
 #pod 'KakaoSDKAuth'  # 카카오 로그인

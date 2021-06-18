@@ -34,7 +34,6 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
             connectedAccountVC.modalPresentationStyle = .fullScreen
             self.present(connectedAccountVC, animated: true, completion: nil)
         
-        
     }
     
     private var nameTextField: UITextField = {
