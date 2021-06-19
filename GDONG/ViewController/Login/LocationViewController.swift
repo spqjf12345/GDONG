@@ -13,11 +13,15 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var locationTextfield: UITextField!
     
     var getLocation = ""
-    var getCLLocation: CLLocation = CLLocation(latitude: 0, longitude: 0)
     var myLocation: CLLocation = CLLocation(latitude: 0, longitude: 0)
+    var nowLocation: CLLocation = CLLocation(latitude: 0, longitude: 0)
     var nickName = ""
     
     @IBAction func findCurrentLocaButton(_ sender: Any) {
+        
+        self.nowLocation = self.myLocation
+        
+        print("now Location is \(nowLocation)")
         
         locationTextfield.text = currentLocation
     }
@@ -27,11 +31,8 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
         guard let textField = locationTextfield.text else { return }
         if(textField == ""){
             self.showToast(message: "위치를 입력해주세요", font: UIFont.systemFont(ofSize: 10))
-        }else{
-
-        performSegue(withIdentifier: "search", sender: nil)
-            
-
+        } else{
+            performSegue(withIdentifier: "search", sender: nil)
         }
     }
     
@@ -39,25 +40,34 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
         //post location
         print(nickName)
         print(locationTextfield.text)
-        if(getCLLocation.coordinate.latitude == 0.0 && getCLLocation.coordinate.longitude == 0.0){
-            if(locationTextfield.text == currentLocation){
-                //현재 위치 post
-                print("현재 위치 ")
-                print(myLocation.coordinate.latitude)
-                print(myLocation.coordinate.longitude)
-            }else {
-                print("가져온 위치")
-                print(getCLLocation.coordinate.latitude)
-                print(getCLLocation.coordinate.longitude)
-            }
-            
-        }
         
-      
-//        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//        let loginVC = storyboard.instantiateViewController(identifier: "login")
-//        UIApplication.shared.windows.first?.rootViewController = loginVC
-//        UIApplication.shared.windows.first?.makeKeyAndVisible()
+        print("현재 위치 ")
+        let nowLatitude = nowLocation.coordinate.latitude
+        let nowLongitude =  nowLocation.coordinate.longitude
+        print(nowLatitude)
+        print(nowLongitude)
+        print("\(nickName)")
+        if (nowLatitude != 0.0 && nowLongitude != 0.0){
+            //post
+            //API.shared.update(nickName: nickName, logitude: nowLongitude, latitude: nowLatitude)
+            API.shared.update(nickName: "jouureees", longitude: nowLongitude, latitude: nowLatitude)
+            
+            let tabBarViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "tabbar") as! UITabBarController
+
+            UIApplication.shared.windows.first?.rootViewController = tabBarViewController
+            UIApplication.shared.windows.first?.makeKeyAndVisible()
+        }else {
+            showAlertVC()
+        }
+    }
+    
+    
+    
+    func showAlertVC(){
+        let alertVC = UIAlertController(title: "생성 실패", message: "위치 정보를 입력해주세요", preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertVC.addAction(OKAction)
+        self.present(alertVC, animated: true, completion: nil)
     }
     
     var locationManager: CLLocationManager!
@@ -76,8 +86,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         print(nickName)
-        print(getCLLocation.coordinate.latitude)
-        print(getCLLocation.coordinate.longitude)
+        print("now Location is \(nowLocation)")
         
         
         if(getLocation != ""){
@@ -98,10 +107,8 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
         let latitude = coor?.latitude
         let longitude = coor?.longitude
         
-        print(latitude!)
-        print(longitude!)
-        
         myLocation = CLLocation(latitude: latitude!, longitude: longitude!)
+        
         let geocoder = CLGeocoder()
         let locale = Locale(identifier: "Ko-kr")
         

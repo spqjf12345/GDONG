@@ -96,6 +96,7 @@ class API {
             switch response.result {
             case .success(let code):
                 print(code)
+                break
             case .failure(let e):
                 print(e.localizedDescription)
             }
@@ -103,10 +104,10 @@ class API {
     }
     
     
-    func update(nickName: String, logitude: Double, latitude: Double){
+    func update(nickName: String, longitude: Double, latitude: Double){
            let params: Parameters = [
                "nickname": nickName,
-               "logitude": logitude,
+               "longitude": longitude,
                "latitude": latitude
            ]
            

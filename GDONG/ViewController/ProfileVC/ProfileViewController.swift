@@ -267,7 +267,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     func autoLogout(from: String, title: String, messege: String){
         let alertVC = UIAlertController(title: title, message: messege, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "ok", style: .default, handler: {_ in
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: {_ in
             if(title == "회원 탈퇴"){
                 API.shared.userQuit()
             }else{
@@ -294,7 +294,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             self.moveToLoginVC()
         })
         
-        let cancelAction = UIAlertAction(title: "cancel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "CANCEL", style: .cancel, handler: nil)
         alertVC.addAction(okAction)
         alertVC.addAction(cancelAction)
         self.present(alertVC, animated: true, completion: nil)
@@ -304,8 +304,12 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         UserDefaults.standard.removeObject(forKey: UserDefaultKey.userName)
         UserDefaults.standard.removeObject(forKey: UserDefaultKey.userEmail)
         UserDefaults.standard.removeObject(forKey: UserDefaultKey.accessToken)
+        UserDefaults.standard.removeObject(forKey: UserDefaultKey.authProvider)
+        UserDefaults.standard.removeObject(forKey: UserDefaultKey.userNickName)
+        UserDefaults.standard.removeObject(forKey: UserDefaultKey.isNewUser)
+
         
-        let loginVC = LoginViewController()
+        let loginVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "login")
         UIApplication.shared.windows.first?.rootViewController = loginVC
         UIApplication.shared.windows.first?.makeKeyAndVisible()
     }

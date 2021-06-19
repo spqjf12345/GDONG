@@ -162,10 +162,9 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
                 print("User Email : \(userEmail)")
                 print("User Name : \((userName))")
                 
-                DispatchQueue.global().sync {
-                    API.shared.oAuth(from: "google", access_token: accessToken, name: userName, completed: {
-                    })
-                }
+                API.shared.oAuth(from: "google", access_token: accessToken, name: userName, completed: {
+                })
+                
                
 
                 
@@ -181,7 +180,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
     }
     
     @objc func didTapLoginButton(){
-        self.MoveToTabbar()
+        self.MoveToAdditionalInfo()
     }
     
     

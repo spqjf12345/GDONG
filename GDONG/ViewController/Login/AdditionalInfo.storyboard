@@ -48,6 +48,7 @@
                     <navigationItem key="navigationItem" id="1Dk-za-mIx"/>
                     <connections>
                         <outlet property="nickNameTextfield" destination="FeE-ed-r4D" id="sAl-pC-3uU"/>
+                        <segue destination="YxW-fr-NRq" kind="show" identifier="location" id="h8l-9O-XMX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -137,10 +138,10 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XwS-Lb-ZJ8">
+                                        <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XwS-Lb-ZJ8">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                                            <color key="backgroundColor" red="0.93578169529999999" green="1" blue="0.90593017080000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="backgroundColor" red="0.93778945459999996" green="0.93778945459999996" blue="0.93778945459999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
                                     </subviews>
@@ -204,7 +205,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Get-aM-TFT"/>
+        <segue reference="Hs9-pf-0yQ"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="location" catalog="system" width="128" height="121"/>

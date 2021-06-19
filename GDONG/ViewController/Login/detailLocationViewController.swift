@@ -144,7 +144,8 @@ class detailLocationViewController: UIViewController {
                     let latitude = (p.location?.coordinate.latitude)!
                     let logitude = (p.location?.coordinate.longitude)!
                 jusoLocation = CLLocation(latitude: latitude, longitude: logitude)
-                locationVC.getCLLocation = jusoLocation
+                //locationVC.getCLLocation = jusoLocation
+                locationVC.nowLocation = jusoLocation
              }
 
         }
