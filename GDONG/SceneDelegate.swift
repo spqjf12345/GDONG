@@ -21,13 +21,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         
         guard let _ = (scene as? UIWindowScene) else { return }
-//        if let windowScene = scene as? UIWindowScene {
-//                let window = UIWindow(windowScene: windowScene)
-//                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                window.rootViewController = storyboard.instantiateViewController(identifier: "login")
-//                self.window = window
-//                window.makeKeyAndVisible()
-//            }
+        if let windowScene = scene as? UIWindowScene {
+                let window = UIWindow(windowScene: windowScene)
+            
+                if (UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != nil) {
+                    print("access token yes")
+                    let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                    let tabbarVC = storyboard.instantiateViewController(withIdentifier: "tabbar")
+                    window.rootViewController = tabbarVC
+                    self.window = window
+                    window.makeKeyAndVisible()
+                }else{
+                    print("access token nil")
+                    let storyboard: UIStoryboard = UIStoryboard(name: "Login", bundle: nil)
+                    let loginVC = storyboard.instantiateViewController(withIdentifier: "login")
+                    window.rootViewController = loginVC
+                    self.window = window
+                    window.makeKeyAndVisible()
+                }
+            }
     
     }
 

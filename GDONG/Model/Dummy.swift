@@ -11,7 +11,7 @@ class Dummy {
     
     func oneBoardDummy(model: [Board]) -> [Board]{
        var board: [Board] = []
-        board.append(Board(titleBoard: "샤인 머스켓 나눠 사요", contentBoard: "content", dateBoard: "2021.04.20", categoryBoard: "과일", price: "20000", viewBoard: 20, interestBoard: 4, needPeople: 5, nowPeople: 1))
+//        board.append(Board(title: "샤인 머스켓 나눠 사요", content: "content", date: "2021.04.20", category: "과일", price: "20000", view: 20, interest: 4, needPeople: 5, nowPeople: 1))
 //       board.append(Board(titleBoard: "title1", contentBoard: "content", dateBoard: "21.04.20", categoryBoard: "과일", price: "20000", viewBoard: 20))
 //       board.append(Board(titleBoard: "title1", contentBoard: "content", dateBoard: "21.04.20", categoryBoard: "과일", price: "20000", viewBoard: 20))
 //       board.append(Board(titleBoard: "title1", contentBoard: "content", dateBoard: "21.04.20", categoryBoard: "과일", price: "20000", viewBoard: 20))
@@ -23,13 +23,13 @@ class Dummy {
     
     func Boards(model: [Board]) -> [Board]{
        var boards: [Board] = []
-        boards.append(Board(titleBoard: "샤인 머스켓 나눠 사요", contentBoard: "content", dateBoard: "2021.04.20", categoryBoard: "과일", price: "20000", viewBoard: 20, interestBoard: 4, needPeople: 5, nowPeople: 1))
-       boards.append(Board(titleBoard: "청바지", contentBoard: "content", dateBoard: "21.04.20", categoryBoard: "과일", price: "20000", viewBoard: 20, interestBoard: 4, needPeople: 5, nowPeople: 1))
-       boards.append(Board(titleBoard: "title1", contentBoard: "content", dateBoard: "21.04.20", categoryBoard: "과일", price: "20000", viewBoard: 20, interestBoard: 4, needPeople: 5, nowPeople: 1))
-       boards.append(Board(titleBoard: "title1", contentBoard: "content", dateBoard: "21.04.20", categoryBoard: "과일", price: "20000", viewBoard: 20, interestBoard: 4, needPeople: 5, nowPeople: 1))
-       boards.append(Board(titleBoard: "title1", contentBoard: "content", dateBoard: "21.04.20", categoryBoard: "과일", price: "20000", viewBoard: 20, interestBoard: 4, needPeople: 5, nowPeople: 1))
-       boards.append(Board(titleBoard: "title1", contentBoard: "content", dateBoard: "21.04.20", categoryBoard: "과일", price: "20000", viewBoard: 20, interestBoard: 4, needPeople: 5, nowPeople: 1))
-       boards.append(Board(titleBoard: "title1", contentBoard: "content", dateBoard: "21.04.20", categoryBoard: "과일", price: "20000", viewBoard: 20, interestBoard: 4, needPeople: 5, nowPeople: 1))
+//        boards.append(Board(title: "샤인 머스켓 나눠 사요", content: "content", date: "2021.04.20", category: "과일", price: "20000", view: 20, interest: 4, needPeople: 5, nowPeople: 1))
+//       boards.append(Board(title: "청바지", content: "content", date: "21.04.20", category: "과일", price: "20000", view: 20, interest: 4, needPeople: 5, nowPeople: 1))
+//       boards.append(Board(title: "title1", content: "content", date: "21.04.20", category: "과일", price: "20000", view: 20, interest: 4, needPeople: 5, nowPeople: 1))
+//       boards.append(Board(title: "title1", content: "content", date: "21.04.20", category: "과일", price: "20000", view: 20, interest: 4, needPeople: 5, nowPeople: 1))
+//       boards.append(Board(title: "title1", content: "content", date: "21.04.20", category: "과일", price: "20000", view: 20, interest: 4, needPeople: 5, nowPeople: 1))
+//       boards.append(Board(title: "title1", content: "content", date: "21.04.20", category: "과일", price: "20000", view: 20, interest: 4, needPeople: 5, nowPeople: 1))
+//       boards.append(Board(title: "title1", content: "content", date: "21.04.20", category: "과일", price: "20000", view: 20, interest: 4, needPeople: 5, nowPeople: 1))
         return boards
     }
     

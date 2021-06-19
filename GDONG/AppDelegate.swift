@@ -11,10 +11,13 @@ import KakaoSDKCommon
 import KakaoSDKUser
 import GoogleSignIn
 import AuthenticationServices
+import CoreLocation
+import AppTrackingTransparency
+import AdSupport
 
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, CLLocationManagerDelegate {
   
     var window: UIWindow?
     
@@ -23,36 +26,86 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         KakaoSDKCommon.initSDK(appKey: "1cb2a37d6920168105b844b889d7766f") // native key
         GIDSignIn.sharedInstance()?.clientID = "966907908166-emcm81mpq4217qoqtkl9c3ndjcdl5to5.apps.googleusercontent.com"
         
+        print("locatino ask")
+        var locationManager: CLLocationManager!
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        
+        //foreground 일때 위치 추적 권한 요청
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
+        
+        
         //apple id 기반으로 사용자 인증 요청
-        let appleIDProvider = ASAuthorizationAppleIDProvider()
-        appleIDProvider.getCredentialState(forUserID: KeychainItem.currentUserIdentifier) { (credentialState, error) in
-            switch credentialState {
-            case .authorized:
-                print("apple authorized")
-                break // The Apple ID credential is valid.
-            case .revoked, .notFound:
-                // The Apple ID credential is either revoked or was not found, so show the sign-in UI.
-                DispatchQueue.main.async {
-                    self.window?.rootViewController?.showLoginViewController()
-                }
-            default:
-                break
-            }
-        }
+//        let appleIDProvider = ASAuthorizationAppleIDProvider()
+//        appleIDProvider.getCredentialState(forUserID: KeychainItem.currentUserIdentifier) { (credentialState, error) in
+//            switch credentialState {
+//            case .authorized:
+//                print("apple authorized")
+//                break // The Apple ID credential is valid.
+//            case .revoked, .notFound:
+//                // The Apple ID credential is either revoked or was not found, so show the sign-in UI.
+//                DispatchQueue.main.async {
+//                    print(".revoked, .notFound")
+//                    //self.window?.rootViewController?.showLoginViewController()
+//                }
+//            default:
+//                break
+//            }
+//        }
         
         //화면 분기
-        if (UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != nil) {
-            print("access token yes")
-            let storyboard: UIStoryboard = UIStoryboard(name: "Login", bundle: nil)
-            let tabbarVC = storyboard.instantiateViewController(identifier: "tabbar")
-            window?.rootViewController = tabbarVC
-            window?.makeKeyAndVisible()
-        }else{
-            print("access token nil")
-            let storyboard: UIStoryboard = UIStoryboard(name: "Login", bundle: nil)
-            let loginVC = storyboard.instantiateViewController(identifier: "login")
-            window?.rootViewController = loginVC
-            window?.makeKeyAndVisible()
+//        if (UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != nil) {
+//            print("access token yes")
+//            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//            let tabbarVC = storyboard.instantiateViewController(withIdentifier: "tabbar")
+//            window?.rootViewController = tabbarVC
+//            window?.makeKeyAndVisible()
+//        }else{
+//            print("access token nil")
+//            let storyboard: UIStoryboard = UIStoryboard(name: "Login", bundle: nil)
+//            let loginVC = storyboard.instantiateViewController(withIdentifier: "login")
+//            window?.rootViewController = loginVC
+//            window?.makeKeyAndVisible()
+//        }
+        
+        if #available(iOS 8.0, *) {
+              // For iOS 10 display notification (sent via APNS)
+              UNUserNotificationCenter.current().delegate = self
+
+            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+              UNUserNotificationCenter.current().requestAuthorization(
+                options: authOptions,
+                completionHandler: {_, _ in })
+            } else {
+              let settings: UIUserNotificationSettings =
+                UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+              application.registerUserNotificationSettings(settings)
+            }
+        
+        
+        //앱 추적 허용
+        UNUserNotificationCenter.current().delegate = self
+        application.registerForRemoteNotifications()
+
+        ATTrackingManager.requestTrackingAuthorization { status in
+            DispatchQueue.main.async {
+                switch status {
+                case .authorized:
+                    //idfa = identity for advertisers
+                    let idfa = ASIdentifierManager.shared().advertisingIdentifier
+                    print("앱 추적 허용")
+                    
+                case .denied,
+                     .notDetermined,
+                     .restricted:
+                    print("앱 추적 금지 요청")
+                    break
+                @unknown default:
+                    break
+                }
+            }
         }
         
         
@@ -65,9 +118,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
           }
         // APNS 등록
         application.registerForRemoteNotifications()
-    
         return true
     }
+    
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
            print("failed to register for notifications")
@@ -76,8 +129,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
        let tokenParts = deviceToken.map {
            data in String(format: "%02.2hhx", data) }
-       let token = tokenParts.joined()
-       print("Device Token: \(token)")
+       let deviceToken = tokenParts.joined()
+        UserDefaults.standard.setValue(deviceToken, forKey: UserDefaultKey.deviceToken)
+       print("Device Token: \(deviceToken)")
        
    }
        

@@ -12,9 +12,8 @@ import KakaoSDKUser
 import KakaoOpenSDK
 import GoogleSignIn
 import Alamofire
-import CoreLocation
 
-class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding, GIDSignInDelegate, CLLocationManagerDelegate {
+class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding, GIDSignInDelegate {
     let viewModel = AuthenticationViewModel()
     var user: [User] = []
  
@@ -58,7 +57,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        checkAutoLogin()
+        //checkAutoLogin()
     }
     
     override func viewDidLoad() {
@@ -67,14 +66,6 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
         GIDSignIn.sharedInstance()?.presentingViewController = self // 로그인화면 불러오기
         GIDSignIn.sharedInstance().restorePreviousSignIn() // 자동 로그인
         GIDSignIn.sharedInstance()?.delegate = self
-        var locationManager: CLLocationManager!
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        
-        //foreground 일때 위치 추적 권한 요청
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startUpdatingLocation()
 
     }
     
@@ -118,8 +109,9 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
             print("User ID : \(userIdentifier)")
             print("User Email : \(email)")
             print("User Name : \(fullName)")
-            self.autoLogin(UN: fullName.givenName! + fullName.familyName!, UE: email, FROM: "apple")
+            
            // API.shared.oAuth(from: "apple", access_token: accessToken, name: userName)
+            //self.autoLogin(UN: fullName.givenName! + fullName.familyName!, UE: email, FROM: "apple")
 
         default:
             break;
@@ -161,14 +153,22 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
             if let userName = user.profile.name,
                let userEmail = user.profile.email,
                let idToken = user.authentication.idToken,
-               let accessToken = user.authentication.accessToken { //send to server
+               let accessToken = user.authentication.accessToken,
+                let refreshToken = user.authentication.refreshToken
+        { //send to server
                 
                 print("google login:")
                 print("google token \(idToken)")
                 print("User Email : \(userEmail)")
                 print("User Name : \((userName))")
-                self.autoLogin(UN: userName, UE: userEmail, FROM: "google")
-                API.shared.oAuth(from: "google", access_token: accessToken, name: userName)
+                
+                DispatchQueue.global().sync {
+                    API.shared.oAuth(from: "google", access_token: accessToken, name: userName, completed: {
+                    })
+                }
+               
+
+                
             } else {
                 print("Error : User Data Not Found")
             }
@@ -181,9 +181,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
     }
     
     @objc func didTapLoginButton(){
-        //self.MoveToDetailView()
-        //self.MoveToSearchView()
-        self.MoveToAdditionalInfo()
+        self.MoveToTabbar()
     }
     
     
@@ -200,11 +198,12 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
 
                         //do something
                         let token = oauthToken
+                        
                         guard let accessToken = token?.accessToken else {
                             return
                         }
 
-                        print("login token \(accessToken)")
+                        //print("login access token \(accessToken)")
                         self.setUserInfo(accessToken: accessToken)
                     }
                 }
@@ -223,9 +222,11 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
                 guard let userName = user?.kakaoAccount?.profile?.nickname else { return }
                 guard let userEmail = user?.kakaoAccount?.email else { return }
                 
-                API.shared.oAuth(from: "kakao", access_token: accessToken, name: userName)
+                API.shared.oAuth(from: "kakao", access_token: accessToken, name: userName, completed: {
+                    //self.autoLogin(UN: userName, UE: userEmail, FROM: "kakao")
+                })
 
-                self.autoLogin(UN: userName, UE: userEmail, FROM: "kakao")
+                
             }
         }
        
@@ -247,34 +248,12 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
 //        }
 //    }
     
-    func MoveToDetailView(){
-        let detailVC = DetailNoteViewController()
-        let navVC = UINavigationController(rootViewController: detailVC)
-        UIApplication.shared.windows.first?.rootViewController = navVC
-        UIApplication.shared.windows.first?.makeKeyAndVisible()
-    }
-    
-    func MoveToSearchView(){
-        let searchVC = SearchViewController()
-        let navVC = UINavigationController(rootViewController: searchVC)
-        UIApplication.shared.windows.first?.rootViewController = navVC
-        UIApplication.shared.windows.first?.makeKeyAndVisible()
-    }
-    
+
     func MoveToTabbar(){
-        
         let tabBarViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "tabbar") as! UITabBarController
-        let home = tabBarViewController.viewControllers![0] as! UINavigationController
-        home.viewControllers.append(ViewController())
-        let chat = tabBarViewController.viewControllers![1] as! UINavigationController
-        let recommend = tabBarViewController.viewControllers![2] as! UINavigationController
-        let profile = tabBarViewController.viewControllers![3] as! UINavigationController
-        profile.viewControllers.append(ProfileViewController())
-        tabBarViewController.setViewControllers([home, chat, recommend, profile], animated: true)
 
         UIApplication.shared.windows.first?.rootViewController = tabBarViewController
         UIApplication.shared.windows.first?.makeKeyAndVisible()
- 
     }
     
     func MoveToAdditionalInfo(){
@@ -287,43 +266,19 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
         UIApplication.shared.windows.first?.makeKeyAndVisible()
     }
 
-    func autoLogin(UN: String, UE: String, FROM: String){
-        print("auto Login did")
-        UserDefaults.standard.set(UN, forKey: "userName")
-        UserDefaults.standard.set(UE, forKey: "userEmail")
-        UserDefaults.standard.set(FROM, forKey: "from")
-        //if user is new --> 1
-        if UserDefaults.standard.integer(forKey: UserDefaultKey.isNewUser) == 1 {
-            self.MoveToAdditionalInfo()
-        }else {
-            self.MoveToTabbar()
-        }
-
-    }
     
-    func checkAutoLogin(){
-        if let userName = UserDefaults.standard.string(forKey: "userName") {
-            if let useremail = UserDefaults.standard.string(forKey: "userEmail") {
-                print("has value in userDefaults")
-                self.MoveToTabbar()
-          }
-        }else{
-            print("need to meet the condition")
-        }
-        
-    }
+//    func checkAutoLogin(){
+//        if let userName = UserDefaults.standard.string(forKey: "userName") {
+//            if let useremail = UserDefaults.standard.string(forKey: "userEmail") {
+//                print("has value in userDefaults")
+//                self.MoveToTabbar()
+//          }
+//        }else{
+//            print("need to meet the condition")
+//        }
+//
+//    }
 
 }
 
-extension UIViewController {
-    
-    func showLoginViewController() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let loginViewController = storyboard.instantiateViewController(withIdentifier: "login") as? LoginViewController {
-            loginViewController.modalPresentationStyle = .fullScreen
-            loginViewController.isModalInPresentation = true
-            self.present(loginViewController, animated: true, completion: nil)
-        }
-    }
-}
 

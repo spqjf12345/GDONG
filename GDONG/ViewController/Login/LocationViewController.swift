@@ -13,8 +13,12 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var locationTextfield: UITextField!
     
     var getLocation = ""
+    var getCLLocation: CLLocation = CLLocation(latitude: 0, longitude: 0)
+    var myLocation: CLLocation = CLLocation(latitude: 0, longitude: 0)
+    var nickName = ""
     
     @IBAction func findCurrentLocaButton(_ sender: Any) {
+        
         locationTextfield.text = currentLocation
     }
     
@@ -33,11 +37,27 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBAction func nextButton(_ sender: Any) {
         //post location
-    
-        let storyboard: UIStoryboard = UIStoryboard(name: "Login", bundle: nil)
-        let loginVC = storyboard.instantiateViewController(identifier: "login")
-        UIApplication.shared.windows.first?.rootViewController = loginVC
-        UIApplication.shared.windows.first?.makeKeyAndVisible()
+        print(nickName)
+        print(locationTextfield.text)
+        if(getCLLocation.coordinate.latitude == 0.0 && getCLLocation.coordinate.longitude == 0.0){
+            if(locationTextfield.text == currentLocation){
+                //현재 위치 post
+                print("현재 위치 ")
+                print(myLocation.coordinate.latitude)
+                print(myLocation.coordinate.longitude)
+            }else {
+                print("가져온 위치")
+                print(getCLLocation.coordinate.latitude)
+                print(getCLLocation.coordinate.longitude)
+            }
+            
+        }
+        
+      
+//        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//        let loginVC = storyboard.instantiateViewController(identifier: "login")
+//        UIApplication.shared.windows.first?.rootViewController = loginVC
+//        UIApplication.shared.windows.first?.makeKeyAndVisible()
     }
     
     var locationManager: CLLocationManager!
@@ -51,11 +71,16 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
         detailVC.searchKeyword = textField
     }
     
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(nickName)
+        print(getCLLocation.coordinate.latitude)
+        print(getCLLocation.coordinate.longitude)
         
-        if(getLocation != nil){
-            print("get location")
+        
+        if(getLocation != ""){
             locationTextfield.text = getLocation
         }else{
             locationTextfield.text = ""
@@ -65,9 +90,9 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.delegate = self
         
         //foreground 일때 위치 추적 권한 요청
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startUpdatingLocation()
+//        locationManager.requestWhenInUseAuthorization()
+//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//        locationManager.startUpdatingLocation()
         
         let coor = locationManager.location?.coordinate
         let latitude = coor?.latitude
@@ -76,11 +101,11 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
         print(latitude!)
         print(longitude!)
         
-        let findLocation = CLLocation(latitude: 37.715133, longitude: 126.734086)
+        myLocation = CLLocation(latitude: latitude!, longitude: longitude!)
         let geocoder = CLGeocoder()
         let locale = Locale(identifier: "Ko-kr")
         
-        geocoder.reverseGeocodeLocation(findLocation, preferredLocale: locale, completionHandler: {(place, error) in
+        geocoder.reverseGeocodeLocation(myLocation, preferredLocale: locale, completionHandler: {(place, error) in
             if let address: [CLPlacemark] = place {
                 if let name: String = address.last?.name{
                     print(name)

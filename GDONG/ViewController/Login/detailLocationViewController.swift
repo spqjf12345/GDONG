@@ -7,11 +7,13 @@
 
 import UIKit
 import Alamofire
+import CoreLocation
 
 class detailLocationViewController: UIViewController {
 
     var searchKeyword = ""
     var jusoResult: [JusoResults] = []
+    var jusoLocation: CLLocation = CLLocation(latitude: 0, longitude: 0)
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var searchTextfield: UITextField!
@@ -20,6 +22,7 @@ class detailLocationViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.searchTextfield.text = searchKeyword
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
@@ -45,12 +48,34 @@ class detailLocationViewController: UIViewController {
                         }
                         
                     }
+                }else {
+                    print("검색 결과가 없습니다.")
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
                 }
             }
 
 
         }
     }
+    
+//    func geoLocate(address: String) -> CLLocation {
+//        var latitude: CLLocationDegrees = CLLocationDegrees()
+//        var logitude: CLLocationDegrees = CLLocationDegrees()
+//               let gc:CLGeocoder = CLGeocoder()
+//               gc.geocodeAddressString(address) { (placemarks, error) in
+//                   if ((placemarks?.count)! > 0){
+//                       let p = placemarks![0]
+//                    latitude = (p.location?.coordinate.latitude)!
+//                    logitude = (p.location?.coordinate.longitude)!
+//
+//                    print("Lat: \(latitude) Lon: \(logitude)")
+//                }
+//
+//           }
+//        return CLLocation(latitude: latitude, longitude: logitude)
+//    }
     
     private func findAddress(keyword: String, completion: @escaping ((JusoResponse) -> Void)){
         let url = "https://www.juso.go.kr/addrlink/addrLinkApi.do"
@@ -107,9 +132,28 @@ class detailLocationViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let locationVC = segue.destination as! LocationViewController
-        let index = tableView.indexPathForSelectedRow
-        locationVC.getLocation = jusoResult[index!.row].juso[0].jibunAddr
+        
+        if let locationVC = segue.destination as? LocationViewController {
+            let index = tableView.indexPathForSelectedRow
+            locationVC.getLocation = jusoResult[index!.row].juso[0].jibunAddr
+            
+            let gc:CLGeocoder = CLGeocoder()
+            gc.geocodeAddressString(jusoResult[index!.row].juso[0].jibunAddr) { [self] (placemarks, error) in
+                if ((placemarks?.count)! > 0){
+                    let p = placemarks![0]
+                    let latitude = (p.location?.coordinate.latitude)!
+                    let logitude = (p.location?.coordinate.longitude)!
+                jusoLocation = CLLocation(latitude: latitude, longitude: logitude)
+                locationVC.getCLLocation = jusoLocation
+             }
+
+        }
+            
+//            jusoLocation = geoLocate(address: jusoResult[index!.row].juso[0].jibunAddr)
+//            print("prepare geoLocate \(jusoLocation.coordinate.latitude)")
+//            print("prepare geoLocate \(jusoLocation.coordinate.longitude)")
+//            locationVC.getCLLocation = jusoLocation
+        }
         
     }
         
@@ -137,6 +181,7 @@ extension detailLocationViewController: UITableViewDelegate, UITableViewDataSour
         alertController(juso: text, completion: {
             ok in
             if(ok == "OK"){
+                
                 self.performSegue(withIdentifier: "goback", sender: nil)
                 
             }

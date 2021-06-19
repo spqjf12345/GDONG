@@ -11,24 +11,44 @@ import Alamofire
 class API {
     static var shared = API()
     
-    func oAuth(from: String, access_token: String, name: String){
+    func oAuth(from: String, access_token: String, name: String, completed: () -> Void){
+        print("[API] /auth/signin/\(from)")
+        guard let deviceToken: String = UserDefaults.standard.string(forKey: UserDefaultKey.deviceToken) else { return }
         let params: Parameters = [
             "access_token": access_token,
             "name": name,
+            "device_token" : deviceToken
         ]
 
-        AF.request(Config.baseUrl + "/auth/signin/\(from)", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString)).validate().responseJSON {
+        AF.request(Config.baseUrl + "/auth/signin/\(from)", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString) ).validate().responseJSON {
             (response) in
             print("request result")
+            if let httpResponse = response.response, let fields = httpResponse.allHeaderFields as? [String: String]{
+                let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.response?.url)!)
+                print("cookie : \(cookies)")
+                HTTPCookieStorage.shared.setCookies(cookies, for: response.response?.url, mainDocumentURL: nil)
+                
+                if let session = cookies.filter({$0.name == "token"}).first {
+                    print("session : \(session.value)")
+                    UserDefaults.standard.setValue(session.value, forKey: UserDefaultKey.jwtToken)
+                    
+                }
+                
+            }
+            
             switch response.result {
+            
             case .success(let obj):
                 print(obj)
                 print(type(of:obj))
+                
                     do{
         
-                        let response = obj as! NSDictionary
-                        guard let user = response["user"] as? Dictionary<String, Any> else { return }
-                        let isNew = response["isNew"]
+                        let responses = obj as! NSDictionary
+                        
+                        guard let user = responses["user"] as? Dictionary<String, Any> else { return }
+                        
+                        let isNew = responses["isNew"]
                         
                         let dataJSON = try JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
 
@@ -40,6 +60,10 @@ class API {
                         UserDefaults.standard.set(isNew, forKey: UserDefaultKey.isNewUser)
                         UserDefaults.standard.set(UserData.name, forKey: UserDefaultKey.userName)
                         UserDefaults.standard.set(UserData.nickName, forKey: UserDefaultKey.userNickName)
+                        UserDefaults.standard.set(UserData.authProvider, forKey: UserDefaultKey.authProvider)
+                        
+                        self.autoLogin()
+                        
                     }
                     catch let DecodingError.dataCorrupted(context) {
                             print(context)
@@ -55,13 +79,12 @@ class API {
                     } catch {
                         print("error: ", error)
                     }
-                        case .failure(let e):
-                            print(e.localizedDescription)
-                    }
-            
-            
-            
+            case .failure(let e):
+                print(e.localizedDescription)
         }
+            
+    }
+    completed()
         
     }
     
@@ -80,17 +103,61 @@ class API {
     }
     
     
+    func update(nickName: String, logitude: Double, latitude: Double){
+           let params: Parameters = [
+               "nickname": nickName,
+               "logitude": logitude,
+               "latitude": latitude
+           ]
+           
+           AF.request(Config.baseUrl + "/user/update", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString)).validate().responseJSON {
+               (response) in
+               print("[API] /user/update 유저 정보 업데이트")
+               switch response.result {
+               case .success(let obj):
+                   print(obj)
+               case .failure(let e):
+                   print(e.localizedDescription)
+               }
+              
+               }
+           }
+    
+        func autoLogin(){
+            print("auto Login did")
+            //if user is new --> 1
+            print(UserDefaults.standard.integer(forKey: UserDefaultKey.isNewUser))
+            if UserDefaults.standard.integer(forKey: UserDefaultKey.isNewUser) == 1 {
+                
+                //MoveToAdditionalInfo
+                let nickVC = UIStoryboard.init(name: "AdditionalInfo", bundle: nil).instantiateViewController(withIdentifier: "nickName")
+                
+                let additionalNavVC = UINavigationController(rootViewController: nickVC)
+                UIApplication.shared.windows.first?.rootViewController = additionalNavVC
+                UIApplication.shared.windows.first?.makeKeyAndVisible()
+                
+            }else {
+                let tabBarViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "tabbar") as! UITabBarController
+
+                UIApplication.shared.windows.first?.rootViewController = tabBarViewController
+                UIApplication.shared.windows.first?.makeKeyAndVisible()
+            }
+
+        }
+    
+    func setCookies(cookies: HTTPCookie){
+        Alamofire.Session.default.session.configuration.httpCookieStorage?.setCookie(cookies)
+    }
+
+           
 }
+
+
+    
+    
 
 
 
 struct Config {
-    static let baseUrl = "http://192.168.35.236:5000/api/v0" // test server url
+    static let baseUrl = "http://192.168.35.195:5000/api/v0" // test server url
 }
-
-//192.168.35.23
-// 172.30.1.1
-//192.168.35.192
-//192.168.35.139
-//  192.168.35.146
-

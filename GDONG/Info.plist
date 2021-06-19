@@ -118,5 +118,8 @@
         <key>NSLocationWhenInUseUsageDescription</key>
 
         <string>Used to Location&apos;s Info for Using Beacon when In Use.</string>
+        
+        <key>NSUserTrackingUsageDescription</key>
+        <string>This identifier will be used to deliver personalized ads to you.</string>
 </dict>
 </plist>
