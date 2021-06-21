@@ -54,7 +54,6 @@
 		8E772BAA267C8CD10034C2BF /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E772B9B267C8CD10034C2BF /* MainViewController.swift */; };
 		8E772BAB267C8CD10034C2BF /* RecommendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E772B9C267C8CD10034C2BF /* RecommendViewController.swift */; };
 		8E772BAC267C8CD10034C2BF /* myPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E772B9E267C8CD10034C2BF /* myPostViewController.swift */; };
-		8E772BAD267C8CD10034C2BF /* MyPost.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E772B9F267C8CD10034C2BF /* MyPost.storyboard */; };
 		8E772BAE267C8CD10034C2BF /* SellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E772BA0267C8CD10034C2BF /* SellViewController.swift */; };
 		8E772BAF267C8CD10034C2BF /* BuyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E772BA1267C8CD10034C2BF /* BuyViewController.swift */; };
 		8E772BB2267C8CE70034C2BF /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E772BB1267C8CE70034C2BF /* MainViewModel.swift */; };
@@ -67,6 +66,8 @@
 		8E772BC5267C8DC00034C2BF /* ChatListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E772BC4267C8DC00034C2BF /* ChatListModel.swift */; };
 		8E772BC7267C8FFB0034C2BF /* KeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E772BC6267C8FFB0034C2BF /* KeychainItem.swift */; };
 		8E772BC9267C92DD0034C2BF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E772BC8267C92DD0034C2BF /* ViewController.swift */; };
+		8E87F2702680E6D8009BFDDB /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E87F26F2680E6D8009BFDDB /* Profile.storyboard */; };
+		8E87F2722680FA6C009BFDDB /* FolloViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E87F2712680FA6B009BFDDB /* FolloViewController.swift */; };
 		8EC87291266616DF00C1B7C5 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		8EDD9A1A2674B046003AFE65 /* UserDefaultKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDD9A192674B045003AFE65 /* UserDefaultKey.swift */; };
 		8EF00F18265785B700AA1EEA /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF00F17265785B700AA1EEA /* API.swift */; };
@@ -121,14 +122,13 @@
 		8E772B93267C8CD10034C2BF /* ChatListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
 		8E772B95267C8CD10034C2BF /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		8E772B96267C8CD10034C2BF /* SearchResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
-		8E772B97267C8CD10034C2BF /* SearchFilter.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SearchFilter.storyboard; sourceTree = "<group>"; };
+		8E772B97267C8CD10034C2BF /* SearchFilter.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SearchFilter.storyboard; path = ../ViewController/SearchVC/SearchFilter.storyboard; sourceTree = "<group>"; };
 		8E772B98267C8CD10034C2BF /* RecentSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentSearchViewController.swift; sourceTree = "<group>"; };
 		8E772B99267C8CD10034C2BF /* SearchFilteringViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFilteringViewController.swift; sourceTree = "<group>"; };
 		8E772B9A267C8CD10034C2BF /* RecentSearchAllTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentSearchAllTableViewController.swift; sourceTree = "<group>"; };
 		8E772B9B267C8CD10034C2BF /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		8E772B9C267C8CD10034C2BF /* RecommendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecommendViewController.swift; sourceTree = "<group>"; };
 		8E772B9E267C8CD10034C2BF /* myPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = myPostViewController.swift; sourceTree = "<group>"; };
-		8E772B9F267C8CD10034C2BF /* MyPost.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MyPost.storyboard; path = ../ViewController/ProfileVC/MyPost.storyboard; sourceTree = "<group>"; };
 		8E772BA0267C8CD10034C2BF /* SellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SellViewController.swift; sourceTree = "<group>"; };
 		8E772BA1267C8CD10034C2BF /* BuyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuyViewController.swift; sourceTree = "<group>"; };
 		8E772BB1267C8CE70034C2BF /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -141,6 +141,8 @@
 		8E772BC4267C8DC00034C2BF /* ChatListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListModel.swift; sourceTree = "<group>"; };
 		8E772BC6267C8FFB0034C2BF /* KeychainItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainItem.swift; sourceTree = "<group>"; };
 		8E772BC8267C92DD0034C2BF /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = GDONG/ViewController.swift; sourceTree = SOURCE_ROOT; };
+		8E87F26F2680E6D8009BFDDB /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
+		8E87F2712680FA6B009BFDDB /* FolloViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolloViewController.swift; sourceTree = "<group>"; };
 		8EDD9A192674B045003AFE65 /* UserDefaultKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKey.swift; sourceTree = "<group>"; };
 		8EF00F17265785B700AA1EEA /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		8EF2886E2660DF0100840302 /* AdditionalInfo.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = AdditionalInfo.storyboard; path = ../ViewController/Login/AdditionalInfo.storyboard; sourceTree = "<group>"; };
@@ -283,12 +285,12 @@
 				8E772B7B267C8CA40034C2BF /* ChatListCell.swift */,
 				8E772B7C267C8CA40034C2BF /* RecentSearchTableViewCell.xib */,
 				8E772B7D267C8CA40034C2BF /* ChatListCell.xib */,
-				8E772B7E267C8CA40034C2BF /* categoryCollectionViewCell.swift */,
 				8E772B7F267C8CA40034C2BF /* TableViewCell.swift */,
 				8E772B80267C8CA40034C2BF /* TitleTableViewCell.xib */,
 				8E772B81267C8CA40034C2BF /* TableViewCell.xib */,
 				8E772B82267C8CA40034C2BF /* TitleTableViewCell.swift */,
 				8E772B83267C8CA40034C2BF /* categoryCollectionViewCell.xib */,
+				8E772B7E267C8CA40034C2BF /* categoryCollectionViewCell.swift */,
 				8E772B84267C8CA40034C2BF /* RecentSearchTableViewCell.swift */,
 			);
 			path = Cell;
@@ -317,7 +319,6 @@
 			children = (
 				8E772B95267C8CD10034C2BF /* SearchViewController.swift */,
 				8E772B96267C8CD10034C2BF /* SearchResultViewController.swift */,
-				8E772B97267C8CD10034C2BF /* SearchFilter.storyboard */,
 				8E772B98267C8CD10034C2BF /* RecentSearchViewController.swift */,
 				8E772B99267C8CD10034C2BF /* SearchFilteringViewController.swift */,
 				8E772B9A267C8CD10034C2BF /* RecentSearchAllTableViewController.swift */,
@@ -330,6 +331,7 @@
 			children = (
 				8E772B8F267C8CB30034C2BF /* ProfileViewController.swift */,
 				8E772B9E267C8CD10034C2BF /* myPostViewController.swift */,
+				8E87F2712680FA6B009BFDDB /* FolloViewController.swift */,
 			);
 			path = ProfileVC;
 			sourceTree = "<group>";
@@ -349,7 +351,8 @@
 				8E772B10267A0D420034C2BF /* Login.storyboard */,
 				8EF2886E2660DF0100840302 /* AdditionalInfo.storyboard */,
 				8E42FEF6261D958100763B61 /* Main.storyboard */,
-				8E772B9F267C8CD10034C2BF /* MyPost.storyboard */,
+				8E772B97267C8CD10034C2BF /* SearchFilter.storyboard */,
+				8E87F26F2680E6D8009BFDDB /* Profile.storyboard */,
 			);
 			name = Storyboard;
 			path = "/Users/sojeong/URIPLJECT/GDONGProject/remote_total/GDONG-front/GDONG/Storyboard";
@@ -433,6 +436,7 @@
 				8E772B78267C8C750034C2BF /* EntityCell.xib in Resources */,
 				8E772B76267C8C750034C2BF /* CategoryTableView.storyboard in Resources */,
 				8E772B11267A0D420034C2BF /* Login.storyboard in Resources */,
+				8E87F2702680E6D8009BFDDB /* Profile.storyboard in Resources */,
 				8E772BBE267C8D7D0034C2BF /* cero.jpg in Resources */,
 				8E772BBF267C8D7D0034C2BF /* bigapple.jpg in Resources */,
 				8E42FF00261D958800763B61 /* LaunchScreen.storyboard in Resources */,
@@ -450,7 +454,6 @@
 				8E772B8B267C8CA40034C2BF /* TableViewCell.xib in Resources */,
 				8E42FEF8261D958100763B61 /* Main.storyboard in Resources */,
 				8E772B87267C8CA40034C2BF /* ChatListCell.xib in Resources */,
-				8E772BAD267C8CD10034C2BF /* MyPost.storyboard in Resources */,
 				8E772B6E267C8C750034C2BF /* PhotoCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -556,6 +559,7 @@
 				8E772B60267C8C6D0034C2BF /* Extension.swift in Sources */,
 				8E772B77267C8C750034C2BF /* CategoryTableViewController.swift in Sources */,
 				8E61FDD926301739008CCB8A /* Model.swift in Sources */,
+				8E87F2722680FA6C009BFDDB /* FolloViewController.swift in Sources */,
 				8E772BA3267C8CD10034C2BF /* ChatListViewController.swift in Sources */,
 				8E772BB2267C8CE70034C2BF /* MainViewModel.swift in Sources */,
 				8E772BAB267C8CD10034C2BF /* RecommendViewController.swift in Sources */,

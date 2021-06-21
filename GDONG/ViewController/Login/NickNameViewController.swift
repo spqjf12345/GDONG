@@ -27,7 +27,7 @@ class NickNameViewController: UIViewController {
        @IBAction func nextButton(_ sender: Any) {
            if(nickNameTextfield.text != ""){
                //dp에 저장된 이름이 있으면
-            API.shared.update(nickName: nickNameTextfield.text!, logitude: 0.0, latitude: 0.0)
+            API.shared.update(nickName: nickNameTextfield.text!, longitude: 0.0, latitude: 0.0)
                //다시 입력해주세요 alert view 띄우기
                //let LocationVC = UIStoryboard.init(name: "AdditionalInfo", bundle: nil).instantiateViewController(withIdentifier: "location")
                performSegue(withIdentifier: "location", sender: nil)

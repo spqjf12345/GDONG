@@ -14,8 +14,6 @@ class RecentSearchTableViewCell: UITableViewCell {
     
     static var identifier = "RecentSearchTableViewCell"
     
-    @IBOutlet weak var categoryImage: UIImageView!
-    
     @IBOutlet weak var searchWord: UILabel!
     
     override func awakeFromNib() {
@@ -33,10 +31,6 @@ class RecentSearchTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-    }
-    
-    func configure(){
-        categoryImage.image = UIImage(systemName: "tag")
     }
     
 }

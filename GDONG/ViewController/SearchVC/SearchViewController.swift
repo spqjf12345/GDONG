@@ -23,8 +23,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     
     let categoryView: UIView = {
         let view = UIView()
-        var label = UILabel(frame: CGRect(x: 10, y: 10, width: 200, height: 50))
-        label.text = "카테고리"
+        var label = UILabel(frame: CGRect(x: 20, y: 10, width: 200, height: 50))
+        label.text = "구매 카테고리"
         label.font = .boldSystemFont(ofSize: 20)
         view.addSubview(label)
         view.layer.borderWidth = 2
@@ -32,16 +32,16 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         return view
     }()
     
-    let bottomMostView: UIView = {
-        let view = UIView()
-        var label = UILabel(frame: CGRect(x: 10, y: 10, width: 200, height: 50))
-        label.text = "지역 주변 인기 글"
-        label.font = .boldSystemFont(ofSize: 20)
-        view.addSubview(label)
-        view.layer.borderWidth = 2
-        view.layer.borderColor = UIColor.systemGray.cgColor
-        return view
-    }()
+//    let bottomMostView: UIView = {
+//        let view = UIView()
+//        var label = UILabel(frame: CGRect(x: 10, y: 10, width: 200, height: 50))
+//        label.text = "지역 주변 인기 글"
+//        label.font = .boldSystemFont(ofSize: 20)
+//        view.addSubview(label)
+//        view.layer.borderWidth = 2
+//        view.layer.borderColor = UIColor.systemGray.cgColor
+//        return view
+//    }()
     
     let scrollView: UIScrollView = {
         let scroll = UIScrollView()
@@ -172,15 +172,15 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         categoryView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20).isActive = true
         categoryView.heightAnchor.constraint(equalToConstant: 500).isActive = true
 
-        bottomMostView.translatesAutoresizingMaskIntoConstraints = false
-
-        scrollView.addSubview(bottomMostView)
-        bottomMostView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 10).isActive = true
-        bottomMostView.topAnchor.constraint(equalTo: categoryView.bottomAnchor, constant: 10).isActive = true
-        bottomMostView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20).isActive = true
-        bottomMostView.heightAnchor.constraint(equalToConstant: 500).isActive = true
-
-        bottomMostView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+//        bottomMostView.translatesAutoresizingMaskIntoConstraints = false
+//
+//        scrollView.addSubview(bottomMostView)
+//        bottomMostView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 10).isActive = true
+//        bottomMostView.topAnchor.constraint(equalTo: categoryView.bottomAnchor, constant: 10).isActive = true
+//        bottomMostView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20).isActive = true
+//        bottomMostView.heightAnchor.constraint(equalToConstant: 500).isActive = true
+//
+//        bottomMostView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
     }
     
     

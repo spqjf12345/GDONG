@@ -84,7 +84,7 @@ extension SearchResultViewController: UITableViewDelegate, UITableViewDataSource
         cell.productNameLabel.text = filteredBoard[indexPath.row].title
         cell.productImageView.image = UIImage(named: filteredBoard[indexPath.row].profileImage)
         cell.productPriceLabel.text = String(filteredBoard[indexPath.row].price)
-        cell.timeLabel.text = filteredBoard[indexPath.row].date
+        cell.timeLabel.text = filteredBoard[indexPath.row].createdAt
         cell.peopleLabel.text = "\(filteredBoard[indexPath.row].nowPeople)/ \(filteredBoard[indexPath.row].needPeople)"
         
         return cell

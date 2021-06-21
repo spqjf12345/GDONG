@@ -41,15 +41,12 @@ class Dummy {
     
     func categoryList(model : [Category]) -> [Category] {
         var categoryList: [Category] = []
-        categoryList.append(Category(categoryImage: "ct1", categoryText: "과일"))
-        categoryList.append(Category(categoryImage: "ct1", categoryText: "야채"))
-        categoryList.append(Category(categoryImage: "ct1", categoryText: "의류"))
-        categoryList.append(Category(categoryImage: "ct1", categoryText: "배달 음식"))
-        categoryList.append(Category(categoryImage: "ct1", categoryText: "스낵"))
-        categoryList.append(Category(categoryImage: "ct1", categoryText: "문구"))
-        categoryList.append(Category(categoryImage: "ct1", categoryText: "음반"))
-        categoryList.append(Category(categoryImage: "ct1", categoryText: "과일"))
-        categoryList.append(Category(categoryImage: "ct1", categoryText: "마스크"))
+        categoryList.append(Category(categoryImage: "fruits", categoryText: "과일"))
+        categoryList.append(Category(categoryImage: "vegetable", categoryText: "야채"))
+        categoryList.append(Category(categoryImage: "delivery_blue", categoryText: "배달"))
+        categoryList.append(Category(categoryImage: "cosmetic", categoryText: "화장품"))
+        categoryList.append(Category(categoryImage: "record", categoryText: "음반"))
+        categoryList.append(Category(categoryImage: "oversees_delivery", categoryText: "해외 배송"))
         return categoryList
     }
     

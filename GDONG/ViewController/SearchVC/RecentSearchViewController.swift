@@ -28,20 +28,21 @@ class RecentSearchViewController: UITableViewController, RecentSearchTableViewCe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         tableView.tableHeaderView = {
             let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.width, height: 30))
             let label = UILabel()
             label.text = "최근 검색"
-            label.frame = CGRect(x: 10, y: 0, width: 100, height: 30)
+            label.textColor = UIColor.systemGray
+            label.frame = CGRect(x: 20, y: 5, width: 100, height: 30)
             
-//            let allButton = UIButton()
-//            allButton.setTitle("모두 보기", for: .normal)
-//            allButton.addTarget(self, action: #selector(didTapAllSearch), for: .touchUpInside)
-//            allButton.setTitleColor(UIColor.blue, for: .normal)
-//            allButton.frame = CGRect(x: 300, y: 0, width: 100, height: 30)
-            view.backgroundColor = UIColor.lightGray
+            let allButton = UIButton()
+            allButton.setTitle("전체 삭제", for: .normal)
+            allButton.addTarget(self, action: #selector(didTapAlldelete), for: .touchUpInside)
+            allButton.setTitleColor(UIColor.systemGray, for: .normal)
+            allButton.frame = CGRect(x: 270, y: 5, width: 100, height: 30)
             view.addSubview(label)
-            //view.addSubview(allButton)
+            view.addSubview(allButton)
             return view
         }()
         tableView.tableFooterView = UIView(frame: CGRect.zero)
@@ -57,15 +58,31 @@ class RecentSearchViewController: UITableViewController, RecentSearchTableViewCe
 //
 //    }
     
-//    @objc func didTapAllSearch(){
-//        let allSearchVC = RecentSearchAllTableViewController()
-//        allSearchVC.historyWord = searchHistory
-//
-//        allSearchVC.tableView.reloadData()
-//
-//        navVC.pushViewController(allSearchVC, animated: true)
-//        self.present(allSearchVC, animated: true, completion: nil)
-//    }
+    @objc func didTapAlldelete(){
+        print("searchHistory.removeAll()")
+        searchHistory.removeAll()
+        tableView.reloadData()
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        var numberOfSections: Int = 0
+        
+        if searchHistory.count > 0 {
+            tableView.separatorStyle = .singleLine
+            numberOfSections = 1
+            tableView.backgroundView = nil
+        }
+        else
+            {
+                let noDataLabel: UILabel  = UILabel(frame: CGRect(x: 0, y: 0, width:tableView.bounds.size.width, height: tableView.bounds.size.height))
+                noDataLabel.text          = "최근 검색어가 없습니다."
+                noDataLabel.textColor     = UIColor.systemGray2
+                noDataLabel.textAlignment = .center
+                tableView.backgroundView  = noDataLabel
+                tableView.separatorStyle  = .none
+            }
+        return numberOfSections
+    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchHistory.count
@@ -77,7 +94,6 @@ class RecentSearchViewController: UITableViewController, RecentSearchTableViewCe
         let cell = tableView.dequeueReusableCell(withIdentifier: RecentSearchTableViewCell.identifier) as! RecentSearchTableViewCell
         cell.cellDelegate = self
         cell.searchWord.text = searchHistory[indexPath.row]
-        cell.configure()
 
         return cell
     }

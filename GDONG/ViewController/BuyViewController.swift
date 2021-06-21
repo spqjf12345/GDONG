@@ -107,7 +107,7 @@ extension BuyViewController: UITableViewDelegate, UITableViewDataSource{
 
             cell.productNameLabel.text = contents[indexPath.row].title
             cell.productPriceLabel.text = contents[indexPath.row].price
-            cell.timeLabel.text = contents[indexPath.row].date
+            cell.timeLabel.text = contents[indexPath.row].createdAt
         
             cell.peopleLabel.text = "\(contents[indexPath.row].nowPeople)/ \(contents[indexPath.row].needPeople)"
             cell.productImageView.image = UIImage(named: contents[(indexPath as NSIndexPath).row].profileImage)

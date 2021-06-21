@@ -17,6 +17,7 @@ class myPostViewController: TabmanViewController {
         let heartVC = myHeartViewController()
         self.navigationItem.title = "내 글 목록"
         
+        
         viewControllers.append(wroteVC)
         viewControllers.append(heartVC)
         
@@ -75,6 +76,7 @@ class myWroteViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(tableView)
+        API.shared.getauthorPost(author: "test")
     }
     
     var tableView: UITableView = {

@@ -34,7 +34,7 @@ class detailLocationViewController: UIViewController {
     
     func searchWithJuso(){
         if !searchKeyword.isEmpty {
-            findAddress(keyword: searchKeyword){ [weak self]
+            API.shared.findAddress(keyword: searchKeyword){ [weak self]
                 (jusoResponse) in
                 guard let self = self else { return }
                 if(!jusoResponse.results.juso.isEmpty){
@@ -77,42 +77,6 @@ class detailLocationViewController: UIViewController {
 //        return CLLocation(latitude: latitude, longitude: logitude)
 //    }
     
-    private func findAddress(keyword: String, completion: @escaping ((JusoResponse) -> Void)){
-        let url = "https://www.juso.go.kr/addrlink/addrLinkApi.do"
-        
-        let parameters: [String: Any] = ["confmKey": "devU01TX0FVVEgyMDIxMDUzMDAxMDMzNzExMTIyMjE=",
-                                                    "currentPage": "1",
-                                                    "countPerPage":"10",
-                                                    "keyword": searchKeyword,
-                                                    "resultType": "json"]
-    
-        AF.request(url, method: .get, parameters: parameters).responseJSON{ [weak self] (response) in
-            guard let self = self else { return }
-            if let value = response.value {
-                if let jusoResponse: JusoResponse = self.toJson(object: value) {
-                    completion(jusoResponse)
-                    }else {
-                        print("serialize error")
-                    }
-            }
-        }
-    }
-        
-    private func toJson<T: Decodable>(object: Any) -> T? {
-        if let jsonData = try? JSONSerialization.data(withJSONObject: object) {
-                    let decoder = JSONDecoder()
-                    
-                    
-                    if let result = try? decoder.decode(T.self, from: jsonData) {
-                        return result
-                    } else {
-                        return nil
-                    }
-                } else {
-                  return nil
-                }
-
-    }
     
     func alertController(juso: String, completion: @escaping ((String) -> Void)){
         let alertVC = UIAlertController(title: "현재 위치 확인", message: "\(juso)를 현재 위치로 설정하시겠습니까?", preferredStyle: .alert)

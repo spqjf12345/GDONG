@@ -16,17 +16,34 @@ import CoreLocation
 
 class ProfileViewController: UIViewController, CLLocationManagerDelegate {
 
+    var userInfo = User()
     var locationManager: CLLocationManager!
     @IBOutlet weak var userName: UILabel!
     
     @IBOutlet weak var userLocation: UILabel!
     
-    @IBAction func editButton(_ sender: Any) {
-        alertEditName()
+
+    @IBOutlet weak var profileImage: UIImageView!
+    
+    @IBAction func profileSetting(_ sender: Any) {
+        
     }
     
-    @IBAction func locationEditbutton(_ sender: Any) {
-        alertEditLocation()
+    @IBOutlet weak var isSellerButton: UIButton!
+    
+    @IBOutlet weak var setFollwerCount: UIButton!
+    
+    @IBOutlet weak var setFollowingCount: UIButton!
+    
+    @IBAction func followerCount(_ sender: Any) {
+    }
+    
+    @IBAction func followingCount(_ sender: Any) {
+        
+    }
+    
+    @IBAction func LikePages(_ sender: Any) {
+        performSegue(withIdentifier: "myPost", sender: nil)
     }
     
     @IBAction func connectAccount(_ sender: Any) {
@@ -109,23 +126,34 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     private let sec = ["사용자 정보", "알림", "계정 설정"]
-    var sec1 = ["내가 쓴 글"]
-    var sec2 = ["알림 허용"]
+    var sec1 = ["판매자 인증하기"]
+    var sec2 = ["메세지 알림 허용"]
     var sec3 = ["로그아웃", "회원 탈퇴", "앱 정보"]
+    
+    
     
     
     @IBOutlet weak var FrameTableView: UITableView!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(FrameTableView)
+        API.shared.getUserInfo(completion: { (response) in
+            print("get user Info")
+            self.userInfo = response
+            self.userName.text = self.userInfo.nickName
+            self.getLocation()
+            self.setFollowingCount.setTitle("\(self.userInfo.following.count)", for: .normal)
+            self.setFollwerCount.setTitle("\(self.userInfo.followers.count)", for: .normal)
+            if(self.userInfo.isSeller == true){
+                self.isSellerButton.isHidden = false
+            }else {
+                self.isSellerButton.isHidden = true
+            }
+        })
         
-     
         FrameTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         FrameTableView.delegate = self
         FrameTableView.dataSource = self
-        userName.text = "jouureee"
         
         
         locationManager = CLLocationManager()
@@ -164,6 +192,10 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
     @objc func didTapnoti(_ sender: UISwitch){
         if sender.isOn {
             print("turn")
+            UserDefaults.standard.setValue("jouureee", forKey: UserDefaultKey.userNickName)
+            guard let nickName =  UserDefaults.standard.string(forKey: UserDefaultKey.userNickName) else { return }
+            print(nickName)
+            API.shared.pushNotification(nickname: nickName, message: "apn test message")
             UserDefaults.standard.set(sender.isOn, forKey: UserDefaultKey.notiState)
 
         }else{
@@ -177,14 +209,24 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
 
 class ConnectedViewController: UIViewController {
    
+    @IBOutlet weak var authProvider: UILabel!
+    
+    @IBOutlet weak var userName: UILabel!
+    
+    @IBOutlet weak var userEmail: UILabel!
+    
+    
     @IBAction func closeButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("view did load")
+
         //get user info
+        authProvider.text?.append(UserDefaults.standard.string(forKey: UserDefaultKey.authProvider)!)
+        userName.text?.append(UserDefaults.standard.string(forKey: UserDefaultKey.userName)!)
+        userEmail.text?.append(UserDefaults.standard.string(forKey: UserDefaultKey.userEmail)!)
     }
 }
 
@@ -247,7 +289,6 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         guard let from = UserDefaults.standard.string(forKey: UserDefaultKey.authProvider) else { return }
         
         if indexPath.section == 0 && indexPath.row == 0 { // 내가 쓴 글, 찜한 글
-            print("myPost indexpath")
            performSegue(withIdentifier: "myPost", sender: nil)
         }
         if indexPath.section == 1 && indexPath.row == 0 { // 알림 허용
