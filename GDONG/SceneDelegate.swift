@@ -7,6 +7,9 @@
 
 import UIKit
 import KakaoSDKAuth
+import KakaoSDKUser
+import KakaoSDKCommon
+import KakaoOpenSDK
 import GoogleSignIn
 import AuthenticationServices
 
@@ -22,26 +25,52 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let _ = (scene as? UIWindowScene) else { return }
         if let windowScene = scene as? UIWindowScene {
-                let window = UIWindow(windowScene: windowScene)
+            let window = UIWindow(windowScene: windowScene)
+            if(API.shared.checkAutoLogin() == true){
+                print("checkAutoLogin did")
+                API.shared.autoLogin()
+            }else {
+                print("access token nil")
+                let storyboard: UIStoryboard = UIStoryboard(name: "Login", bundle: nil)
+                let loginVC = storyboard.instantiateViewController(withIdentifier: "login")
+                window.rootViewController = loginVC
+                self.window = window
+                window.makeKeyAndVisible()
+            }
             
-                if (UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != nil) {
-                    print("access token yes")
-                    let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                    let tabbarVC = storyboard.instantiateViewController(withIdentifier: "tabbar")
-                    window.rootViewController = tabbarVC
-                    self.window = window
-                    window.makeKeyAndVisible()
-                }else{
-                    print("access token nil")
-                    let storyboard: UIStoryboard = UIStoryboard(name: "Login", bundle: nil)
-                    let loginVC = storyboard.instantiateViewController(withIdentifier: "login")
-                    window.rootViewController = loginVC
-                    self.window = window
-                    window.makeKeyAndVisible()
-                }
+//                if (UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != nil) {
+//                    print("access token yes")
+//
+//                    let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//                    let tabbarVC = storyboard.instantiateViewController(withIdentifier: "tabbar")
+//                    window.rootViewController = tabbarVC
+//                    self.window = window
+//                    window.makeKeyAndVisible()
+//                }else{
+//                    print("access token nil")
+//                    let storyboard: UIStoryboard = UIStoryboard(name: "Login", bundle: nil)
+//                    let loginVC = storyboard.instantiateViewController(withIdentifier: "login")
+//                    window.rootViewController = loginVC
+//                    self.window = window
+//                    window.makeKeyAndVisible()
+//                }
             }
     
     }
+    
+    func getToken(){
+           UserApi.shared.accessTokenInfo {(accessTokenInfo, error) in
+               if let error = error {
+                   print(error)
+               }
+               else {
+                   print("accessTokenInfo() success.")
+                guard let token = accessTokenInfo else { return }
+                print("login token \(token)")
+                   
+               }
+           }
+       }
 
     //scene의 연결이 해제될 때 호출
     func sceneDidDisconnect(_ scene: UIScene) {

@@ -17,6 +17,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
     let viewModel = AuthenticationViewModel()
     var user: [User] = []
  
+    private var loginObserver: NSObjectProtocol?
     
     //temp button
     private let loginButton: UIButton = {
@@ -66,6 +67,13 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
         GIDSignIn.sharedInstance()?.presentingViewController = self // 로그인화면 불러오기
         GIDSignIn.sharedInstance().restorePreviousSignIn() // 자동 로그인
         GIDSignIn.sharedInstance()?.delegate = self
+        
+        loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification, object: nil, queue:.main, using: { [weak self] _ in
+            guard let strongSelf = self else{
+                return
+            }
+            strongSelf.navigationController?.dismiss(animated: true, completion: nil)
+        })
 
     }
     
@@ -163,10 +171,8 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
                 print("User Name : \((userName))")
                 
                 API.shared.oAuth(from: "google", access_token: accessToken, name: userName, completed: {
+                    API.shared.autoLogin()
                 })
-                
-               
-
                 
             } else {
                 print("Error : User Data Not Found")
@@ -197,7 +203,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
 
                         //do something
                         let token = oauthToken
-                        
+                        print("kakao login \(oauthToken)")
                         guard let accessToken = token?.accessToken else {
                             return
                         }
@@ -222,7 +228,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
                 guard let userEmail = user?.kakaoAccount?.email else { return }
                 
                 API.shared.oAuth(from: "kakao", access_token: accessToken, name: userName, completed: {
-                    //self.autoLogin(UN: userName, UE: userEmail, FROM: "kakao")
+                    API.shared.autoLogin()
                 })
 
                 
@@ -230,22 +236,6 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
         }
        
     }
-    
-//    func getToken(userName: String){
-//        UserApi.shared.accessTokenInfo {(accessTokenInfo, error) in
-//            if let error = error {
-//                print(error)
-//            }
-//            else {
-//                print("accessTokenInfo() success.")
-//                guard let accessToken = accessTokenInfo else { return }
-//                print(type(of: accessToken))
-//                //API.shared.oAuth(from: "kakao", access_token: accessToken, name: userName)
-//                print("kakao login token \(accessToken)")
-//
-//            }
-//        }
-//    }
     
 
     func MoveToTabbar(){
@@ -265,19 +255,11 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
         UIApplication.shared.windows.first?.makeKeyAndVisible()
     }
 
-    
-//    func checkAutoLogin(){
-//        if let userName = UserDefaults.standard.string(forKey: "userName") {
-//            if let useremail = UserDefaults.standard.string(forKey: "userEmail") {
-//                print("has value in userDefaults")
-//                self.MoveToTabbar()
-//          }
-//        }else{
-//            print("need to meet the condition")
-//        }
-//
-//    }
-
+    deinit {
+        if let observer = loginObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+    }
 }
 
 

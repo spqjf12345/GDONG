@@ -83,11 +83,22 @@
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="chatListTableView" destination="oo9-dK-OSc" id="jY2-DR-reK"/>
+                        <segue destination="0Yz-Pw-atL" kind="show" identifier="chat" id="Fbt-Cr-eBe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pxg-rX-nv0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1041" y="-687"/>
+            <point key="canvasLocation" x="912" y="-700"/>
+        </scene>
+        <!--ChatViewController-->
+        <scene sceneID="GTs-VG-a7x">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="chat" storyboardName="Chat" referencedIdentifier="ChatViewController" id="0Yz-Pw-atL" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="xdx-Bb-cog"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="H2V-aI-PkH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1772" y="-740"/>
         </scene>
         <!--Main-->
         <scene sceneID="Ncv-mZ-yfp">

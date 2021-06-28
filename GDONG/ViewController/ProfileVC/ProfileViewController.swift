@@ -26,7 +26,7 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var profileImage: UIImageView!
     
     @IBAction func profileSetting(_ sender: Any) {
-        
+        performSegue(withIdentifier: "EditProfile", sender: nil)
     }
     
     @IBOutlet weak var isSellerButton: UIButton!
@@ -36,93 +36,17 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var setFollowingCount: UIButton!
     
     @IBAction func followerCount(_ sender: Any) {
+        let dataString = "followers"
+        performSegue(withIdentifier: "follo", sender: dataString)
     }
     
     @IBAction func followingCount(_ sender: Any) {
-        
+        let dataString = "following"
+        performSegue(withIdentifier: "follo", sender: dataString)
     }
     
     @IBAction func LikePages(_ sender: Any) {
         performSegue(withIdentifier: "myPost", sender: nil)
-    }
-    
-    @IBAction func connectAccount(_ sender: Any) {
-        //get user account
-        let connectedAccountVC = UIStoryboard.init(name: "MyPost", bundle: nil).instantiateViewController(withIdentifier: "connectAccount")
-            connectedAccountVC.modalPresentationStyle = .fullScreen
-            self.present(connectedAccountVC, animated: true, completion: nil)
-        
-        
-    }
-    
-    private var nameTextField: UITextField = {
-        var textfield = UITextField()
-        return textfield
-    }()
-    
-    //alertVC with textfield
-    func alertEditName(){
-        let alertVC = UIAlertController(title:"회원 정보 수정", message: nil, preferredStyle: .alert)
-       
-        alertVC.addTextField(configurationHandler: { (textField) -> Void in
-            self.nameTextField = textField
-            self.nameTextField.placeholder = "새로 수정할 닉네임을 입력해주세요"
-        })
-    
-        let createAction = UIAlertAction(title: "create", style: .default, handler: { (action) -> Void in
-            if let userInput = self.nameTextField.text  {
-                let label = UILabel(frame:CGRect(x: 0, y: 40, width: 270, height:18))
-                label.isHidden = true
-                
-                label.textColor = .red
-                label.font = label.font.withSize(12)
-                label.textAlignment = .center
-                alertVC.view.addSubview(label)
-                
-                if userInput == ""{
-                    label.text = "이름을 입력해주세요"
-                    label.isHidden = false
-                    self.present(alertVC, animated: true, completion: nil)
-
-                }else if self.haveSamenickName(name: userInput){
-                    label.text = "이미 같은 이름을 가진 사용자가 있습니다"
-                    label.isHidden = false
-                    self.present(alertVC, animated: true, completion: nil)
-                }else{
-                   //reflect
-                    self.userName.text = userInput
-                }
-            }
-           
-        })
-        
-        let cancelAction = UIAlertAction(title: "cancel", style: .cancel, handler: nil)
-        alertVC.addAction(createAction)
-        alertVC.addAction(cancelAction)
-        self.present(alertVC, animated: true, completion: nil)
-    }
-    
-    func alertEditLocation(){
-        let alertVC = UIAlertController(title:"위치 정보 수정", message: nil, preferredStyle: .alert)
-        let OkAction = UIAlertAction(title: "OK", style: .default, handler: {
-            (okAction) in
-            //get Location func called
-            self.getLocation()
-        })
-        let cancelAction =  UIAlertAction(title: "CANCEL", style: .cancel)
-        alertVC.addAction(OkAction)
-        alertVC.addAction(cancelAction)
-        self.present(alertVC, animated: true, completion: nil)
-        
-        
-    }
-    
-    //check for validate name from server
-    func haveSamenickName(name: String) -> Bool{
-        if name == "jouureee"{
-           return true
-        }
-        return false
     }
     
     private let sec = ["사용자 정보", "알림", "계정 설정"]
@@ -304,6 +228,17 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let EditProfileVC = segue.destination as? EditProfileViewController {
+            EditProfileVC.userInfo = self.userInfo
+        }
+
+    
+        guard let FolloProfileVC = segue.destination as? FolloViewController, let dataFrom = sender as? String else { return }
+        FolloProfileVC.dataFrom = dataFrom
+        
     }
     
     func autoLogout(from: String, title: String, messege: String){

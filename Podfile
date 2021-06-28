@@ -19,5 +19,18 @@ pod 'GoogleSignIn' #구글 로그인
 
 pod "TTGTagCollectionView"
 pod 'Alamofire', '~> 5.2'
+pod 'MessageKit'
+pod 'Scaledrone', '~> 0.3.0'
+
+pod 'Firebase/Analytics'
+pod 'Firebase/Core'
+pod 'Firebase/Auth'
+pod 'Firebase/Database'
+pod 'Firebase/Storage'
+
+pod 'JGProgressHUD'
+pod 'Kingfisher', '~> 6.0'
+
+
 
 end

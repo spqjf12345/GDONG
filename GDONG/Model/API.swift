@@ -87,8 +87,6 @@ class API {
                         UserDefaults.standard.set(UserData.name, forKey: UserDefaultKey.userName)
                         UserDefaults.standard.set(UserData.authProvider, forKey: UserDefaultKey.authProvider)
                         
-                        self.autoLogin()
-                        
                     }
                     catch let DecodingError.dataCorrupted(context) {
                             print(context)
@@ -105,11 +103,14 @@ class API {
                         print("error: ", error)
                     }
             case .failure(let e):
+                print("connected failed")
                 print(e.localizedDescription)
         }
             
     }
     completed()
+    //로그인 옵저버
+    NotificationCenter.default.post(name: .didLogInNotification, object: nil)
         
     }
     
@@ -178,8 +179,9 @@ class API {
     
     
     func getauthorPost(author: String){
-        let params: Parameters = ["author": "test", "num": 1]
-        //AF.request(Config.baseUrl + "/user/update", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString)).validate().responseJSON
+        let params: Parameters = ["author": "test",
+                                  "num": 1]
+    
         AF.request(Config.baseUrl + "/post/author", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString)).validate().responseJSON { (response) in
                 print(response)
                 print("[API] /post/author 유저 게시글 가져오기")
@@ -212,6 +214,15 @@ class API {
                     }
             }
         }
+    
+    func checkAutoLogin() -> Bool {
+        if let from = UserDefaults.standard.string(forKey: UserDefaultKey.authProvider), let accseeToken = UserDefaults.standard.string(forKey: UserDefaultKey.accessToken), let name = UserDefaults.standard.string(forKey: UserDefaultKey.userName) {
+            oAuth(from: from, access_token: accseeToken, name: name, completed: {
+              })
+            return true
+        }
+        return false
+    }
     
     
     func autoLogin(){
@@ -287,5 +298,5 @@ class API {
 
 
 struct Config {
-    static let baseUrl = "http://192.168.35.19:5000/api/v0" // test server url
+    static let baseUrl = "http://172.30.123.134:5000/api/v0" // test server url
 }

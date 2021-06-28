@@ -14,6 +14,7 @@ import AuthenticationServices
 import CoreLocation
 import AppTrackingTransparency
 import AdSupport
+import Firebase
 
 
 @main
@@ -35,6 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         locationManager.requestWhenInUseAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
+        FirebaseApp.configure()
         
         
         //apple id 기반으로 사용자 인증 요청

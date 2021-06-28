@@ -13,10 +13,13 @@ class ChatListViewController: UIViewController {
     var thumnail = ["strawberry.jpg", "perfume.jpg"]
     var latestMessageTime = ["1시간전", "2021.4.28"]
     var message = ["안녕하세요 채팅내용 입니다 이건 마지막 채팅내용이 나타날 자리 입니다.", "1/80"]
+    
+    private var conversations = [ChatRoom]()
 
     
     @IBOutlet var chatListTableView: UITableView!
     
+    private var loginObserver: NSObjectProtocol?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +34,9 @@ class ChatListViewController: UIViewController {
         chatListTableView.delegate = self
         chatListTableView.dataSource = self
         
+        DatabaseManager.shared.test();
+        
+        //self.getConversation()
 
         
     }
@@ -39,7 +45,47 @@ class ChatListViewController: UIViewController {
         super.viewWillAppear(animated)
         chatListTableView.reloadData()
         
+    }
+    
+    private func getConversation() {
+        guard let email = UserDefaults.standard.value(forKey: UserDefaultKey.userEmail) as? String else {
+            return
         }
+
+        if let observer = loginObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+
+        print("starting conversation fetch...")
+
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+        
+        // get all conversation
+        DatabaseManager.shared.getAllConversations(for: safeEmail, completion: { [weak self] (result) in
+                                                    print(result)})
+ //       DatabaseManager.shared.getAllConversations(for: safeEmail, completion: { [weak //self] result in
+//            switch result {
+//            case .success(let conversations):
+//                print("successfully got conversation models")
+//                guard !conversations.isEmpty else {
+//                    self?.tableView.isHidden = true
+//                    self?.noConversationsLabel.isHidden = false
+//                    return
+//                }
+//                self?.noConversationsLabel.isHidden = true
+//                self?.tableView.isHidden = false
+//                self?.conversations = conversations
+//
+//                DispatchQueue.main.async {
+//                    self?.tableView.reloadData()
+//                }
+//            case .failure(let error):
+//                self?.tableView.isHidden = true
+//                self?.noConversationsLabel.isHidden = false
+//                print("failed to get convos: \(error)")
+//            }
+//        })
+    }
 
 }
 
@@ -49,7 +95,7 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return roomName.count
+        return conversations.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -59,7 +105,7 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource {
         cell.latestMessageTime.text = latestMessageTime[indexPath.row]
         cell.message.text = message[indexPath.row]
         cell.thumbnail.image = UIImage(named: thumnail[(indexPath as NSIndexPath).row])
-        
+
         cell.roomName.sizeToFit()
         cell.latestMessageTime.sizeToFit()
         cell.message.sizeToFit()
@@ -91,5 +137,10 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource {
         
     }
 
+    
+    //chat 방 들어가기
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "chat", sender: nil)
+    }
     
 }

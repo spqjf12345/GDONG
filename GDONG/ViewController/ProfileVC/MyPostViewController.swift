@@ -9,7 +9,7 @@ import UIKit
 import Tabman
 import Pageboy
 
-class myPostViewController: TabmanViewController {
+class MyPostViewController: TabmanViewController {
     private var viewControllers: Array<UIViewController> = []
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +36,7 @@ class myPostViewController: TabmanViewController {
 
 }
 
-extension myPostViewController: PageboyViewControllerDataSource, TMBarDataSource {
+extension MyPostViewController: PageboyViewControllerDataSource, TMBarDataSource {
     func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
         viewControllers.count
     }
