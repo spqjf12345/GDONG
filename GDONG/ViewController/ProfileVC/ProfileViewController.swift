@@ -16,7 +16,7 @@ import CoreLocation
 
 class ProfileViewController: UIViewController, CLLocationManagerDelegate {
 
-    var userInfo = User()
+    var userInfo = Users()
     var locationManager: CLLocationManager!
     @IBOutlet weak var userName: UILabel!
     
@@ -116,7 +116,6 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
     @objc func didTapnoti(_ sender: UISwitch){
         if sender.isOn {
             print("turn")
-            UserDefaults.standard.setValue("jouureee", forKey: UserDefaultKey.userNickName)
             guard let nickName =  UserDefaults.standard.string(forKey: UserDefaultKey.userNickName) else { return }
             print(nickName)
             API.shared.pushNotification(nickname: nickName, message: "apn test message")
@@ -148,9 +147,12 @@ class ConnectedViewController: UIViewController {
         super.viewDidLoad()
 
         //get user info
-        authProvider.text?.append(UserDefaults.standard.string(forKey: UserDefaultKey.authProvider)!)
-        userName.text?.append(UserDefaults.standard.string(forKey: UserDefaultKey.userName)!)
-        userEmail.text?.append(UserDefaults.standard.string(forKey: UserDefaultKey.userEmail)!)
+        if(UserDefaults.standard.string(forKey: UserDefaultKey.authProvider) != nil){
+            authProvider.text?.append(UserDefaults.standard.string(forKey: UserDefaultKey.authProvider)!)
+            userName.text?.append(UserDefaults.standard.string(forKey: UserDefaultKey.userName)!)
+            userEmail.text?.append(UserDefaults.standard.string(forKey: UserDefaultKey.userEmail)!)
+        }
+        
     }
 }
 
@@ -209,12 +211,17 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.section)
+
         guard let from = UserDefaults.standard.string(forKey: UserDefaultKey.authProvider) else { return }
         
-        if indexPath.section == 0 && indexPath.row == 0 { // 내가 쓴 글, 찜한 글
-           performSegue(withIdentifier: "myPost", sender: nil)
+        if indexPath.section == 0 && indexPath.row == 0 { // 판매자 인증하기
+            alertController(title: "판매자 인증 📧", message: "spqjf12345@gmail.com 관리자에게 사업자 등록증을 첨부한 뒤 메일을 보내주세요. 메일 앱으로 이동합니다.", completion: { action in
+                if action == "OK"{
+                    self.openMail()
+                }
+            })
         }
+        
         if indexPath.section == 1 && indexPath.row == 0 { // 알림 허용
             print("alarm indexpath")
         }
@@ -237,9 +244,34 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
 
     
         guard let FolloProfileVC = segue.destination as? FolloViewController, let dataFrom = sender as? String else { return }
+        
         FolloProfileVC.dataFrom = dataFrom
         
     }
+    
+    func openMail(){
+        let email = "spqjf12345@gmail.com"
+        if let url = URL(string: "mailto:\(email)") {
+          if #available(iOS 10.0, *) {
+            UIApplication.shared.open(url)
+          } else {
+            UIApplication.shared.openURL(url)
+          }
+        }
+    }
+    
+    func alertController(title: String, message: String, completion: @escaping ((String) -> Void)){
+       let AlertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: .default, handler: { action in
+            completion("OK")
+         })
+        let CANCELAction = UIAlertAction(title: "CANCEL", style: .cancel, handler: nil)
+        
+        AlertVC.addAction(OKAction)
+        AlertVC.addAction(CANCELAction)
+        self.present(AlertVC, animated: true, completion: nil)
+    }
+    
     
     func autoLogout(from: String, title: String, messege: String){
         let alertVC = UIAlertController(title: title, message: messege, preferredStyle: .alert)

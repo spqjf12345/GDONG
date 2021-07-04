@@ -26,9 +26,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let _ = (scene as? UIWindowScene) else { return }
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            if(API.shared.checkAutoLogin() == true){
+            if(API.shared.checkAutoLogin() == true){ // 앱에 저장된 정보가 있으면
                 print("checkAutoLogin did")
-                API.shared.autoLogin()
             }else {
                 print("access token nil")
                 let storyboard: UIStoryboard = UIStoryboard(name: "Login", bundle: nil)
@@ -37,24 +36,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 self.window = window
                 window.makeKeyAndVisible()
             }
-            
-//                if (UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != nil) {
-//                    print("access token yes")
-//
-//                    let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//                    let tabbarVC = storyboard.instantiateViewController(withIdentifier: "tabbar")
-//                    window.rootViewController = tabbarVC
-//                    self.window = window
-//                    window.makeKeyAndVisible()
-//                }else{
-//                    print("access token nil")
-//                    let storyboard: UIStoryboard = UIStoryboard(name: "Login", bundle: nil)
-//                    let loginVC = storyboard.instantiateViewController(withIdentifier: "login")
-//                    window.rootViewController = loginVC
-//                    self.window = window
-//                    window.makeKeyAndVisible()
-//                }
-            }
+        }
     
     }
     

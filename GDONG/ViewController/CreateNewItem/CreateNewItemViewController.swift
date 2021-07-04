@@ -1,12 +1,15 @@
+
 //
 //  CreateNewItemViewController.swift
 //  GDONG
 //
 //  Created by Woochan Park on 2021/04/22.
 //
-
 import UIKit
 import PhotosUI
+import Alamofire
+import FirebaseFirestore
+import CoreLocation
 
 private enum Cells: String, CaseIterable {
   case PhotoCell
@@ -38,6 +41,10 @@ class CreateNewItemViewController: UIViewController {
   @IBOutlet weak var entityTextView: UITextView!
   
   var token: NSObjectProtocol?
+    var images: [Data] = []
+    var image = Data()
+    //var profileImage: String?
+    
   
   private let phPickerVC: PHPickerViewController = {
     var configuration = PHPickerConfiguration()
@@ -53,13 +60,129 @@ class CreateNewItemViewController: UIViewController {
       DispatchQueue.main.async {
         self.photoCollectionView.reloadData()
         self.photoCountingLabel.text = "\(self.userSelectedPhotoImageList.count)/10"
+        
       }
     }
   }
+    
+    func postData(){
+        //images data array
+        for image in userSelectedPhotoImageList {
+            let imageData = image.jpeg(.lowest)
+            self.images.append(imageData!)
+        }
+        
+        let locationManager =  CLLocationManager()
+        let coor = locationManager.location?.coordinate
+        let latitude = coor?.latitude
+        let longitude = coor?.longitude
+        let location = Location(dictionary: ["coordinates" : [latitude, longitude]])
+
+        //guard let price: Int = Int(self.priceCell.priceTextField.text!) else { return }
+        let pricetext = self.priceCell.priceTextField.text!
+        let priceCharList = [Character](pricetext.filter { $0 != "," })
+        let postprice:Int = Int(String(priceCharList))!
+        
+        //self.profileImage = images[0].base64EncodedString(options: .lineLength64Characters)
+        print("post price \(postprice)")
+        
+        print(self.titleTextField.text!)
+        print(self.entityTextView.text)
+        print(postprice)
+        print(type(of: postprice))
+        print(self.categoryLabel.text!)
+        print(self.images)
+        print(location)
+        
+        PostService.shared.uploadPost(title: self.titleTextField.text!, content: self.entityTextView.text, link: "www.naver.com", needPeople: 5, price: postprice, category: self.categoryLabel.text!, images: images, profileImg: "", location: location!, completionHandler: { (response) in
+            print(response)
+            self.postId = response.postid
+            self.image = response.images[0]
+        })
+            
+    }
+    
+//    //post 코드 완성버전
+//    func post() throws {
+//
+//        let url = Config.baseUrl + "/post/upload"
+//        let headers: HTTPHeaders = [
+//            "Content-type": "multipart/form-data"
+//        ]
+//
+//        var postboard = PostBoard()
+//
+//        guard let author =  UserDefaults.standard.string(forKey: UserDefaultKey.userNickName) else { return }
+//        guard let authorEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else { return }
+//
+//        var locationManager: CLLocationManager!
+//        let coor = locationManager.location?.coordinate
+//        let latitude = coor?.latitude
+//        let longitude = coor?.longitude
+//
+//        postboard.author = "test nicname"
+//        postboard.title = self.titleTextField.text!
+//        postboard.content = self.entityTextView.text
+//        postboard.link = "link"
+//        postboard.needPeople = "5"
+//        guard let price: Int = Int(self.priceCell.priceTextField.text!) else { return }
+//        postboard.price = price
+//        postboard.category = self.categoryLabel.text!
+//
+//
+//        //콤마 지우고 디비에 저장될 수 있게 해주는코드
+//        let pricetext = price
+//        let priceCharList = [Character](pricetext.filter { $0 != "," })
+//        let postprice = String(priceCharList)
+//
+//
+//        이미지 전송위한 코드
+//        let image = UIImage(named: "strawberry.jpg")
+//        let imgData = image!.jpegData(compressionQuality: 0.2)! //압축퀄리티 조정 필요
+//
+//
+//
+//        AF.upload(multipartFormData: { multipartFormData in do {
+//            print("[API] /post/upload 유저 글 쓰기 업데이트")
+//            multipartFormData.append(Data(postboard.author!.utf8), withName: "author", mimeType:"text/plain")
+//            multipartFormData.append(Data(postboard.title!.utf8), withName: "title", mimeType:"text/plain")
+//            multipartFormData.append(Data(postboard.content!.utf8), withName: "content", mimeType:"text/plain")
+//            multipartFormData.append(Data(postboard.link!.utf8), withName: "link", mimeType:"text/plain")
+//            multipartFormData.append(Data(postboard.needPeople!.utf8), withName: "needPeople", mimeType:"text/plain")
+//            multipartFormData.append(Data(postprice.utf8), withName: "price", mimeType:"text/plain")
+//            multipartFormData.append(Data(postboard.category!.utf8), withName: "category", mimeType:"text/plain")
+//            multipartFormData.append(Data(authorEmail.utf8), withName: "email", mimeType:"text/plain")
+//            }
+//            이미지추가
+//            multipartFormData.append(img, withName: "images", fileName: "\(imgData).jpg", mimeType: "image/jpg")
+//
+//            if let imageArray = postboard.images {
+//                for images in imageArray {
+//                    multipartFormData.append(images, withName: "images", fileName: "\(images).jpg", mimeType: "image/jpeg")
+//                }
+//            }
+//
+//
+//            }, to: url, method: .post, headers: headers).responseJSON { response in
+//
+//            guard let statusCode = response.response?.statusCode else { return }
+//
+//                switch statusCode {
+//                    case 200:
+//                        print("성공")
+//
+//                    default:
+//                        print("\(statusCode)" + "실패")
+//                }
+//
+//            }
+//
+//        }
 
   
   /// AllCases of enum `Cells`, the list used as tableview Layout order.
   private let cellList = Cells.allCases
+    var postId: Int?
   
   /// MARK: ViewDidLoad
   override func viewDidLoad() {
@@ -98,9 +221,12 @@ class CreateNewItemViewController: UIViewController {
     
     do {
       try validateWriting()
+        try postData()
       
       //TODO: Post Function
-      print("somePostFunction()")
+      //make new chat room
+      self.createNewChat()
+
       
       dismiss(animated: true, completion: nil)
     } catch {
@@ -109,6 +235,38 @@ class CreateNewItemViewController: UIViewController {
       presentAlert(with: error as! InvalidValueError)
     }
   }
+    
+    func createNewChat() {
+        print("createNewChat called")
+        guard let myEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else{
+            print("there are no email")
+            return
+        }
+        
+        guard let postId:Int = self.postId else { return }
+        
+        let users = [myEmail] // 방 생성 시 혼자만 있음
+        //let users = [self.currentUser.uid, self.user2UID]
+        let data: [String: Any] = [
+            "users": users,
+            "ChatRoomName" : titleTextField.text!, // 채팅 방 이름
+            "Date" : Date(), // 채팅방 생성 날짜
+            "PostID" : postId
+        ]
+        
+        let db = Firestore.firestore().collection("Chats")
+        
+        db.addDocument(data: data) { (error) in
+            if let error = error {
+                print("Unable to create chat! \(error)")
+                return
+            } else {
+                ChatListViewController().loadChat()
+            }
+        }
+    }
+    
+
   
   // 유효한 글인지 검사하는 메서드
   private func validateWriting() throws {
@@ -303,6 +461,9 @@ extension CreateNewItemViewController: PHPickerViewControllerDelegate {
   
   func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
     
+    //변수 설정 by lys
+    var postImageBoard = PostBoard()
+    
     dismiss(animated: true)
     guard !results.isEmpty else { return }
     
@@ -316,6 +477,10 @@ extension CreateNewItemViewController: PHPickerViewControllerDelegate {
           if let image = image as? UIImage {
             self?.userSelectedPhotoImageList.append(image)
           }
+            //post 용 이미지 코드
+            if let postimage = image as? Data {
+                postImageBoard.images.append(postimage)
+            }
         }
       }
     }

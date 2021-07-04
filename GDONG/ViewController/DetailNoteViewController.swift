@@ -8,10 +8,11 @@
 /// need to add url
 /// in progress, .. 단계, 카테고리
 import UIKit
+import FirebaseFirestore
 
 class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
     var oneBoard: Board?
-    var oneUser: [User] = []
+    var oneUser: [Users] = []
     
     var FrameTableView: UITableView = {
         var table = UITableView()
@@ -134,7 +135,50 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @objc func didTapGoToChatRoom(){
         print("didTapGoToChatRoom")
+        //TO-DO
+        //if post user 인원 안찼을 때
+        guard let userEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
+            print("no exists user ")
+            return
+        }
+        addUserToChat(userEamil: userEmail)
+        //else alertController()
+        
     }
+    
+    func addUserToChat(userEamil: String){
+        //getPostInfo
+        //postId == chatId
+        let postId = ""
+        let document = Firestore.firestore().collection("Chats").document(postId)
+        
+        //let users = [userEamil] // 방 생성 시 혼자만 있음
+        //let users = [self.currentUser.uid, self.user2UID]
+//        let data: [String: Any] = [
+//            "users": FieldValue.arrayUnion(["\(userEamil)"])
+//        ]
+//        document.setData(data){ err in
+//            if let err = err {
+//                    print("Error writing document: \(err)")
+//                } else {
+//                    print("Document successfully written!")
+//                }
+//        }
+        document.updateData([
+            "users": FieldValue.arrayUnion(["\(userEamil)"])
+        ])
+
+    }
+    
+    public func alertController() {
+       let AlertVC = UIAlertController(title: "인원 초가", message: "채팅방에 인원이 꽉 찼습니다.", preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        
+        AlertVC.addAction(OKAction)
+        
+        self.present(AlertVC, animated: true, completion: nil)
+    }
+    
     
     @objc func didTapHeart(_ sender: UIButton){
         print("didTapHeart")

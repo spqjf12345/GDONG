@@ -36,7 +36,7 @@ class TitleTableViewCell: UITableViewCell {
 
     }
     
-    public func configure(with modelBoard: Board, modelUser: User){
+    public func configure(with modelBoard: Board, modelUser: Users){
         self.titleBoard.text = modelBoard.title
         self.dateBoard.text = modelBoard.createdAt
         self.userName.text = modelUser.nickName

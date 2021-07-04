@@ -6,16 +6,26 @@
 //
 
 import UIKit
+import FirebaseFirestore
+
+struct ChatRoom {
+    var chatId: String = ""
+    var chatRoomName: String = ""
+    var chatRoomDate: Date = Date()
+    var postId: Int = 0
+}
 
 class ChatListViewController: UIViewController {
+    var mychatRoom = [ChatRoom()]
     
-    var roomName = ["딸기사실분 선착순입니다!어서어서 들어오세요","향수 공동구매 해요!어서어서 들어오세요"]
-    var thumnail = ["strawberry.jpg", "perfume.jpg"]
-    var latestMessageTime = ["1시간전", "2021.4.28"]
-    var message = ["안녕하세요 채팅내용 입니다 이건 마지막 채팅내용이 나타날 자리 입니다.", "1/80"]
+//    var roomName = ["딸기사실분 선착순입니다!어서어서 들어오세요","향수 공동구매 해요!어서어서 들어오세요"]
+//    var thumnail = ["strawberry.jpg", "perfume.jpg"]
+//    var latestMessageTime = ["1시간전", "2021.4.28"]
+//    var message = ["안녕하세요 채팅내용 입니다 이건 마지막 채팅내용이 나타날 자리 입니다.", "1/80"]
     
-    private var conversations = [ChatRoom]()
+    //private var conversations = [ChatRoom]()
 
+    var currentUser: Users = Users()
     
     @IBOutlet var chatListTableView: UITableView!
     
@@ -34,9 +44,11 @@ class ChatListViewController: UIViewController {
         chatListTableView.delegate = self
         chatListTableView.dataSource = self
         
-        DatabaseManager.shared.test();
+        API.shared.getUserInfo(completion: { (response) in
+            self.currentUser = response
+        })
         
-        //self.getConversation()
+        loadChat()
 
         
     }
@@ -47,22 +59,86 @@ class ChatListViewController: UIViewController {
         
     }
     
-    private func getConversation() {
-        guard let email = UserDefaults.standard.value(forKey: UserDefaultKey.userEmail) as? String else {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let chatVC = segue.destination as! ChatViewController
+        let index = chatListTableView.indexPathForSelectedRow
+        chatVC.chatRoom = self.mychatRoom[index!.row]
+        
+    }
+    
+    public func loadChat(){
+        guard let myEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else{
+            print("there are no email")
             return
         }
-
-        if let observer = loginObserver {
-            NotificationCenter.default.removeObserver(observer)
+        
+        //useremail 을 가진 document들을 불러옴
+        let db = Firestore.firestore().collection("Chats").whereField("users", arrayContains: myEmail)
+        db.getDocuments { (chatQuerySnap, error) in
+        if let error = error {
+            print("Error: \(error)")
+            return
+        } else {
+            guard let queryCount = chatQuerySnap?.documents.count else {
+                print("date is no queryCount")
+                return
+                }
+                if(queryCount == 0){
+                    print("아직 채팅 방이 없음")
+                }else if queryCount >= 1 {
+                    print("query count is \(queryCount)")
+                    for doc in chatQuerySnap!.documents {
+                        print(doc.documentID) //N9f8ugKxMGslE8oNusnA
+                        guard let ChatRoomName = doc.data()["ChatRoomName"] as? String else {
+                            print("no chat room name in database")
+                            return
+                        }
+                        guard let ChatRoomDate = doc.data()["Date"] as? Timestamp else {
+                            print("no chat room date in database")
+                            return
+                        }
+                        
+                        guard let ChatPostId = doc.data()["postId"] as? Int else {
+                            print("no postId in database")
+                            return
+                        }
+                        
+                        self.mychatRoom.append(ChatRoom(chatId: doc.documentID, chatRoomName: ChatRoomName, chatRoomDate: Date(timeIntervalSince1970: TimeInterval(ChatRoomDate.seconds)), postId: ChatPostId))
+                        
+                     
+                        print(self.mychatRoom)
+                        DispatchQueue.main.async {
+                            self.chatListTableView.reloadData()
+                        }
+                        
+                        
+                    }
+                }
+            }
+           
         }
+        
+        
+    }
+        
+    
+    
+//    private func getConversation() {
+//        guard let email = UserDefaults.standard.value(forKey: UserDefaultKey.userEmail) as? String else {
+//            return
+//        }
+//
+//        if let observer = loginObserver {
+//            NotificationCenter.default.removeObserver(observer)
+//        }
+//
+//        print("starting conversation fetch...")
 
-        print("starting conversation fetch...")
-
-        let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+       // let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
         
         // get all conversation
-        DatabaseManager.shared.getAllConversations(for: safeEmail, completion: { [weak self] (result) in
-                                                    print(result)})
+        //DatabaseManager.shared.getAllConversations(for: safeEmail, completion: { [weak self] (result) in
+               //                                     print(result)})
  //       DatabaseManager.shared.getAllConversations(for: safeEmail, completion: { [weak //self] result in
 //            switch result {
 //            case .success(let conversations):
@@ -84,8 +160,7 @@ class ChatListViewController: UIViewController {
 //                self?.noConversationsLabel.isHidden = false
 //                print("failed to get convos: \(error)")
 //            }
-//        })
-    }
+//        })    }
 
 }
 
@@ -95,16 +170,18 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return conversations.count
+        return mychatRoom.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = chatListTableView.dequeueReusableCell(withIdentifier: "chatList", for: indexPath) as! ChatListCell
         
-        cell.roomName.text = roomName[indexPath.row]
-        cell.latestMessageTime.text = latestMessageTime[indexPath.row]
-        cell.message.text = message[indexPath.row]
-        cell.thumbnail.image = UIImage(named: thumnail[(indexPath as NSIndexPath).row])
+        cell.roomName.text = mychatRoom[indexPath.row].chatRoomName
+        
+        cell.latestMessageTime.text = "\(mychatRoom[indexPath.row].chatRoomDate)"
+        
+//        cell.message.text = message[indexPath.row]
+//        cell.thumbnail.image = UIImage(named: thumnail[(indexPath as NSIndexPath).row])
 
         cell.roomName.sizeToFit()
         cell.latestMessageTime.sizeToFit()
@@ -122,10 +199,12 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource {
         let deleteAction = UIContextualAction(style: .destructive, title: "나가기") { (action, view, success) in
             
             //swipe 할 때의 action 정의
-            self.roomName.remove(at: indexPath.row)
-            self.latestMessageTime.remove(at: indexPath.row)
-            self.message.remove(at: indexPath.row)
-            self.thumnail.remove(at: indexPath.row)
+            self.mychatRoom.remove(at: indexPath.row).chatRoomName
+            self.mychatRoom.remove(at: indexPath.row).chatRoomDate
+//            self.roomName.remove(at: indexPath.row)
+//            self.latestMessageTime.remove(at: indexPath.row)
+//            self.message.remove(at: indexPath.row)
+//            self.thumnail.remove(at: indexPath.row)
             
             tableView.deleteRows(at: [indexPath], with: .fade)
         

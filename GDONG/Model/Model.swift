@@ -7,13 +7,14 @@
 
 import Foundation
 
-struct Board: Codable {
-    var __v: Int
+struct Board: Codable { // response
+    var __v: Int = 0
     var _id: String
     var author: String
+    var postid: Int
     var title: String // 글 제목
     var content: String // 글 내용
-    var images: [String]
+    var images: [Data]
     var profileImage: String // 글 대표 이미지
     var category: String // 글 카테고리
     var price: String //가격
@@ -22,10 +23,11 @@ struct Board: Codable {
     var needPeople: Int // 모집 인원
     var nowPeople: Int // 모집된 인원
     var link: String
-    var postid: Int
     var tags: [String]
     var createdAt: String
     var updatedAt: String
+    var location: Location
+    var email: String
     
     enum CodingKeys: String, CodingKey {
         case __v
@@ -46,15 +48,15 @@ struct Board: Codable {
         case updatedAt
         case interest = "likes"
         case profileImage = "profileImg"
+        case location
+        case email
 
-        
-        
     }
     
 }
 
 
-struct User: Codable {
+struct Users: Codable {
     var __v: Int = 0
     var _id: String = ""
     var email: String = "" // 유저 이메일
@@ -62,7 +64,6 @@ struct User: Codable {
     var authProvider: String = "" //소셜 로그인 정보
     var isSeller: Bool = false//판매 권한
     var chatRoomList: [Int] = [] // 참여 중인 채팅 방 ID
-    var recentHistory: [String] = []// 최근 검색어
     var nickName: String = "" //유저 닉네임
     var profileImageUrl: String = "" // 유저 프로필 이미지 url
     var followers: [String] = [] //내가 follow 하는 nickName
@@ -71,8 +72,7 @@ struct User: Codable {
     var updatedAt: String = ""
     var deviceToken: String = ""
     //유저 위치
-    var latitude: Double = 0.0
-    var longitude: Double = 0.0
+    var location: Location = Location()
     var posts:[Int] = []
     var likes: [Int] = []
     
@@ -84,19 +84,33 @@ struct User: Codable {
         case authProvider
         case isSeller
         case chatRoomList = "chatroomList"
-        case recentHistory
         case nickName = "nickname"
-        case profileImageUrl
+        case profileImageUrl = "profileImg"
         case followers
         case following
         case createdAt
         case updatedAt
         case deviceToken
-        case latitude
-        case longitude
+        case location
         case posts
         case likes
 
+    }
+}
+
+struct Location: Codable {
+    var _id: String = ""
+    var coordinates: [Double] = []
+    var type: String = ""
+    var dictionary: [String: Any] {
+        return ["coordinates": [coordinates]]
+    }
+}
+
+extension Location {
+    init?(dictionary: [String:Any]) {
+        guard let location = dictionary["coordinates"] as? [Double] else { return nil }
+        self.init(coordinates: location)
     }
 }
 
@@ -125,4 +139,28 @@ struct Juso: Codable {
 struct Category {
     var categoryImage: String
     var categoryText: String
+}
+
+//struct PostBoard: Codable {
+//    var author : String? //테스트용 아이디 이용
+//    var title : String?
+//    var content : String?
+//    var link : String?
+//    var needPeople : String? //없으면 post 불가, 임의로 값 설정
+//    var price : String?
+//    var category : String?
+//    var images : [Data]?
+//}
+
+
+struct PostBoard: Codable { // for request
+    var author : String = "" //테스트용 아이디 이용
+    var title : String = ""
+    var content : String = ""
+    var link : String = ""
+    var needPeople : String = "" //없으면 post 불가, 임의로 값 설정
+    var price : Int = 0
+    var category : String = ""
+    var images : [Data] = []
+    var location : Location? = Location(dictionary: ["coordinates" : [0, 0]])
 }

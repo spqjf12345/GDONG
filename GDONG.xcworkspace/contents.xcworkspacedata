@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/sojeong/URIPLJECT/GDONGProject/remote_total/GDONG-front/GDONG/ViewController/ChatVC/Chat.swift">
+   </FileRef>
+   <FileRef
       location = "group:GDONG.xcodeproj">
    </FileRef>
    <FileRef

@@ -15,6 +15,7 @@ import CoreLocation
 import AppTrackingTransparency
 import AdSupport
 import Firebase
+import Photos
 
 
 @main
@@ -27,13 +28,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         KakaoSDKCommon.initSDK(appKey: "1cb2a37d6920168105b844b889d7766f") // native key
         GIDSignIn.sharedInstance()?.clientID = "966907908166-emcm81mpq4217qoqtkl9c3ndjcdl5to5.apps.googleusercontent.com"
         
-        print("locatino ask")
-        var locationManager: CLLocationManager!
-        locationManager = CLLocationManager()
+        let locationManager =  CLLocationManager()
         locationManager.delegate = self
         
         //foreground 일때 위치 추적 권한 요청
-        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestAlwaysAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
         FirebaseApp.configure()
@@ -55,21 +54,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //            default:
 //                break
 //            }
-//        }
-        
-        //화면 분기
-//        if (UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != nil) {
-//            print("access token yes")
-//            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//            let tabbarVC = storyboard.instantiateViewController(withIdentifier: "tabbar")
-//            window?.rootViewController = tabbarVC
-//            window?.makeKeyAndVisible()
-//        }else{
-//            print("access token nil")
-//            let storyboard: UIStoryboard = UIStoryboard(name: "Login", bundle: nil)
-//            let loginVC = storyboard.instantiateViewController(withIdentifier: "login")
-//            window?.rootViewController = loginVC
-//            window?.makeKeyAndVisible()
 //        }
         
         if #available(iOS 8.0, *) {
@@ -113,13 +97,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         //push notification
         UNUserNotificationCenter.current().delegate = self
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
-              [weak self] granted, error in
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
               print("Permission granted: \(granted)")
               
           }
         // APNS 등록
         application.registerForRemoteNotifications()
+        
         return true
     }
     
@@ -140,7 +124,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
    //foreground에서 알림이 온 상태
    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
        // 푸시가 오면 alert, badge, sound표시를 하라는 의미
-       completionHandler([.alert, .badge, .sound])
+       //completionHandler([.alert, .sound])
    }
    
    //TODO

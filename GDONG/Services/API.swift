@@ -11,10 +11,9 @@ import Alamofire
 class API {
     static var shared = API()
     
-    func getUserInfo(completion: @escaping ((User) -> Void) ){
+    func getUserInfo(completion: @escaping ((Users) -> Void) ){
         AF.request(Config.baseUrl + "/user/info", method: .get, parameters: nil).validate().responseJSON {
             (response) in
-            print("request result")
             switch response.result {
             
                 case .success(let obj):
@@ -25,7 +24,7 @@ class API {
                         
                         let dataJSON = try JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
 
-                        let UserData = try JSONDecoder().decode(User.self, from: dataJSON)
+                        let UserData = try JSONDecoder().decode(Users.self, from: dataJSON)
                         completion(UserData)
                     } catch {
                         print("error: ", error)
@@ -38,7 +37,7 @@ class API {
         }
     }
         
-    func oAuth(from: String, access_token: String, name: String, completed: () -> Void){
+    func oAuth(from: String, access_token: String, name: String) {
         print("[API] /auth/signin/\(from)")
         guard let deviceToken: String = UserDefaults.standard.string(forKey: UserDefaultKey.deviceToken) else { return }
         let params: Parameters = [
@@ -49,10 +48,8 @@ class API {
 
         AF.request(Config.baseUrl + "/auth/signin/\(from)", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString) ).validate().responseJSON {
             (response) in
-            print("request result")
             if let httpResponse = response.response, let fields = httpResponse.allHeaderFields as? [String: String]{
                 let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.response?.url)!)
-                print("cookie : \(cookies)")
                 HTTPCookieStorage.shared.setCookies(cookies, for: response.response?.url, mainDocumentURL: nil)
                 
                 if let session = cookies.filter({$0.name == "token"}).first {
@@ -78,7 +75,7 @@ class API {
                         
                         let dataJSON = try JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
 
-                        let UserData = try JSONDecoder().decode(User.self, from: dataJSON)
+                        let UserData = try JSONDecoder().decode(Users.self, from: dataJSON)
                         print(UserData)
 
                         UserDefaults.standard.set(UserData.email, forKey: UserDefaultKey.userEmail)
@@ -86,7 +83,9 @@ class API {
                         UserDefaults.standard.set(isNew, forKey: UserDefaultKey.isNewUser)
                         UserDefaults.standard.set(UserData.name, forKey: UserDefaultKey.userName)
                         UserDefaults.standard.set(UserData.authProvider, forKey: UserDefaultKey.authProvider)
+                        UserDefaults.standard.set(UserData.nickName, forKey: UserDefaultKey.userNickName)
                         
+                        API.shared.autoLogin()
                     }
                     catch let DecodingError.dataCorrupted(context) {
                             print(context)
@@ -105,10 +104,20 @@ class API {
             case .failure(let e):
                 print("connected failed")
                 print(e.localizedDescription)
+//                LoginViewController().alertController( completion: {
+//                ok in
+//                if(ok == "OK"){
+//                    
+//                    exit(0) //앱 종료
+//                    
+//                }
+//                })
+                
+                
         }
             
     }
-    completed()
+
     //로그인 옵저버
     NotificationCenter.default.post(name: .didLogInNotification, object: nil)
         
@@ -130,16 +139,14 @@ class API {
     }
     
     
-    func update(nickName: String, longitude: Double, latitude: Double){
+    func updateNickname(nickName: String){
            let params: Parameters = [
-               "nickname": nickName,
-               "longitude": longitude,
-               "latitude": latitude
+               "nickname": nickName
            ]
            
            AF.request(Config.baseUrl + "/user/update", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString)).validate().responseJSON {
                (response) in
-               print("[API] /user/update 유저 정보 업데이트")
+               print("[API] /user/update 유저 닉네임 업데이트")
                switch response.result {
                case .success(let obj):
                    print(obj)
@@ -149,6 +156,26 @@ class API {
               
                }
         }
+    
+    func updateLocation(longitude: Double, latitude: Double){
+        
+        let params: Parameters = [
+            "longitude": longitude,
+            "latitude": latitude
+        ]
+        
+        AF.request(Config.baseUrl + "/user/update", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString)).validate().responseJSON {
+            (response) in
+            print("[API] /user/update 유저 위치 정보 업데이트")
+            switch response.result {
+            case .success(let obj):
+                print(obj)
+            case .failure(let e):
+                print(e.localizedDescription)
+            }
+           
+            }
+    }
     
     func pushNotification(nickname: String, message: String){
         
@@ -216,9 +243,13 @@ class API {
         }
     
     func checkAutoLogin() -> Bool {
-        if let from = UserDefaults.standard.string(forKey: UserDefaultKey.authProvider), let accseeToken = UserDefaults.standard.string(forKey: UserDefaultKey.accessToken), let name = UserDefaults.standard.string(forKey: UserDefaultKey.userName) {
-            oAuth(from: from, access_token: accseeToken, name: name, completed: {
-              })
+        guard let from = UserDefaults.standard.string(forKey: UserDefaultKey.authProvider) , let accseeToken = UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) , let name = UserDefaults.standard.string(forKey: UserDefaultKey.userName) , let jwt = UserDefaults.standard.string(forKey: UserDefaultKey.jwtToken) else {
+            print("저장된 정보가 없어 login view로 이동")
+            return false
+        }
+        
+        if from != "", accseeToken != "", name != "", jwt != "" {
+            oAuth(from: from, access_token: accseeToken, name: name)
             return true
         }
         return false
@@ -226,11 +257,10 @@ class API {
     
     
     func autoLogin(){
-        print("auto Login did")
+        print("autoLogin method call")
         //if user is new --> 1
         print(UserDefaults.standard.integer(forKey: UserDefaultKey.isNewUser))
         if UserDefaults.standard.integer(forKey: UserDefaultKey.isNewUser) == 1 {
-            
             //MoveToAdditionalInfo
             let nickVC = UIStoryboard.init(name: "AdditionalInfo", bundle: nil).instantiateViewController(withIdentifier: "nickName")
             
@@ -249,6 +279,45 @@ class API {
     
     func setCookies(cookies: HTTPCookie){
         Alamofire.Session.default.session.configuration.httpCookieStorage?.setCookie(cookies)
+    }
+    
+    func postUpload(author: String, email: String, title: String, content: String, link: String, longitude: Double, latitude: Double, needPeople: Int, price: Int, category: String, image: String, tags: [String], progileImage: String){
+        
+        let parameters: [String: Any] = ["author": author,
+                                         "email": email,
+                                         "title": title,
+                                         "content": content,
+                                         "link": link,
+                                         "longitude": longitude,
+                                         "latitude": latitude,
+                                         "needPeople" : needPeople,
+                                         "price" : price,
+                                         "category": category,
+                                         "image": image,
+                                         "tag": tags,
+                                         "progileImage" : progileImage
+        ]
+        
+        var request = URLRequest(url: URL(string: Config.baseUrl + "/post/upload")!)
+        request.httpMethod = "POST"
+        request.setValue("multipart/form-data", forHTTPHeaderField: "Content-type")
+       
+        let formDataString = (parameters.compactMap({(key, value) -> String in
+            return "\(key)=\(value)" }) as Array).joined(separator: "&")
+        let formEncodedData = formDataString.data(using: .utf8)
+        
+        request.httpBody = formEncodedData
+        AF.request(request).responseJSON { (response) in
+            print(response)
+            print("[API] /post/upload 글 post 쓰기")
+            switch response.result {
+            case .success(let obj):
+                print(obj)
+                
+            case .failure(let e):
+                print(e.localizedDescription)
+            }
+        }
     }
     
     func findAddress(keyword: String, completion: @escaping ((JusoResponse) -> Void)){
@@ -292,11 +361,10 @@ class API {
 }
 
 
-    
-    
-
-
 
 struct Config {
-    static let baseUrl = "http://172.30.123.134:5000/api/v0" // test server url
+    static let baseUrl = "http://192.168.35.64:5000/api/v0" // test server url
 }
+
+
+

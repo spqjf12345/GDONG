@@ -15,7 +15,7 @@ import Alamofire
 
 class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding, GIDSignInDelegate {
     let viewModel = AuthenticationViewModel()
-    var user: [User] = []
+    var user: [Users] = []
  
     private var loginObserver: NSObjectProtocol?
     
@@ -170,9 +170,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
                 print("User Email : \(userEmail)")
                 print("User Name : \((userName))")
                 
-                API.shared.oAuth(from: "google", access_token: accessToken, name: userName, completed: {
-                    API.shared.autoLogin()
-                })
+                API.shared.oAuth(from: "google", access_token: accessToken, name: userName)
                 
             } else {
                 print("Error : User Data Not Found")
@@ -223,18 +221,24 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
                 print("me() success")
                 _ = user
                 print("kakao login")
-                guard let userId = user?.id else { return }
                 guard let userName = user?.kakaoAccount?.profile?.nickname else { return }
-                guard let userEmail = user?.kakaoAccount?.email else { return }
-                
-                API.shared.oAuth(from: "kakao", access_token: accessToken, name: userName, completed: {
-                    API.shared.autoLogin()
-                })
+                API.shared.oAuth(from: "kakao", access_token: accessToken, name: userName)
 
                 
             }
         }
        
+    }
+    
+    public func alertController(completion: @escaping ((String) -> Void)){
+       let AlertVC = UIAlertController(title: "네트워크 오류", message: "네트워크 연결이 약해 앱을 종료합니다. 잠시 후 다시 이용헤주세요.", preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: .default, handler: { action in
+            completion("OK")
+         })
+        
+        AlertVC.addAction(OKAction)
+        
+        self.present(AlertVC, animated: true, completion: nil)
     }
     
 

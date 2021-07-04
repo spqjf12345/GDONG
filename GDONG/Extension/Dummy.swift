@@ -33,8 +33,8 @@ class Dummy {
         return boards
     }
     
-    func oneUser(model: [User]) -> [User] {
-        var user: [User] = []
+    func oneUser(model: [Users]) -> [Users] {
+        var user: [Users] = []
 //        user.append(User(isNomal: true, usetName: "조소정", userEmail: "spqjf12345@gmail.com", userImage: "tempImageUrl", userLocation: "분당구", likePage: ["샤인 머스켓", "딸기 공구 합니다"]))
         return user
     }

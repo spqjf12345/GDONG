@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>사진 권한을 허용해주세요</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -54,11 +56,11 @@
 		<true/>
 	</dict>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Used to Location's Info always for Using Beacon.</string>
+	<string>Used to Location&apos;s Info always for Using Beacon.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Used to Location's Info always for Using Beacon.</string>
+	<string>Used to Location&apos;s Info always for Using Beacon.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Used to Location's Info for Using Beacon when In Use.</string>
+	<string>Used to Location&apos;s Info for Using Beacon when In Use.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -106,20 +108,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-
-        <string>Used to Location&apos;s Info always for Using Beacon.</string>
-
-        <key>NSLocationAlwaysUsageDescription</key>
-
-        <string>Used to Location&apos;s Info always for Using Beacon.</string>
-
-        <key>NSLocationWhenInUseUsageDescription</key>
-
-        <string>Used to Location&apos;s Info for Using Beacon when In Use.</string>
-        
-        <key>NSUserTrackingUsageDescription</key>
-        <string>This identifier will be used to deliver personalized ads to you.</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>This identifier will be used to deliver personalized ads to you.</string>
 </dict>
 </plist>

@@ -114,73 +114,79 @@ extension DatabaseManager {
     
 }
 
-extension DatabaseManager {
-    public func test(){
-        self.database.child("TEST")
-        database.setValue(["NAME" : "HI"])
-    }
-    /// Fetches and returns all conversations for the user with passed in email
-       public func getAllConversations(for email: String, completion: @escaping (Result<[ChatRoom], Error>) -> Void) {
-        self.database.child("ChatRoom").observe(.value, with: { snapshot in
-               guard let value = snapshot.value as? [[String: Any]] else{
-                   completion(.failure(DatabaseError.failedToFetch))
-                   return
-               }
-                
-  
-               let conversations: [ChatRoom] = value.compactMap({ dictionary in
-                   guard let conversationId = dictionary["id"] as? String,
-                       let name = dictionary["name"] as? String,
-                       let otherUserEmail = dictionary["other_user_email"] as? String,
-                       let latestMessage = dictionary["latest_message"] as? [String: Any],
-                       let date = latestMessage["date"] as? String,
-                       let text = latestMessage["message"] as? String,
-                       let isRead = latestMessage["is_read"] as? Bool,
-                       let thumbnail = dictionary["thumbnail"] as? String,
-                       let user = dictionary["users"] as? [String: String],
-                       let messages = dictionary["messages"] as? [[String: Any]]
-                       else {
-                           return nil
-                   }
+//extension DatabaseManager {
+//    public func test(){
+//        self.database.child("TEST")
+//        database.setValue(["NAME" : "HI"])
+//    }
+//    /// Fetches and returns all conversations for the user with passed in email
+//       public func getAllConversations(for email: String, completion: @escaping (Result<[ChatRoom], Error>) -> Void) {
+//        self.database.child("ChatRoom").observe(.value, with: { snapshot in
+//               guard let value = snapshot.value as? [[String: Any]] else{
+//                   completion(.failure(DatabaseError.failedToFetch))
+//                   return
+//               }
+//                
+//  
+//               let conversations: [ChatRoom] = value.compactMap({ dictionary in
+//                   guard let conversationId = dictionary["id"] as? String,
+//                       let name = dictionary["name"] as? String,
+//                       let otherUserEmail = dictionary["other_user_email"] as? String,
+//                       let latestMessage = dictionary["latest_message"] as? [String: Any],
+//                       let date = latestMessage["date"] as? String,
+//                       let text = latestMessage["message"] as? String,
+//                       let isRead = latestMessage["is_read"] as? Bool,
+//                       let thumbnail = dictionary["thumbnail"] as? String,
+//                       let user = dictionary["users"] as? [String: String],
+//                       let messages = dictionary["messages"] as? [[String: Any]]
+//                       else {
+//                           return nil
+//                   }
+//
+//                   let latestMmessageObject = LatestMessage(date: date,
+//                                                            text: text,
+//                                                            isRead: isRead)
+//                 
+//                print(messages)
+//                var messageAll = [Message]()
+//                var kind: MessageKind?
+//                
+//                for i in messages {
+//                    
+//                    let content = i["content"] as? String
+//                    let date = i["date"] as? String
+//                    let id = i["id"] as? String
+//                    let senderName = i["sender_nickName"] as? String
+//                    let type = i["type"] as? String
+//                    let sender = Sender(photoURL: "",
+//                                    senderId: email,
+//                                    displayName: senderName!)
+//                    let dateFormatter = DateFormatter()
+//                    kind = .text(content!)
+//                    let message = Message(sender: sender, messageId: id!, sentDate: (dateFormatter.date(from: date!)!), kind: kind!)
+//                    print(message)
+//                    messageAll.append(message)
+//                }
+//                
+//                
+//                var users = [String]()
+//                
+//                for i in user {
+//                    users.append(i.value)
+//                }
+//                return ChatRoom(id: conversationId, roomName: name, thumbnail: thumbnail, parcipants: users, latestMessage: latestMmessageObject, messages: messageAll, allowedNotification: false)
+//                 
+//               })
+//
+//               completion(.success(conversations))
+//           })
+//       }
+//    
+//    
+//}
 
-                   let latestMmessageObject = LatestMessage(date: date,
-                                                            text: text,
-                                                            isRead: isRead)
-                 
-                print(messages)
-                var messageAll = [Message]()
-                var kind: MessageKind?
-                
-                for i in messages {
-                    
-                    let content = i["content"] as? String
-                    let date = i["date"] as? String
-                    let id = i["id"] as? String
-                    let senderName = i["sender_nickName"] as? String
-                    let type = i["type"] as? String
-                    let sender = Sender(photoURL: "",
-                                    senderId: email,
-                                    displayName: senderName!)
-                    let dateFormatter = DateFormatter()
-                    kind = .text(content!)
-                    let message = Message(sender: sender, messageId: id!, sentDate: (dateFormatter.date(from: date!)!), kind: kind!)
-                    print(message)
-                    messageAll.append(message)
-                }
-                
-                
-                var users = [String]()
-                
-                for i in user {
-                    users.append(i.value)
-                }
-                return ChatRoom(id: conversationId, roomName: name, thumbnail: thumbnail, parcipants: users, latestMessage: latestMmessageObject, messages: messageAll, allowedNotification: false)
-                 
-               })
-
-               completion(.success(conversations))
-           })
-       }
-    
-    
-}
+//extension DatabaseManager {
+//    public func createNewChatRoom(with otherUSerEmail: String, name: String, firstMessage: Message, postTitle, completion: @escaping (Bool) -> Void){
+//        let ref = database.child("\(postTitle)")
+//    }
+//}

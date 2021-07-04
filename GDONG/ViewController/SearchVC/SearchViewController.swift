@@ -18,7 +18,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     
     /// Data model for the table view.
     var board = [Board]()
-    var user = [User]()
+    var user = [Users]()
     var filteredBoard = [Board]()
     
     let categoryView: UIView = {
@@ -54,9 +54,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
             let searchResult = SearchResultViewController()
             searchResult.searchWord = searchBar.text!
             recentController.searchHistory.append(searchBar.text!)
-//            print("is added \(recentController.searchHistory)")
             recentController.tableView.reloadData()
-            UserDefaults.standard.set(searchBar.text!, forKey: "historyWord")
+            UserDefaults.standard.set(recentController.searchHistory, forKey: UserDefaultKey.recentHistory)
             searchBar.text = ""
             self.navigationController?.pushViewController(searchResult, animated: true)
         }

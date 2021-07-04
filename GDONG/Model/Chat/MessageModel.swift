@@ -10,17 +10,14 @@ import UIKit
 import MessageKit
 import CoreLocation
 
-struct Member {
-  let name: String
-  let color: UIColor
-}
 
-struct Message: MessageType {
-    public var sender: SenderType // 보내는 사람
-    public var messageId: String // 메세지 하나 id
-    public var sentDate: Date // 메시지 날짜
-    public var kind: MessageKind // 메제시 종류
-}
+
+//struct Message: MessageType {
+//    public var sender: SenderType // 보내는 사람
+//    public var messageId: String // 메세지 하나 id
+//    public var sentDate: Date // 메시지 날짜
+//    public var kind: MessageKind // 메제시 종류
+//}
 
 //struct Media: MediaItem {
 //    var url: URL?
@@ -34,17 +31,17 @@ struct Message: MessageType {
 //    var size: CGSize
 //}
 
-struct Sender: SenderType {
-    public var photoURL: String // 보내는 사람 이미지
-    public var senderId: String // 보내는 사람 아이디
-    public var displayName: String // 보내는 사람 닉네임
-}
-
-struct LatestMessage {
-    let date: String
-    let text: String
-    let isRead: Bool
-}
+//struct Sender: SenderType {
+//    public var photoURL: String // 보내는 사람 이미지
+//    public var senderId: String // 보내는 사람 아이디
+//    public var displayName: String // 보내는 사람 닉네임
+//}
+//
+//struct LatestMessage {
+//    let date: String
+//    let text: String
+//    let isRead: Bool
+//}
 
 
 

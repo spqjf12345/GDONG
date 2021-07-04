@@ -7,12 +7,14 @@
 
 import UIKit
 import CoreLocation
+import PhotosUI
 
 class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
     
     var locationManager: CLLocationManager!
     
-    var userInfo = User()
+    
+    var userInfo = Users()
     @IBOutlet weak var imageEditButton: UIImageView!
     @IBOutlet weak var userImage: UIImageView!
     
@@ -40,14 +42,29 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var connectedAccountImage: UIImageView!
     
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         locationSetting()
         UISetting()
+       
         
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(editImage))
+        imageEditButton.addGestureRecognizer(tapGestureRecognizer)
+        imageEditButton.isUserInteractionEnabled = true
 
+    }
+    
+    @objc func editImage(){
+        var configuration = PHPickerConfiguration()
+        configuration.selectionLimit = 1
+        configuration.filter = .any(of: [.images])
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
+        self.present(picker, animated: true, completion: nil)
     }
     
     func UISetting(){
@@ -129,6 +146,7 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
                     self.present(alertVC, animated: true, completion: nil)
                 }else{
                    //reflect
+                    API.shared.updateNickname(nickName: userInput)
                     self.nickNameTextField.text = userInput
                 }
             }
@@ -174,9 +192,30 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
                 if let name: String = address.last?.name{
                     print(name)
                     self.locationTextField.text = name
+                    API.shared.updateLocation(longitude: latitude!, latitude: longitude!)
                 }
             }
         })
     }
 
+}
+
+extension EditProfileViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true, completion: nil)
+        let itemProvider = results.first?.itemProvider
+        
+        if let itemProvider = itemProvider, // <- background asyn type
+           itemProvider.canLoadObject(ofClass: UIImage.self){
+            itemProvider.loadObject(ofClass: UIImage.self, completionHandler: {(image, error) in
+                DispatchQueue.main.async {
+                    self.userImage.image = image as? UIImage
+                }
+            })
+        }else {
+            print("cannot find image")
+        }
+    }
+    
+    
 }

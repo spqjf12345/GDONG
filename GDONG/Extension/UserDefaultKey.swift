@@ -18,4 +18,5 @@ struct UserDefaultKey {
     static let deviceToken: String = "deviceToken"
     static let jwtToken: String = "jwtToken"
     static let notiState: String = "notiState"
+    static let recentHistory: String = "recentHistory"
 }

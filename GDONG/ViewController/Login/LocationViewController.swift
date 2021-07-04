@@ -50,7 +50,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
         if (nowLatitude != 0.0 && nowLongitude != 0.0){
             //post
             //API.shared.update(nickName: nickName, logitude: nowLongitude, latitude: nowLatitude)
-            API.shared.update(nickName: "jouureees", longitude: nowLongitude, latitude: nowLatitude)
+            API.shared.updateLocation(longitude: nowLongitude, latitude: nowLatitude)
             
             let tabBarViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "tabbar") as! UITabBarController
 
@@ -99,9 +99,9 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.delegate = self
         
         //foreground 일때 위치 추적 권한 요청
-//        locationManager.requestWhenInUseAuthorization()
-//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-//        locationManager.startUpdatingLocation()
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
         
         let coor = locationManager.location?.coordinate
         let latitude = coor?.latitude

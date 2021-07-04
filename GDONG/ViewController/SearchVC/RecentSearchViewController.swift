@@ -14,17 +14,13 @@ class RecentSearchViewController: UITableViewController, RecentSearchTableViewCe
         let buttonPosition:CGPoint = cell.convert(CGPoint.zero, to:self.tableView)
         let indexPath = self.tableView.indexPathForRow(at: buttonPosition)
         searchHistory.remove(at: indexPath![1])
+        UserDefaults.standard.set(searchHistory, forKey: UserDefaultKey.recentHistory)
         tableView.reloadData()
     }
     
 
-    var searchHistory = UserDefaults.standard.array(forKey: "historyWord") as? [String] ?? []
+    var searchHistory = UserDefaults.standard.array(forKey: UserDefaultKey.recentHistory) as? [String] ?? []
     
-    var deleteButton: UIButton = {
-        var button = UIButton()
-        button.setImage(UIImage(named: "xButton"), for: .normal)
-        return button
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,18 +45,11 @@ class RecentSearchViewController: UITableViewController, RecentSearchTableViewCe
         tableView.backgroundColor = .white
     }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        let searchResult = SearchResultViewController()
-//        if let index = tableView.indexPathForSelectedRow {
-//            searchResult.searchWord = searchHistory[index.row]
-//        }
-//
-//
-//    }
     
     @objc func didTapAlldelete(){
         print("searchHistory.removeAll()")
         searchHistory.removeAll()
+        UserDefaults.standard.setValue(searchHistory, forKey: UserDefaultKey.recentHistory)
         tableView.reloadData()
     }
     
