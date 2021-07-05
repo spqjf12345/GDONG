@@ -39,6 +39,7 @@ class PostService {
             print("[API] /post/upload")
             for imageData in images {
                 print("image string get from AF : \(String.init(data: imageData, encoding: .utf8))")
+                
                 multipartFormData.append(imageData, withName: "images", fileName: "\(imageData).jpg", mimeType: "image/jpg")
             }
             for (key, value) in parameter {
@@ -102,6 +103,81 @@ class PostService {
             
         }
     }
-}
+    
+    func getPosts(completion: @escaping (([Board]) -> Void)){
+        let parameter:Parameters = ["start" : -1,
+                                    "num" : 5] // start : -1 처음부터 ~ 5개
+        AF.request(Config.baseUrl + "/post/recent", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString)).validate().responseJSON(completionHandler: { (response) in
+
+            print("[API] post/recent")
+            switch response.result {
+                case .success(let obj):
+                    do {
+                       let responses = obj as! NSDictionary
+                        print("response is \(responses)")
+                       guard let posts = responses["posts"] as? [Dictionary<String, Any>] else { return }
+                        print("posts is \(posts)")
+        
+                        let dataJSON = try JSONSerialization.data(withJSONObject: posts, options: .prettyPrinted)
+
+                        let postData = try JSONDecoder().decode([Board].self, from: dataJSON)
+                        print("postData is \(postData)")
+                        completion(postData)
+//                        var board = [Board]()
+//                        
+//                        for i in postData {
+//                            
+//                            board.append(i)
+//                        }
+//                        completion(board)
+                    
+                     } catch let DecodingError.dataCorrupted(context) {
+                         print(context)
+                     } catch let DecodingError.keyNotFound(key, context) {
+                         print("Key '\(key)' not found:", context.debugDescription)
+                         print("codingPath:", context.codingPath)
+                     } catch let DecodingError.valueNotFound(value, context) {
+                         print("Value '\(value)' not found:", context.debugDescription)
+                         print("codingPath:", context.codingPath)
+                     } catch let DecodingError.typeMismatch(type, context)  {
+                         print("Type '\(type)' mismatch:", context.debugDescription)
+                         print("codingPath:", context.codingPath)
+                     } catch {
+                         print("error: ", error)
+                     }
+                 case .failure(let e):
+                     print(e.localizedDescription)
+                 }
+        })
+        
+    }
+    
+    func getImage(fileName:String){
+        let url = Config.baseUrl + "/static"
+        let parameter: Parameters = ["filename" : fileName]
+        
+        let destination: DownloadRequest.Destination = { _, _ in
+            let documentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+            let documentURL = URL(fileURLWithPath: documentPath, isDirectory: true)
+            let fileURL = documentURL.appendingPathComponent(fileName)
+            return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
+        }
+        
+        AF.download(url, method: .get, parameters: parameter, encoding: JSONEncoding.default, to: destination).downloadProgress { progress in
+            print("Download Progress: \(progress.fractionCompleted)")
+         }
+        .response { response in
+                 debugPrint(response)
+         if response.error == nil, let imagePath = response.fileURL?.path {
+                     let image = UIImage(contentsOfFile: imagePath)
+                                            
+                     UIImageWriteToSavedPhotosAlbum(image!, nil, nil, nil)
+
+                 }
+             }
+    }
+        
+    }
+
         
         

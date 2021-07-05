@@ -363,7 +363,7 @@ class API {
 
 
 struct Config {
-    static let baseUrl = "http://192.168.35.64:5000/api/v0" // test server url
+    static let baseUrl = "http://192.168.35.147:5000/api/v0" // test server url
 }
 
 

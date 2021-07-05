@@ -53,6 +53,7 @@ class BuyViewController: UIViewController {
         }
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -62,8 +63,7 @@ class BuyViewController: UIViewController {
 
         buyTableView.register(nibName, forCellReuseIdentifier: "productCell")
         
-        itemBoard = Dummy.shared.oneBoardDummy(model: itemBoard)
-        
+        //itemBoard = Dummy.shared.oneBoardDummy(model: itemBoard)
         
         buyTableView.delegate = self
         buyTableView.dataSource = self
@@ -80,6 +80,11 @@ class BuyViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print("getPost in buyViewController ")
+        PostService.shared.getPosts(completion: { [self] (response) in
+            self.contents = response
+            print("content is \(contents)")
+        })
         buyTableView.reloadData()
         
         }
@@ -106,7 +111,7 @@ extension BuyViewController: UITableViewDelegate, UITableViewDataSource{
         guard contents.indices.contains(indexPath.row) else { return cell }
 
             cell.productNameLabel.text = contents[indexPath.row].title
-            cell.productPriceLabel.text = contents[indexPath.row].price
+            cell.productPriceLabel.text = "\(contents[indexPath.row].price)"
             cell.timeLabel.text = contents[indexPath.row].createdAt
         
             cell.peopleLabel.text = "\(contents[indexPath.row].nowPeople)/ \(contents[indexPath.row].needPeople)"

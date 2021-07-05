@@ -78,6 +78,9 @@
 		8EF2887C2662A97500840302 /* JusoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF2887A2662A97500840302 /* JusoTableViewCell.swift */; };
 		8EF2887D2662A97500840302 /* JusoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EF2887B2662A97500840302 /* JusoTableViewCell.xib */; };
 		8EF3BFA0268EE94100415150 /* AdditionalInfo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EF3BF9F268EE87400415150 /* AdditionalInfo.storyboard */; };
+		8EF8F1F7269323AC0034BD99 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF8F1F6269323AC0034BD99 /* Chat.swift */; };
+		8EF8F1FB26935DFD0034BD99 /* NeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EF8F1F926935DFD0034BD99 /* NeedCell.xib */; };
+		8EF8F20126935FD90034BD99 /* LinkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EF8F1FF26935FD90034BD99 /* LinkCell.xib */; };
 		8EF8F7952681BF36003ADFA9 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF8F7942681BF36003ADFA9 /* EditProfileViewController.swift */; };
 		8EF8F7982681E5D2003ADFA9 /* FolloTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF8F7962681E5D2003ADFA9 /* FolloTableViewCell.swift */; };
 		8EF8F7992681E5D2003ADFA9 /* FolloTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EF8F7972681E5D2003ADFA9 /* FolloTableViewCell.xib */; };
@@ -165,6 +168,9 @@
 		8EF2887A2662A97500840302 /* JusoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JusoTableViewCell.swift; sourceTree = "<group>"; };
 		8EF2887B2662A97500840302 /* JusoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JusoTableViewCell.xib; sourceTree = "<group>"; };
 		8EF3BF9F268EE87400415150 /* AdditionalInfo.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AdditionalInfo.storyboard; sourceTree = "<group>"; };
+		8EF8F1F6269323AC0034BD99 /* Chat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Chat.swift; path = GDONG/ViewController/ChatVC/Chat.swift; sourceTree = SOURCE_ROOT; };
+		8EF8F1F926935DFD0034BD99 /* NeedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NeedCell.xib; sourceTree = "<group>"; };
+		8EF8F1FF26935FD90034BD99 /* LinkCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LinkCell.xib; sourceTree = "<group>"; };
 		8EF8F7942681BF36003ADFA9 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		8EF8F7962681E5D2003ADFA9 /* FolloTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolloTableViewCell.swift; sourceTree = "<group>"; };
 		8EF8F7972681E5D2003ADFA9 /* FolloTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FolloTableViewCell.xib; sourceTree = "<group>"; };
@@ -312,6 +318,8 @@
 				8E772B6B267C8C750034C2BF /* CategoryTableViewController.swift */,
 				8E772B6C267C8C750034C2BF /* EntityCell.xib */,
 				8E772B6D267C8C750034C2BF /* PhotoCollectionViewCell.swift */,
+				8EF8F1F926935DFD0034BD99 /* NeedCell.xib */,
+				8EF8F1FF26935FD90034BD99 /* LinkCell.xib */,
 			);
 			path = CreateNewItem;
 			sourceTree = "<group>";
@@ -426,6 +434,7 @@
 		8EF8F7B0268598DE003ADFA9 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				8EF8F1F6269323AC0034BD99 /* Chat.swift */,
 				8E772BC4267C8DC00034C2BF /* ChatListModel.swift */,
 				8EF8F7A5268468C5003ADFA9 /* MessageModel.swift */,
 				8EF8F7AE268598DA003ADFA9 /* StorageManager.swift */,
@@ -501,6 +510,7 @@
 				8E772B78267C8C750034C2BF /* EntityCell.xib in Resources */,
 				8E772B76267C8C750034C2BF /* CategoryTableView.storyboard in Resources */,
 				8E87F2702680E6D8009BFDDB /* Profile.storyboard in Resources */,
+				8EF8F20126935FD90034BD99 /* LinkCell.xib in Resources */,
 				8E772BBE267C8D7D0034C2BF /* cero.jpg in Resources */,
 				8E772BBF267C8D7D0034C2BF /* bigapple.jpg in Resources */,
 				8E42FF00261D958800763B61 /* LaunchScreen.storyboard in Resources */,
@@ -516,6 +526,7 @@
 				8E772B8D267C8CA40034C2BF /* categoryCollectionViewCell.xib in Resources */,
 				8EF8F7992681E5D2003ADFA9 /* FolloTableViewCell.xib in Resources */,
 				8E772B74267C8C750034C2BF /* CategoryCell.xib in Resources */,
+				8EF8F1FB26935DFD0034BD99 /* NeedCell.xib in Resources */,
 				8EF8F7C32689C903003ADFA9 /* TitleCell.xib in Resources */,
 				8E42FEFD261D958800763B61 /* Assets.xcassets in Resources */,
 				8E772B8B267C8CA40034C2BF /* TableViewCell.xib in Resources */,
@@ -628,6 +639,7 @@
 				8E772BAE267C8CD10034C2BF /* SellViewController.swift in Sources */,
 				8E772BAF267C8CD10034C2BF /* BuyViewController.swift in Sources */,
 				8EF8F7B226859CE7003ADFA9 /* DatabaseManager.swift in Sources */,
+				8EF8F1F7269323AC0034BD99 /* Chat.swift in Sources */,
 				8E772BC3267C8DB80034C2BF /* MainModel.swift in Sources */,
 				8E1DA7BE268B6A1F0049E658 /* Messages.swift in Sources */,
 				8E772BA7267C8CD10034C2BF /* RecentSearchViewController.swift in Sources */,

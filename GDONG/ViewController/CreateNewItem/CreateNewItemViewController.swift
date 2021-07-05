@@ -16,6 +16,8 @@ private enum Cells: String, CaseIterable {
   case TitleCell
   case CategoryCell
   case PriceCell
+  case NeedCell
+  case LinkCell
   case EntityCell
 }
 
@@ -24,6 +26,8 @@ private enum InvalidValueError: String, Error {
   case invalidTitle
   case invalidCategory
   case invalidePrice
+  case invalidNeedPeople
+  case invalidLink
   case invalidEntity
 }
 
@@ -39,8 +43,12 @@ class CreateNewItemViewController: UIViewController {
   @IBOutlet weak var categoryLabel: UILabel!
   @IBOutlet weak var priceCell: PriceCell! // 값을 두개 가져오기 위해서 이것은 cell 로 가져옴
   @IBOutlet weak var entityTextView: UITextView!
-  
-  var token: NSObjectProtocol?
+    
+    @IBOutlet weak var needPeople: UITextField!
+    
+    @IBOutlet weak var link: UITextField!
+    
+    var token: NSObjectProtocol?
     var images: [Data] = []
     var image = Data()
     //var profileImage: String?
@@ -82,22 +90,28 @@ class CreateNewItemViewController: UIViewController {
         let pricetext = self.priceCell.priceTextField.text!
         let priceCharList = [Character](pricetext.filter { $0 != "," })
         let postprice:Int = Int(String(priceCharList))!
+        let needPeople:Int = Int(String(needPeople.text!))!
+        
+        let link = link.text!
         
         //self.profileImage = images[0].base64EncodedString(options: .lineLength64Characters)
         print("post price \(postprice)")
         
-        print(self.titleTextField.text!)
-        print(self.entityTextView.text)
+        print(titleTextField.text!)
+        print(entityTextView.text)
         print(postprice)
         print(type(of: postprice))
         print(self.categoryLabel.text!)
         print(self.images)
-        print(location)
+        print(location?.coordinates)
+        print(needPeople)
+        print(type(of: needPeople))
+        print(link)
         
-        PostService.shared.uploadPost(title: self.titleTextField.text!, content: self.entityTextView.text, link: "www.naver.com", needPeople: 5, price: postprice, category: self.categoryLabel.text!, images: images, profileImg: "", location: location!, completionHandler: { (response) in
+        PostService.shared.uploadPost(title: self.titleTextField.text!, content: self.entityTextView.text, link: link, needPeople: needPeople, price: postprice, category: self.categoryLabel.text!, images: images, profileImg: "1234", location: location!, completionHandler: { (response) in
             print(response)
             self.postId = response.postid
-            self.image = response.images[0]
+            //self.image = response
         })
             
     }
@@ -182,7 +196,7 @@ class CreateNewItemViewController: UIViewController {
   
   /// AllCases of enum `Cells`, the list used as tableview Layout order.
   private let cellList = Cells.allCases
-    var postId: Int?
+  var postId: Int?
   
   /// MARK: ViewDidLoad
   override func viewDidLoad() {
@@ -193,7 +207,7 @@ class CreateNewItemViewController: UIViewController {
     
     phPickerVC.delegate = self
     
-    regitserCells()
+    regitserCells() // nib connected
     
     token = NotificationCenter.default.addObserver(forName: Notification.Name.UserDidDeletePhotoFromPhotoList, object: nil, queue: OperationQueue.main, using: { [weak self] noti in
       // 더 좋은 방법은 없을까?
@@ -221,9 +235,9 @@ class CreateNewItemViewController: UIViewController {
     
     do {
       try validateWriting()
-        try postData()
-      
-      //TODO: Post Function
+        // TODO: Post Function
+        postData()
+
       //make new chat room
       self.createNewChat()
 
@@ -287,6 +301,14 @@ class CreateNewItemViewController: UIViewController {
       throw InvalidValueError.invalidePrice
     }
     
+    guard let needPeople = needPeople.text, !needPeople.isEmpty else {
+        throw InvalidValueError.invalidNeedPeople
+    }
+    
+    guard let link = link.text, !link.isEmpty else {
+        throw InvalidValueError.invalidLink
+    }
+    
     // price charater list without ','(comma)
     let priceCharList = [Character](priceText.filter { $0 != "," })
     
@@ -305,7 +327,7 @@ class CreateNewItemViewController: UIViewController {
   
   fileprivate func presentAlert(with error: InvalidValueError) {
     
-    let alert = UIAlertController(title: "비어있는 곳들을 채워주세요🥺", message: error.rawValue , preferredStyle: .alert)
+    let alert = UIAlertController(title: "비어있는 곳들을 채워주세요", message: error.rawValue , preferredStyle: .alert)
     
     let action = UIAlertAction(title: "확인", style: .default, handler: nil)
     
@@ -396,12 +418,25 @@ extension CreateNewItemViewController: UITableViewDataSource {
           return cell
         }
         
+    case .NeedCell:
+        if let cell = cell as? NeedCell {
+            self.needPeople = cell.needTextField
+            return cell
+        }
+        
+    case .LinkCell:
+        if let cell = cell as? LinkCell {
+            self.link = cell.linkTextfield
+            return cell
+        }
+        
       case .EntityCell:
         if let cell = cell as? EntityCell {
           cell.textView.delegate = self
           self.entityTextView = cell.textView
           return cell
         }
+        
           
       default:
         break

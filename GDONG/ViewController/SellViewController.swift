@@ -29,7 +29,7 @@ class SellViewController: UIViewController {
           }
           let lastIndex = (page + 1) * self.numberOfItemsPerPage < self.itemBoard.count ?
             (page + 1) * self.numberOfItemsPerPage : self.itemBoard.count
-          onComplete(Array(self.itemBoard[firstIndex ..< lastIndex]))
+            onComplete(Array(self.itemBoard[firstIndex ..< lastIndex]))
         }
       }
     
@@ -62,8 +62,12 @@ class SellViewController: UIViewController {
 
         sellTableView.register(nibName, forCellReuseIdentifier: "productCell")
         
-        itemBoard = Dummy.shared.oneBoardDummy(model: itemBoard)
-        
+        //itemBoard = Dummy.shared.oneBoardDummy(model: itemBoard)
+        print("getPost in SellViewController ")
+        PostService.shared.getPosts(completion: { [self] (response) in
+            self.contents = response
+            print("content is \(contents)")
+        })
         
         sellTableView.delegate = self
         sellTableView.dataSource = self
@@ -105,11 +109,11 @@ extension SellViewController: UITableViewDelegate, UITableViewDataSource{
         guard contents.indices.contains(indexPath.row) else { return cell }
 
             cell.productNameLabel.text = contents[indexPath.row].title
-            cell.productPriceLabel.text = contents[indexPath.row].price
+            cell.productPriceLabel.text = String(contents[indexPath.row].price)
             cell.timeLabel.text = contents[indexPath.row].createdAt
             
             cell.peopleLabel.text = "\(contents[indexPath.row].nowPeople)/ \(contents[indexPath.row].needPeople)"
-            cell.productImageView.image = UIImage(named: contents[(indexPath as NSIndexPath).row].profileImage)
+            //cell.productImageView.image = UIImage(named: contents[(indexPath as NSIndexPath).row].images[0])
 
             
             

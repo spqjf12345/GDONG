@@ -51,25 +51,14 @@ class CategoryCell: UITableViewCell {
 class PriceCell: UITableViewCell {
   
   @IBOutlet weak var priceTextField: UITextField!
-  @IBOutlet weak var checkButton: UIButton!
   
-  var isAllowedPriceSuggestion: Bool {
-    return checkButton.isSelected
-  }
+
   
   override func awakeFromNib() {
     super.awakeFromNib()
     self.selectionStyle = .none
     //TODO: delegate 설정 가능한지 확인하기
     priceTextField.delegate = self
-    
-    checkButton.tintColor = .lightGray
-    checkButton.isSelected = false
-  }
-  
-  @IBAction func checkForPriceSuggestion(_ sender: Any) {
-    checkButton.isSelected = checkButton.isSelected ? false : true
-    checkButton.tintColor = checkButton.isSelected ? .systemBlue : .lightGray
   }
 }
 
@@ -110,6 +99,27 @@ extension PriceCell: UITextFieldDelegate {
   }
 }
 
+class NeedCell: UITableViewCell {
+    
+    @IBOutlet weak var needTextField: UITextField!
+    
+    override func awakeFromNib() {
+        
+      super.awakeFromNib()
+        self.selectionStyle = .none
+    }
+}
+
+
+class LinkCell: UITableViewCell {
+    
+    @IBOutlet weak var linkTextfield: UITextField!
+    override func awakeFromNib() {
+        
+      super.awakeFromNib()
+        self.selectionStyle = .none
+    }
+}
 
 class EntityCell: UITableViewCell {
   
@@ -127,3 +137,4 @@ class EntityCell: UITableViewCell {
     textView.textColor = .lightGray
   }
 }
+

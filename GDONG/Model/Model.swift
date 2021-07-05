@@ -9,25 +9,25 @@ import Foundation
 
 struct Board: Codable { // response
     var __v: Int = 0
-    var _id: String
-    var author: String
-    var postid: Int
-    var title: String // 글 제목
-    var content: String // 글 내용
-    var images: [Data]
-    var profileImage: String // 글 대표 이미지
-    var category: String // 글 카테고리
-    var price: String //가격
-    var view: Int // 조회수
-    var interest: Int // 관심수
-    var needPeople: Int // 모집 인원
-    var nowPeople: Int // 모집된 인원
-    var link: String
-    var tags: [String]
-    var createdAt: String
-    var updatedAt: String
-    var location: Location
-    var email: String
+    var _id: String = ""
+    var author: String = ""
+    var postid: Int = 0
+    var title: String = "" // 글 제목
+    var content: String = "" // 글 내용
+    var images: [String] = []
+    var profileImage: String = ""  // 글 대표 이미지
+    var category: String = "" // 글 카테고리
+    var price: Int = 0 //가격
+    var view: Int = 0 // 조회수
+    var interest: Int = 0 // 관심수
+    var needPeople: Int = 0// 모집 인원
+    var nowPeople: Int = 0 // 모집된 인원
+    var link: String = ""
+    var tags: [String] = []
+    var createdAt: String = ""
+    var updatedAt: String = ""
+    var location: Location = Location(_id: "", coordinates: [0,0], type: "")
+    var email: String = ""
     
     enum CodingKeys: String, CodingKey {
         case __v
@@ -54,6 +54,55 @@ struct Board: Codable { // response
     }
     
 }
+
+struct BoardResponse: Codable { // response
+    var __v: Int = 0
+    var _id: String = ""
+    var author: String = ""
+    var postid: Int = 0
+    var title: String = "" // 글 제목
+    var content: String = "" // 글 내용
+    var images: [String] = []
+    var profileImage: String = ""  // 글 대표 이미지
+    var category: String = "" // 글 카테고리
+    var price: Int = 0 //가격
+    var view: Int = 0 // 조회수
+    var interest: Int = 0 // 관심수
+    var needPeople: Int = 0// 모집 인원
+    var nowPeople: Int = 0 // 모집된 인원
+    var link: String = ""
+    var tags: [String] = []
+    var createdAt: String = ""
+    var updatedAt: String = ""
+    var location: Location = Location(_id: "", coordinates: [0,0], type: "")
+    var email: String = ""
+    
+    enum CodingKeys: String, CodingKey {
+        case __v
+        case _id
+        case author
+        case title
+        case content
+        case images
+        case category
+        case price
+        case view
+        case needPeople
+        case nowPeople
+        case link
+        case postid
+        case tags
+        case createdAt
+        case updatedAt
+        case interest = "likes"
+        case profileImage = "profileImg"
+        case location
+        case email
+
+    }
+    
+}
+
 
 
 struct Users: Codable {

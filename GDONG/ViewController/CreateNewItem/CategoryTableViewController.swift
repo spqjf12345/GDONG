@@ -9,10 +9,12 @@ import UIKit
 
 
 enum ItemCategory: String, CaseIterable {
-    case 배달음식
-    case 가공식품
-    case 뷰티미용
-    case 기타
+    case 과일
+    case 야채
+    case 배달
+    case 화장품
+    case 음반
+    case 해외배송
 }
 
 class CategoryTableViewController: UITableViewController {
