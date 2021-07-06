@@ -81,6 +81,14 @@
 		8EF8F1F7269323AC0034BD99 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF8F1F6269323AC0034BD99 /* Chat.swift */; };
 		8EF8F1FB26935DFD0034BD99 /* NeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EF8F1F926935DFD0034BD99 /* NeedCell.xib */; };
 		8EF8F20126935FD90034BD99 /* LinkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EF8F1FF26935FD90034BD99 /* LinkCell.xib */; };
+		8EF8F2052694B73B0034BD99 /* ContentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF8F2032694B73A0034BD99 /* ContentTableViewCell.swift */; };
+		8EF8F2062694B73B0034BD99 /* ContentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EF8F2042694B73A0034BD99 /* ContentTableViewCell.xib */; };
+		8EF8F2092694B8310034BD99 /* LinkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF8F2072694B8310034BD99 /* LinkTableViewCell.swift */; };
+		8EF8F20A2694B8310034BD99 /* LinkTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EF8F2082694B8310034BD99 /* LinkTableViewCell.xib */; };
+		8EF8F20D2694B9620034BD99 /* PriceAndPeopleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF8F20B2694B9620034BD99 /* PriceAndPeopleTableViewCell.swift */; };
+		8EF8F20E2694B9620034BD99 /* PriceAndPeopleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EF8F20C2694B9620034BD99 /* PriceAndPeopleTableViewCell.xib */; };
+		8EF8F2112694BB1B0034BD99 /* ViewAndLikeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF8F20F2694BB1B0034BD99 /* ViewAndLikeTableViewCell.swift */; };
+		8EF8F2122694BB1B0034BD99 /* ViewAndLikeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EF8F2102694BB1B0034BD99 /* ViewAndLikeTableViewCell.xib */; };
 		8EF8F7952681BF36003ADFA9 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF8F7942681BF36003ADFA9 /* EditProfileViewController.swift */; };
 		8EF8F7982681E5D2003ADFA9 /* FolloTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF8F7962681E5D2003ADFA9 /* FolloTableViewCell.swift */; };
 		8EF8F7992681E5D2003ADFA9 /* FolloTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EF8F7972681E5D2003ADFA9 /* FolloTableViewCell.xib */; };
@@ -171,6 +179,14 @@
 		8EF8F1F6269323AC0034BD99 /* Chat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Chat.swift; path = GDONG/ViewController/ChatVC/Chat.swift; sourceTree = SOURCE_ROOT; };
 		8EF8F1F926935DFD0034BD99 /* NeedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NeedCell.xib; sourceTree = "<group>"; };
 		8EF8F1FF26935FD90034BD99 /* LinkCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LinkCell.xib; sourceTree = "<group>"; };
+		8EF8F2032694B73A0034BD99 /* ContentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTableViewCell.swift; sourceTree = "<group>"; };
+		8EF8F2042694B73A0034BD99 /* ContentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContentTableViewCell.xib; sourceTree = "<group>"; };
+		8EF8F2072694B8310034BD99 /* LinkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkTableViewCell.swift; sourceTree = "<group>"; };
+		8EF8F2082694B8310034BD99 /* LinkTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LinkTableViewCell.xib; sourceTree = "<group>"; };
+		8EF8F20B2694B9620034BD99 /* PriceAndPeopleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceAndPeopleTableViewCell.swift; sourceTree = "<group>"; };
+		8EF8F20C2694B9620034BD99 /* PriceAndPeopleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PriceAndPeopleTableViewCell.xib; sourceTree = "<group>"; };
+		8EF8F20F2694BB1B0034BD99 /* ViewAndLikeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAndLikeTableViewCell.swift; sourceTree = "<group>"; };
+		8EF8F2102694BB1B0034BD99 /* ViewAndLikeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewAndLikeTableViewCell.xib; sourceTree = "<group>"; };
 		8EF8F7942681BF36003ADFA9 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		8EF8F7962681E5D2003ADFA9 /* FolloTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolloTableViewCell.swift; sourceTree = "<group>"; };
 		8EF8F7972681E5D2003ADFA9 /* FolloTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FolloTableViewCell.xib; sourceTree = "<group>"; };
@@ -327,12 +343,11 @@
 		8E772B7A267C8CA40034C2BF /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				8EF8F2022694AF200034BD99 /* DetailCell */,
 				8E772B7B267C8CA40034C2BF /* ChatListCell.swift */,
 				8E772B7D267C8CA40034C2BF /* ChatListCell.xib */,
 				8E772B7F267C8CA40034C2BF /* TableViewCell.swift */,
-				8E772B80267C8CA40034C2BF /* TitleTableViewCell.xib */,
 				8E772B81267C8CA40034C2BF /* TableViewCell.xib */,
-				8E772B82267C8CA40034C2BF /* TitleTableViewCell.swift */,
 				8E772B83267C8CA40034C2BF /* categoryCollectionViewCell.xib */,
 				8E772B7E267C8CA40034C2BF /* categoryCollectionViewCell.swift */,
 				8E772B84267C8CA40034C2BF /* RecentSearchTableViewCell.swift */,
@@ -417,6 +432,23 @@
 				8E772BBB267C8D7D0034C2BF /* bigapple.jpg */,
 			);
 			path = Image;
+			sourceTree = "<group>";
+		};
+		8EF8F2022694AF200034BD99 /* DetailCell */ = {
+			isa = PBXGroup;
+			children = (
+				8E772B80267C8CA40034C2BF /* TitleTableViewCell.xib */,
+				8E772B82267C8CA40034C2BF /* TitleTableViewCell.swift */,
+				8EF8F2032694B73A0034BD99 /* ContentTableViewCell.swift */,
+				8EF8F2042694B73A0034BD99 /* ContentTableViewCell.xib */,
+				8EF8F2072694B8310034BD99 /* LinkTableViewCell.swift */,
+				8EF8F2082694B8310034BD99 /* LinkTableViewCell.xib */,
+				8EF8F20B2694B9620034BD99 /* PriceAndPeopleTableViewCell.swift */,
+				8EF8F20C2694B9620034BD99 /* PriceAndPeopleTableViewCell.xib */,
+				8EF8F20F2694BB1B0034BD99 /* ViewAndLikeTableViewCell.swift */,
+				8EF8F2102694BB1B0034BD99 /* ViewAndLikeTableViewCell.xib */,
+			);
+			path = DetailCell;
 			sourceTree = "<group>";
 		};
 		8EF8F7A22684684C003ADFA9 /* ChatVC */ = {
@@ -513,7 +545,9 @@
 				8EF8F20126935FD90034BD99 /* LinkCell.xib in Resources */,
 				8E772BBE267C8D7D0034C2BF /* cero.jpg in Resources */,
 				8E772BBF267C8D7D0034C2BF /* bigapple.jpg in Resources */,
+				8EF8F2062694B73B0034BD99 /* ContentTableViewCell.xib in Resources */,
 				8E42FF00261D958800763B61 /* LaunchScreen.storyboard in Resources */,
+				8EF8F2122694BB1B0034BD99 /* ViewAndLikeTableViewCell.xib in Resources */,
 				8E772B86267C8CA40034C2BF /* RecentSearchTableViewCell.xib in Resources */,
 				8E772BBC267C8D7D0034C2BF /* perfume.jpg in Resources */,
 				8E772BBD267C8D7D0034C2BF /* strawberry.jpg in Resources */,
@@ -531,7 +565,9 @@
 				8E42FEFD261D958800763B61 /* Assets.xcassets in Resources */,
 				8E772B8B267C8CA40034C2BF /* TableViewCell.xib in Resources */,
 				8E42FEF8261D958100763B61 /* Main.storyboard in Resources */,
+				8EF8F20A2694B8310034BD99 /* LinkTableViewCell.xib in Resources */,
 				8E772B87267C8CA40034C2BF /* ChatListCell.xib in Resources */,
+				8EF8F20E2694B9620034BD99 /* PriceAndPeopleTableViewCell.xib in Resources */,
 				8E772B6E267C8C750034C2BF /* PhotoCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -611,7 +647,9 @@
 				8E42FEFB261D958100763B61 /* GDONG.xcdatamodeld in Sources */,
 				8EF2887C2662A97500840302 /* JusoTableViewCell.swift in Sources */,
 				8E1DA7B8268AF13B0049E658 /* GetUserProfileViewController.swift in Sources */,
+				8EF8F2092694B8310034BD99 /* LinkTableViewCell.swift in Sources */,
 				8E61FDDD26301797008CCB8A /* Dummy.swift in Sources */,
+				8EF8F2112694BB1B0034BD99 /* ViewAndLikeTableViewCell.swift in Sources */,
 				8EF8F7952681BF36003ADFA9 /* EditProfileViewController.swift in Sources */,
 				8EF288732660EE3F00840302 /* LocationViewController.swift in Sources */,
 				8E772B8C267C8CA40034C2BF /* TitleTableViewCell.swift in Sources */,
@@ -643,6 +681,7 @@
 				8E772BC3267C8DB80034C2BF /* MainModel.swift in Sources */,
 				8E1DA7BE268B6A1F0049E658 /* Messages.swift in Sources */,
 				8E772BA7267C8CD10034C2BF /* RecentSearchViewController.swift in Sources */,
+				8EF8F2052694B73B0034BD99 /* ContentTableViewCell.swift in Sources */,
 				8E772BC5267C8DC00034C2BF /* ChatListModel.swift in Sources */,
 				8EDD9A1A2674B046003AFE65 /* UserDefaultKey.swift in Sources */,
 				8EC87291266616DF00C1B7C5 /* (null) in Sources */,
@@ -653,6 +692,7 @@
 				8E772BA3267C8CD10034C2BF /* ChatListViewController.swift in Sources */,
 				8E772BB2267C8CE70034C2BF /* MainViewModel.swift in Sources */,
 				8E772BAB267C8CD10034C2BF /* RecommendViewController.swift in Sources */,
+				8EF8F20D2694B9620034BD99 /* PriceAndPeopleTableViewCell.swift in Sources */,
 				8E772B70267C8C750034C2BF /* ViewCells.swift in Sources */,
 				8E42FF0A261D9B4600763B61 /* LoginViewController.swift in Sources */,
 				8E42FEF3261D958100763B61 /* SceneDelegate.swift in Sources */,

@@ -12,7 +12,7 @@ import SDWebImage
 
 class BuyViewController: UIViewController {
     
-    var itemBoard = [Board]()
+   // var itemBoard = [Board]()
     //페이징을 위한 새로운 변수 저장
     var contents = [Board]()
     var profileImage = [UIImage]()
@@ -26,13 +26,13 @@ class BuyViewController: UIViewController {
       func loadData(at page: Int, onComplete: @escaping ([Board]) -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
           let firstIndex = page * self.numberOfItemsPerPage
-          guard firstIndex < self.itemBoard.count else {
+          guard firstIndex < self.contents.count else {
             onComplete([])
             return
           }
-          let lastIndex = (page + 1) * self.numberOfItemsPerPage < self.itemBoard.count ?
-            (page + 1) * self.numberOfItemsPerPage : self.itemBoard.count
-          onComplete(Array(self.itemBoard[firstIndex ..< lastIndex]))
+          let lastIndex = (page + 1) * self.numberOfItemsPerPage < self.contents.count ?
+            (page + 1) * self.numberOfItemsPerPage : self.contents.count
+          onComplete(Array(self.contents[firstIndex ..< lastIndex]))
         }
       }
     
@@ -52,7 +52,7 @@ class BuyViewController: UIViewController {
         }
 
         if let detailVC = segue.destination as? DetailNoteViewController {
-            detailVC.oneBoard = itemBoard[index.row]
+            detailVC.oneBoard = contents[index.row]
         }
     }
     
@@ -83,35 +83,10 @@ class BuyViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("getPost in buyViewController ")
+        
         PostService.shared.getPosts(completion: { [self] (response) in
             self.contents = response
-            print("content is \(contents)")
-            
-//            for images in contents {
-//                print("here")
-//                let url = Config.baseUrl + "/static/"
-                
-                
-//                PostService.shared.getImage(fileName: images.images[0], completion: { // images.images[0] 대표 이미지
-//                    (imageData) in
-//                    guard let image = imageData as Data? else {
-//                        print("cant")
-//                        return
-//                    }
-//                    print(image)
-//                    print("uiimage is \(UIImage(data: image))")
-//
-//                    guard let uiimage = UIImage(data: image) as UIImage? else {
-//                        print("can't get uiimage")
-//                        return
-//                    }
-//
-//                    self.profileImage.append(uiimage)
-//                    print(profileImage)
-//                })
-                
- //           }
+            //print("content is \(contents)")
         })
         buyTableView.reloadData()
         

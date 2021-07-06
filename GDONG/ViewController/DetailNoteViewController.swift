@@ -5,44 +5,49 @@
 //  Created by JoSoJeong on 2021/04/21.
 //
 
-/// need to add url
-/// in progress, .. 단계, 카테고리
+
 import UIKit
 import FirebaseFirestore
 
+
+//private enum Cells: String, CaseIterable {
+//    case TitleTableViewCell
+//    case ContentTableViewCell
+//    case LinkTableViewCell
+//    case PriceAndPeopleTableViewCell
+//    case ViewAndLikeTableViewCell
+//    case cell
+//}
+
+
 class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
     var oneBoard: Board?
-    var oneUser: [Users] = []
+   // private let cellList = Cells.allCases
     
-    var FrameTableView: UITableView = {
-        var table = UITableView()
-        table.register(TitleTableViewCell.nib(), forCellReuseIdentifier: TitleTableViewCell.identifier)
-        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        table.separatorColor = UIColor.lightGray
-        table.isEditing = false
-        table.isScrollEnabled = true
-        table.allowsSelection = false
-        return table
-    }()
+    @IBOutlet weak var FrameTableView: UITableView!
 
-    
-    var contentTextview: UITextView = {
-        var textview = UITextView()
-        textview.isUserInteractionEnabled = true
-        textview.isSelectable = true
-        textview.isEditable = false
-        return textview
-    }()
-    
-    var footerView: UIView = {
-        var view = UIView()
-        return view
-    }()
-    
-    var priceView: UIView = {
-        var view = UIView()
-        return view
-    }()
+//    var contentTextview: UITextView = {
+//        var textview = UITextView()
+//        textview.isUserInteractionEnabled = true
+//        textview.isSelectable = true
+//        textview.isEditable = false
+//        return textview
+//    }()
+//
+//    var linkView: UIView = {
+//        var view = UIView()
+//        return view
+//    }()
+//
+//    var footerView: UIView = {
+//        var view = UIView()
+//        return view
+//    }()
+//
+//    var priceView: UIView = {
+//        var view = UIView()
+//        return view
+//    }()
     
     var bottomView: UIView = {
         var view = UIView()
@@ -60,53 +65,42 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         return view
     }()
     
+    let userNickName = UserDefaults.standard.string(forKey: UserDefaultKey.userNickName)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(FrameTableView)
-        FrameTableView.frame = view.bounds
-        FrameTableView.delegate = self
-        FrameTableView.dataSource = self
-     
-        
-        // - dummy data
-        //oneBoard = Dummy.shared.oneBoardDummy(model: oneBoard)
-        oneUser = Dummy.shared.oneUser(model: oneUser)
-        
-    
-        contentTextview.text = "같이 물품 사요! \n 이거 정말 사고 싶었는데 같이 구매하실 분 구해요 \n\n"
-        contentTextview.font = .systemFont(ofSize: 30)
-        contentTextview.frame = CGRect(x: 10, y: 10, width: view.width - 30, height: view.height - 300)
+        tableViewSetting()
 
-        priceView.frame = CGRect(x: 0, y: 0, width: view.width, height: 100)
+        //priceView.frame = CGRect(x: 0, y: 0, width: view.width, height: 100)
         
-        let priceLabel = UILabel()
-        priceLabel.text = "가격 : \(String(oneBoard!.price))원"
-        priceLabel.font = .boldSystemFont(ofSize: 20)
-        priceView.addSubview(priceLabel)
-        priceLabel.frame = CGRect(x: 20, y: 30, width: 150, height: 30)
+//        let priceLabel = UILabel()
+//        priceLabel.text = "가격 : \(String(oneBoard!.price))원"
+//        priceLabel.font = .boldSystemFont(ofSize: 20)
+//        priceView.addSubview(priceLabel)
+//        priceLabel.frame = CGRect(x: 20, y: 30, width: 150, height: 30)
+//
+//        let needPersonLabel = UILabel()
+//        needPersonLabel.text = " \(oneBoard!.nowPeople) / \(oneBoard!.needPeople) 명"
+//        needPersonLabel.font = .systemFont(ofSize: 20)
+//        priceView.addSubview(needPersonLabel)
+//        needPersonLabel.frame = CGRect(x: view.width - 100 , y: 30, width: 150, height: 30)
         
-        let needPersonLabel = UILabel()
-        needPersonLabel.text = " \(oneBoard!.nowPeople) /\(oneBoard!.needPeople) 명"
-        needPersonLabel.font = .systemFont(ofSize: 20)
-        priceView.addSubview(needPersonLabel)
-        needPersonLabel.frame = CGRect(x: view.width - 100 , y: 30, width: 150, height: 30)
-        
-        
-        
-        footerView.frame = CGRect(x: 0, y: 0, width: view.width, height: 200)
-       
-        let viewCount = UILabel()
-        viewCount.text = "조회수 \(oneBoard!.view)"
-        viewCount.textColor = UIColor.systemGray
-        viewCount.frame = CGRect(x: 20, y: 20, width: 100, height: 25)
-        
-        let interestCount = UILabel()
-        interestCount.text = "관심수 \(oneBoard!.interest)"
-        interestCount.textColor = UIColor.systemGray
-        interestCount.frame = CGRect(x: viewCount.frame.maxX + 10, y: 20, width: 100, height: 25)
-        
-        footerView.addSubview(viewCount)
-        footerView.addSubview(interestCount)
+        //contentTextview.frame = CGRect(x: 10, y: 10, width: view.width - 30, height: view.height - 300)
+//        linkView.frame = CGRect(x: 0, y: 0, width: view.width, height: 200)
+//        footerView.frame = CGRect(x: 0, y: 0, width: view.width, height: 200)
+//
+//        let viewCount = UILabel()
+//        viewCount.text = "조회수 \(oneBoard!.view)"
+//        viewCount.textColor = UIColor.systemGray
+//        viewCount.frame = CGRect(x: 20, y: 20, width: 100, height: 25)
+//
+//        let interestCount = UILabel()
+//        interestCount.text = "관심수 \(oneBoard!.interest)"
+//        interestCount.textColor = UIColor.systemGray
+//        interestCount.frame = CGRect(x: viewCount.frame.maxX + 10, y: 20, width: 100, height: 25)
+//
+//        footerView.addSubview(viewCount)
+//        footerView.addSubview(interestCount)
  
     
     
@@ -118,14 +112,31 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         view.addSubview(bottomView)
         bottomView.frame = CGRect(x: 0, y: view.bottom - 100, width: view.width, height: 100)
         
-        //dummy content data
-        makeContentView()
         
         let heartButton = HeartButton(frame: CGRect(x: 50, y: 25, width: 40, height: 40))
             heartButton.addTarget(
               self, action: #selector(didTapHeart(_:)), for: .touchUpInside)
         bottomView.addSubview(heartButton)
 
+    }
+    
+    func tableViewSetting(){
+        FrameTableView.register(TitleTableViewCell.nib(), forCellReuseIdentifier: TitleTableViewCell.identifier)
+        FrameTableView.register(ContentTableViewCell.nib(), forCellReuseIdentifier: ContentTableViewCell.identifier)
+        FrameTableView.register(LinkTableViewCell.nib(), forCellReuseIdentifier: LinkTableViewCell.identifier)
+        FrameTableView.register(PriceAndPeopleTableViewCell.nib(), forCellReuseIdentifier: PriceAndPeopleTableViewCell.identifier)
+        FrameTableView.register(ViewAndLikeTableViewCell.nib(), forCellReuseIdentifier: ViewAndLikeTableViewCell.identifier)
+        FrameTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        //FrameTableView.rowHeight = UITableView.automaticDimension
+        FrameTableView.separatorInset.left = 0
+
+  
+        FrameTableView.separatorColor = UIColor.lightGray
+        FrameTableView.isEditing = false
+        FrameTableView.isScrollEnabled = true
+        FrameTableView.allowsSelection = false
+        FrameTableView.delegate = self
+        FrameTableView.dataSource = self
     }
     
     
@@ -171,7 +182,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     public func alertController() {
-       let AlertVC = UIAlertController(title: "인원 초가", message: "채팅방에 인원이 꽉 찼습니다.", preferredStyle: .alert)
+       let AlertVC = UIAlertController(title: "인원 초과", message: "채팅방에 인원이 꽉 찼습니다.", preferredStyle: .alert)
         let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         
         AlertVC.addAction(OKAction)
@@ -184,42 +195,56 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         print("didTapHeart")
         guard let button = sender as? HeartButton else { return }
         if(button.flipLikedState() == true){
-            //관심 글 등록 toast message
+            //관심 글 등록 toast message // TO DO post likes
             self.showToast(message: "관심 글에 등록되었습니다.", font: .systemFont(ofSize: 12.0))
         }
     }
-    
-
-    func makeContentView(){
-        let image1Attachment = NSTextAttachment()
-        let localImage = UIImage(named: "rabbit")!
-        image1Attachment.image = localImage
+    //contentView content
+    func makeContentView(contentTextView : UITextView) -> NSAttributedString {
         
-        let newImageWidth = (contentTextview.bounds.size.width - 30)
-        let scale = newImageWidth/localImage.size.width
-        let newImageHeight = (localImage.size.height - 30) * scale
-        image1Attachment.bounds = CGRect.init(x: 0, y: 300, width: newImageWidth, height: newImageHeight)
+        let fullString = NSMutableAttributedString()
+        
+        if(oneBoard!.content != ""){
+            fullString.append(NSAttributedString(string: oneBoard!.content))
+            fullString.append(NSAttributedString(string: "\n\n\n\n"))
+           
+        }
+ 
+        for i in oneBoard!.images {
+            let image1Attachment = NSTextAttachment()
+            let urlString = Config.baseUrl + "/static/\(i)"
+
+            if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
+                let data = try? Data(contentsOf: myURL)
+                let localImage = UIImage(data: data!)
+                image1Attachment.image = localImage
+                
+                let newImageWidth = (contentTextView.bounds.size.width - 30)
+                let scale = newImageWidth/localImage!.size.width
+                let newImageHeight = (localImage!.size.height - 30) * scale
+                image1Attachment.bounds = CGRect.init(x: 0, y: 300, width: newImageWidth, height: newImageHeight)
+               
+                image1Attachment.image = UIImage(cgImage: (image1Attachment.image?.cgImage!)!, scale: scale, orientation: .up)
+                
+                let imgString = NSAttributedString(attachment: image1Attachment)
        
-        image1Attachment.image = UIImage(cgImage: (image1Attachment.image?.cgImage!)!, scale: scale, orientation: .up)
-        
-        let imgString = NSAttributedString(attachment: image1Attachment)
-        let combination = NSMutableAttributedString()
-        let fontSize = UIFont.boldSystemFont(ofSize: 20)
+                let fontSize = UIFont.systemFont(ofSize: 15)
+                
+                
+             
+                fullString.addAttribute(.font, value: fontSize, range: (contentTextView.text as NSString).range(of: contentTextView.text))
+                fullString.append(imgString)
+                
+            }
+        }
+        return fullString
 
-        let NSMAString = NSMutableAttributedString(string: contentTextview.text)
-        NSMAString.addAttribute(.font, value: fontSize, range: (contentTextview.text as NSString).range(of: contentTextview.text))
-            
-        combination.append(NSMAString)
-        combination.append(imgString)
-        contentTextview.attributedText = combination
+    }
+        
+
+
     }
     
-
-}
-
-
-
-
 
 
 
@@ -227,46 +252,63 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
 extension DetailNoteViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4 // has four table cell
+        return 6
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
-     
+        
+        let nomalCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
+
         //titleCell
         if(indexPath.row == 0){
             let cell = tableView.dequeueReusableCell(withIdentifier: TitleTableViewCell.identifier) as! TitleTableViewCell
-            cell.configure(with: oneBoard!, modelUser: oneUser[0])
+            
+            cell.configure(with: oneBoard!, modelUser: userNickName!)
             return cell
+            
         }else if(indexPath.row == 1){
-            cell.addSubview(contentTextview)
+            let cell = tableView.dequeueReusableCell(withIdentifier: ContentTableViewCell.identifier) as! ContentTableViewCell
+            print("0 \(cell.contentTextView.height)")
+            
+            cell.contentTextView.attributedText = makeContentView(contentTextView : cell.contentTextView)
+            cell.calculate()
+            
+            print("2 \(cell.contentTextView.height)")
             return cell
+            
         }else if(indexPath.row == 2){
-            cell.addSubview(priceView)
-           return cell
-        }else if(indexPath.row == 3){
-            cell.addSubview(footerView)
+            let cell = tableView.dequeueReusableCell(withIdentifier: LinkTableViewCell.identifier) as! LinkTableViewCell
+      
+            cell.configure(link: oneBoard!.link)
            return cell
         }
+        else if(indexPath.row == 3){
+            let cell = tableView.dequeueReusableCell(withIdentifier: PriceAndPeopleTableViewCell.identifier) as! PriceAndPeopleTableViewCell
+            cell.configure(price: oneBoard!.price, nowPeople: oneBoard!.nowPeople, needPeople: oneBoard!.needPeople)
+           return cell
+            
+        }else if(indexPath.row == 4){
+            let cell = tableView.dequeueReusableCell(withIdentifier: ViewAndLikeTableViewCell.identifier) as! ViewAndLikeTableViewCell
+            cell.configure(view: oneBoard!.view, like: oneBoard!.interest)
+    
+           return cell
+        }else if (indexPath.row == 5){
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! UITableViewCell
+            return cell
+        }
         
-        
-        return cell
+        return nomalCell
         
     }
     
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if(tableView == FrameTableView){
-            if(indexPath.row == 0){ // titleCell
-                return 100
-            }else if(indexPath.row == 1){ // contentCell
-                return view.height - 200
-            }else if (indexPath.row == 2){ //price
-                return 100
-            }else if (indexPath.row == 3){ //footer
-                return 200
-            }
-        }
-        return 50 // default
+        
+        return UITableView.automaticDimension // default
     }
   
     

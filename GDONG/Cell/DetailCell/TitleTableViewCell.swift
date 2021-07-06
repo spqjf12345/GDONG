@@ -25,6 +25,7 @@ class TitleTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         settingForLabel()
+        
     }
     
     override func awakeFromNib() {
@@ -36,10 +37,12 @@ class TitleTableViewCell: UITableViewCell {
 
     }
     
-    public func configure(with modelBoard: Board, modelUser: Users){
+    public func configure(with modelBoard: Board, modelUser: String){
         self.titleBoard.text = modelBoard.title
-        self.dateBoard.text = modelBoard.createdAt
-        self.userName.text = modelUser.nickName
+        let dateDate = DateUtil.parseDate(modelBoard.createdAt)
+        let dateString = DateUtil.formatDate(dateDate)
+        self.dateBoard.text = dateString
+        self.userName.text = modelUser
         self.categoryBoard.setTitle(modelBoard.category, for: .normal)
     }
     
