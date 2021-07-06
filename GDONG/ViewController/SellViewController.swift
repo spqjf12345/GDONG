@@ -108,17 +108,23 @@ extension SellViewController: UITableViewDelegate, UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "productCell", for: indexPath) as! TableViewCell
         guard contents.indices.contains(indexPath.row) else { return cell }
 
-            cell.productNameLabel.text = contents[indexPath.row].title
-            cell.productPriceLabel.text = String(contents[indexPath.row].price)
-            cell.timeLabel.text = contents[indexPath.row].createdAt
-            
-            cell.peopleLabel.text = "\(contents[indexPath.row].nowPeople)/ \(contents[indexPath.row].needPeople)"
-            //cell.productImageView.image = UIImage(named: contents[(indexPath as NSIndexPath).row].images[0])
-
-            
-            
+        cell.productNameLabel.text = contents[indexPath.row].title
+        cell.productPriceLabel.text = "\(contents[indexPath.row].price)"
+        let date: Date = DateUtil.parseDate(contents[indexPath.row].createdAt)
+        let dateString: String = DateUtil.formatDate(date)
         
-       return cell
+        cell.timeLabel.text = dateString
+    
+        cell.peopleLabel.text = "\(contents[indexPath.row].nowPeople)/ \(contents[indexPath.row].needPeople)"
+
+        let indexImage =  contents[indexPath.row].images[0]
+        let urlString = Config.baseUrl + "/static/\(indexImage)"
+    
+        if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
+            cell.productImageView.sd_setImage(with: myURL, completed: nil)
+        }
+        
+        return cell
 
     }
     

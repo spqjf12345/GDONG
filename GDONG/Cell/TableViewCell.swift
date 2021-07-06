@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import SDWebImage
 
 class TableViewCell: UITableViewCell {
     
-    @IBOutlet var productImageView: UIImageView!
+    @IBOutlet var productImageView: SDAnimatedImageView!
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var productPriceLabel: UILabel!
     @IBOutlet weak var peopleLabel: UILabel!

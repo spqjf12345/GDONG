@@ -9,6 +9,7 @@ import Foundation
 import Alamofire
 import CoreLocation
 
+
 class PostService {
     static var shared = PostService()
     
@@ -114,22 +115,11 @@ class PostService {
                 case .success(let obj):
                     do {
                        let responses = obj as! NSDictionary
-                        print("response is \(responses)")
+               
                        guard let posts = responses["posts"] as? [Dictionary<String, Any>] else { return }
-                        print("posts is \(posts)")
-        
                         let dataJSON = try JSONSerialization.data(withJSONObject: posts, options: .prettyPrinted)
-
                         let postData = try JSONDecoder().decode([Board].self, from: dataJSON)
-                        print("postData is \(postData)")
                         completion(postData)
-//                        var board = [Board]()
-//                        
-//                        for i in postData {
-//                            
-//                            board.append(i)
-//                        }
-//                        completion(board)
                     
                      } catch let DecodingError.dataCorrupted(context) {
                          print(context)
@@ -151,33 +141,70 @@ class PostService {
         })
         
     }
+}
     
-    func getImage(fileName:String){
-        let url = Config.baseUrl + "/static"
-        let parameter: Parameters = ["filename" : fileName]
-        
-        let destination: DownloadRequest.Destination = { _, _ in
-            let documentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-            let documentURL = URL(fileURLWithPath: documentPath, isDirectory: true)
-            let fileURL = documentURL.appendingPathComponent(fileName)
-            return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
-        }
-        
-        AF.download(url, method: .get, parameters: parameter, encoding: JSONEncoding.default, to: destination).downloadProgress { progress in
-            print("Download Progress: \(progress.fractionCompleted)")
-         }
-        .response { response in
-                 debugPrint(response)
-         if response.error == nil, let imagePath = response.fileURL?.path {
-                     let image = UIImage(contentsOfFile: imagePath)
-                                            
-                     UIImageWriteToSavedPhotosAlbum(image!, nil, nil, nil)
+//    func getImage(fileName:String, completion: @escaping ((Data?) -> Void)){
+//        let url = Config.baseUrl + "/static/\(fileName)"
+//        let URL = URL(string: url)
+//        let data = Data(contentsOf: URL!)
+//        return data
+//        
+//    }
 
-                 }
-             }
-    }
+
+        //let parameter: Parameters = ["filename" : fileName]
         
-    }
+        
+        
+//        AF.request(url, method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString)).validate().responseData(completionHandler: {(response) in
+//            print("[API] /static/fileName 이미지 받아오기")
+////            let temp = base64String.components(separatedBy: ",")
+//            let dataDecoded : Data = Data(base64Encoded: (response.data?.base64EncodedString())!, options:
+//             .ignoreUnknownCharacters)!
+//            let decodedimage = UIImage(data: dataDecoded)
+////
+////            yourImage.image = decodedimage
+//           // guard let uiimage: UIImage = UIImage(data: response.data!) else { return }
+//            //print("uiimage \(uiimage)")
+//            print(decodedimage)
+//            print(response.data?.base64EncodedString())
+//            
+//            completion(response.data)
+//
+//        })
+        
+//        let destination: DownloadRequest.Destination = { _, _ in
+//
+//            //let documentsURL = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+//            let url = Config.baseUrl + "/static/"
+//            let filepath = url.appending("/\(fileName)")
+//
+//            let fileURL = URL.init(fileURLWithPath: filepath, isDirectory: false)
+//
+//            return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
+////            let documentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+////            let documentURL = URL(fileURLWithPath: documentPath, isDirectory: true)
+////            let fileURL = documentURL.appendingPathComponent(fileName)
+////            return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
+//        }
 
         
+
+//        AF.download(url, method: .get, parameters: nil, encoding: JSONEncoding.default, to: destination).downloadProgress { progress in
+//            print(destination)
+//            print("Download Progress: \(progress.fractionCompleted)")
+//         }
+//        .response { response in
+//                 debugPrint(response)
+//                 if response.error == nil, let imagePath = response.fileURL?.path {
+//                let image = UIImage(contentsOfFile: imagePath)
+//
+//                     UIImageWriteToSavedPhotosAlbum(image!, nil, nil, nil)
+//
+//                 }
+//             }
+ //   }
+//}
+
+
         

@@ -456,6 +456,7 @@ DEPENDENCIES:
   - PagingTableView
   - Scaledrone (~> 0.3.0)
   - SDWebImage
+  - SDWebImage (~> 5.0)
   - Tabman (~> 2.9)
   - TTGTagCollectionView
 
@@ -544,6 +545,6 @@ SPEC CHECKSUMS:
   Tabman: 792ac76fd1ec95af175c93db880a3c47cabedc91
   TTGTagCollectionView: 86fcbfa6a7493c9e860b01c2e693cffc8acf6de1
 
-PODFILE CHECKSUM: 6add467e0011df777a9863b1d20119d4f4fb2dd3
+PODFILE CHECKSUM: 2181b29b39399a485d3d944b785673b35180488a
 
 COCOAPODS: 1.10.1

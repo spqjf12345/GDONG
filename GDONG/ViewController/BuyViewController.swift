@@ -7,12 +7,15 @@
 
 import UIKit
 import PagingTableView
+import SDWebImage
+
 
 class BuyViewController: UIViewController {
     
     var itemBoard = [Board]()
     //페이징을 위한 새로운 변수 저장
     var contents = [Board]()
+    var profileImage = [UIImage]()
 
     @IBOutlet var buyTableView: PagingTableView!
     
@@ -84,6 +87,31 @@ class BuyViewController: UIViewController {
         PostService.shared.getPosts(completion: { [self] (response) in
             self.contents = response
             print("content is \(contents)")
+            
+//            for images in contents {
+//                print("here")
+//                let url = Config.baseUrl + "/static/"
+                
+                
+//                PostService.shared.getImage(fileName: images.images[0], completion: { // images.images[0] 대표 이미지
+//                    (imageData) in
+//                    guard let image = imageData as Data? else {
+//                        print("cant")
+//                        return
+//                    }
+//                    print(image)
+//                    print("uiimage is \(UIImage(data: image))")
+//
+//                    guard let uiimage = UIImage(data: image) as UIImage? else {
+//                        print("can't get uiimage")
+//                        return
+//                    }
+//
+//                    self.profileImage.append(uiimage)
+//                    print(profileImage)
+//                })
+                
+ //           }
         })
         buyTableView.reloadData()
         
@@ -112,11 +140,21 @@ extension BuyViewController: UITableViewDelegate, UITableViewDataSource{
 
             cell.productNameLabel.text = contents[indexPath.row].title
             cell.productPriceLabel.text = "\(contents[indexPath.row].price)"
-            cell.timeLabel.text = contents[indexPath.row].createdAt
+            let date: Date = DateUtil.parseDate(contents[indexPath.row].createdAt)
+            let dateString: String = DateUtil.formatDate(date)
+            
+            cell.timeLabel.text = dateString
         
             cell.peopleLabel.text = "\(contents[indexPath.row].nowPeople)/ \(contents[indexPath.row].needPeople)"
-            cell.productImageView.image = UIImage(named: contents[(indexPath as NSIndexPath).row].profileImage)
 
+            let indexImage =  contents[indexPath.row].images[0]
+            //print("index image \(indexImage)")
+            let urlString = Config.baseUrl + "/static/\(indexImage)"
+        
+            if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
+               print(myURL)
+                cell.productImageView.sd_setImage(with: myURL, completed: nil)
+            }
         
        return cell
 
