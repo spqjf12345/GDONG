@@ -7,6 +7,9 @@
 
 import UIKit
 import KakaoSDKAuth
+import KakaoSDKUser
+import KakaoSDKCommon
+import KakaoOpenSDK
 import GoogleSignIn
 import AuthenticationServices
 
@@ -21,15 +24,35 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         
         guard let _ = (scene as? UIWindowScene) else { return }
-//        if let windowScene = scene as? UIWindowScene {
-//                let window = UIWindow(windowScene: windowScene)
-//                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                window.rootViewController = storyboard.instantiateViewController(identifier: "login")
-//                self.window = window
-//                window.makeKeyAndVisible()
-//            }
+        if let windowScene = scene as? UIWindowScene {
+            let window = UIWindow(windowScene: windowScene)
+            if(API.shared.checkAutoLogin() == true){ // 앱에 저장된 정보가 있으면
+                print("checkAutoLogin did")
+            }else {
+                print("access token nil")
+                let storyboard: UIStoryboard = UIStoryboard(name: "Login", bundle: nil)
+                let loginVC = storyboard.instantiateViewController(withIdentifier: "login")
+                window.rootViewController = loginVC
+                self.window = window
+                window.makeKeyAndVisible()
+            }
+        }
     
     }
+    
+    func getToken(){
+           UserApi.shared.accessTokenInfo {(accessTokenInfo, error) in
+               if let error = error {
+                   print(error)
+               }
+               else {
+                   print("accessTokenInfo() success.")
+                guard let token = accessTokenInfo else { return }
+                print("login token \(token)")
+                   
+               }
+           }
+       }
 
     //scene의 연결이 해제될 때 호출
     func sceneDidDisconnect(_ scene: UIScene) {
