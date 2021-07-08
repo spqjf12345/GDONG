@@ -49,7 +49,7 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
         performSegue(withIdentifier: "myPost", sender: nil)
     }
     
-    private let sec = ["사용자 정보", "알림", "계정 설정"]
+    private let sec = ["사용자 정보", "알림 설정", "계정 설정"]
     var sec1 = ["판매자 인증하기"]
     var sec2 = ["메세지 알림 허용"]
     var sec3 = ["로그아웃", "회원 탈퇴", "앱 정보"]

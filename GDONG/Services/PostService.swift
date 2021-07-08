@@ -21,7 +21,6 @@ class PostService {
         
         guard let author =  UserDefaults.standard.string(forKey: UserDefaultKey.userNickName) else { return }
         guard let authorEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else { return }
-        let tags:[String] = ["과일", "샤인머스켓"]
         
         let parameter:Parameters = ["author" : author,//
                          "email" : authorEmail,//
@@ -29,11 +28,10 @@ class PostService {
                          "content": content,//
                          "link" : link, //
                          "needPeople" : needPeople, //
-                         "price" : price, //
+                         "price" : price, 
                          "category": category,
-                         "images": images,//
-                         //"tags": tags,
-                         "profileImg" : profileImg,
+                         "images": images,
+                         "profileImg" : "1234test",
                          "location":location]
         
         AF.upload(multipartFormData: { multipartFormData in
@@ -105,7 +103,7 @@ class PostService {
         }
     }
     
-    func getPosts(completion: @escaping (([Board]) -> Void)){
+    func getAllPosts(completion: @escaping (([Board]) -> Void)){
         let parameter:Parameters = ["start" : -1,
                                     "num" : 5] // start : -1 처음부터 ~ 5개
         AF.request(Config.baseUrl + "/post/recent", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString)).validate().responseJSON(completionHandler: { (response) in
@@ -139,6 +137,89 @@ class PostService {
                      print(e.localizedDescription)
                  }
         })
+        
+    }
+    
+    func clickHeart(postId: Int){
+        
+        let parameter: Parameters = ["postid": postId]
+        AF.request(Config.baseUrl + "/post/like", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString)).validate().responseJSON(completionHandler: {
+            (response) in
+                print(response)
+                print("[API] /post/like 좋아요 누르기")
+                
+                switch response.result {
+                    case .success(let obj):
+                        do {
+                           let responses = obj as! NSDictionary
+                            print(response)
+                        
+                         } catch let DecodingError.dataCorrupted(context) {
+                             print(context)
+                         } catch let DecodingError.keyNotFound(key, context) {
+                             print("Key '\(key)' not found:", context.debugDescription)
+                             print("codingPath:", context.codingPath)
+                         } catch let DecodingError.valueNotFound(value, context) {
+                             print("Value '\(value)' not found:", context.debugDescription)
+                             print("codingPath:", context.codingPath)
+                         } catch let DecodingError.typeMismatch(type, context)  {
+                             print("Type '\(type)' mismatch:", context.debugDescription)
+                             print("codingPath:", context.codingPath)
+                         } catch {
+                             print("error: ", error)
+                         }
+                     case .failure(let e):
+                         print(e.localizedDescription)
+                     }
+                
+        })
+        
+    }
+    
+    func getSearchPost(start: Int, searWord: String, num: Int, completion: @escaping (([Board]) -> Void)){
+        let parameter: Parameters = ["start" : start,
+                                    "word" : searWord,
+                                    "num" : num]
+        
+        AF.request(Config.baseUrl + "/post/search", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString)).validate().responseJSON(completionHandler: {
+            (response) in
+
+                print("[API] /post/search \(searWord)에 해당하는 글 가져오기")
+                
+                switch response.result {
+                    case .success(let obj):
+                        do {
+                           let responses = obj as! NSDictionary
+                            print(response)
+                            //print(String(data: response.data!, encoding: .utf8))
+                    
+                            guard let posts = responses["posts"] as? [Dictionary<String, Any>] else { return }
+                             let dataJSON = try JSONSerialization.data(withJSONObject: posts, options: .prettyPrinted)
+                             let postData = try JSONDecoder().decode([Board].self, from: dataJSON)
+                             completion(postData)
+                            
+                         } catch let DecodingError.dataCorrupted(context) {
+                             print(context)
+                         } catch let DecodingError.keyNotFound(key, context) {
+                             print("Key '\(key)' not found:", context.debugDescription)
+                             print("codingPath:", context.codingPath)
+                         } catch let DecodingError.valueNotFound(value, context) {
+                             print("Value '\(value)' not found:", context.debugDescription)
+                             print("codingPath:", context.codingPath)
+                         } catch let DecodingError.typeMismatch(type, context)  {
+                             print("Type '\(type)' mismatch:", context.debugDescription)
+                             print("codingPath:", context.codingPath)
+                         } catch {
+                             print("error: ", error)
+                         }
+                     case .failure(let e):
+                         print(e.localizedDescription)
+                     }
+                
+        })
+        
+        
+        
         
     }
 }

@@ -26,28 +26,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var FrameTableView: UITableView!
 
-//    var contentTextview: UITextView = {
-//        var textview = UITextView()
-//        textview.isUserInteractionEnabled = true
-//        textview.isSelectable = true
-//        textview.isEditable = false
-//        return textview
-//    }()
-//
-//    var linkView: UIView = {
-//        var view = UIView()
-//        return view
-//    }()
-//
-//    var footerView: UIView = {
-//        var view = UIView()
-//        return view
-//    }()
-//
-//    var priceView: UIView = {
-//        var view = UIView()
-//        return view
-//    }()
+
     
     var bottomView: UIView = {
         var view = UIView()
@@ -70,44 +49,6 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableViewSetting()
-
-        //priceView.frame = CGRect(x: 0, y: 0, width: view.width, height: 100)
-        
-//        let priceLabel = UILabel()
-//        priceLabel.text = "가격 : \(String(oneBoard!.price))원"
-//        priceLabel.font = .boldSystemFont(ofSize: 20)
-//        priceView.addSubview(priceLabel)
-//        priceLabel.frame = CGRect(x: 20, y: 30, width: 150, height: 30)
-//
-//        let needPersonLabel = UILabel()
-//        needPersonLabel.text = " \(oneBoard!.nowPeople) / \(oneBoard!.needPeople) 명"
-//        needPersonLabel.font = .systemFont(ofSize: 20)
-//        priceView.addSubview(needPersonLabel)
-//        needPersonLabel.frame = CGRect(x: view.width - 100 , y: 30, width: 150, height: 30)
-        
-        //contentTextview.frame = CGRect(x: 10, y: 10, width: view.width - 30, height: view.height - 300)
-//        linkView.frame = CGRect(x: 0, y: 0, width: view.width, height: 200)
-//        footerView.frame = CGRect(x: 0, y: 0, width: view.width, height: 200)
-//
-//        let viewCount = UILabel()
-//        viewCount.text = "조회수 \(oneBoard!.view)"
-//        viewCount.textColor = UIColor.systemGray
-//        viewCount.frame = CGRect(x: 20, y: 20, width: 100, height: 25)
-//
-//        let interestCount = UILabel()
-//        interestCount.text = "관심수 \(oneBoard!.interest)"
-//        interestCount.textColor = UIColor.systemGray
-//        interestCount.frame = CGRect(x: viewCount.frame.maxX + 10, y: 20, width: 100, height: 25)
-//
-//        footerView.addSubview(viewCount)
-//        footerView.addSubview(interestCount)
- 
-    
-    
-        
-        // navigaion bar - report button
-//        navigationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(didTapReport))
-        
         
         view.addSubview(bottomView)
         bottomView.frame = CGRect(x: 0, y: view.bottom - 100, width: view.width, height: 100)
@@ -117,6 +58,21 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
             heartButton.addTarget(
               self, action: #selector(didTapHeart(_:)), for: .touchUpInside)
         bottomView.addSubview(heartButton)
+        
+        //유저 likes 배열에 있는 (좋아요 한 글)이면
+        API.shared.getUserInfo(completion: { [self] (response) in
+            for i in response.likes {
+                if i == oneBoard!.postid {
+                    print(i)
+                    heartButton.setLikeState() // 하트 버튼 ui 누른 상태 setting
+                }
+            }
+        })
+        
+        // navigaion bar - report button
+//        navigationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(didTapReport))
+        
+    
 
     }
     
@@ -127,7 +83,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         FrameTableView.register(PriceAndPeopleTableViewCell.nib(), forCellReuseIdentifier: PriceAndPeopleTableViewCell.identifier)
         FrameTableView.register(ViewAndLikeTableViewCell.nib(), forCellReuseIdentifier: ViewAndLikeTableViewCell.identifier)
         FrameTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        //FrameTableView.rowHeight = UITableView.automaticDimension
+
         FrameTableView.separatorInset.left = 0
 
   
@@ -147,21 +103,28 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
     @objc func didTapGoToChatRoom(){
         print("didTapGoToChatRoom")
         //TO-DO
-        //if post user 인원 안찼을 때
-        guard let userEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
-            print("no exists user ")
-            return
+        //if post user 인원 찼을 때
+        if(oneBoard!.needPeople + 1 == oneBoard!.nowPeople){
+            alertController()
+        }else {
+            guard let userEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
+                print("no exists user ")
+                return
+            }
+            addUserToChat(userEamil: userEmail)
+            performSegue(withIdentifier: "chatRoom", sender: nil)
         }
-        addUserToChat(userEamil: userEmail)
-        //else alertController()
+        
+        //else
         
     }
     
     func addUserToChat(userEamil: String){
         //getPostInfo
         //postId == chatId
-        let postId = ""
-        let document = Firestore.firestore().collection("Chats").document(postId)
+        guard let postId = oneBoard?.postid else { return }
+        
+        let document = Firestore.firestore().collection("Chats").document("\(postId)")
         
         //let users = [userEamil] // 방 생성 시 혼자만 있음
         //let users = [self.currentUser.uid, self.user2UID]
@@ -196,6 +159,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         guard let button = sender as? HeartButton else { return }
         if(button.flipLikedState() == true){
             //관심 글 등록 toast message // TO DO post likes
+            PostService.shared.clickHeart(postId: oneBoard!.postid)
             self.showToast(message: "관심 글에 등록되었습니다.", font: .systemFont(ofSize: 12.0))
         }
     }
@@ -269,12 +233,9 @@ extension DetailNoteViewController: UITableViewDelegate, UITableViewDataSource {
             
         }else if(indexPath.row == 1){
             let cell = tableView.dequeueReusableCell(withIdentifier: ContentTableViewCell.identifier) as! ContentTableViewCell
-            print("0 \(cell.contentTextView.height)")
             
             cell.contentTextView.attributedText = makeContentView(contentTextView : cell.contentTextView)
-            cell.calculate()
-            
-            print("2 \(cell.contentTextView.height)")
+            //cell.calculate()
             return cell
             
         }else if(indexPath.row == 2){
@@ -294,7 +255,7 @@ extension DetailNoteViewController: UITableViewDelegate, UITableViewDataSource {
     
            return cell
         }else if (indexPath.row == 5){
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! UITableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
             return cell
         }
         
@@ -340,6 +301,11 @@ class HeartButton: UIButton {
     animate()
     return isLiked
   }
+    
+    public func setLikeState() {
+        isLiked = !isLiked
+        animate()
+    }
 
   private func animate() {
     UIView.animate(withDuration: 0.1, animations: {

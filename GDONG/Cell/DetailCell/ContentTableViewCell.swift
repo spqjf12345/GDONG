@@ -10,13 +10,15 @@ import UIKit
 class ContentTableViewCell: UITableViewCell {
     static var identifier = "ContentTableViewCell"
     
+    @IBOutlet weak var frameView: UIView!
     @IBOutlet weak var contentTextView: UITextView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         UISetting()
-        contentView.addSubview(contentTextView)
+      
+        calculate()
     }
     
     static func nib() -> UINib {
@@ -33,17 +35,29 @@ class ContentTableViewCell: UITableViewCell {
         contentTextView.isUserInteractionEnabled = true
         contentTextView.isSelectable = true
         contentTextView.isEditable = false
+        //contentTextView.isScrollEnabled = false
+ 
     }
     
     func calculate(){
-  
-        contentTextView.translatesAutoresizingMaskIntoConstraints = false
-        contentTextView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10).isActive = true
-        contentTextView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10).isActive = true
-        contentTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10).isActive = true
-        contentTextView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10).isActive = true
+
+        frameView.translatesAutoresizingMaskIntoConstraints = false
         
-        print("1 \(contentTextView.height)")
+        //2배 해줌
+        frameView.heightAnchor.constraint(equalToConstant: contentTextView.height * 2).isActive = true
+//        contentTextView.topAnchor.constraint(equalTo: frameView.topAnchor, constant: 10).isActive = true
+//        contentTextView.leadingAnchor.constraint(equalTo: frameView.leadingAnchor, constant: 10).isActive = true
+//        contentTextView.trailingAnchor.constraint(equalTo: frameView.trailingAnchor, constant: -10).isActive = true
+//        contentTextView.bottomAnchor.constraint(equalTo: frameView.bottomAnchor, constant: -10).isActive = true
+        
+        //height dynamic set
+//        frameView.heightAnchor.constraint(equalToConstant: contentView.height).isActive = true
+//        contentTextView.heightAnchor.constraint(equalToConstant: contentTextView.height).isActive = true
+        
+        print("height")
+        print(contentView.height)
+        print(contentTextView.height)
+
     }
     
     

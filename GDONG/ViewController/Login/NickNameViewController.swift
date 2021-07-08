@@ -26,9 +26,14 @@ class NickNameViewController: UIViewController {
 
        @IBAction func nextButton(_ sender: Any) {
            if(nickNameTextfield.text != ""){
-               //dp에 저장된 이름이 있으면
-            API.shared.updateNickname(nickName: nickNameTextfield.text!)
-            UserDefaults.standard.setValue(nickNameTextfield.text!, forKey: UserDefaultKey.userNickName)
+               //dp에 저장된 이름이 았으면
+            
+            
+            API.shared.updateNickname(nickName: nickNameTextfield.text!, completion: { (response) in
+                print("업데이트 완료 \(response)")
+                UserDefaults.standard.setValue(response, forKey: UserDefaultKey.userNickName)
+            })
+        
                //다시 입력해주세요 alert view 띄우기
 
                performSegue(withIdentifier: "location", sender: nil)

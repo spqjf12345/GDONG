@@ -64,7 +64,7 @@ class SellViewController: UIViewController {
         
         //itemBoard = Dummy.shared.oneBoardDummy(model: itemBoard)
         print("getPost in SellViewController ")
-        PostService.shared.getPosts(completion: { [self] (response) in
+        PostService.shared.getAllPosts(completion: { [self] (response) in
             self.contents = response
             print("content is \(contents)")
         })

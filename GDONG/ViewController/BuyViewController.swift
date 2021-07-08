@@ -84,7 +84,7 @@ class BuyViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        PostService.shared.getPosts(completion: { [self] (response) in
+        PostService.shared.getAllPosts(completion: { [self] (response) in
             self.contents = response
             //print("content is \(contents)")
         })
