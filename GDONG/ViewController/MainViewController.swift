@@ -62,9 +62,15 @@ class MainViewController : TabmanViewController {
         //Do any additional setup after loading the view.
   
         //네비게이션바 왼쪽에 현재 위치
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "서울시 강남구", style: .plain, target: self, action: nil)
+        var locationString: String = "위치 설정이 필요합니다."
+//        let location = UserDefaults.standard.string(forKey: UserDefaultKey.userLocation)
+//        locationString = location!
+
+        let LocationBarButton: UIBarButtonItem = UIBarButtonItem(title: locationString, style: .plain, target: nil, action: nil)
+        LocationBarButton.tintColor = .black
+        navigationItem.leftBarButtonItem = LocationBarButton
         
-        itemBoard = Dummy.shared.oneBoardDummy(model: itemBoard)
+ //       itemBoard = Dummy.shared.oneBoardDummy(model: itemBoard)
         
 //        if let navigationBar = self.navigationController?.navigationBar {
 //            let positionFrame = CGRect(x: 20, y: 0, width: navigationBar.frame.width/2, height: navigationBar.frame.height)

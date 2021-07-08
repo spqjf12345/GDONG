@@ -51,7 +51,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
             //post
             //API.shared.update(nickName: nickName, logitude: nowLongitude, latitude: nowLatitude)
             API.shared.updateLocation(longitude: nowLongitude, latitude: nowLatitude)
-            
+            UserDefaults.standard.setValue(getLocation, forKey: UserDefaultKey.userLocation)
             let tabBarViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "tabbar") as! UITabBarController
 
             UIApplication.shared.windows.first?.rootViewController = tabBarViewController

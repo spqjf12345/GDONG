@@ -21,6 +21,10 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var userImage: UIImageView!
     
     @IBOutlet var tableView: UITableView!
+    @IBAction func backButton(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     
 //
 //    @IBOutlet weak var nickNameTextField: UITextField!
@@ -71,6 +75,13 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
         self.present(picker, animated: true, completion: nil)
     }
     
+    func alertDone(title: String, message: String, completionHandler: @escaping ((String) -> Void)) {
+        let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: .default, handler: { action in  completionHandler("OK")})
+        alertVC.addAction(OKAction)
+        self.present(alertVC, animated: true, completion: nil)
+    }
+    
     
 //    func UISetting(){
 //        let authProvider = self.userInfo.authProvider
@@ -110,13 +121,15 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
         locationManager = CLLocationManager()
         locationManager.delegate = self
         let coor = locationManager.location?.coordinate
-        let latitude = coor?.latitude
-        let longitude = coor?.longitude
+        guard let latitude = coor?.latitude, let longitude = coor?.longitude else {
+            print("can not load location")
+            return
+        }
 
-        print(latitude!)
-        print(longitude!)
+        print(latitude)
+        print(longitude)
 
-        let findLocation = CLLocation(latitude: latitude!, longitude: longitude!)
+        let findLocation = CLLocation(latitude: latitude, longitude: longitude)
         let geocoder = CLGeocoder()
         let locale = Locale(identifier: "Ko-kr")
 
@@ -125,8 +138,7 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
                 if let name: String = address.last?.name{
                     print(name)
                     cellField.text = name
-                    API.shared.updateLocation(longitude: latitude!, latitude: longitude!)
-                    self.tableView.reloadData()
+                    API.shared.updateLocation(longitude: latitude, latitude: longitude)
                 }
             }
         })
@@ -197,9 +209,13 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
                     API.shared.updateNickname(nickName: userInput, completion: {
                         (response) in
                         cellField.text = userInput
-                        DispatchQueue.main.async {
-                            self.tableView.reloadData()
-                        }
+                        self.alertDone(title: "수정 완료", message: "닉네임이 변경되었습니다 ",  completionHandler: { response in
+                            if(response == "OK"){
+                                print("닉네임 \(userInput)으로 수정")
+                                
+                            }
+                        })
+                        
 
                     })
                     
@@ -224,8 +240,18 @@ extension EditProfileViewController: PHPickerViewControllerDelegate {
            itemProvider.canLoadObject(ofClass: UIImage.self){
             itemProvider.loadObject(ofClass: UIImage.self, completionHandler: {(image, error) in
                 DispatchQueue.main.async {
-                    self.userImage.image = image as? UIImage
+                    if let image = image as? UIImage {
+                        self.userImage.image = image
+                        if let imageData = image.jpeg(.lowest) {
+                            
+                            //post user setting image
+                            API.shared.updateUserImage(userImage: imageData)
+                        }
+                        
+                    }
                 }
+
+               
             })
         }else {
             print("cannot find image")
@@ -243,7 +269,7 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
             
             alertEditName(cellField: cell.textfield)
             
-        }else if(cell.indexPath[1] == 0){
+        }else if(cell.indexPath[1] == 1){
             
             alertEditLocation(cellField: cell.textfield)
         }

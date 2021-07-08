@@ -84,11 +84,11 @@ class BuyViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        PostService.shared.getAllPosts(completion: { [self] (response) in
+        PostService.shared.getAllPosts(completion: { (response) in
             self.contents = response
-            //print("content is \(contents)")
+            print("content is \(self.contents)")
         })
-        buyTableView.reloadData()
+        //buyTableView.reloadData()
         
         }
     
@@ -104,6 +104,7 @@ extension BuyViewController: UITableViewDelegate, UITableViewDataSource{
     
     //segmented control 인덱스에 따른 테이블뷰 설정
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("page count \(contents.count)")
         return contents.count
     }
     

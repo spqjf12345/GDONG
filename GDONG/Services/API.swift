@@ -196,17 +196,100 @@ class API {
             "latitude": latitude
         ]
         
-        AF.request(Config.baseUrl + "/user/update", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString)).validate().responseJSON {
-            (response) in
+        let headers: HTTPHeaders = [
+            "Content-type": "multipart/form-data"
+        ]
+        
+        AF.upload(multipartFormData: { multipartFormData in
             print("[API] /user/update 유저 위치 정보 업데이트")
+        
+            for (key, value) in params {
+                if let temp = value as? Double {
+                    multipartFormData.append("\(temp)".data(using: .utf8)!, withName: key)
+                    print(temp)
+                }
+                
+                if let temp = value as? String {
+                    multipartFormData.append(temp.data(using: .utf8)!, withName: key)
+                    print(temp)
+               }
+
+            }
+           
+            
+        }, to: Config.baseUrl + "/user/update", usingThreshold: UInt64.init(), method: .post, headers: headers).validate().responseJSON { (response) in
+
             switch response.result {
             case .success(let obj):
                 print(obj)
+//                do {
+//                    let responses = obj as! NSDictionary
+//                    guard let user = responses["user"] as? Dictionary<String, Any> else { return }
+//
+//                    let dataJSON = try JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
+//
+//                    let UserData = try JSONDecoder().decode(Users.self, from: dataJSON)
+//                    completion(UserData.nickName)
+//                } catch {
+//                    print("error: ", error)
+//                }
+                
             case .failure(let e):
                 print(e.localizedDescription)
             }
+        }
+        
+        
+        
+//        AF.request(Config.baseUrl + "/user/update", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString)).validate().responseJSON {
+//            (response) in
+//            print("[API] /user/update 유저 위치 정보 업데이트")
+//            switch response.result {
+//            case .success(let obj):
+//                print(obj)
+//            case .failure(let e):
+//                print(e.localizedDescription)
+//            }
+//           
+//            }
+    }
+    
+    func updateUserImage(userImage:Data) {
+        let url = Config.baseUrl + "/post/upload"
+        
+        let headers: HTTPHeaders = [
+            "Content-type": "multipart/form-data"
+        ]
+        
+       // let parameter:Parameters = ["images" : userImage]
+        
+        
+        AF.upload(multipartFormData: { multipartFormData in
+            print("[API] /user/update 유저 이미지 업데이트")
+            
+            print("image string get from AF : \(String(describing: String.init(data: userImage, encoding: .utf8)))")
+            
+            multipartFormData.append(userImage, withName: "images", fileName: "\(userImage).jpg", mimeType: "image/jpg")
            
+        }, to: url,usingThreshold: UInt64.init(), method: .post, headers: headers).validate().responseJSON { (response) in
+            
+            do {
+                
+                if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
+                    print("String Data: \(utf8Text)") // original server data as UTF8 string
+//                    let BoardData = try JSONDecoder().decode(Board.self, from: data)
+//                    completionHandler(BoardData)
+                }
+                if let json = response.value {
+                    print("JSON Response : \(json)") // serialized json response
+                }
+                
+            }catch {
+                print("error: ", error)
             }
+            
+            
+        }
     }
     
     func pushNotification(nickname: String, message: String){

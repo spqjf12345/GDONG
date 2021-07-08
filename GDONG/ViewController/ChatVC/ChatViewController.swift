@@ -385,6 +385,7 @@ class ChatViewController: MessagesViewController, InputBarAccessoryViewDelegate,
             "senderID": message.senderID,
             "senderName": message.senderName
         ]
+        
     //Writing it to the thread using the saved document reference we saved in load chat function
         docReference?.collection("thread").addDocument(data: data, completion: { (error) in
             if let error = error {

@@ -8,7 +8,7 @@
 import Foundation
 
 struct Board: Codable { // response
-    var __v: Int = 0
+    var __v: Int?
     var _id: String = ""
     var author: String = ""
     var postid: Int = 0

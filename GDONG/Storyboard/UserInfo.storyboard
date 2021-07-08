@@ -327,6 +327,9 @@
                     <navigationItem key="navigationItem" title="프로필 수정" id="67v-9w-JO2" userLabel="프로필 수정">
                         <barButtonItem key="leftBarButtonItem" image="chevron.left" catalog="system" id="8aB-va-iQd">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="backButton:" destination="pwh-BK-6Nn" id="AtI-AX-RAF"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>

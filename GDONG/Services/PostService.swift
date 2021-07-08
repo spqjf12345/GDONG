@@ -105,7 +105,7 @@ class PostService {
     
     func getAllPosts(completion: @escaping (([Board]) -> Void)){
         let parameter:Parameters = ["start" : -1,
-                                    "num" : 5] // start : -1 처음부터 ~ 5개
+                                    "num" : 10] // start : -1 처음부터 ~ 5개
         AF.request(Config.baseUrl + "/post/recent", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString)).validate().responseJSON(completionHandler: { (response) in
 
             print("[API] post/recent")
@@ -217,12 +217,55 @@ class PostService {
                      }
                 
         })
+    }
+    
+    func getCategoryPost(start: Int, category: String, num: Int, completion: @escaping (([Board]) -> Void)){
+        let parameter: Parameters = ["start" : start,
+                                    "word" : category,
+                                    "num" : num]
         
-        
-        
-        
+        AF.request(Config.baseUrl + "/post/category", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString)).validate().responseJSON(completionHandler: {
+            (response) in
+
+                print("[API] /post/category \(category)에 해당하는 글 가져오기")
+                
+                switch response.result {
+                    case .success(let obj):
+                        do {
+                           let responses = obj as! NSDictionary
+                            print(response)
+                            //print(String(data: response.data!, encoding: .utf8))
+                    
+                            guard let posts = responses["posts"] as? [Dictionary<String, Any>] else { return }
+                             let dataJSON = try JSONSerialization.data(withJSONObject: posts, options: .prettyPrinted)
+                             let postData = try JSONDecoder().decode([Board].self, from: dataJSON)
+                             completion(postData)
+                            
+                         } catch let DecodingError.dataCorrupted(context) {
+                             print(context)
+                         } catch let DecodingError.keyNotFound(key, context) {
+                             print("Key '\(key)' not found:", context.debugDescription)
+                             print("codingPath:", context.codingPath)
+                         } catch let DecodingError.valueNotFound(value, context) {
+                             print("Value '\(value)' not found:", context.debugDescription)
+                             print("codingPath:", context.codingPath)
+                         } catch let DecodingError.typeMismatch(type, context)  {
+                             print("Type '\(type)' mismatch:", context.debugDescription)
+                             print("codingPath:", context.codingPath)
+                         } catch {
+                             print("error: ", error)
+                         }
+                     case .failure(let e):
+                         print(e.localizedDescription)
+                     }
+                
+        })
     }
 }
+
+
+
+
     
 //    func getImage(fileName:String, completion: @escaping ((Data?) -> Void)){
 //        let url = Config.baseUrl + "/static/\(fileName)"

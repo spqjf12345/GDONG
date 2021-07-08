@@ -65,9 +65,15 @@ class SearchResultViewController: UIViewController {
             })
         }else {
             title = categoryWord
+            PostService.shared.getCategoryPost(start: -1, category: categoryWord, num: 100, completion: { [self] (response) in
+                self.filteredBoard = response
+               print(filteredBoard)
+                DispatchQueue.main.async {
+                    FrameTableView.reloadData()
+                }
+               
+            })
         }
-        
-        //filteredBoard = filteredBoard.filter{($0.title.lowercased().contains(searchWord)) || ($0.category.lowercased().contains(categoryWord))}
     
         
     }
@@ -75,6 +81,26 @@ class SearchResultViewController: UIViewController {
 }
 
 extension SearchResultViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        var numberOfSections: Int = 0
+        
+        if filteredBoard.count > 0 {
+            tableView.separatorStyle = .singleLine
+            numberOfSections = 1
+            tableView.backgroundView = nil
+        }
+        else
+            {
+                let noDataLabel: UILabel  = UILabel(frame: CGRect(x: 0, y: 0, width:tableView.bounds.size.width, height: tableView.bounds.size.height))
+                noDataLabel.text          = "검색어에 관한 글이 존재하지 않습니다."
+                noDataLabel.textColor     = UIColor.systemGray2
+                noDataLabel.textAlignment = .center
+                tableView.backgroundView  = noDataLabel
+                tableView.separatorStyle  = .none
+            }
+        return numberOfSections
+    }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
