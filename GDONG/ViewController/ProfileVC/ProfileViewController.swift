@@ -61,6 +61,8 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        profileImage.circle()
+        
         API.shared.getUserInfo(completion: { (response) in
             print("get user Info")
             self.userInfo = response
@@ -96,21 +98,23 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
         let latitude = coor?.latitude
         let longitude = coor?.longitude
         
-        print(latitude!)
-        print(longitude!)
-        
-        let findLocation = CLLocation(latitude: latitude!, longitude: longitude!)
-        let geocoder = CLGeocoder()
-        let locale = Locale(identifier: "Ko-kr")
-        
-        geocoder.reverseGeocodeLocation(findLocation, preferredLocale: locale, completionHandler: {(place, error) in
-            if let address: [CLPlacemark] = place {
-                if let name: String = address.last?.name{
-                    print(name)
-                    self.userLocation.text = name
+        //처음 위치 설정 x 후 함수 호출시 default location setting
+        if let latitude = latitude, let longitude = longitude {
+            let findLocation = CLLocation(latitude: latitude, longitude: longitude)
+            let geocoder = CLGeocoder()
+            let locale = Locale(identifier: "Ko-kr")
+            
+            geocoder.reverseGeocodeLocation(findLocation, preferredLocale: locale, completionHandler: {(place, error) in
+                if let address: [CLPlacemark] = place {
+                    if let name: String = address.last?.name{
+                        print(name)
+                        self.userLocation.text = name
+                    }
                 }
-            }
-        })
+            })
+        }else {
+            self.userLocation.text = "no location"
+        }
     }
 
     @objc func didTapnoti(_ sender: UISwitch){

@@ -62,7 +62,7 @@ class MainViewController : TabmanViewController {
         //Do any additional setup after loading the view.
   
         //네비게이션바 왼쪽에 현재 위치
-        var locationString: String = "위치 설정이 필요합니다."
+        var locationString: String = "마석로 93-2"
 //        let location = UserDefaults.standard.string(forKey: UserDefaultKey.userLocation)
 //        locationString = location!
 

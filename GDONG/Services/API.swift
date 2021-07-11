@@ -45,8 +45,9 @@ class API {
             "name": name,
             "device_token" : deviceToken
         ]
+       
 
-        AF.request(Config.baseUrl + "/auth/signin/\(from)", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString) ).validate().responseJSON {
+        AF.request(Config.baseUrl + "/auth/signin/\(from)", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString)).validate().responseJSON {
             (response) in
             if let httpResponse = response.response, let fields = httpResponse.allHeaderFields as? [String: String]{
                 let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.response?.url)!)
@@ -143,9 +144,18 @@ class API {
         let params: Parameters = [
                "nickname": nickName
            ]
+        
+        guard let email = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
+            return
+        }
+        
+        guard let jwtToken = UserDefaults.standard.string(forKey: UserDefaultKey.jwtToken) else {
+            return
+        }
 
         let headers: HTTPHeaders = [
-            "Content-type": "multipart/form-data"
+            "Content-type": "multipart/form-data",
+            "Set-Cookie" : "email=\(email); token=\(jwtToken)"
         ]
         
         AF.upload(multipartFormData: { multipartFormData in
@@ -190,15 +200,26 @@ class API {
     }
     
     func updateLocation(longitude: Double, latitude: Double){
-        
+        print(longitude)
+        print(latitude)
         let params: Parameters = [
             "longitude": longitude,
             "latitude": latitude
         ]
         
+        guard let email = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
+            return
+        }
+        
+        guard let jwtToken = UserDefaults.standard.string(forKey: UserDefaultKey.jwtToken) else {
+            return
+        }
+
         let headers: HTTPHeaders = [
-            "Content-type": "multipart/form-data"
+            "Content-type": "multipart/form-data",
+            "Set-Cookie" : "email=\(email); token=\(jwtToken)"
         ]
+        
         
         AF.upload(multipartFormData: { multipartFormData in
             print("[API] /user/update 유저 위치 정보 업데이트")
@@ -254,14 +275,21 @@ class API {
 //            }
     }
     
-    func updateUserImage(userImage:Data) {
+    func updateUserImage(userImage: Data) {
         let url = Config.baseUrl + "/post/upload"
+        guard let email = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
+            print("updateUserImage email no")
+            return
+        }
+        guard let jwtToken = UserDefaults.standard.string(forKey: UserDefaultKey.jwtToken) else {
+            print("updateUserImage jwtToken no")
+            return
+        }
         
         let headers: HTTPHeaders = [
-            "Content-type": "multipart/form-data"
+            "Content-type": "multipart/form-data",
+            "Set-Cookie" : "email=\(email); token=\(jwtToken)"
         ]
-        
-       // let parameter:Parameters = ["images" : userImage]
         
         
         AF.upload(multipartFormData: { multipartFormData in
@@ -394,45 +422,6 @@ class API {
     
     func setCookies(cookies: HTTPCookie){
         Alamofire.Session.default.session.configuration.httpCookieStorage?.setCookie(cookies)
-    }
-    
-    func postUpload(author: String, email: String, title: String, content: String, link: String, longitude: Double, latitude: Double, needPeople: Int, price: Int, category: String, image: String, tags: [String], progileImage: String){
-        
-        let parameters: [String: Any] = ["author": author,
-                                         "email": email,
-                                         "title": title,
-                                         "content": content,
-                                         "link": link,
-                                         "longitude": longitude,
-                                         "latitude": latitude,
-                                         "needPeople" : needPeople,
-                                         "price" : price,
-                                         "category": category,
-                                         "image": image,
-                                         "tag": tags,
-                                         "progileImage" : progileImage
-        ]
-        
-        var request = URLRequest(url: URL(string: Config.baseUrl + "/post/upload")!)
-        request.httpMethod = "POST"
-        request.setValue("multipart/form-data", forHTTPHeaderField: "Content-type")
-       
-        let formDataString = (parameters.compactMap({(key, value) -> String in
-            return "\(key)=\(value)" }) as Array).joined(separator: "&")
-        let formEncodedData = formDataString.data(using: .utf8)
-        
-        request.httpBody = formEncodedData
-        AF.request(request).responseJSON { (response) in
-            print(response)
-            print("[API] /post/upload 글 post 쓰기")
-            switch response.result {
-            case .success(let obj):
-                print(obj)
-                
-            case .failure(let e):
-                print(e.localizedDescription)
-            }
-        }
     }
     
     func findAddress(keyword: String, completion: @escaping ((JusoResponse) -> Void)){

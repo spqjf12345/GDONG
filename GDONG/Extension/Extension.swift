@@ -89,13 +89,22 @@ extension Date {
 }
 
 extension UIImageView {
-    func makeCircle() {
-        self.layer.borderWidth = 1
-        self.layer.masksToBounds = false
-        self.layer.borderColor = UIColor.clear.cgColor
-        clipsToBounds = true
+    func circle(){
         self.layer.cornerRadius = self.frame.height/2
+        self.layer.borderWidth = 1
+        self.layer.borderColor = UIColor.clear.cgColor
+                    // 뷰의 경계에 맞춰준다
+        self.clipsToBounds = true
     }
+}
+
+extension UIButton {
+    func circle(){
+        self.layer.cornerRadius = 0.5
+         * self.bounds.size.width
+        self.clipsToBounds = true
+    }
+   
 }
 
 extension UIImage {

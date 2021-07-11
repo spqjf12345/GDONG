@@ -9,25 +9,25 @@ import Foundation
 
 struct Board: Codable { // response
     var __v: Int?
-    var _id: String = ""
-    var author: String = ""
-    var postid: Int = 0
-    var title: String = "" // 글 제목
-    var content: String = "" // 글 내용
-    var images: [String] = []
-    var profileImage: String = ""  // 글 대표 이미지
-    var category: String = "" // 글 카테고리
-    var price: Int = 0 //가격
-    var view: Int = 0 // 조회수
-    var interest: Int = 0 // 관심수
-    var needPeople: Int = 0// 모집 인원
-    var nowPeople: Int = 0 // 모집된 인원
-    var link: String = ""
-    var tags: [String] = []
-    var createdAt: String = ""
-    var updatedAt: String = ""
-    var location: Location = Location(_id: "", coordinates: [0,0], type: "")
-    var email: String = ""
+    var _id: String?
+    var author: String?
+    var postid: Int?
+    var title: String?
+    var content: String?
+    var images: [String]?
+    var profileImage: String?
+    var category: String?
+    var price: Int?
+    var view: Int?
+    var interest: Int?
+    var needPeople: Int?
+    var nowPeople: Int?
+    var link: String?
+    var tags: [String]?
+    var createdAt: String?
+    var updatedAt: String?
+    var location: Location?
+    var email: String?
     
     enum CodingKeys: String, CodingKey {
         case __v
@@ -51,6 +51,31 @@ struct Board: Codable { // response
         case location
         case email
 
+    }
+    
+    init(__v: Int, _id: String, author: String, postid: Int, title: String, content: String, images: [String], profileImage: String, category: String, price: Int, view: Int, interest: Int, needPeople: Int, nowPeople: Int, link: String, tags: [String], createdAt: String, updatedAt: String, location: Location, email: String) {
+      
+        self.__v = __v
+        self._id = _id
+        self.author = author
+        self.postid = postid
+        self.title = title
+        self.content = content
+        self.images = images
+        self.profileImage = profileImage
+        self.category = category
+        self.price = price
+        self.view = view
+        self.interest = interest
+        self.needPeople = needPeople
+        self.nowPeople = nowPeople
+        self.link = link
+        self.tags = tags
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+        self.location = location
+        self.email = email
+        
     }
     
 }

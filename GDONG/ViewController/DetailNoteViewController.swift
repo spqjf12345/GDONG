@@ -104,7 +104,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         print("didTapGoToChatRoom")
         //TO-DO
         //if post user 인원 찼을 때
-        if(oneBoard!.needPeople + 1 == oneBoard!.nowPeople){
+        if(oneBoard!.needPeople! + 1 == oneBoard!.nowPeople){
             alertController()
         }else {
             guard let userEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
@@ -159,7 +159,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         guard let button = sender as? HeartButton else { return }
         if(button.flipLikedState() == true){
             //관심 글 등록 toast message // TO DO post likes
-            PostService.shared.clickHeart(postId: oneBoard!.postid)
+            PostService.shared.clickHeart(postId: oneBoard!.postid!)
             self.showToast(message: "관심 글에 등록되었습니다.", font: .systemFont(ofSize: 12.0))
         }
     }
@@ -169,12 +169,15 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         let fullString = NSMutableAttributedString()
         
         if(oneBoard!.content != ""){
-            fullString.append(NSAttributedString(string: oneBoard!.content))
+            fullString.append(NSAttributedString(string: oneBoard!.content!))
             fullString.append(NSAttributedString(string: "\n\n\n\n"))
            
         }
+        guard let images = oneBoard!.images else {
+            return NSAttributedString()
+        }
  
-        for i in oneBoard!.images {
+        for i in images {
             let image1Attachment = NSTextAttachment()
             let urlString = Config.baseUrl + "/static/\(i)"
 
@@ -241,17 +244,17 @@ extension DetailNoteViewController: UITableViewDelegate, UITableViewDataSource {
         }else if(indexPath.row == 2){
             let cell = tableView.dequeueReusableCell(withIdentifier: LinkTableViewCell.identifier) as! LinkTableViewCell
       
-            cell.configure(link: oneBoard!.link)
+            cell.configure(link: oneBoard!.link!)
            return cell
         }
         else if(indexPath.row == 3){
             let cell = tableView.dequeueReusableCell(withIdentifier: PriceAndPeopleTableViewCell.identifier) as! PriceAndPeopleTableViewCell
-            cell.configure(price: oneBoard!.price, nowPeople: oneBoard!.nowPeople, needPeople: oneBoard!.needPeople)
+            cell.configure(price: oneBoard!.price!, nowPeople: oneBoard!.nowPeople!, needPeople: oneBoard!.needPeople!)
            return cell
             
         }else if(indexPath.row == 4){
             let cell = tableView.dequeueReusableCell(withIdentifier: ViewAndLikeTableViewCell.identifier) as! ViewAndLikeTableViewCell
-            cell.configure(view: oneBoard!.view, like: oneBoard!.interest)
+            cell.configure(view: oneBoard!.view!, like: oneBoard!.interest!)
     
            return cell
         }else if (indexPath.row == 5){

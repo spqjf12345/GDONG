@@ -49,7 +49,7 @@ class SellViewController: UIViewController {
         }
 
         if let detailVC = segue.destination as? DetailNoteViewController {
-            detailVC.oneBoard = itemBoard[index.row]
+            detailVC.oneBoard = contents[index.row]
         }
     }
     
@@ -65,6 +65,9 @@ class SellViewController: UIViewController {
         //itemBoard = Dummy.shared.oneBoardDummy(model: itemBoard)
         print("getPost in SellViewController ")
         PostService.shared.getAllPosts(completion: { [self] (response) in
+            guard let response = response else {
+                return
+            }
             self.contents = response
             print("content is \(contents)")
         })
@@ -109,15 +112,15 @@ extension SellViewController: UITableViewDelegate, UITableViewDataSource{
         guard contents.indices.contains(indexPath.row) else { return cell }
 
         cell.productNameLabel.text = contents[indexPath.row].title
-        cell.productPriceLabel.text = "\(contents[indexPath.row].price)"
-        let date: Date = DateUtil.parseDate(contents[indexPath.row].createdAt)
+        cell.productPriceLabel.text = "\(contents[indexPath.row].price ?? 0)"
+        let date: Date = DateUtil.parseDate((contents[indexPath.row].createdAt!))
         let dateString: String = DateUtil.formatDate(date)
         
         cell.timeLabel.text = dateString
     
-        cell.peopleLabel.text = "\(contents[indexPath.row].nowPeople)/ \(contents[indexPath.row].needPeople)"
+        cell.peopleLabel.text = "\(contents[indexPath.row].nowPeople ?? 0)/ \(contents[indexPath.row].needPeople ?? 0)"
 
-        let indexImage =  contents[indexPath.row].images[0]
+        let indexImage =  contents[indexPath.row].images![0]
         let urlString = Config.baseUrl + "/static/\(indexImage)"
     
         if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
@@ -128,11 +131,13 @@ extension SellViewController: UITableViewDelegate, UITableViewDataSource{
 
     }
     
+    // 디테일뷰 넘어가는 함수
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            tableView.deselectRow(at: indexPath, animated: true)
             performSegue(withIdentifier: "detail", sender: nil)
         
     }
-    // 디테일뷰 넘어가는 함수
+
     
     
 }

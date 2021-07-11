@@ -15,13 +15,18 @@ class PostService {
     
     func uploadPost(title: String, content: String, link: String, needPeople: Int, price: Int, category: String, images: [Data], profileImg: String, location: Location, completionHandler: @escaping (Board) -> Void){
         let url = Config.baseUrl + "/post/upload"
-        let headers: HTTPHeaders = [
-            "Content-type": "multipart/form-data"
-        ]
         
         guard let author =  UserDefaults.standard.string(forKey: UserDefaultKey.userNickName) else { return }
         guard let authorEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else { return }
+        guard let jwtToken = UserDefaults.standard.string(forKey: UserDefaultKey.jwtToken) else { return }
         
+        
+        let headers: HTTPHeaders = [
+            "Content-type": "multipart/form-data",
+            "Set-Cookie": "email=\(authorEmail); token=\(jwtToken)"
+            
+        ]
+
         let parameter:Parameters = ["author" : author,//
                          "email" : authorEmail,//
                          "title" : title,//
@@ -37,7 +42,6 @@ class PostService {
         AF.upload(multipartFormData: { multipartFormData in
             print("[API] /post/upload")
             for imageData in images {
-                print("image string get from AF : \(String.init(data: imageData, encoding: .utf8))")
                 
                 multipartFormData.append(imageData, withName: "images", fileName: "\(imageData).jpg", mimeType: "image/jpg")
             }
@@ -103,7 +107,7 @@ class PostService {
         }
     }
     
-    func getAllPosts(completion: @escaping (([Board]) -> Void)){
+    func getAllPosts(completion: @escaping (([Board]?) -> Void)){
         let parameter:Parameters = ["start" : -1,
                                     "num" : 10] // start : -1 처음부터 ~ 5개
         AF.request(Config.baseUrl + "/post/recent", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString)).validate().responseJSON(completionHandler: { (response) in
@@ -115,8 +119,9 @@ class PostService {
                        let responses = obj as! NSDictionary
                
                        guard let posts = responses["posts"] as? [Dictionary<String, Any>] else { return }
+                        print(posts)
                         let dataJSON = try JSONSerialization.data(withJSONObject: posts, options: .prettyPrinted)
-                        let postData = try JSONDecoder().decode([Board].self, from: dataJSON)
+                        let postData = try JSONDecoder().decode([Board]?.self, from: dataJSON)
                         completion(postData)
                     
                      } catch let DecodingError.dataCorrupted(context) {

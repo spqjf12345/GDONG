@@ -53,7 +53,7 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        userImage.circle()
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(editImage))
         imageEditButton.addGestureRecognizer(tapGestureRecognizer)
         imageEditButton.isUserInteractionEnabled = true
@@ -138,7 +138,7 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
                 if let name: String = address.last?.name{
                     print(name)
                     cellField.text = name
-                    API.shared.updateLocation(longitude: latitude, latitude: longitude)
+                    API.shared.updateLocation(longitude: longitude, latitude: latitude)
                 }
             }
         })
@@ -242,8 +242,9 @@ extension EditProfileViewController: PHPickerViewControllerDelegate {
                 DispatchQueue.main.async {
                     if let image = image as? UIImage {
                         self.userImage.image = image
+                        self.userImage.contentMode = .scaleAspectFill
                         if let imageData = image.jpeg(.lowest) {
-                            
+                          
                             //post user setting image
                             API.shared.updateUserImage(userImage: imageData)
                         }

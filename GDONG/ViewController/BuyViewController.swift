@@ -12,7 +12,7 @@ import SDWebImage
 
 class BuyViewController: UIViewController {
     
-   // var itemBoard = [Board]()
+    var itemBoard = [Board]()
     //페이징을 위한 새로운 변수 저장
     var contents = [Board]()
     var profileImage = [UIImage]()
@@ -26,13 +26,14 @@ class BuyViewController: UIViewController {
       func loadData(at page: Int, onComplete: @escaping ([Board]) -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
           let firstIndex = page * self.numberOfItemsPerPage
-          guard firstIndex < self.contents.count else {
+          guard firstIndex < self.itemBoard.count else {
             onComplete([])
             return
           }
-          let lastIndex = (page + 1) * self.numberOfItemsPerPage < self.contents.count ?
-            (page + 1) * self.numberOfItemsPerPage : self.contents.count
-          onComplete(Array(self.contents[firstIndex ..< lastIndex]))
+          let lastIndex = (page + 1) * self.numberOfItemsPerPage < self.itemBoard.count ?
+            (page + 1) * self.numberOfItemsPerPage : self.itemBoard.count
+            print("last index \(lastIndex)")
+          onComplete(Array(self.itemBoard[firstIndex ..< lastIndex]))
         }
       }
     
@@ -85,6 +86,9 @@ class BuyViewController: UIViewController {
         super.viewWillAppear(animated)
         
         PostService.shared.getAllPosts(completion: { (response) in
+            guard let response = response else {
+                return
+            }
             self.contents = response
             print("content is \(self.contents)")
         })
@@ -114,16 +118,16 @@ extension BuyViewController: UITableViewDelegate, UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "productCell", for: indexPath) as! TableViewCell
         guard contents.indices.contains(indexPath.row) else { return cell }
 
-            cell.productNameLabel.text = contents[indexPath.row].title
-            cell.productPriceLabel.text = "\(contents[indexPath.row].price)"
-            let date: Date = DateUtil.parseDate(contents[indexPath.row].createdAt)
-            let dateString: String = DateUtil.formatDate(date)
-            
-            cell.timeLabel.text = dateString
+        cell.productNameLabel.text = contents[indexPath.row].title
+        cell.productPriceLabel.text = "\(contents[indexPath.row].price ?? 0)"
+        let date: Date = DateUtil.parseDate(contents[indexPath.row].createdAt!)
+        let dateString: String = DateUtil.formatDate(date)
         
-            cell.peopleLabel.text = "\(contents[indexPath.row].nowPeople)/ \(contents[indexPath.row].needPeople)"
+        cell.timeLabel.text = dateString
+        
+        cell.peopleLabel.text = "\(contents[indexPath.row].nowPeople ?? 0)/ \(contents[indexPath.row].needPeople ?? 0)"
 
-            let indexImage =  contents[indexPath.row].images[0]
+        let indexImage =  contents[indexPath.row].images![0]
             //print("index image \(indexImage)")
             let urlString = Config.baseUrl + "/static/\(indexImage)"
         
@@ -136,11 +140,13 @@ extension BuyViewController: UITableViewDelegate, UITableViewDataSource{
 
     }
     
+    // 디테일뷰 넘어가는 함수
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            performSegue(withIdentifier: "detail", sender: nil)
+        tableView.deselectRow(at: indexPath, animated: true)
+        performSegue(withIdentifier: "detail", sender: nil)
         
     }
-    // 디테일뷰 넘어가는 함수
+   
 }
 
 //페이징 함수 확장

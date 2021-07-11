@@ -117,17 +117,17 @@ extension SearchResultViewController: UITableViewDelegate, UITableViewDataSource
 
 
         cell.productNameLabel.text = filteredBoard[indexPath.row].title
-        cell.productImageView.image = UIImage(named: filteredBoard[indexPath.row].profileImage)
-        cell.productPriceLabel.text = String(filteredBoard[indexPath.row].price)
+        cell.productImageView.image = UIImage(named: filteredBoard[indexPath.row].profileImage!)
+        cell.productPriceLabel.text = String(filteredBoard[indexPath.row].price!)
         
-        let date: Date = DateUtil.parseDate(filteredBoard[indexPath.row].createdAt)
+        let date: Date = DateUtil.parseDate(filteredBoard[indexPath.row].createdAt!)
         let dateString: String = DateUtil.formatDate(date)
         
         cell.timeLabel.text = dateString
     
         cell.peopleLabel.text = "\(filteredBoard[indexPath.row].nowPeople)/ \(filteredBoard[indexPath.row].needPeople)"
 
-        let indexImage =  filteredBoard[indexPath.row].images[0]
+        let indexImage =  filteredBoard[indexPath.row].images![0]
         let urlString = Config.baseUrl + "/static/\(indexImage)"
     
         if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
