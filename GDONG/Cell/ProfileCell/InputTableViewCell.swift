@@ -11,6 +11,7 @@ import CoreLocation
 protocol InputTableViewCellDelegate {
     func change(cell: InputTableViewCell)
 }
+
 class InputTableViewCell: UITableViewCell, CLLocationManagerDelegate {
     
 

@@ -73,6 +73,7 @@
 		8ED15EA02696D816002943C9 /* InputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED15E9E2696D815002943C9 /* InputTableViewCell.swift */; };
 		8ED15EA32696E7A9002943C9 /* UserInfo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8ED15EA22696E7A9002943C9 /* UserInfo.storyboard */; };
 		8ED15EA52696F173002943C9 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED15EA42696F173002943C9 /* Config.swift */; };
+		8ED15EAD269AEAD2002943C9 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8ED15EAC269AEAD1002943C9 /* Search.storyboard */; };
 		8EDD9A1A2674B046003AFE65 /* UserDefaultKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDD9A192674B045003AFE65 /* UserDefaultKey.swift */; };
 		8EF00F18265785B700AA1EEA /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF00F17265785B700AA1EEA /* API.swift */; };
 		8EF288712660EC9500840302 /* NickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF288702660EC9500840302 /* NickNameViewController.swift */; };
@@ -174,6 +175,7 @@
 		8ED15E9E2696D815002943C9 /* InputTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputTableViewCell.swift; sourceTree = "<group>"; };
 		8ED15EA22696E7A9002943C9 /* UserInfo.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = UserInfo.storyboard; sourceTree = "<group>"; };
 		8ED15EA42696F173002943C9 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		8ED15EAC269AEAD1002943C9 /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		8EDD9A192674B045003AFE65 /* UserDefaultKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKey.swift; sourceTree = "<group>"; };
 		8EF00F17265785B700AA1EEA /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		8EF288702660EC9500840302 /* NickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NickNameViewController.swift; sourceTree = "<group>"; };
@@ -193,7 +195,6 @@
 		8EF8F20C2694B9620034BD99 /* PriceAndPeopleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PriceAndPeopleTableViewCell.xib; sourceTree = "<group>"; };
 		8EF8F20F2694BB1B0034BD99 /* ViewAndLikeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAndLikeTableViewCell.swift; sourceTree = "<group>"; };
 		8EF8F2102694BB1B0034BD99 /* ViewAndLikeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewAndLikeTableViewCell.xib; sourceTree = "<group>"; };
-		8EF8F2132695BF8A0034BD99 /* SearchFilter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SearchFilter.storyboard; sourceTree = "<group>"; };
 		8EF8F7942681BF36003ADFA9 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		8EF8F7962681E5D2003ADFA9 /* FolloTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolloTableViewCell.swift; sourceTree = "<group>"; };
 		8EF8F7972681E5D2003ADFA9 /* FolloTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FolloTableViewCell.xib; sourceTree = "<group>"; };
@@ -419,13 +420,13 @@
 		8E772BB6267C8CFA0034C2BF /* Storyboard */ = {
 			isa = PBXGroup;
 			children = (
-				8EF8F2132695BF8A0034BD99 /* SearchFilter.storyboard */,
 				8E42FEFE261D958800763B61 /* LaunchScreen.storyboard */,
 				8EF3BF9F268EE87400415150 /* AdditionalInfo.storyboard */,
 				8E42FEF6261D958100763B61 /* Main.storyboard */,
 				8EF8F7C02689C859003ADFA9 /* Chat.storyboard */,
 				8EF8F7CD2689D076003ADFA9 /* Login.storyboard */,
 				8ED15EA22696E7A9002943C9 /* UserInfo.storyboard */,
+				8ED15EAC269AEAD1002943C9 /* Search.storyboard */,
 			);
 			name = Storyboard;
 			path = "/Users/sojeong/URIPLJECT/GDONGProject/remote_total/GDONG-front/GDONG/Storyboard";
@@ -557,6 +558,7 @@
 				8E772B8A267C8CA40034C2BF /* TitleTableViewCell.xib in Resources */,
 				8E772B71267C8C750034C2BF /* PhotoCell.xib in Resources */,
 				8E772B78267C8C750034C2BF /* EntityCell.xib in Resources */,
+				8ED15EAD269AEAD2002943C9 /* Search.storyboard in Resources */,
 				8E772B76267C8C750034C2BF /* CategoryTableView.storyboard in Resources */,
 				8EF8F20126935FD90034BD99 /* LinkCell.xib in Resources */,
 				8E772BBE267C8D7D0034C2BF /* cero.jpg in Resources */,

@@ -11,6 +11,7 @@ import DLRadioButton
 class SearchFilteringViewController: UIViewController, UITextFieldDelegate {
 
     var setButtton: String = ""
+    var filteredBoard = [Board]()
     
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -29,9 +30,9 @@ class SearchFilteringViewController: UIViewController, UITextFieldDelegate {
     
     @objc func MyTapMethod(sender: UITapGestureRecognizer) {
 
-            self.view.endEditing(true)
+        self.view.endEditing(true)
 
-        }
+    }
 
     
    
@@ -43,8 +44,43 @@ class SearchFilteringViewController: UIViewController, UITextFieldDelegate {
     
     
     @IBAction func done(_ sender: Any) {
+       //selected 된 정렬 방식 찾기
+        guard let minPrice:Int = Int(startPriceTextfield.text!) as Int? else {
+            return
+        }
         
+        print(minPrice)
+        
+        let maxPriceText: String?
+        
+        if endPriceTextfield.text == "" {
+            maxPriceText = "1000000000"
+        }else {
+            maxPriceText = endPriceTextfield.text!
+        }
+        
+        guard let maxPrice: Int = Int(maxPriceText!) as Int? else {
+            return
+        }
+        
+        
+        let distValue = Int(radiusSlide.value)
+        
+        let sortText = find_sortText()
+        
+        print(maxPrice)
+        print(distValue)
+        print(sortText)
+        
+   
+    
+        
+        PostService.shared.filteredPost(start: -1, num: 100, min_price: minPrice, max_price: maxPrice, min_dist: 0, max_dist: distValue, sortby: sortText, completion: { (response) in
+            self.filteredBoard = response
+            print("필터링 된 글 \(self.filteredBoard)")
+        })
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         startPriceTextfield.delegate = self
@@ -76,6 +112,18 @@ class SearchFilteringViewController: UIViewController, UITextFieldDelegate {
         heartRadioButton.isSelected = false
         startPriceTextfield.text = "0"
         endPriceTextfield.text = ""
+        kmTextLabel.text = "동네 범위"
+    }
+    
+    func find_sortText() -> String{
+        if(recentRadioButton.isSelected){
+            return "view"
+        }else if(viewRadioButton.isSelected){
+            return "postid"
+        }else if(heartRadioButton.isSelected){
+            return "likes"
+        }
+        return "no"
     }
     
     @objc func onChangeValueSlider(sender: UISlider){

@@ -13,21 +13,24 @@ class SearchResultViewController: UIViewController {
     var filteredBoard = [Board]()
     
     
+    //headerview for filtering
     var HeaderView: UIView = {
-        let view = UIView()
+        let headerView = UIView()
         var filterButton = UIButton()
-        filterButton.setTitle("검색 필터", for: .normal)
-        view.addSubview(filterButton)
-        filterButton.frame = CGRect(x: 10, y: 0, width: 100, height: 30)
-        filterButton.setTitleColor(UIColor.black, for: .normal)
+        filterButton.setTitle(" 검색 필터", for: .normal)
+        filterButton.setImage(UIImage(systemName: "square.fill.text.grid.1x2"), for: .normal)
+        filterButton.tintColor = .black
+        filterButton.setTitleColor(.black, for: .normal)
+        headerView.addSubview(filterButton)
+        filterButton.frame = CGRect(x: 10, y: 0, width: 100, height: 50)
         filterButton.addTarget(self, action: #selector(didTapFilteringButton), for: .touchUpInside)
-        return view
+        return headerView
     }()
     
     @objc func didTapFilteringButton(){
         print("didTapFilteringButton")
-        let filteringVC = UIStoryboard.init(name: "SearchFilter", bundle: nil).instantiateViewController(withIdentifier: "searchFilter")
-        filteringVC.modalPresentationStyle = .fullScreen
+        let filteringVC = UIStoryboard.init(name: "Search", bundle: nil).instantiateViewController(withIdentifier: "searchFilter")
+        //filteringVC.modalPresentationStyle = .fullScreen
         filteringVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(filteringVC, animated: true)
 
@@ -45,10 +48,9 @@ class SearchResultViewController: UIViewController {
         FrameTableView.dataSource = self
         FrameTableView.delegate = self
         
-        HeaderView.frame = CGRect(x: 0, y: 00, width: view.width, height: 50)
+        HeaderView.frame = CGRect(x: 0, y: 0, width: view.width, height: 50)
         FrameTableView.tableHeaderView = HeaderView
-        FrameTableView.frame = CGRect(x: 0, y: 0, width: view.width, height: view.height)
-        //filteredBoard = Dummy.shared.oneBoardDummy(model: filteredBoard)
+        FrameTableView.frame = view.bounds
         
         
         print("search word \(searchWord)")
@@ -117,7 +119,16 @@ extension SearchResultViewController: UITableViewDelegate, UITableViewDataSource
 
 
         cell.productNameLabel.text = filteredBoard[indexPath.row].title
-        cell.productImageView.image = UIImage(named: filteredBoard[indexPath.row].profileImage!)
+        
+        let indexImage = filteredBoard[indexPath.row].images![0]
+            //print("index image \(indexImage)")
+            let urlString = Config.baseUrl + "/static/\(indexImage)"
+        
+            if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
+               print(myURL)
+                cell.productImageView.sd_setImage(with: myURL, completed: nil)
+            }
+
         cell.productPriceLabel.text = String(filteredBoard[indexPath.row].price!)
         
         let date: Date = DateUtil.parseDate(filteredBoard[indexPath.row].createdAt!)
@@ -125,15 +136,9 @@ extension SearchResultViewController: UITableViewDelegate, UITableViewDataSource
         
         cell.timeLabel.text = dateString
     
-        cell.peopleLabel.text = "\(filteredBoard[indexPath.row].nowPeople)/ \(filteredBoard[indexPath.row].needPeople)"
+        cell.peopleLabel.text = "\(filteredBoard[indexPath.row].nowPeople ?? 0)/ \(filteredBoard[indexPath.row].needPeople ?? 0)"
 
-        let indexImage =  filteredBoard[indexPath.row].images![0]
-        let urlString = Config.baseUrl + "/static/\(indexImage)"
-    
-        if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
-           print(myURL)
-            cell.productImageView.sd_setImage(with: myURL, completed: nil)
-        }
+     
         return cell
     }
         
@@ -142,7 +147,7 @@ extension SearchResultViewController: UITableViewDelegate, UITableViewDataSource
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        tableView.deselectRow(at: indexPath, animated: true)
         let detailVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "detail") as! DetailNoteViewController
         detailVC.oneBoard = filteredBoard[indexPath.row]
         navigationController?.pushViewController(detailVC, animated: true)

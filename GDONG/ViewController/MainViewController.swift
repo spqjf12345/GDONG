@@ -8,6 +8,7 @@
 import UIKit
 import Tabman
 import Pageboy
+import CoreLocation
 
 class MainViewController : TabmanViewController {
     
@@ -17,32 +18,11 @@ class MainViewController : TabmanViewController {
     
     var itemBoard = [Board]()
     
+    var locationString: String?
+    
     //view array
     private var viewControllers: Array<UIViewController> = []
     
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let searchVC = segue.destination as? SearchViewController {
-            
-        }
-        
-//        guard let index = .indexPathForSelectedRow else {
-//            return
-//        }
-//
-//        if let detailVC = segue.destination as? DetailNoteViewController {
-//            detailVC.oneBoard = itemBoard[index.row]
-//        }
-        
-//        if let createItemVC = segue.destination as? CreateNewItemViewController {
-//            navigationController?.navigationBar.isHidden = true
-//        }
-//
-      
-        
-        
-      
-    }
     
     @IBAction func search(_ sender: Any) {
         performSegue(withIdentifier: "searchButton", sender: self)
@@ -56,33 +36,50 @@ class MainViewController : TabmanViewController {
       
     }
     
+    func getLocation(longitude: Double?, latitude: Double?, complete: @escaping (String) -> (Void)){
+        
+        //처음 위치 설정 x 후 함수 호출시 default location setting
+        if let latitude = latitude, let longitude = longitude {
+            
+            let findLocation = CLLocation(latitude: latitude, longitude: longitude)
+            let geocoder = CLGeocoder()
+            let locale = Locale(identifier: "Ko-kr")
+            
+            geocoder.reverseGeocodeLocation(findLocation, preferredLocale: locale, completionHandler: {(place, error) in
+                if let address: [CLPlacemark] = place {
+                    if let name: String = address.last?.name{
+                        print(name)
+                        complete(name)
+                    }
+                }
+            })
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        //locationString update
+
+        API.shared.getUserInfo(completion: {
+            response in
+            let longitude = response.location.coordinates[0]
+            let latitude = response.location.coordinates[1]
+            
+            self.getLocation(longitude: longitude, latitude: latitude, complete: { [self] (response) in
+                print("get location : \(response)")
+                self.locationString = response
+                print("get location1 : \(String(describing: self.locationString))")
+                let LocationBarButton: UIBarButtonItem = UIBarButtonItem(title: locationString, style: .plain, target: nil, action: nil)
+                LocationBarButton.tintColor = .black
+                navigationItem.leftBarButtonItem = LocationBarButton
+            })
+        })
+      
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //Do any additional setup after loading the view.
-  
-        //네비게이션바 왼쪽에 현재 위치
-        var locationString: String = "마석로 93-2"
-//        let location = UserDefaults.standard.string(forKey: UserDefaultKey.userLocation)
-//        locationString = location!
-
-        let LocationBarButton: UIBarButtonItem = UIBarButtonItem(title: locationString, style: .plain, target: nil, action: nil)
-        LocationBarButton.tintColor = .black
-        navigationItem.leftBarButtonItem = LocationBarButton
-        
- //       itemBoard = Dummy.shared.oneBoardDummy(model: itemBoard)
-        
-//        if let navigationBar = self.navigationController?.navigationBar {
-//            let positionFrame = CGRect(x: 20, y: 0, width: navigationBar.frame.width/2, height: navigationBar.frame.height)
-//
-//
-//            let positionLabel = UILabel(frame: positionFrame)
-//            positionLabel.text = "서울시 강남구"
-//
-//
-//            navigationBar.addSubview(positionLabel)
-//        }
-    
         
         //view array에 추가
         let buyViewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BuyViewController") as! BuyViewController

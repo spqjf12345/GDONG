@@ -15,6 +15,7 @@ class SellViewController: UIViewController {
     var itemBoard = [Board]()
     //페이징을 위한 새로운 변수 저장
     var contents = [Board]()
+
     
     
     //페이징을 위한 데이터 가공
@@ -53,6 +54,20 @@ class SellViewController: UIViewController {
         }
     }
     
+    //headerview for filtering
+    var HeaderView: UIView = {
+        let headerView = UIView()
+        var filterButton = UIButton()
+        filterButton.setTitle(" 검색 필터", for: .normal)
+        filterButton.setImage(UIImage(systemName: "square.fill.text.grid.1x2"), for: .normal)
+        filterButton.tintColor = .black
+        filterButton.setTitleColor(.black, for: .normal)
+        headerView.addSubview(filterButton)
+        filterButton.frame = CGRect(x: 280, y: 0, width: 100, height: 50)
+        filterButton.addTarget(self, action: #selector(didTapFilteringButton), for: .touchUpInside)
+        return headerView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -79,17 +94,26 @@ class SellViewController: UIViewController {
         //당겨서 새로고침
         sellTableView.refreshControl = UIRefreshControl()
         sellTableView.refreshControl?.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
+    
+        
+        HeaderView.frame = CGRect(x: 0, y: 0, width: view.width, height: 50)
+        sellTableView.tableHeaderView = HeaderView
+
+    }
+    
+    
+    @objc func didTapFilteringButton(){
+        print("didTapFilteringButton")
+        let filteringVC = UIStoryboard.init(name: "Search", bundle: nil).instantiateViewController(withIdentifier: "searchFilter")
+        //filteringVC.modalPresentationStyle = .fullScreen
+        filteringVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(filteringVC, animated: true)
 
     }
     
     
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        sellTableView.reloadData()
-        
-        }
-    
+
 
 }
 

@@ -266,6 +266,56 @@ class PostService {
                 
         })
     }
+    
+    func filteredPost(start: Int, num: Int, min_price: Int, max_price: Int, min_dist: Int, max_dist: Int, sortby: String, completion: @escaping (([Board]) -> Void)){
+        
+        let parameter: Parameters = [ "start" : start,
+                                    "num" : num,
+                                    "min_price" : min_price,
+                                    "max_price" : max_price,
+                                    "min_dist": min_dist,
+                                    "max_dist" : max_dist,
+                                    "sortby" : sortby
+                                    ]
+        
+        AF.request(Config.baseUrl + "/post/filter", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString)).validate().responseJSON(completionHandler: {
+            (response) in
+            print("[API] /post/filter 된 글 가져오기")
+            
+            switch response.result {
+                case .success(let obj):
+                    do {
+                       let responses = obj as! NSDictionary
+                        print(response)
+                        //print(String(data: response.data!, encoding: .utf8))
+                
+                        guard let posts = responses["posts"] as? [Dictionary<String, Any>] else { return }
+                         let dataJSON = try JSONSerialization.data(withJSONObject: posts, options: .prettyPrinted)
+                         let postData = try JSONDecoder().decode([Board].self, from: dataJSON)
+                         completion(postData)
+                        
+                     } catch let DecodingError.dataCorrupted(context) {
+                         print(context)
+                     } catch let DecodingError.keyNotFound(key, context) {
+                         print("Key '\(key)' not found:", context.debugDescription)
+                         print("codingPath:", context.codingPath)
+                     } catch let DecodingError.valueNotFound(value, context) {
+                         print("Value '\(value)' not found:", context.debugDescription)
+                         print("codingPath:", context.codingPath)
+                     } catch let DecodingError.typeMismatch(type, context)  {
+                         print("Type '\(type)' mismatch:", context.debugDescription)
+                         print("codingPath:", context.codingPath)
+                     } catch {
+                         print("error: ", error)
+                     }
+                 case .failure(let e):
+                     print(e.localizedDescription)
+                 }
+            
+    })
+        
+        
+    }
 }
 
 
