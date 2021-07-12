@@ -9,14 +9,21 @@ import UIKit
 import FirebaseFirestore
 
 struct ChatRoom {
-    var chatId: String = ""
-    var chatRoomName: String = ""
-    var chatRoomDate: Date = Date()
-    var postId: Int = 0
+    var chatId: String?
+    var chatRoomName: String?
+    var chatRoomDate: Date?
+    var chatImage: String?
+    
+    init(chatId: String, chatRoomName: String, chatRoomDate: Date, chatImage:String){
+        self.chatId = chatId
+        self.chatRoomName = chatRoomName
+        self.chatRoomDate = chatRoomDate
+        self.chatImage = chatImage
+    }
 }
 
 class ChatListViewController: UIViewController {
-    var mychatRoom = [ChatRoom()]
+    var mychatRoom = [ChatRoom]()
     
 //    var roomName = ["딸기사실분 선착순입니다!어서어서 들어오세요","향수 공동구매 해요!어서어서 들어오세요"]
 //    var thumnail = ["strawberry.jpg", "perfume.jpg"]
@@ -93,26 +100,33 @@ class ChatListViewController: UIViewController {
                             print("no chat room name in database")
                             return
                         }
+                        
                         guard let ChatRoomDate = doc.data()["Date"] as? Timestamp else {
                             print("no chat room date in database")
                             return
                         }
                         
-                        guard let ChatPostId = doc.data()["postId"] as? Int else {
-                            print("no postId in database")
+//                        guard let ChatPostId = doc.data()["PostID"] as? Int else {
+//                            print("no postId in database")
+//                            return
+//                        }
+                        
+                        guard let ChatImage = doc.data()["ChatImage"] as? String else {
+                            print("no ChatImage string in database")
                             return
                         }
                         
-                        self.mychatRoom.append(ChatRoom(chatId: doc.documentID, chatRoomName: ChatRoomName, chatRoomDate: Date(timeIntervalSince1970: TimeInterval(ChatRoomDate.seconds)), postId: ChatPostId))
+                        
+                        self.mychatRoom.append(
+                            ChatRoom(chatId: doc.documentID, chatRoomName: ChatRoomName, chatRoomDate: Date(timeIntervalSince1970: TimeInterval(ChatRoomDate.seconds)), chatImage: ChatImage))
                         
                      
                         print(self.mychatRoom)
-                        DispatchQueue.main.async {
-                            self.chatListTableView.reloadData()
-                        }
-                        
-                        
                     }
+//                    if(self.mychatRoom.count > 1){
+//                        self.chatListTableView.reloadData()
+//                    }
+                   
                 }
             }
            
@@ -177,12 +191,18 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = chatListTableView.dequeueReusableCell(withIdentifier: "chatList", for: indexPath) as! ChatListCell
         
         cell.roomName.text = mychatRoom[indexPath.row].chatRoomName
+        let dateString = DateUtil.formatDate(mychatRoom[indexPath.row].chatRoomDate!)
         
-        cell.latestMessageTime.text = "\(mychatRoom[indexPath.row].chatRoomDate)"
+        cell.latestMessageTime.text = dateString
         
-//        cell.message.text = message[indexPath.row]
-//        cell.thumbnail.image = UIImage(named: thumnail[(indexPath as NSIndexPath).row])
-
+        if let indexImage =  mychatRoom[indexPath.row].chatImage {
+            //print("index image \(indexImage)")
+            let urlString = Config.baseUrl + "/static/\(indexImage)"
+            if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
+                cell.thumbnail.sd_setImage(with: myURL, completed: nil)
+            }
+        }
+      
         cell.roomName.sizeToFit()
         cell.latestMessageTime.sizeToFit()
         cell.message.sizeToFit()

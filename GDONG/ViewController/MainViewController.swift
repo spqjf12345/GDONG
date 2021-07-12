@@ -65,9 +65,9 @@ class MainViewController : TabmanViewController {
             let latitude = response.location.coordinates[1]
             
             self.getLocation(longitude: longitude, latitude: latitude, complete: { [self] (response) in
-                print("get location : \(response)")
+                //print("get location : \(response)")
                 self.locationString = response
-                print("get location1 : \(String(describing: self.locationString))")
+                //print("get location1 : \(String(describing: self.locationString))")
                 let LocationBarButton: UIBarButtonItem = UIBarButtonItem(title: locationString, style: .plain, target: nil, action: nil)
                 LocationBarButton.tintColor = .black
                 navigationItem.leftBarButtonItem = LocationBarButton

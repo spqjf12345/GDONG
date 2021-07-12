@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ChatListCell: UITableViewCell {
 
-    @IBOutlet var thumbnail: UIImageView!
+    @IBOutlet var thumbnail: SDAnimatedImageView!
     @IBOutlet var roomName: UILabel!
    
     @IBOutlet var latestMessageTime: UILabel!

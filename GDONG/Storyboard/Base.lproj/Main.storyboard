@@ -368,11 +368,11 @@
             <objects>
                 <viewController storyboardIdentifier="detail" hidesBottomBarWhenPushed="YES" id="6lN-HR-gAP" customClass="DetailNoteViewController" customModule="GDONG" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pWo-CF-PyA">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CEy-g5-4gV">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>
@@ -388,6 +388,7 @@
                     <navigationItem key="navigationItem" id="jJ5-et-QeQ"/>
                     <connections>
                         <outlet property="FrameTableView" destination="CEy-g5-4gV" id="1qy-hA-Iat"/>
+                        <segue destination="0Yz-Pw-atL" kind="show" identifier="chatRoom" id="toj-Py-Avx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MNG-0d-3hV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -439,7 +440,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="dKn-Ub-gLM"/>
+        <segue reference="UMt-Yq-bSM"/>
+        <segue reference="toj-Py-Avx"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="list.bullet" catalog="system" width="128" height="88"/>

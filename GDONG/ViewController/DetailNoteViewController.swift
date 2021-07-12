@@ -22,9 +22,11 @@ import FirebaseFirestore
 
 class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
     var oneBoard: Board?
-   // private let cellList = Cells.allCases
+    var postChatRoom: ChatRoom?
     
     @IBOutlet weak var FrameTableView: UITableView!
+    
+    private var docReference: DocumentReference? //현재 document
 
 
     
@@ -48,6 +50,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("oneBoard : \(oneBoard)")
         tableViewSetting()
         
         view.addSubview(bottomView)
@@ -104,43 +107,79 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         print("didTapGoToChatRoom")
         //TO-DO
         //if post user 인원 찼을 때
-        if(oneBoard!.needPeople! + 1 == oneBoard!.nowPeople){
+        if(oneBoard!.needPeople! == oneBoard!.nowPeople){
             alertController()
         }else {
             guard let userEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
                 print("no exists user ")
                 return
             }
-            addUserToChat(userEamil: userEmail)
-            performSegue(withIdentifier: "chatRoom", sender: nil)
+            addUserToChat(userEamil: "jouureee@gmail.com", completed: {(response) in
+                if(response == "OK"){
+                    self.performSegue(withIdentifier: "chatRoom", sender: nil)
+                }
+            })
         }
-        
-        //else
         
     }
     
-    func addUserToChat(userEamil: String){
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let chatVC = segue.destination as! ChatViewController
+        chatVC.chatRoom = self.postChatRoom
+        
+    }
+    
+    func findChatInfo(){
+        
+    }
+    
+    func addUserToChat(userEamil: String, completed: @escaping (String) -> Void){
         //getPostInfo
         //postId == chatId
-        guard let postId = oneBoard?.postid else { return }
+        print("addUserToChat called")
+        guard let postId = oneBoard?.postid else {
+            print("no post id")
+            return
+        }
         
+        //채팅방에 유저 넣기
         let document = Firestore.firestore().collection("Chats").document("\(postId)")
+        print(document.documentID)
         
-        //let users = [userEamil] // 방 생성 시 혼자만 있음
-        //let users = [self.currentUser.uid, self.user2UID]
-//        let data: [String: Any] = [
-//            "users": FieldValue.arrayUnion(["\(userEamil)"])
-//        ]
-//        document.setData(data){ err in
-//            if let err = err {
-//                    print("Error writing document: \(err)")
-//                } else {
-//                    print("Document successfully written!")
-//                }
-//        }
         document.updateData([
             "users": FieldValue.arrayUnion(["\(userEamil)"])
         ])
+        
+        document.getDocument { (document, error) in
+            if let document = document, document.exists {
+                guard let ChatRoomName = document.data()!["ChatRoomName"] as? String else {
+                    print("no chat room name in database")
+                    return
+                }
+                
+                guard let ChatRoomDate = document.data()!["Date"] as? Timestamp else {
+                    print("no chat room date in database")
+                    return
+                }
+                
+
+                
+                guard let ChatImage = document.data()!["ChatImage"] as? String else {
+                    print("no ChatImage string in database")
+                    return
+                }
+                print(ChatRoomName)
+                print(ChatRoomDate)
+                print(ChatImage)
+                
+                self.postChatRoom = ChatRoom(chatId: document.documentID, chatRoomName: ChatRoomName, chatRoomDate: Date(timeIntervalSince1970: TimeInterval(ChatRoomDate.seconds)), chatImage: ChatImage)
+                print("postChatRoom ready \(self.postChatRoom)")
+                completed("OK")
+       
+            } else {
+                print("Document does not exist")
+            }
+        }
 
     }
     
@@ -225,7 +264,9 @@ extension DetailNoteViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let nomalCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        
+//        let chatVC = segue.destination as! ChatViewController
+//        let index = chatListTableView.indexPathForSelectedRow
+//        chatVC.chatRoom = self.mychatRoom[index!.row]
 
         //titleCell
         if(indexPath.row == 0){

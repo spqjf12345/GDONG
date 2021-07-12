@@ -22,8 +22,7 @@ class PostService {
         
         
         let headers: HTTPHeaders = [
-            "Content-type": "multipart/form-data",
-            "Set-Cookie": "email=\(authorEmail); token=\(jwtToken)"
+            "Content-type": "multipart/form-data"
             
         ]
 
@@ -87,23 +86,60 @@ class PostService {
            
             
         }, to: url,usingThreshold: UInt64.init(), method: .post, headers: headers).validate().responseJSON { (response) in
+            switch response.result {
             
-            do {
-                
-                if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-                    print("String Data: \(utf8Text)") // original server data as UTF8 string
-                    let BoardData = try JSONDecoder().decode(Board.self, from: data)
-                    completionHandler(BoardData)
+            case .success(let obj):
+                do {
+                    let response = obj as! NSDictionary
+                    print("PostService : \(response["post"])")
+                    guard let post = response["post"] as? Dictionary<String, Any> else {
+                        print("post data can't get")
+                        return }
+                    print("post in PostService : \(post)")
+                    let dataJSON = try JSONSerialization.data(withJSONObject: post, options: .prettyPrinted)
+                    let postData = try JSONDecoder().decode(Board.self, from: dataJSON)
+                    completionHandler(postData)
+                    
+                }catch {
+                    print("error: ", error)
                 }
-                if let json = response.value {
-                    print("JSON Response : \(json)") // serialized json response
-                }
-                
-            }catch {
-                print("error: ", error)
+            case .failure(let error):
+                print(error.localizedDescription)
             }
-            
-            
+//            do {
+//
+//                let responses = obj as! NSDictionary
+//                 print(response)
+//                 //print(String(data: response.data!, encoding: .utf8))
+//
+//                 guard let posts = responses["posts"] as? [Dictionary<String, Any>] else { return }
+//                  let dataJSON = try JSONSerialization.data(withJSONObject: posts, options: .prettyPrinted)
+//                  let postData = try JSONDecoder().decode([Board].self, from: dataJSON)
+//
+//
+//                if let jsonData = response.data {
+//                    let responseObj = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]
+//                    if let response = responseObj as? [String: Any] {
+//                        if let data = response["post"] as? [String : Any]{
+//                            completionHandler(data["postid"] as! Int)
+//                            print("json :  \(data["postid"])") }
+//                        }
+//                    }
+//
+////                if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
+////                    print("String Data: \(utf8Text)") // original server data as UTF8 string
+////                    let BoardData = try JSONDecoder().decode(Board?.self, from: data)
+////                    print(BoardData)
+////                    completionHandler(BoardData)
+////                }
+////                if let json = response.value {
+////                    print("JSON Response : \(json)") // serialized json response
+////                }
+//
+//            }catch {
+//                print("error: ", error)
+//            }
+           
         }
     }
     
@@ -119,7 +155,7 @@ class PostService {
                        let responses = obj as! NSDictionary
                
                        guard let posts = responses["posts"] as? [Dictionary<String, Any>] else { return }
-                        print(posts)
+                        //print(posts)
                         let dataJSON = try JSONSerialization.data(withJSONObject: posts, options: .prettyPrinted)
                         let postData = try JSONDecoder().decode([Board]?.self, from: dataJSON)
                         completion(postData)

@@ -50,6 +50,7 @@ class SellViewController: UIViewController {
         }
 
         if let detailVC = segue.destination as? DetailNoteViewController {
+            print("segue to \(contents)")
             detailVC.oneBoard = contents[index.row]
         }
     }
@@ -84,7 +85,7 @@ class SellViewController: UIViewController {
                 return
             }
             self.contents = response
-            print("content is \(contents)")
+            //print("content is \(contents)")
         })
         
         sellTableView.delegate = self
@@ -157,7 +158,6 @@ extension SellViewController: UITableViewDelegate, UITableViewDataSource{
     
     // 디테일뷰 넘어가는 함수
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            tableView.deselectRow(at: indexPath, animated: true)
             performSegue(withIdentifier: "detail", sender: nil)
         
     }

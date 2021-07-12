@@ -309,7 +309,7 @@ class API {
 //                    completionHandler(BoardData)
                 }
                 if let json = response.value {
-                    print("JSON Response : \(json)") // serialized json response
+                    //print("JSON Response : \(json)") // serialized json response
                 }
                 
             }catch {

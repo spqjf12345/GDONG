@@ -31,6 +31,11 @@ private enum InvalidValueError: String, Error {
   case invalidEntity
 }
 
+struct chatData {
+    let chatId: Int?
+    let chatImage: String?
+}
+
 class CreateNewItemViewController: UIViewController {
   
   @IBOutlet private weak var photoCollectionView: UICollectionView!
@@ -73,7 +78,7 @@ class CreateNewItemViewController: UIViewController {
     }
   }
     
-    func postData(){
+    func postData(completed: @escaping (chatData) -> (Void)){
         //images data array
         for image in userSelectedPhotoImageList {
             let imageData = image.jpeg(.lowest)
@@ -109,10 +114,14 @@ class CreateNewItemViewController: UIViewController {
         print(link)
         
         PostService.shared.uploadPost(title: self.titleTextField.text!, content: self.entityTextView.text, link: link, needPeople: needPeople, price: postprice, category: self.categoryLabel.text!, images: images, profileImg: "1234", location: location!, completionHandler: { (response) in
-            print(response)
-            self.postId = response.postid
-            //self.image = response
+            print("postId : \(response.postid)")
+            let chatData: chatData = chatData(chatId: response.postid, chatImage: response.images![0])
+           
+            completed(chatData)
+
         })
+        
+        
             
     }
     
@@ -196,7 +205,6 @@ class CreateNewItemViewController: UIViewController {
   
   /// AllCases of enum `Cells`, the list used as tableview Layout order.
   private let cellList = Cells.allCases
-  var postId: Int?
   
   /// MARK: ViewDidLoad
   override func viewDidLoad() {
@@ -261,13 +269,13 @@ class CreateNewItemViewController: UIViewController {
     do {
       try validateWriting()
         // TODO: Post Function
-        postData()
+        self.postData(completed: {(chatData) in
+            //make new chat room
+            print("completed data : \(chatData.chatId) and \(chatData.chatImage)")
+            self.createNewChat(postId: chatData.chatId!, chatImage: chatData.chatImage!)
+        })
 
-      //make new chat room
-      self.createNewChat()
-
-      
-      dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     } catch {
       print(error)
       
@@ -275,34 +283,39 @@ class CreateNewItemViewController: UIViewController {
     }
   }
     
-    func createNewChat() {
+    func createNewChat(postId: Int, chatImage: String) {
         print("createNewChat called")
         guard let myEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else{
             print("there are no email")
             return
         }
-        
-        guard let postId:Int = self.postId else { return }
+        print(myEmail)
+    
+        print("postId : \(postId)")
         
         let users = [myEmail] // 방 생성 시 혼자만 있음
-        //let users = [self.currentUser.uid, self.user2UID]
         let data: [String: Any] = [
             "users": users,
             "ChatRoomName" : titleTextField.text!, // 채팅 방 이름
             "Date" : Date(), // 채팅방 생성 날짜
-            "PostID" : postId
+            "ChatImage" : chatImage // 채팅방 이미지 string
         ]
+        print(data)
         
-        let db = Firestore.firestore().collection("Chats")
+        let db = Firestore.firestore().collection("Chats").document("\(postId)")
+        db.setData(data)
+        ChatListViewController().loadChat()
         
-        db.addDocument(data: data) { (error) in
-            if let error = error {
-                print("Unable to create chat! \(error)")
-                return
-            } else {
-                ChatListViewController().loadChat()
-            }
-        }
+//        print(db)
+//        db.addDocument(data: data) { (error) in
+//            if let error = error {
+//                print("Unable to create chat! \(error)")
+//                return
+//            } else {
+//                print("add documet")
+//                ChatListViewController().loadChat()
+//            }
+//        }
     }
     
 

@@ -9,6 +9,6 @@
 import Foundation
 import MessageKit
 struct ChatUser: SenderType, Equatable {
-    var senderId: String
+    var senderId: String // send email
     var displayName: String
 }

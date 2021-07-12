@@ -190,7 +190,7 @@ class ChatViewController: MessagesViewController, InputBarAccessoryViewDelegate,
     var currentUser: Users = Users()
     
     private var docReference: DocumentReference? //현재 document
-    var chatRoom: ChatRoom = ChatRoom()
+    var chatRoom: ChatRoom?
     var messages: [Message] = []
     
     //I'll send the profile of user 2 from previous class from which //I'm navigating to chat view. So make sure you have the following //three variables information when you are on this class.
@@ -200,10 +200,12 @@ class ChatViewController: MessagesViewController, InputBarAccessoryViewDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = chatRoom.chatRoomName
+        print("get \(chatRoom)")
+        self.title = chatRoom?.chatRoomName
         
         API.shared.getUserInfo(completion: { (response) in
             self.currentUser = response
+            print("currentUser \(response)")
         })
         
         navigationItem.largeTitleDisplayMode = .never
@@ -215,12 +217,13 @@ class ChatViewController: MessagesViewController, InputBarAccessoryViewDelegate,
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
+        
         loadMessage()
     }
     
     func loadMessage(){
         print("load Message")
-        let document = Firestore.firestore().collection("Chats").document(chatRoom.chatId)
+        let document = Firestore.firestore().collection("Chats").document((chatRoom?.chatId)!)
         document.collection("thread")
             .order(by: "created", descending: false)
             .addSnapshotListener(includeMetadataChanges: true, listener: { (threadQuery, error) in
@@ -265,7 +268,7 @@ class ChatViewController: MessagesViewController, InputBarAccessoryViewDelegate,
                                 let msg = Message(id: id, content: content, created: Date(timeIntervalSince1970: TimeInterval(created.seconds)) , senderID: senderID, senderName: senderName)
                                
                                 self.messages.append(msg) //TO DO
-                                print(self.messages)
+                                print("loadMessage : \(self.messages)")
                                 self.messagesCollectionView.reloadData()
                                 self.messagesCollectionView.scrollToLastItem(at: .bottom, animated: true)
                                     //We'll edit viewDidload below which will solve the error
@@ -382,7 +385,7 @@ class ChatViewController: MessagesViewController, InputBarAccessoryViewDelegate,
             "content": message.content,
             "created": message.created,
             "id": message.id,
-            "senderID": message.senderID,
+            "senderID": message.senderID, // userNickName
             "senderName": message.senderName
         ]
         
@@ -401,7 +404,8 @@ class ChatViewController: MessagesViewController, InputBarAccessoryViewDelegate,
         //When use press send button this method is called.
 //        let message = Message(id: UUID().uuidString, content: text, created: Date(), senderID: currentUser.uid, senderName: currentUser.displayName!)
         print("messageid \(UUID().uuidString)")
-        let message = Message(id: UUID().uuidString, content: text, created: Date(), senderID: currentUser._id, senderName: currentUser.nickName)
+        let message = Message(id: UUID().uuidString, content: text, created: Date(), senderID: currentUser.email, senderName: currentUser.nickName)
+        print("messageid \(message)")
         //calling function to insert and save message
         insertNewMessage(message)
         save(message)
@@ -414,7 +418,13 @@ class ChatViewController: MessagesViewController, InputBarAccessoryViewDelegate,
     
     //This method return the current sender ID and name
     func currentSender() -> SenderType {
-        return ChatUser(senderId: currentUser._id, displayName: currentUser.nickName)
+        let chatUser: ChatUser?
+        if let email = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail), let nickName = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail)  {
+            chatUser = ChatUser(senderId: email, displayName: nickName)
+            return chatUser!
+        }
+        return ChatUser(senderId: "", displayName: "")
+
 //        return ChatUser(senderId: Auth.auth().currentUser!.uid, displayName: (Auth.auth().currentUser?.displayName)!)
         // return Sender(id: Auth.auth().currentUser!.uid, displayName: Auth.auth().currentUser?.displayName ?? "Name not found")
     }

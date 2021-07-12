@@ -46,13 +46,15 @@ class BuyViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        guard let index = buyTableView.indexPathForSelectedRow else {
-            return
-        }
+    
 
         if let detailVC = segue.destination as? DetailNoteViewController {
-            detailVC.oneBoard = contents[index.row]
+            if let index = buyTableView.indexPathForSelectedRow {
+                print("segue to \(contents)")
+                detailVC.oneBoard = contents[index.row]
+            }
+            
+            
         }
     }
     
@@ -119,7 +121,7 @@ class BuyViewController: UIViewController {
             self.contents = response
             print("content is \(self.contents)")
         })
-        //buyTableView.reloadData()
+        buyTableView.reloadData()
         
         }
     
@@ -135,7 +137,7 @@ extension BuyViewController: UITableViewDelegate, UITableViewDataSource{
     
     //segmented control 인덱스에 따른 테이블뷰 설정
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("page count \(contents.count)")
+        //print("page count \(contents.count)")
         return contents.count
     }
     
@@ -159,7 +161,6 @@ extension BuyViewController: UITableViewDelegate, UITableViewDataSource{
             let urlString = Config.baseUrl + "/static/\(indexImage)"
         
             if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
-               print(myURL)
                 cell.productImageView.sd_setImage(with: myURL, completed: nil)
             }
         
@@ -169,9 +170,7 @@ extension BuyViewController: UITableViewDelegate, UITableViewDataSource{
     
     // 디테일뷰 넘어가는 함수
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
         performSegue(withIdentifier: "detail", sender: nil)
-        
     }
    
 }
