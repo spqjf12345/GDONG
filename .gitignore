@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Xcode
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
@@ -88,3 +89,20 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+=======
+# Created by https://www.toptal.com/developers/gitignore/api/cocoapods
+# Edit at https://www.toptal.com/developers/gitignore?templates=cocoapods
+
+### CocoaPods ###
+## CocoaPods GitIgnore Template
+
+# CocoaPods - Only use to conserve bandwidth / Save time on Pushing
+#           - Also handy if you have a large number of dependant pods
+#           - AS PER https://guides.cocoapods.org/using/using-cocoapods.html NEVER IGNORE THE LOCK FILE
+Pods/
+node_modules/
+package.json
+package-lock.json
+
+# End of https://www.toptal.com/developers/gitignore/api/cocoapods
+>>>>>>> 4528bc95b79d3aa4bec35cb127682b5f09c564b6

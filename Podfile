@@ -6,6 +6,9 @@ target 'GDONG' do
   use_frameworks!
 
   # Pods for GDONG
+pod 'Tabman', '~> 2.9'
+pod 'DLRadioButton', '~> 1.4'
+pod 'PagingTableView'
 
 pod 'KakaoSDKAuth'  # 카카오 로그인
 pod 'KakaoSDKUser'
@@ -16,5 +19,21 @@ pod 'GoogleSignIn' #구글 로그인
 
 pod "TTGTagCollectionView"
 pod 'Alamofire', '~> 5.2'
+pod 'MessageKit'
+pod 'Scaledrone', '~> 0.3.0'
+
+pod 'Firebase/Analytics'
+pod 'Firebase/Core'
+pod 'Firebase/Auth'
+pod 'Firebase/Database'
+pod 'Firebase/Storage'
+pod 'Firebase/Firestore'
+pod 'SDWebImage' 
+
+pod 'JGProgressHUD'
+pod 'Kingfisher', '~> 6.0'
+pod 'SDWebImage', '~> 5.0'
+
+
 
 end
