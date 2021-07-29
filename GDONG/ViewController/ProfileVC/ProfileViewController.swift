@@ -136,6 +136,7 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
 
 class ConnectedViewController: UIViewController {
    
+    @IBOutlet weak var authProviderImage: UIImageView!
     @IBOutlet weak var authProvider: UILabel!
     
     @IBOutlet weak var userName: UILabel!
@@ -149,6 +150,7 @@ class ConnectedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        authProviderImageLoad()
 
         //get user info
         if(UserDefaults.standard.string(forKey: UserDefaultKey.authProvider) != nil){
@@ -158,6 +160,30 @@ class ConnectedViewController: UIViewController {
         }
         
     }
+    
+        func authProviderImageLoad(){
+            guard let authProvider = (UserDefaults.standard.string(forKey: UserDefaultKey.authProvider)) else {
+                print("authProvider didn't setting")
+                return
+            }
+            
+            switch authProvider {
+            case "google":
+                authProviderImage.image = UIImage(named: "google-logo")
+                break
+            case "kakao":
+                authProviderImage.image = UIImage(named: "kakao-logo")
+                break
+            case "apple":
+                authProviderImage.image = UIImage(named: "apple-logo")
+                break
+            default:
+                print("\(authProvider) image loaded")
+            }
+    
+    
+    
+        }
 }
 
 

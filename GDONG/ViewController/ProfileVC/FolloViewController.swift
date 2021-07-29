@@ -92,10 +92,16 @@ extension FolloViewController: UITableViewDelegate, UITableViewDataSource, Follo
             if (response == "delete"){
                 self.userList.remove(at: indexPath!.row)
                 //나의 친구 리스트에서도 삭제
+                //unfollow
+                API.shared.userUnfollow(nickName: self.userList[indexPath!.row])
                 self.follotableView.reloadData()
                 //self.follotableView.reloadRows(at: [indexPath!], with: .bottom)
             }
         })
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "\(self.FilteredList.count)명의 \(dataFrom)"
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -120,6 +126,7 @@ extension FolloViewController: UITableViewDelegate, UITableViewDataSource, Follo
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        //get user info server
         performSegue(withIdentifier: "getUserProfile", sender: nil)
     }
     

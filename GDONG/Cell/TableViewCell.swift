@@ -7,7 +7,9 @@
 
 import UIKit
 import SDWebImage
-
+protocol TableViewCellDelegate {
+    func moreButton(cell: TableViewCell)
+}
 class TableViewCell: UITableViewCell {
     
     @IBOutlet var productImageView: SDAnimatedImageView!
@@ -15,7 +17,16 @@ class TableViewCell: UITableViewCell {
     @IBOutlet weak var productPriceLabel: UILabel!
     @IBOutlet weak var peopleLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
-
+    
+    var delegate: TableViewCellDelegate?
+    
+    @IBOutlet weak var moreButton: UIButton!
+    
+    @IBAction func moreButton(_ sender: Any) {
+        delegate?.moreButton(cell: self)
+    }
+    
+    var indexPath: IndexPath?
     
     override func awakeFromNib() {
         super.awakeFromNib()

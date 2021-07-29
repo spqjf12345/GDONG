@@ -114,7 +114,7 @@ class CreateNewItemViewController: UIViewController {
         print(link)
         
         PostService.shared.uploadPost(title: self.titleTextField.text!, content: self.entityTextView.text, link: link, needPeople: needPeople, price: postprice, category: self.categoryLabel.text!, images: images, profileImg: "1234", location: location!, completionHandler: { (response) in
-            print("postId : \(response.postid)")
+            //print("postId : \(response.postid)")
             let chatData: chatData = chatData(chatId: response.postid, chatImage: response.images![0])
            
             completed(chatData)

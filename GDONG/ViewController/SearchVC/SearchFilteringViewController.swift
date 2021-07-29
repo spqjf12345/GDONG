@@ -8,6 +8,10 @@
 import UIKit
 import DLRadioButton
 
+protocol SearchFilteringDelegate {
+    func filteredPosts(filteredPostArray: [Board])
+}
+
 class SearchFilteringViewController: UIViewController, UITextFieldDelegate {
 
     var setButtton: String = ""
@@ -27,6 +31,7 @@ class SearchFilteringViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var endPriceTextfield: UITextField!
     
     @IBOutlet weak var kmTextLabel: UILabel!
+    var delegate: SearchFilteringDelegate?
     
     @objc func MyTapMethod(sender: UITapGestureRecognizer) {
 
@@ -48,9 +53,7 @@ class SearchFilteringViewController: UIViewController, UITextFieldDelegate {
         guard let minPrice:Int = Int(startPriceTextfield.text!) as Int? else {
             return
         }
-        
-        print(minPrice)
-        
+
         let maxPriceText: String?
         
         if endPriceTextfield.text == "" {
@@ -63,21 +66,23 @@ class SearchFilteringViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        
         let distValue = Int(radiusSlide.value)
         
         let sortText = find_sortText()
-        
-        print(maxPrice)
-        print(distValue)
-        print(sortText)
-        
-   
-    
-        
+
         PostService.shared.filteredPost(start: -1, num: 100, min_price: minPrice, max_price: maxPrice, min_dist: 0, max_dist: distValue, sortby: sortText, completion: { (response) in
             self.filteredBoard = response
             print("필터링 된 글 \(self.filteredBoard)")
+            self.navigationController?.popViewController(animated: true)
+            print(self.navigationController?.viewControllers.last)
+            let previousVC = self.navigationController?.viewControllers.last as! MainViewController
+            print(previousVC.isViewLoaded)
+            let buyVC = previousVC.viewControllers[0] as! BuyViewController
+            buyVC.contents = self.filteredBoard
+            buyVC.filtered = true
+            self.delegate?.filteredPosts(filteredPostArray: self.filteredBoard)
+
+           
         })
     }
     
@@ -117,9 +122,9 @@ class SearchFilteringViewController: UIViewController, UITextFieldDelegate {
     
     func find_sortText() -> String{
         if(recentRadioButton.isSelected){
-            return "view"
-        }else if(viewRadioButton.isSelected){
             return "postid"
+        }else if(viewRadioButton.isSelected){
+            return "view"
         }else if(heartRadioButton.isSelected){
             return "likes"
         }

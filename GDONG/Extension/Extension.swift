@@ -130,13 +130,15 @@ extension Notification.Name {
 }
 
 class DateUtil {
+    //date parsing
     static func parseDate(_ dateString: String) -> Date {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-        formatter.calendar = Calendar(identifier: .iso8601)
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-
-        return formatter.date(from: dateString) ?? Date()
+        let dates = DateFormatter()
+        dates.locale = Locale(identifier: "ko_kr")
+        dates.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+//        print("parseDate \(dateString)")
+// 
+//        print("format \(dates.date(from: dateString)!)")
+        return dates.date(from: dateString)!
     }
 
     static func formatDate(_ date: Date) -> String {
@@ -146,3 +148,28 @@ class DateUtil {
         return formatter.string(from: date)
     }
 }
+
+
+extension UIViewController{
+    func alertViewController(title: String, message: String, completion: @escaping  (String) -> Void){
+        let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "확인", style: .default, handler:  { _ in
+            completion("OK")
+        })
+        alertVC.addAction(OKAction)
+        self.present(alertVC, animated: true, completion: nil)
+    }
+    
+    func alertWithNoViewController(title: String, message: String, completion: @escaping  (String) -> Void){
+        let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "확인", style: .default, handler:  { _ in
+            completion("OK")
+        })
+        let CANCELAction = UIAlertAction(title: "취소", style: .default, handler:  nil)
+        alertVC.addAction(OKAction)
+        alertVC.addAction(CANCELAction)
+        self.present(alertVC, animated: true, completion: nil)
+    }
+}
+
+

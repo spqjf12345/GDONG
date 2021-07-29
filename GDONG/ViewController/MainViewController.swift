@@ -21,7 +21,7 @@ class MainViewController : TabmanViewController {
     var locationString: String?
     
     //view array
-    private var viewControllers: Array<UIViewController> = []
+    var viewControllers: Array<UIViewController> = []
     
     
     @IBAction func search(_ sender: Any) {
@@ -79,7 +79,6 @@ class MainViewController : TabmanViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //Do any additional setup after loading the view.
         
         //view array에 추가
         let buyViewController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BuyViewController") as! BuyViewController

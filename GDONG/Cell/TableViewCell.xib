@@ -30,7 +30,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="75A-mO-6qU">
-                        <rect key="frame" x="158" y="13" width="172" height="20.5"/>
+                        <rect key="frame" x="158" y="13" width="41.5" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -48,6 +48,14 @@
                             <constraint firstAttribute="width" secondItem="xwQ-Jc-frK" secondAttribute="height" multiplier="123:125" id="U99-UM-8JR"/>
                         </constraints>
                     </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YxJ-iM-kHA">
+                        <rect key="frame" x="311" y="20" width="19" height="6"/>
+                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <state key="normal" backgroundImage="ellipsis" catalog="system"/>
+                        <connections>
+                            <action selector="moreButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="3P1-Np-Vvp"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="xwQ-Jc-frK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="9Bg-Bt-0Jw"/>
@@ -55,18 +63,21 @@
                     <constraint firstAttribute="bottom" secondItem="I5j-fT-AZB" secondAttribute="bottom" constant="13" id="B9k-by-F67"/>
                     <constraint firstItem="jmq-Mh-ZmD" firstAttribute="leading" secondItem="xwQ-Jc-frK" secondAttribute="trailing" constant="15" id="LzR-kZ-Viq"/>
                     <constraint firstItem="75A-mO-6qU" firstAttribute="leading" secondItem="xwQ-Jc-frK" secondAttribute="trailing" constant="15" id="OH7-w6-ZU7"/>
+                    <constraint firstItem="YxJ-iM-kHA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="75A-mO-6qU" secondAttribute="trailing" constant="10" id="Tmg-12-2p4"/>
                     <constraint firstAttribute="bottom" secondItem="xwQ-Jc-frK" secondAttribute="bottom" constant="12" id="YR7-cz-jZO"/>
                     <constraint firstItem="jmq-Mh-ZmD" firstAttribute="top" secondItem="75A-mO-6qU" secondAttribute="bottom" constant="5" id="ahz-Be-koR"/>
                     <constraint firstItem="pta-jM-dqp" firstAttribute="leading" relation="lessThanOrEqual" secondItem="I5j-fT-AZB" secondAttribute="trailing" constant="93.5" id="bqM-4V-dDN"/>
                     <constraint firstItem="xwQ-Jc-frK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="esb-5S-94N"/>
-                    <constraint firstAttribute="trailing" secondItem="75A-mO-6qU" secondAttribute="trailing" constant="20" id="hKp-B3-dW3"/>
+                    <constraint firstItem="YxJ-iM-kHA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="ewY-HS-P8f"/>
                     <constraint firstAttribute="trailing" secondItem="pta-jM-dqp" secondAttribute="trailing" constant="20" id="lFe-67-Ify"/>
                     <constraint firstItem="75A-mO-6qU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="pOO-gJ-3uo"/>
+                    <constraint firstAttribute="trailing" secondItem="YxJ-iM-kHA" secondAttribute="trailing" constant="20" symbolic="YES" id="rvr-Ep-xED"/>
                     <constraint firstItem="I5j-fT-AZB" firstAttribute="leading" secondItem="xwQ-Jc-frK" secondAttribute="trailing" constant="15" id="vbM-Sh-nRd"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="Lih-5s-lrn"/>
             <connections>
+                <outlet property="moreButton" destination="YxJ-iM-kHA" id="dJh-vt-8bi"/>
                 <outlet property="peopleLabel" destination="pta-jM-dqp" id="OoO-Rh-fOA"/>
                 <outlet property="productImageView" destination="xwQ-Jc-frK" id="sLV-xw-65p"/>
                 <outlet property="productNameLabel" destination="75A-mO-6qU" id="LLR-sr-opj"/>
@@ -77,6 +88,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="ellipsis" catalog="system" width="128" height="37"/>
         <image name="questionmark" catalog="system" width="96" height="128"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>

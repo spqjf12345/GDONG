@@ -350,25 +350,7 @@ class ChatViewController: MessagesViewController, InputBarAccessoryViewDelegate,
 //    }
 //
 //        }}}
-    
-//    func createNewChat() {
-//        print("createNewChat called")
-//        let users = [self.currentUser._id]
-//        //let users = [self.currentUser.uid, self.user2UID]
-//        let data: [String: Any] = [
-//            "users": users
-//        ]
-//        let db = Firestore.firestore().collection("Chats")
-//
-//        db.addDocument(data: data) { (error) in
-//            if let error = error {
-//                print("Unable to create chat! \(error)")
-//                return
-//            } else {
-//                self.loadChat()
-//            }
-//        }
-//    }
+
     
     private func insertNewMessage(_ message: Message) {
     //add the message to the messages array and reload it
@@ -479,6 +461,21 @@ class ChatViewController: MessagesViewController, InputBarAccessoryViewDelegate,
         let corner: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight: .bottomLeft
         print("corner : \(corner)")
         return .bubbleTail(corner, .curved)
+    }
+    
+    func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+        return CGSize(width: 0, height: 8)
+      }
+    
+    
+    //display name
+    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        let name = message.sender.displayName
+        return NSAttributedString(string: name, attributes: [.font : UIFont.preferredFont(forTextStyle: .caption1), .foregroundColor: UIColor(white: 0.3, alpha: 1)])
+    }
+    
+    func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 35
     }
 
 }

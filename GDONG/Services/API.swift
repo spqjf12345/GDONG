@@ -320,6 +320,66 @@ class API {
         }
     }
     
+    func userFollow(nickName: String){
+        let parameters: [String: Any] = ["nickname": nickName]
+    
+        
+        guard let email = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
+            print("updateUserImage email no")
+            return
+        }
+        guard let jwtToken = UserDefaults.standard.string(forKey: UserDefaultKey.jwtToken) else {
+            print("updateUserImage jwtToken no")
+            return
+        }
+        
+        let headers: HTTPHeaders = [
+            "Set-Cookie" : "email=\(email); token=\(jwtToken)"
+        ]
+        
+        AF.request(Config.baseUrl + "/user/follow", method: .get, parameters: parameters, encoding: URLEncoding.default, headers: headers).validate().responseJSON { (response) in
+            print("[API] user 팔로우: \(response.result)")
+            switch response.result {
+            case .success(let code):
+                print(code)
+                break
+            case .failure(let e):
+                print(e.localizedDescription)
+            }
+        }
+        
+    }
+    
+    func userUnfollow(nickName: String){
+        let parameters: [String: Any] = ["nickname": nickName]
+    
+        
+        guard let email = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
+            print("updateUserImage email no")
+            return
+        }
+        guard let jwtToken = UserDefaults.standard.string(forKey: UserDefaultKey.jwtToken) else {
+            print("updateUserImage jwtToken no")
+            return
+        }
+        
+        let headers: HTTPHeaders = [
+            "Set-Cookie" : "email=\(email); token=\(jwtToken)"
+        ]
+        
+        AF.request(Config.baseUrl + "/user/unfollow", method: .get, parameters: parameters, encoding: URLEncoding.default, headers: headers).validate().responseJSON { (response) in
+            print("[API] user 언팔로우: \(response.result)")
+            switch response.result {
+            case .success(let code):
+                print(code)
+                break
+            case .failure(let e):
+                print(e.localizedDescription)
+            }
+        }
+        
+    }
+    
     func pushNotification(nickname: String, message: String){
         
         let parameters: [String: Any] = ["nickname": nickname, "message": message]

@@ -7,16 +7,60 @@
 
 import UIKit
 import PagingTableView
+import DropDown
 
-
-class BuyViewController: UIViewController {
+class BuyViewController: UIViewController, TableViewCellDelegate {
+    
+    let more_dropDown: DropDown = {
+        let dropDown = DropDown()
+        dropDown.width = 100
+        dropDown.dataSource = ["게시글 삭제"]
+        return dropDown
+    }()
+    
+    
+    //delete post 
+    func moreButton(cell: TableViewCell) {
+        
+        more_dropDown.anchorView = cell.moreButton
+        more_dropDown.show()
+        more_dropDown.backgroundColor = UIColor.white
+        more_dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+            print("선택한 아이템 : \(item)")
+            print("인덱스 : \(index)")
+            
+            if(index == 0){ // 게시글 삭제
+                self.alertWithNoViewController(title: "게시글 삭제", message: "게시글을 삭제하시겠습니까?", completion: {(response) in
+                    if(response == "OK"){
+                        print("선택한 셀 \(cell.indexPath)")
+                        guard let postId = contents[cell.indexPath![1]].postid else {
+                            print("cant not find postid")
+                            return
+                        }
+                        
+                        PostService.shared.deletePost(postId: postId)
+                        contents.remove(at: cell.indexPath![1])
+                        DispatchQueue.main.async {
+                            buyTableView.reloadData()
+                        }
+                        
+               
+                    }
+                })
+            }
+        }
+    }
+    
     
     var itemBoard = [Board]()
     //페이징을 위한 새로운 변수 저장
+    
     var contents = [Board]()
     var profileImage = [UIImage]()
 
     @IBOutlet var buyTableView: PagingTableView!
+    
+    var filtered = false
     
     
     //페이징을 위한 데이터 가공
@@ -91,9 +135,7 @@ class BuyViewController: UIViewController {
         let nibName = UINib(nibName: "TableViewCell", bundle: nil)
 
         buyTableView.register(nibName, forCellReuseIdentifier: "productCell")
-        
-        //itemBoard = Dummy.shared.oneBoardDummy(model: itemBoard)
-        
+                
         buyTableView.delegate = self
         buyTableView.dataSource = self
         buyTableView.pagingDelegate = self
@@ -112,18 +154,55 @@ class BuyViewController: UIViewController {
     
     
     override func viewWillAppear(_ animated: Bool) {
+        
         super.viewWillAppear(animated)
-        
-        PostService.shared.getAllPosts(completion: { (response) in
-            guard let response = response else {
-                return
-            }
-            self.contents = response
-            print("content is \(self.contents)")
-        })
-        buyTableView.reloadData()
-        
+        //filteringVC.delegate = self
+        print("- filteredPost 호출 순서 확인 2 -")
+        //필터링 된 글에서 받아온 경우가 아닐 경우
+        if filtered == false {
+            PostService.shared.getAllPosts(completion: { (response) in
+                guard let response = response else {
+                    return
+                }
+                self.contents = response
+                print("content is \(self.contents)")
+            })
+            buyTableView.reloadData()
+        }else {
+            print("filtering view controller 글에서 받아온 글 ")
+            print(self.contents)
+            buyTableView.reloadData()
         }
+       
+        }
+    
+    func ondDayDateText(date: Date) -> String{
+        //day Second -> 86400 60*60*24
+        let dateFormatter = DateFormatter()
+        let fixHour = 24
+        let today = Date()
+        dateFormatter.locale = Locale(identifier: "ko_kr")
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        //print("현재 시간 string")
+        let nowString = dateFormatter.string(from: today)
+        //print(nowString)
+        
+        //print("현재 시간 date")
+    
+        var nowDate = dateFormatter.date(from: nowString)
+
+        nowDate = nowDate?.addingTimeInterval(3600 * 9)
+        //print(nowDate)
+        
+        let interval = nowDate!.timeIntervalSince(date) // -> 초만큼으로 환산
+        let diffHour = Int(interval / 3600)
+        if(diffHour < fixHour){
+            return "\(diffHour) 시간 전"
+        }
+        
+        let dateString: String = DateUtil.formatDate(date)
+        return dateString
+    }
     
 
 }
@@ -143,19 +222,27 @@ extension BuyViewController: UITableViewDelegate, UITableViewDataSource{
     
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        let myEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail)
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "productCell", for: indexPath) as! TableViewCell
+        cell.delegate = self
         guard contents.indices.contains(indexPath.row) else { return cell }
 
         cell.productNameLabel.text = contents[indexPath.row].title
         cell.productPriceLabel.text = "\(contents[indexPath.row].price ?? 0)"
-        let date: Date = DateUtil.parseDate(contents[indexPath.row].createdAt!)
-        let dateString: String = DateUtil.formatDate(date)
         
-        cell.timeLabel.text = dateString
+        //내가 쓴 글이 아니라면
+        if contents[indexPath.row].email != myEmail {
+           cell.moreButton.isHidden = true
+            cell.moreButton.isEnabled = false
+        }
+
+        let date: Date = DateUtil.parseDate(contents[indexPath.row].updatedAt!)
+
+        cell.timeLabel.text = ondDayDateText(date: date)
         
         cell.peopleLabel.text = "\(contents[indexPath.row].nowPeople ?? 0)/ \(contents[indexPath.row].needPeople ?? 0)"
-
+        cell.indexPath = indexPath
         let indexImage =  contents[indexPath.row].images![0]
             //print("index image \(indexImage)")
             let urlString = Config.baseUrl + "/static/\(indexImage)"
@@ -185,6 +272,16 @@ extension BuyViewController: PagingTableViewDelegate {
     self.buyTableView.isLoading = false
     }
   }
+
+}
+
+extension BuyViewController: SearchFilteringDelegate {
+    func filteredPosts(filteredPostArray: [Board]) {
+        print("- filteredPost 호출 순서 확인 1 -")
+        contents = filteredPostArray
+        filtered = true
+    }
+
 
 }
 

@@ -28,11 +28,11 @@ pod 'Firebase/Auth'
 pod 'Firebase/Database'
 pod 'Firebase/Storage'
 pod 'Firebase/Firestore'
-pod 'SDWebImage' 
 
 pod 'JGProgressHUD'
 pod 'Kingfisher', '~> 6.0'
 pod 'SDWebImage', '~> 5.0'
+pod 'DropDown'
 
 
 

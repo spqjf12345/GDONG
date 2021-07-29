@@ -25,6 +25,8 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
         self.navigationController?.popViewController(animated: true)
     }
     
+    private let sec = ["사용자 정보", "연동 계정"]
+    
     
 //
 //    @IBOutlet weak var nickNameTextField: UITextField!
@@ -83,36 +85,9 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     
-//    func UISetting(){
-//        let authProvider = self.userInfo.authProvider
-//        switch authProvider {
-//        case "google":
-//            connectedAccountImage.image = UIImage(named: "google-logo")
-//            break
-//        case "kakao":
-//            connectedAccountImage.image = UIImage(named: "kakao-logo")
-//            break
-//        case "apple":
-//            connectedAccountImage.image = UIImage(named: "apple-logo")
-//            break
-//        default:
-//            print("\(authProvider) image loaded")
-//        }
-//        nickNameTextField.text =  self.userInfo.nickName
-//        self.getLocation()
-//
-//
-//
-//    }
-    
     func locationSetting(){
         locationManager = CLLocationManager()
         locationManager.delegate = self
-//
-//        foreground 일때 위치 추적 권한 요청
-//        locationManager.requestWhenInUseAuthorization()
-//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-//        locationManager.startUpdatingLocation()
     }
 
     
@@ -276,15 +251,23 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
         }
     }
 
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return sec.count
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2 // ID, Location
+        if(section == 0){
+            return 2
+        }else if (section == 1){
+            return 1
+        }
+        return 0
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
-        if(indexPath.row == 0){
+        let defaultCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
+        if(indexPath.section == 0 && indexPath.row == 0){
             let cell = tableView.dequeueReusableCell(withIdentifier: InputTableViewCell.identifier)as! InputTableViewCell
             cell.label.text = "아이디 :"
             if let userNickName = UserDefaults.standard.string(forKey: UserDefaultKey.userNickName) {
@@ -293,16 +276,21 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
             cell.indexPath = indexPath
             cell.delegate = self
             return cell
-        }else if(indexPath.row == 1){
+        }else if(indexPath.section == 0 && indexPath.row == 1){
             let cell = tableView.dequeueReusableCell(withIdentifier: InputTableViewCell.identifier) as! InputTableViewCell
             cell.label.text = "위치 :"
             cell.setLocation()
             cell.delegate = self
             cell.indexPath = indexPath
             return cell
-    }
+        }else if(indexPath.section == 1){
+            
+            defaultCell.textLabel?.text = "연동 계정 확인"
+            defaultCell.accessoryType = .disclosureIndicator
+            return defaultCell
+        }
         
-        return cell
+        return defaultCell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

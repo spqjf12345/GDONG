@@ -50,7 +50,6 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("oneBoard : \(oneBoard)")
         tableViewSetting()
         
         view.addSubview(bottomView)
