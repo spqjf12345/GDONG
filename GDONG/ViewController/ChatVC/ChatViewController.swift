@@ -217,7 +217,6 @@ class ChatViewController: MessagesViewController, InputBarAccessoryViewDelegate,
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
-        
         loadMessage()
     }
     
@@ -271,7 +270,6 @@ class ChatViewController: MessagesViewController, InputBarAccessoryViewDelegate,
                                 print("loadMessage : \(self.messages)")
                                 self.messagesCollectionView.reloadData()
                                 self.messagesCollectionView.scrollToLastItem(at: .bottom, animated: true)
-                                    //We'll edit viewDidload below which will solve the error
                             }
                         }
                        

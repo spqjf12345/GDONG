@@ -17,6 +17,7 @@ class ChatListCell: UITableViewCell {
     
     @IBOutlet var message: UILabel!
     
+    @IBOutlet weak var peopleLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

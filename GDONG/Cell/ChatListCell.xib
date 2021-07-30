@@ -41,11 +41,19 @@
                         <color key="textColor" systemColor="secondaryLabelColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="plz-r7-BzC" userLabel="people">
+                        <rect key="frame" x="302" y="72" width="38" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="bottom" secondItem="plz-r7-BzC" secondAttribute="bottom" constant="10" id="3ca-oY-8lF"/>
                     <constraint firstAttribute="trailing" secondItem="GoC-YD-wdv" secondAttribute="trailing" constant="10" id="DHH-Da-hfs"/>
                     <constraint firstItem="HP9-8q-zV5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Qyk-9g-nX4"/>
                     <constraint firstItem="bUR-4q-TrL" firstAttribute="top" secondItem="M9w-7Z-jlM" secondAttribute="bottom" constant="13" id="RsY-6p-m43"/>
+                    <constraint firstAttribute="trailing" secondItem="plz-r7-BzC" secondAttribute="trailing" constant="10" id="cec-Hu-9ur"/>
                     <constraint firstItem="GoC-YD-wdv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="k3J-hE-72M"/>
                     <constraint firstItem="bUR-4q-TrL" firstAttribute="leading" secondItem="HP9-8q-zV5" secondAttribute="trailing" constant="15" id="k9Y-mF-vxN"/>
                     <constraint firstItem="HP9-8q-zV5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="pv7-Jp-wVN"/>
@@ -60,6 +68,7 @@
             <connections>
                 <outlet property="latestMessageTime" destination="GoC-YD-wdv" id="hld-78-Gfl"/>
                 <outlet property="message" destination="bUR-4q-TrL" id="o5u-Yx-o3H"/>
+                <outlet property="peopleLabel" destination="plz-r7-BzC" id="uuJ-iP-VYu"/>
                 <outlet property="roomName" destination="M9w-7Z-jlM" id="G0b-mR-s92"/>
                 <outlet property="thumbnail" destination="HP9-8q-zV5" id="uzq-iX-KbT"/>
             </connections>

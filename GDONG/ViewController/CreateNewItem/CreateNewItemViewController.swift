@@ -306,16 +306,7 @@ class CreateNewItemViewController: UIViewController {
         db.setData(data)
         ChatListViewController().loadChat()
         
-//        print(db)
-//        db.addDocument(data: data) { (error) in
-//            if let error = error {
-//                print("Unable to create chat! \(error)")
-//                return
-//            } else {
-//                print("add documet")
-//                ChatListViewController().loadChat()
-//            }
-//        }
+
     }
     
 

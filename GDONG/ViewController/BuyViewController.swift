@@ -32,7 +32,7 @@ class BuyViewController: UIViewController, TableViewCellDelegate {
             if(index == 0){ // 게시글 삭제
                 self.alertWithNoViewController(title: "게시글 삭제", message: "게시글을 삭제하시겠습니까?", completion: {(response) in
                     if(response == "OK"){
-                        print("선택한 셀 \(cell.indexPath)")
+                        print("선택한 셀 \(cell.indexPath!)")
                         guard let postId = contents[cell.indexPath![1]].postid else {
                             print("cant not find postid")
                             return
@@ -43,6 +43,7 @@ class BuyViewController: UIViewController, TableViewCellDelegate {
                         DispatchQueue.main.async {
                             buyTableView.reloadData()
                         }
+                        ChatListViewController().deleteChatRoom(postId: postId)
                         
                
                     }
@@ -165,7 +166,7 @@ class BuyViewController: UIViewController, TableViewCellDelegate {
                     return
                 }
                 self.contents = response
-                print("content is \(self.contents)")
+                //print("content is \(self.contents)")
             })
             buyTableView.reloadData()
         }else {
@@ -258,6 +259,7 @@ extension BuyViewController: UITableViewDelegate, UITableViewDataSource{
     // 디테일뷰 넘어가는 함수
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "detail", sender: nil)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
    
 }
