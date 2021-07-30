@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseFirestore
+import PagingTableView
 
 //fireStore에 저장될 데이터 모델
 struct ChatRoom {
@@ -27,19 +28,42 @@ class ChatListViewController: UIViewController {
     var mychatRoom = [ChatRoom]()
     var userCount = [Int]()
     
-//    var roomName = ["딸기사실분 선착순입니다!어서어서 들어오세요","향수 공동구매 해요!어서어서 들어오세요"]
-//    var thumnail = ["strawberry.jpg", "perfume.jpg"]
-//    var latestMessageTime = ["1시간전", "2021.4.28"]
-//    var message = ["안녕하세요 채팅내용 입니다 이건 마지막 채팅내용이 나타날 자리 입니다.", "1/80"]
+    var mychatRoomitem = [ChatRoom]()
     
-    //private var conversations = [ChatRoom]()
 
     var currentUser: Users = Users()
     
-    @IBOutlet var chatListTableView: UITableView!
+    @IBOutlet var chatListTableView: PagingTableView!
     
     private var loginObserver: NSObjectProtocol?
 
+    
+    //페이징을 위한 데이터 가공
+    let numberOfItemsPerPage = 2
+
+      func loadData(at page: Int, onComplete: @escaping ([ChatRoom]) -> Void) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+          let firstIndex = page * self.numberOfItemsPerPage
+          guard firstIndex < self.mychatRoomitem.count else {
+            onComplete([])
+            return
+          }
+          let lastIndex = (page + 1) * self.numberOfItemsPerPage < self.mychatRoomitem.count ?
+            (page + 1) * self.numberOfItemsPerPage : self.mychatRoomitem.count
+            print("last index \(lastIndex)")
+          onComplete(Array(self.mychatRoomitem[firstIndex ..< lastIndex]))
+        }
+      }
+    
+    //당겨서 새로고침시 갱신되어야 할 내용
+    @objc func pullToRefresh(_ sender: UIRefreshControl) {
+        
+        self.chatListTableView.refreshControl?.endRefreshing() // 당겨서 새로고침 종료
+        self.chatListTableView.reloadData() // Reload하여 뷰를 비워주기
+
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -58,6 +82,10 @@ class ChatListViewController: UIViewController {
         })
         
         loadChat()
+        
+        //당겨서 새로고침
+        chatListTableView.refreshControl = UIRefreshControl()
+        chatListTableView.refreshControl?.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
 
         
     }
@@ -353,3 +381,21 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
 }
+
+
+//페이징 함수 확장
+extension ChatListViewController: PagingTableViewDelegate {
+
+  func paginate(_ tableView: PagingTableView, to page: Int) {
+    chatListTableView.isLoading = true
+        self.loadData(at: page) { contents in
+            self.mychatRoom.append(contentsOf: contents)
+       
+        self.chatListTableView.isLoading = false
+    }
+  }
+
+}
+
+
+

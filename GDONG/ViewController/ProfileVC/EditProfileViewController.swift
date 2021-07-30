@@ -122,6 +122,7 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
     
 //    //check for validate name from server
     func haveSamenickName(name: String) -> Bool{
+//        API.shared.updateNickname(nickName: name, completion: { ( responce) in })
         if name == "jouureee"{
            return true
         }
@@ -133,12 +134,12 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
     
     func alertEditLocation(cellField: UITextField){
         let alertVC = UIAlertController(title:"위치 정보 수정", message: nil, preferredStyle: .alert)
-        let OkAction = UIAlertAction(title: "OK", style: .default, handler: {
+        let OkAction = UIAlertAction(title: "확인", style: .default, handler: {
             (okAction) in
             //get Location func called
             self.getLocation(cellField: cellField)
         })
-        let cancelAction =  UIAlertAction(title: "CANCEL", style: .cancel)
+        let cancelAction =  UIAlertAction(title: "취소", style: .cancel)
         alertVC.addAction(OkAction)
         alertVC.addAction(cancelAction)
         self.present(alertVC, animated: true, completion: nil)
@@ -180,7 +181,7 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
                     label.isHidden = false
                     self.present(alertVC, animated: true, completion: nil)
                 }else{
-                   //reflect
+                   //reflect from server
                     API.shared.updateNickname(nickName: userInput, completion: {
                         (response) in
                         cellField.text = userInput
@@ -291,6 +292,16 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
         }
         
         return defaultCell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if(indexPath.section == 1){ // 연동 정보 뷰로 이동
+            guard let connectedVC = self.storyboard?.instantiateViewController(identifier: "connectAccount") as? ConnectedViewController else {
+                return
+            }
+            connectedVC.modalPresentationStyle = .fullScreen
+            self.present(connectedVC, animated: true, completion: nil)
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

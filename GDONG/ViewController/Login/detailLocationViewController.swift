@@ -82,10 +82,10 @@ class detailLocationViewController: UIViewController {
         let alertVC = UIAlertController(title: "현재 위치 확인", message: "\(juso)를 현재 위치로 설정하시겠습니까?", preferredStyle: .alert)
         
         
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: { action in
+        let okAction = UIAlertAction(title: "확인", style: .default, handler: { action in
            completion("OK")
         })
-        let cancelAction = UIAlertAction(title: "CANCEL", style: .cancel)
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
         
         alertVC.addAction(okAction)
         alertVC.addAction(cancelAction)

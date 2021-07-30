@@ -154,7 +154,7 @@ class ConnectedViewController: UIViewController {
 
         //get user info
         if(UserDefaults.standard.string(forKey: UserDefaultKey.authProvider) != nil){
-            authProvider.text?.append(UserDefaults.standard.string(forKey: UserDefaultKey.authProvider)!)
+            authProvider.text = UserDefaults.standard.string(forKey: UserDefaultKey.authProvider)!
             userName.text?.append(UserDefaults.standard.string(forKey: UserDefaultKey.userName)!)
             userEmail.text?.append(UserDefaults.standard.string(forKey: UserDefaultKey.userEmail)!)
         }
@@ -305,7 +305,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     func autoLogout(from: String, title: String, messege: String){
         let alertVC = UIAlertController(title: title, message: messege, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: {_ in
+        let okAction = UIAlertAction(title: "확인", style: .default, handler: {_ in
             if(title == "회원 탈퇴"){
                 API.shared.userQuit()
             }else{
@@ -332,7 +332,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             self.moveToLoginVC()
         })
         
-        let cancelAction = UIAlertAction(title: "CANCEL", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         alertVC.addAction(okAction)
         alertVC.addAction(cancelAction)
         self.present(alertVC, animated: true, completion: nil)
