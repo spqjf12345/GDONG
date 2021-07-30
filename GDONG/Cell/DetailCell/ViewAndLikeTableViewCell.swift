@@ -18,7 +18,6 @@ class ViewAndLikeTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        print("get ViewAndLikeTableViewCell nib")
         // Initialization code
     }
 

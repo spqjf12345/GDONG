@@ -65,6 +65,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         API.shared.getUserInfo(completion: { [self] (response) in
             for i in response.likes {
                 if i == oneBoard!.postid {
+                    print("유저가 좋아요 한 글")
                     print(i)
                     heartButton.setLikeState() // 하트 버튼 ui 누른 상태 setting
                 }
@@ -274,20 +275,20 @@ extension DetailNoteViewController: UITableViewDelegate, UITableViewDataSource {
             cell.configure(with: oneBoard!, modelUser: userNickName!)
             return cell
             
-        }else if(indexPath.row == 1){
+        }else if(indexPath.row == 1){ // content cell
             let cell = tableView.dequeueReusableCell(withIdentifier: ContentTableViewCell.identifier) as! ContentTableViewCell
             
             cell.contentTextView.attributedText = makeContentView(contentTextView : cell.contentTextView)
             //cell.calculate()
             return cell
             
-        }else if(indexPath.row == 2){
+        }else if(indexPath.row == 2){ // link cell
             let cell = tableView.dequeueReusableCell(withIdentifier: LinkTableViewCell.identifier) as! LinkTableViewCell
       
             cell.configure(link: oneBoard!.link!)
            return cell
         }
-        else if(indexPath.row == 3){
+        else if(indexPath.row == 3){ // price cell
             let cell = tableView.dequeueReusableCell(withIdentifier: PriceAndPeopleTableViewCell.identifier) as! PriceAndPeopleTableViewCell
             cell.configure(price: oneBoard!.price!, nowPeople: oneBoard!.nowPeople!, needPeople: oneBoard!.needPeople!)
            return cell
@@ -295,7 +296,6 @@ extension DetailNoteViewController: UITableViewDelegate, UITableViewDataSource {
         }else if(indexPath.row == 4){
             let cell = tableView.dequeueReusableCell(withIdentifier: ViewAndLikeTableViewCell.identifier) as! ViewAndLikeTableViewCell
             cell.configure(view: oneBoard!.view!, like: oneBoard!.interest!)
-    
            return cell
         }else if (indexPath.row == 5){
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!

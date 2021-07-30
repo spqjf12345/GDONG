@@ -23,13 +23,59 @@ class MyPostViewController: TabmanViewController {
         
         self.dataSource = self
         let bar = TMBar.ButtonBar()
-        bar.layout.transitionStyle = .snap //customize
-        bar.layout.contentMode = .fit
-        bar.backgroundView.style = .blur(style: .extraLight)
-        bar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 20.0, bottom: 0.0, right: 20.0)
+        settingTabBar(ctBar: bar)
         addBar(bar, dataSource: self, at: .top)
           
     }
+    
+    func settingTabBar(ctBar: TMBar.ButtonBar){
+        ctBar.layout.transitionStyle = .snap //customize
+        ctBar.layout.contentMode = .fit
+        ctBar.backgroundView.style = .blur(style: .extraLight)
+        ctBar.layout.contentInset = UIEdgeInsets(top: 0.0, left: 20.0, bottom: 0.0, right: 20.0)
+        ctBar.layout.interButtonSpacing = 20
+        ctBar.buttons.customize({ (button) in
+            button.tintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+            button.selectedTintColor = UIColor.black
+            
+            button.font = UIFont.systemFont(ofSize: 16)
+            button.selectedFont = UIFont.systemFont(ofSize: 16, weight: .medium)
+        })
+        
+        //인디케이터
+        ctBar.indicator.weight = .custom(value: 2)
+        ctBar.indicator.tintColor = UIColor.black
+    }
+    
+    
+    static func ondDayDateText(date: Date) -> String{
+        //day Second -> 86400 60*60*24
+        let dateFormatter = DateFormatter()
+        let fixHour = 24
+        let today = Date()
+        dateFormatter.locale = Locale(identifier: "ko_kr")
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        //print("현재 시간 string")
+        let nowString = dateFormatter.string(from: today)
+        //print(nowString)
+        
+        //print("현재 시간 date")
+    
+        var nowDate = dateFormatter.date(from: nowString)
+
+        nowDate = nowDate?.addingTimeInterval(3600 * 9)
+        //print(nowDate)
+        
+        let interval = nowDate!.timeIntervalSince(date) // -> 초만큼으로 환산
+        let diffHour = Int(interval / 3600)
+        if(diffHour < fixHour){
+            return "\(diffHour) 시간 전"
+        }
+        
+        let dateString: String = DateUtil.formatDate(date)
+        return dateString
+    }
+    
     
 
 
@@ -69,21 +115,43 @@ extension MyPostViewController: PageboyViewControllerDataSource, TMBarDataSource
 
 
 class myWroteViewController: UIViewController {
-
+    var myPostBoard = [Board]()
+    
+    
+    var tableView: UITableView = {
+        let tableView = UITableView()
+        let nibName = UINib(nibName: "TableViewCell", bundle: nil)
+        tableView.register(nibName, forCellReuseIdentifier: "productCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        return tableView
+    }()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        guard let userNickName = UserDefaults.standard.string(forKey: UserDefaultKey.userNickName) else {
+            print("UserDefaults has no userNickName")
+            return
+        }
+        
+        API.shared.getauthorPost(start: -1, author: userNickName, num: 100, completion: {
+            response in
+            self.myPostBoard = response!
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        })
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.frame = view.bounds
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(tableView)
-        API.shared.getauthorPost(author: "test")
-    }
     
-    var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        return tableView
-    }()
+    }
+
     
     
 
@@ -92,12 +160,30 @@ class myWroteViewController: UIViewController {
 
 extension myWroteViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return myPostBoard.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
-        cell.textLabel?.text = "wrote"
+        let cell = tableView.dequeueReusableCell(withIdentifier: "productCell", for: indexPath) as! TableViewCell
+        guard myPostBoard.indices.contains(indexPath.row) else { return cell }
+
+        cell.productNameLabel.text = myPostBoard[indexPath.row].title
+        cell.productPriceLabel.text = "\(myPostBoard[indexPath.row].price ?? 0)"
+        let date: Date = DateUtil.parseDate(myPostBoard[indexPath.row].updatedAt!)
+
+        cell.timeLabel.text = MyPostViewController.ondDayDateText(date: date)
+        
+        cell.peopleLabel.text = "\(myPostBoard[indexPath.row].nowPeople ?? 0)/ \(myPostBoard[indexPath.row].needPeople ?? 0)"
+        cell.indexPath = indexPath
+        let indexImage =  myPostBoard[indexPath.row].images![0]
+            //print("index image \(indexImage)")
+            let urlString = Config.baseUrl + "/static/\(indexImage)"
+        
+            if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
+                cell.productImageView.sd_setImage(with: myURL, completed: nil)
+            }
+        cell.moreButton.isHidden = true
+        
         return cell
     }
     
@@ -108,8 +194,39 @@ extension myWroteViewController: UITableViewDelegate, UITableViewDataSource {
     
 }
 
+
+
+
+
+// ----------- heart post VC -------------------- //
 class myHeartViewController: UIViewController {
 
+    var myHeartBoard = [Board]()
+    
+    var tableView: UITableView = {
+        let tableView = UITableView()
+        let nibName = UINib(nibName: "TableViewCell", bundle: nil)
+        tableView.register(nibName, forCellReuseIdentifier: "productCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        return tableView
+    }()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        guard let userNickName = UserDefaults.standard.string(forKey: UserDefaultKey.userNickName) else {
+            print("UserDefaults has no userNickName")
+            return
+        }
+        
+        
+        API.shared.getMyHeartPost(nickName: userNickName, completion: { (response) in
+            self.myHeartBoard = response!
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        })
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -117,25 +234,46 @@ class myHeartViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(tableView)
+  
+
+        
     }
+
     
-    var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        return tableView
-    }()
+    
+
+
 
 
 }
 
 extension myHeartViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return myHeartBoard.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
-        cell.textLabel?.text = "heart"
+        let cell = tableView.dequeueReusableCell(withIdentifier: "productCell", for: indexPath) as! TableViewCell
+        guard myHeartBoard.indices.contains(indexPath.row) else { return cell }
+
+        cell.productNameLabel.text = myHeartBoard[indexPath.row].title
+        cell.productPriceLabel.text = "\(myHeartBoard[indexPath.row].price ?? 0)"
+
+        let date: Date = DateUtil.parseDate(myHeartBoard[indexPath.row].updatedAt!)
+
+        cell.timeLabel.text = MyPostViewController.ondDayDateText(date: date)
+        
+        cell.peopleLabel.text = "\(myHeartBoard[indexPath.row].nowPeople ?? 0)/ \(myHeartBoard[indexPath.row].needPeople ?? 0)"
+        cell.moreButton.isHidden = true
+        cell.indexPath = indexPath
+        let indexImage =  myHeartBoard[indexPath.row].images![0]
+            //print("index image \(indexImage)")
+            let urlString = Config.baseUrl + "/static/\(indexImage)"
+        
+            if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
+                cell.productImageView.sd_setImage(with: myURL, completed: nil)
+            }
+
         return cell
     }
     

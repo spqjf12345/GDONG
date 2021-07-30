@@ -17,7 +17,6 @@ class API {
             switch response.result {
             
                 case .success(let obj):
-                    print(obj)
                     do {
                         let responses = obj as! NSDictionary
                         guard let user = responses["user"] as? Dictionary<String, Any> else { return }
@@ -408,23 +407,25 @@ class API {
         
     
     
-    func getauthorPost(author: String){
-        let params: Parameters = ["author": "test",
-                                  "num": 1]
+    func getauthorPost(start: Int, author: String, num: Int, completion: @escaping (([Board]?) -> Void)){
+        let params: Parameters = ["start" : start,
+                                "author": author,
+                                  "num": num]
     
         AF.request(Config.baseUrl + "/post/author", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString)).validate().responseJSON { (response) in
                 print(response)
-                print("[API] /post/author 유저 게시글 가져오기")
+                print("[API] /post/author \(author) 유저 게시글 가져오기")
                 switch response.result {
                     case .success(let obj):
                         do {
                            let responses = obj as! NSDictionary
                             print(responses)
-                           //let posts = responses["posts"] as Any
-                           let dataJSON = try JSONSerialization.data(withJSONObject: responses, options: .prettyPrinted)
+                           let posts = responses["posts"] as Any
+                           let dataJSON = try JSONSerialization.data(withJSONObject: posts, options: .prettyPrinted)
 
-                           let postData = try JSONDecoder().decode(Board.self, from: dataJSON)
-                            print("postData \(postData)")
+                           let authorBoard = try JSONDecoder().decode([Board]?.self, from: dataJSON)
+                            print("authorBoard \(authorBoard!)")
+                            completion(authorBoard)
                         } catch let DecodingError.dataCorrupted(context) {
                             print(context)
                         } catch let DecodingError.keyNotFound(key, context) {
@@ -444,6 +445,43 @@ class API {
                     }
             }
         }
+    
+    
+    func getMyHeartPost(nickName: String,  completion: @escaping (([Board]?) -> Void)){
+        let params: Parameters = ["nickname" : nickName]
+        AF.request(Config.baseUrl + "/post/likelist", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString)).validate().responseJSON { (response) in
+                print(response)
+                print("[API] /post/likeList \(nickName)가 좋아요 한 글 가져오기")
+                switch response.result {
+                    case .success(let obj):
+                        do {
+                           let responses = obj as! NSDictionary
+                            //print(responses)
+                            let posts = responses["posts"] as Any
+                           let dataJSON = try JSONSerialization.data(withJSONObject: posts, options: .prettyPrinted)
+
+                           let heartBoard = try JSONDecoder().decode([Board]?.self, from: dataJSON)
+                            print("hearted post -> \(heartBoard!)")
+                            completion(heartBoard)
+                        } catch let DecodingError.dataCorrupted(context) {
+                            print(context)
+                        } catch let DecodingError.keyNotFound(key, context) {
+                            print("Key '\(key)' not found:", context.debugDescription)
+                            print("codingPath:", context.codingPath)
+                        } catch let DecodingError.valueNotFound(value, context) {
+                            print("Value '\(value)' not found:", context.debugDescription)
+                            print("codingPath:", context.codingPath)
+                        } catch let DecodingError.typeMismatch(type, context)  {
+                            print("Type '\(type)' mismatch:", context.debugDescription)
+                            print("codingPath:", context.codingPath)
+                        } catch {
+                            print("error: ", error)
+                        }
+                    case .failure(let e):
+                        print(e.localizedDescription)
+                    }
+            }
+    }
     
     func checkAutoLogin() -> Bool {
         guard let from = UserDefaults.standard.string(forKey: UserDefaultKey.authProvider) , let accseeToken = UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) , let name = UserDefaults.standard.string(forKey: UserDefaultKey.userName) , let jwt = UserDefaults.standard.string(forKey: UserDefaultKey.jwtToken) else {

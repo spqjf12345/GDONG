@@ -50,7 +50,6 @@ class SellViewController: UIViewController {
         }
 
         if let detailVC = segue.destination as? DetailNoteViewController {
-            print("segue to \(contents)")
             detailVC.oneBoard = contents[index.row]
         }
     }

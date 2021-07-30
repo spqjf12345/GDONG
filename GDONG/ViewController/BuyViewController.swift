@@ -95,7 +95,6 @@ class BuyViewController: UIViewController, TableViewCellDelegate {
 
         if let detailVC = segue.destination as? DetailNoteViewController {
             if let index = buyTableView.indexPathForSelectedRow {
-                print("segue to \(contents)")
                 detailVC.oneBoard = contents[index.row]
             }
             

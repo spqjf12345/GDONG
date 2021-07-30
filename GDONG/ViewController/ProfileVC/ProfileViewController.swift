@@ -292,10 +292,10 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     func alertController(title: String, message: String, completion: @escaping ((String) -> Void)){
        let AlertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let OKAction = UIAlertAction(title: "OK", style: .default, handler: { action in
+        let OKAction = UIAlertAction(title: "확인", style: .default, handler: { action in
             completion("OK")
          })
-        let CANCELAction = UIAlertAction(title: "CANCEL", style: .cancel, handler: nil)
+        let CANCELAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         
         AlertVC.addAction(OKAction)
         AlertVC.addAction(CANCELAction)

@@ -92,14 +92,37 @@ class MainViewController : TabmanViewController {
 
         // Create bar
         let bar = TMBar.ButtonBar()
+        settingTabBar(ctBar: bar)
         bar.layout.transitionStyle = .snap // Customize
         bar.layout.contentMode = .fit
 
         // Add to view
         addBar(bar, dataSource: self, at: .top)
+        
+        search.tintColor = .black
+        add.tintColor = .black
 
 
     }
+    
+    func settingTabBar(ctBar: TMBar.ButtonBar){
+        ctBar.layout.transitionStyle = .snap //customize
+        ctBar.layout.contentMode = .fit
+        ctBar.backgroundView.style = .blur(style: .extraLight)
+        ctBar.layout.interButtonSpacing = 20
+        ctBar.buttons.customize({ (button) in
+            button.tintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+            button.selectedTintColor = UIColor.black
+            
+            button.font = UIFont.systemFont(ofSize: 16)
+            button.selectedFont = UIFont.systemFont(ofSize: 16, weight: .medium)
+        })
+        
+        //인디케이터
+        ctBar.indicator.weight = .custom(value: 5)
+        ctBar.indicator.tintColor = UIColor.black
+    }
+
     
 }
 
