@@ -15,13 +15,28 @@
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GDONG 로그인" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GBV-gZ-GBI">
+                                <rect key="frame" x="60" y="194" width="226" height="42"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="35"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="GBV-gZ-GBI" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="150" id="KSq-BG-WQm"/>
+                            <constraint firstItem="GBV-gZ-GBI" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="60" id="hGI-Qv-43g"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="loginLabelText" destination="GBV-gZ-GBI" id="864-Fr-qFc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="64" y="36"/>
+            <point key="canvasLocation" x="63.768115942028992" y="35.491071428571423"/>
         </scene>
     </scenes>
     <resources>

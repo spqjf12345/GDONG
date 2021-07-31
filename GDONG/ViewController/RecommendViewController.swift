@@ -134,9 +134,9 @@ extension RecommendViewController: UITableViewDataSource, UITableViewDelegate {
         guard contents.indices.contains(indexPath.row) else { return cell }
             
         cell.productNameLabel.text = contents[indexPath.row].title
-        cell.productPriceLabel.text = "\(contents[indexPath.row].price)"
-        cell.timeLabel.text = contents[indexPath.row].updatedAt
-        cell.peopleLabel.text = "\(contents[indexPath.row].nowPeople)/ \(contents[indexPath.row].needPeople)"
+        cell.productPriceLabel.text = "\(contents[indexPath.row].price ?? 0)"
+        cell.timeLabel.text = contents[indexPath.row].updatedAt!
+        cell.peopleLabel.text = "\(contents[indexPath.row].nowPeople!)/ \(contents[indexPath.row].needPeople!)"
         //cell.productImageView.image = UIImage(named: contents[(indexPath as NSIndexPath).row].profileImage)
         
         return cell

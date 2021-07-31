@@ -307,9 +307,7 @@ class API {
 //                    let BoardData = try JSONDecoder().decode(Board.self, from: data)
 //                    completionHandler(BoardData)
                 }
-                if let json = response.value {
-                    //print("JSON Response : \(json)") // serialized json response
-                }
+              
                 
             }catch {
                 print("error: ", error)

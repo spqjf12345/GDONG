@@ -114,7 +114,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
                 print("no exists user ")
                 return
             }
-            addUserToChat(userEamil: "jouureee@gmail.com", completed: {(response) in
+            addUserToChat(userEamil: userEmail, completed: {(response) in
                 if(response == "OK"){
                     self.performSegue(withIdentifier: "chatRoom", sender: nil)
                 }

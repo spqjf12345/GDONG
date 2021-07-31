@@ -19,15 +19,16 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
  
     private var loginObserver: NSObjectProtocol?
     
+    @IBOutlet weak var loginLabelText: UILabel!
     //temp button
-    private let loginButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("login", for: .normal)
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.backgroundColor = .systemBlue
-        button.addTarget(self, action: #selector(didTapLoginButton), for: .touchUpInside)
-        return button
-    }()
+//    private let loginButton: UIButton = {
+//        let button = UIButton()
+//        button.setTitle("login", for: .normal)
+//        button.setTitleColor(UIColor.white, for: .normal)
+//        button.backgroundColor = .systemBlue
+//        button.addTarget(self, action: #selector(didTapLoginButton), for: .touchUpInside)
+//        return button
+//    }()
 
     //for apple login button view
     private var appleLoginButtonView: UIStackView = {
@@ -38,7 +39,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
     
     //apple login button
     private let appleLoginButton:ASAuthorizationAppleIDButton = {
-        let appleLoginButton = ASAuthorizationAppleIDButton(type: .signIn, style: .white)
+        let appleLoginButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
         appleLoginButton.addTarget(self, action: #selector(appleLoginButtonClick), for: .touchUpInside)
         return appleLoginButton
     }()
@@ -55,11 +56,6 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
         button.style = .standard
         return button
     }()
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        //checkAutoLogin()
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,19 +75,43 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-      
-        googleLoginButton.frame = CGRect(x: 70, y: 300, width: 250, height: 40)
-        kakaoTalkLoginButton.frame = CGRect(x: 70, y: googleLoginButton.bottom + 20, width: 250, height: 40)
-
-        appleLoginButtonView.frame = CGRect(x: 70, y: kakaoTalkLoginButton.bottom + 20, width: 250, height: 40)
-        appleLoginButton.frame = CGRect(x: 0, y: 0, width: 250, height: 50)
-        loginButton.frame = CGRect(x: 70, y: appleLoginButtonView.bottom + 20, width: 250, height: 40)
-      
+        view.addSubview(googleLoginButton)
         appleLoginButtonView.addArrangedSubview(appleLoginButton)
         view.addSubview(appleLoginButtonView)
         view.addSubview(kakaoTalkLoginButton)
-        view.addSubview(googleLoginButton)
-        view.addSubview(loginButton)
+        googleLoginButton.translatesAutoresizingMaskIntoConstraints = false
+
+//        googleLoginButton.topAnchor.constraint(equalTo: loginLabelText.bottomAnchor, constant: 400).isActive = true
+        googleLoginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
+        googleLoginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
+        googleLoginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        kakaoTalkLoginButton.translatesAutoresizingMaskIntoConstraints = false
+        kakaoTalkLoginButton.topAnchor.constraint(equalTo: googleLoginButton.bottomAnchor, constant: 30).isActive = true
+        
+        kakaoTalkLoginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
+        kakaoTalkLoginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
+        kakaoTalkLoginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        appleLoginButtonView.translatesAutoresizingMaskIntoConstraints = false
+        appleLoginButtonView.topAnchor.constraint(equalTo: kakaoTalkLoginButton.bottomAnchor, constant: 20).isActive = true
+        
+        appleLoginButtonView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
+        appleLoginButtonView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
+        appleLoginButtonView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+
+        appleLoginButtonView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100).isActive = true
+//        googleLoginButton.frame = CGRect(x: 70, y: 300, width: 250, height: 40)
+//        kakaoTalkLoginButton.frame = CGRect(x: 70, y: googleLoginButton.bottom + 20, width: 250, height: 40)
+
+//        appleLoginButtonView.frame = CGRect(x: 70, y: kakaoTalkLoginButton.bottom + 20, width: 250, height: 40)
+        
+//        loginButton.frame = CGRect(x: 70, y: appleLoginButtonView.bottom + 20, width: 250, height: 40)
+        
+        
+        
+        appleLoginButton.frame = CGRect(x: 0, y: 0, width: 250, height: 50)
+        //view.addSubview(loginButton)
     }
     
     //Apple Login
@@ -161,8 +181,8 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
             if let userName = user.profile.name,
                let userEmail = user.profile.email,
                let idToken = user.authentication.idToken,
-               let accessToken = user.authentication.accessToken,
-                let refreshToken = user.authentication.refreshToken
+               let accessToken = user.authentication.accessToken
+                //let refreshToken = user.authentication.refreshToken
         { //send to server
                 
                 print("google login:")
@@ -201,7 +221,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
 
                         //do something
                         let token = oauthToken
-                        print("kakao login \(oauthToken)")
+                        print("kakao login \(token)")
                         guard let accessToken = token?.accessToken else {
                             return
                         }
