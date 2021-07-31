@@ -13,100 +13,99 @@ class RecommendViewController: UIViewController {
    
     var itemBoard = [Board]()
     
-    //페이징을 위한 새로운 변수 저장
-    var contents = [Board]()
     
+    @IBOutlet var scrollView: UIScrollView!
+    
+    @IBOutlet var stackview: UIStackView!
+    //@IBOutlet var contentView: UIView!
+    
+    @IBOutlet var view1: UIView!
+    @IBOutlet var view2: UIView!
+    @IBOutlet var view3: UIView!
+    @IBOutlet var view4: UIView!
+    @IBOutlet var seller: UILabel!
+    @IBOutlet var sellerCollectionView: UICollectionView!
+    @IBOutlet var buyer: UILabel!
+    @IBOutlet var buyerCollectionView: UICollectionView!
+    @IBOutlet var buyboard: UILabel!
+    @IBOutlet var buyBoardCollectionView: UICollectionView!
+    @IBOutlet var sellboard: UILabel!
+    @IBOutlet var sellBoardCollectionView: UICollectionView!
+    
+    @IBOutlet var view5: UIView!
+    @IBOutlet var otherpeoplelike: UILabel!
+    @IBOutlet var otherpeoplelikeCollectionView: UICollectionView!
 
-    @IBOutlet var recommendTableView: PagingTableView!
-
-    
-    //페이징을 위한 데이터 가공
-    let numberOfItemsPerPage = 2 //지정한 개수마다 로딩
-
-      func loadData(at page: Int, onComplete: @escaping ([Board]) -> Void) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-          let firstIndex = page * self.numberOfItemsPerPage
-          guard firstIndex < self.itemBoard.count else {
-            onComplete([])
-            return
-          }
-          let lastIndex = (page + 1) * self.numberOfItemsPerPage < self.itemBoard.count ?
-            (page + 1) * self.numberOfItemsPerPage : self.itemBoard.count
-          onComplete(Array(self.itemBoard[firstIndex ..< lastIndex]))
-        }
-      }
-    
-    
-    
     
     
     //당겨서 새로고침시 갱신되어야 할 내용
     @objc func pullToRefresh(_ sender: UIRefreshControl) {
         
-        self.recommendTableView.refreshControl?.endRefreshing() // 당겨서 새로고침 종료
-        self.recommendTableView.reloadData() // Reload하여 뷰를 비워주기
+        self.scrollView.refreshControl?.endRefreshing() // 당겨서 새로고침 종료
+        self.sellerCollectionView.reloadData() // Reload하여 뷰를 비워주기
+        self.buyerCollectionView.reloadData()
+        self.sellBoardCollectionView.reloadData()
+        self.buyBoardCollectionView.reloadData()
+        
 
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        guard let index = recommendTableView.indexPathForSelectedRow else {
-            return
-        }
-
-        if let detailVC = segue.destination as? DetailNoteViewController {
-            detailVC.oneBoard = itemBoard[index.row]
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//
+//        guard let index = recommendTableView.indexPathForSelectedRow else {
+//            return
+//        }
+//
+//        if let detailVC = segue.destination as? DetailNoteViewController {
+//            detailVC.oneBoard = itemBoard[index.row]
+//        }
+//    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
-        //headerview 설정
-        let header = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 40))
-        let headerlabel = UILabel(frame: header.bounds)
+        let peopleCellNibName = UINib(nibName: "PopularPeopleCell", bundle: nil)
+        let boardCellNibName = UINib(nibName: "PopularBoardCell", bundle: nil)
+
+        sellerCollectionView.register(peopleCellNibName, forCellWithReuseIdentifier: "popularpeoplecell")
+        buyerCollectionView.register(peopleCellNibName, forCellWithReuseIdentifier: "popularpeoplecell")
+        sellBoardCollectionView.register(boardCellNibName, forCellWithReuseIdentifier: "popularboardcell")
+        buyBoardCollectionView.register(boardCellNibName, forCellWithReuseIdentifier: "popularboardcell")
+        otherpeoplelikeCollectionView.register(boardCellNibName, forCellWithReuseIdentifier: "popularboardcell")
+                
+        sellerCollectionView.delegate = self
+        sellerCollectionView.dataSource = self
         
-        headerlabel.text = "Notice:  공감수가 높은순으로 보여집니다."
-        headerlabel.textAlignment = .center
-        headerlabel.setTextWithLineHeight(text: headerlabel.text, lineHeight: 35)
-        headerlabel.layer.cornerRadius = 10
-        headerlabel.layer.borderWidth = 1
-        headerlabel.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-            
-        let color = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
-        let attributedString = NSMutableAttributedString(string: headerlabel.text!)
-        attributedString.addAttribute(.foregroundColor, value: color, range: (headerlabel.text! as NSString).range(of:"Notice:"))
-        headerlabel.attributedText = attributedString
+        buyerCollectionView.delegate = self
+        buyerCollectionView.dataSource = self
         
-        header.addSubview(headerlabel)
-        recommendTableView.tableHeaderView = header
+        
+        sellBoardCollectionView.delegate = self
+        sellBoardCollectionView.dataSource = self
+        
+        buyBoardCollectionView.delegate = self
+        buyBoardCollectionView.dataSource = self
+        
+        otherpeoplelikeCollectionView.delegate = self
+        otherpeoplelikeCollectionView.dataSource = self
         
 
-        // 테이블뷰와 테이블뷰 셀인 xib 파일과 연결
-        let nibName = UINib(nibName: "TableViewCell", bundle: nil)
-
-        recommendTableView.register(nibName, forCellReuseIdentifier: "productCell")
-        
-        itemBoard = Dummy.shared.oneBoardDummy(model: itemBoard)
-        
-        recommendTableView.delegate = self
-        recommendTableView.dataSource = self
-        recommendTableView.pagingDelegate = self
-        
-
-        
         //당겨서 새로고침
-        recommendTableView.refreshControl = UIRefreshControl()
-        recommendTableView.refreshControl?.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
+        scrollView.refreshControl = UIRefreshControl()
+        scrollView.refreshControl?.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
         
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        recommendTableView.reloadData()
+        sellerCollectionView.reloadData()
+        buyerCollectionView.reloadData()
+        sellBoardCollectionView.reloadData()
+        buyBoardCollectionView.reloadData()
+        otherpeoplelikeCollectionView.reloadData()
         
     }
     
@@ -115,87 +114,131 @@ class RecommendViewController: UIViewController {
    
 }
 
-extension RecommendViewController: UITableViewDataSource, UITableViewDelegate {
-    
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 150
-    }
-   
-    
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return contents.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+extension RecommendViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: "productCell", for: indexPath) as! TableViewCell
-        guard contents.indices.contains(indexPath.row) else { return cell }
-            
-        cell.productNameLabel.text = contents[indexPath.row].title
-        cell.productPriceLabel.text = "\(contents[indexPath.row].price)"
-        cell.timeLabel.text = contents[indexPath.row].updatedAt
-        cell.peopleLabel.text = "\(contents[indexPath.row].nowPeople)/ \(contents[indexPath.row].needPeople)"
-        //cell.productImageView.image = UIImage(named: contents[(indexPath as NSIndexPath).row].profileImage)
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return cell
-            
+        if collectionView == sellerCollectionView {
+            return 5
+        }
+        if collectionView == buyerCollectionView {
+            return 5
+        }
+        if collectionView == sellBoardCollectionView {
+            return 5
+        }
+        if collectionView == buyBoardCollectionView {
+            return 5
+        }
+        if collectionView == otherpeoplelikeCollectionView {
+            return 5
+        }
+        
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         
-    }
+        if collectionView == sellerCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "popularpeoplecell", for: indexPath) as! PopularPeopleCell
 
-    
-    // 디테일뷰 넘어가는 함수
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "detail", sender: nil)
-    
-    }
-    
-    
-}
+            cell.profileimageView.image = UIImage(named: "strawberry.jpg")
+            cell.peolenameLabel.text = "판매자"
 
-
-//페이징 함수 확장
-extension RecommendViewController: PagingTableViewDelegate {
-
-  func paginate(_ tableView: PagingTableView, to page: Int) {
-    recommendTableView.isLoading = true
-    self.loadData(at: page) { contents in
-        self.contents.append(contentsOf: contents)
-    self.recommendTableView.isLoading = false
-    }
-  }
-
-}
-
-
-
-
-//uilabel 확장
-extension UILabel {
-    func setTextWithLineHeight(text: String?, lineHeight: CGFloat) {
-        if let text = text {
-            let style = NSMutableParagraphStyle()
-            style.maximumLineHeight = lineHeight
-            style.minimumLineHeight = lineHeight
-
-            let attributes: [NSAttributedString.Key: Any] = [
-                .paragraphStyle: style,
-                .baselineOffset: (lineHeight - font.lineHeight) / 2
-            ]
-
-            let attrString = NSAttributedString(string: text,
-                                                attributes: attributes)
-
-
-            self.attributedText = attrString
-
+            return cell
         }
 
-    }
+        else if collectionView == buyerCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "popularpeoplecell", for: indexPath) as! PopularPeopleCell
 
+            cell.profileimageView.image = UIImage(named: "perfume.jpg")
+            cell.peolenameLabel.text = "사용자"
+
+            return cell
+        }
+
+        else if collectionView == sellBoardCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "popularboardcell", for: indexPath) as! PopularBoardCell
+
+            cell.boardImageView.image = UIImage(named: "bigapple.jpg")
+            cell.boardtitleLabel.text = "선착순입니다~"
+            cell.chatpeopleLabel.text = "참여인원: "+"1/4"
+
+          return cell
+        }
+
+        else if collectionView == buyBoardCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "popularboardcell", for: indexPath) as! PopularBoardCell
+
+            cell.boardImageView.image = UIImage(named: "cero.jpg")
+            cell.boardtitleLabel.text = "공구해요"
+            cell.chatpeopleLabel.text = "참여인원: "+"1/4"
+
+            return cell
+        }
+        
+        else if collectionView == otherpeoplelikeCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "popularboardcell", for: indexPath) as! PopularBoardCell
+
+            cell.boardImageView.image = UIImage(named: "strawberry.jpg")
+            cell.boardtitleLabel.text = "관심글입니다"
+            cell.chatpeopleLabel.text = "참여인원: "+"1/10"
+
+            return cell
+        }
+        
+        return UICollectionViewCell()
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if collectionView == sellerCollectionView{
+            let collectionViewCellWithd = collectionView.frame.width / 2.5
+            
+            return CGSize(width: collectionViewCellWithd, height: collectionViewCellWithd)
+        }
+        if collectionView == buyerCollectionView{
+            let collectionViewCellWithd = collectionView.frame.width / 2.5
+            
+            return CGSize(width: collectionViewCellWithd, height: collectionViewCellWithd)
+        }
+        if collectionView == sellBoardCollectionView{
+            let collectionViewCellWithd = collectionView.frame.width / 1.5
+            
+            return CGSize(width: collectionViewCellWithd, height: collectionViewCellWithd)
+        }
+        if collectionView == buyBoardCollectionView{
+            let collectionViewCellWithd = collectionView.frame.width / 1.5
+            
+            return CGSize(width: collectionViewCellWithd, height: collectionViewCellWithd)
+        }
+        if collectionView == otherpeoplelikeCollectionView{
+            let collectionViewCellWithd = collectionView.frame.width / 1.5
+            
+            return CGSize(width: collectionViewCellWithd, height: collectionViewCellWithd)
+        }
+        return CGSize()
+      }
+  
+    
 }
+
+
+//    // 디테일뷰 넘어가는 함수
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        performSegue(withIdentifier: "detail", sender: nil)
+//
+//    }
+//
+//
+//}
+//
+//
+
+
+
 
 
 
