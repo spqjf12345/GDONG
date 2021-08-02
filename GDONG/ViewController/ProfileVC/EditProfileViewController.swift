@@ -8,6 +8,7 @@
 import UIKit
 import CoreLocation
 import PhotosUI
+import SDWebImage
 
 class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
    
@@ -18,7 +19,7 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
     
     var userInfo = Users()
     @IBOutlet weak var imageEditButton: UIImageView!
-    @IBOutlet weak var userImage: UIImageView!
+    @IBOutlet weak var userImage: SDAnimatedImageView!
     
     @IBOutlet var tableView: UITableView!
     @IBAction func backButton(_ sender: Any) {
@@ -55,7 +56,7 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        userImage.circle()
+       
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(editImage))
         imageEditButton.addGestureRecognizer(tapGestureRecognizer)
         imageEditButton.isUserInteractionEnabled = true
@@ -64,8 +65,25 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
         tableView.dataSource = self
         tableView.register(InputTableViewCell.nib(), forCellReuseIdentifier: InputTableViewCell.identifier)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
+        imageViewLoad()
+       
 
 
+    }
+    
+    func imageViewLoad(){
+        self.userImage.circle()
+        API.shared.getUserInfo(completion: { (user) in
+            self.userInfo = user
+            
+            let urlString = Config.baseUrl + "/static/\(user.profileImageUrl)"
+            
+                if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
+                    self.userImage.sd_setImage(with: myURL, completed: nil)
+            }
+
+        })
     }
     
     @objc func editImage(){
@@ -100,9 +118,6 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
             print("can not load location")
             return
         }
-
-        print(latitude)
-        print(longitude)
 
         let findLocation = CLLocation(latitude: latitude, longitude: longitude)
         let geocoder = CLGeocoder()
@@ -243,11 +258,9 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
     func change(cell: InputTableViewCell) {
         print("get \(cell.indexPath)")
         if(cell.indexPath[1] == 0){
-            
             alertEditName(cellField: cell.textfield)
             
         }else if(cell.indexPath[1] == 1){
-            
             alertEditLocation(cellField: cell.textfield)
         }
     }

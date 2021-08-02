@@ -448,6 +448,7 @@ DEPENDENCIES:
   - Firebase/Firestore
   - Firebase/Storage
   - GoogleSignIn
+  - InputBarAccessoryView
   - JGProgressHUD
   - KakaoOpenSDK
   - KakaoSDKAuth
@@ -548,6 +549,6 @@ SPEC CHECKSUMS:
   Tabman: 792ac76fd1ec95af175c93db880a3c47cabedc91
   TTGTagCollectionView: 86fcbfa6a7493c9e860b01c2e693cffc8acf6de1
 
-PODFILE CHECKSUM: c7169c1deb57345c47f4cea705f30fcac7265d98
+PODFILE CHECKSUM: f6601c6a5fb93a02fd23b664663bc20f1972dac5
 
 COCOAPODS: 1.10.1

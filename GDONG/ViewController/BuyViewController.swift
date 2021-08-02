@@ -249,7 +249,7 @@ extension BuyViewController: UITableViewDelegate, UITableViewDataSource{
         
             if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
                 cell.productImageView.sd_setImage(with: myURL, completed: nil)
-            }
+        }
         
        return cell
 

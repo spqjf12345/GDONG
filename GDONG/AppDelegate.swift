@@ -81,12 +81,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 case .authorized:
                     //idfa = identity for advertisers
                     let idfa = ASIdentifierManager.shared().advertisingIdentifier
-                    print("앱 추적 허용")
+                    //print("앱 추적 허용")
                     
                 case .denied,
                      .notDetermined,
                      .restricted:
-                    print("앱 추적 금지 요청")
+                    //print("앱 추적 금지 요청")
                     break
                 @unknown default:
                     break

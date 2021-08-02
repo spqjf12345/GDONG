@@ -12,7 +12,7 @@ import KakaoSDKUser
 import KakaoOpenSDK
 import GoogleSignIn
 import CoreLocation
-
+import SDWebImage
 
 class ProfileViewController: UIViewController, CLLocationManagerDelegate {
 
@@ -23,7 +23,7 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var userLocation: UILabel!
     
 
-    @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var profileImage: SDAnimatedImageView!
     
     @IBAction func profileSetting(_ sender: Any) {
         performSegue(withIdentifier: "EditProfile", sender: nil)
@@ -61,6 +61,24 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadUserInfo()
+       
+        FrameTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        FrameTableView.delegate = self
+        FrameTableView.dataSource = self
+        
+        
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        
+        //foreground 일때 위치 추적 권한 요청
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
+
+    }
+    
+    func loadUserInfo(){
         profileImage.circle()
         
         API.shared.getUserInfo(completion: { (response) in
@@ -75,21 +93,18 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
             }else {
                 self.isSellerButton.isHidden = true
             }
+            
+            //user Image
+            if(self.userInfo.profileImageUrl != ""){
+                let urlString = Config.baseUrl + "/static/\(self.userInfo.profileImageUrl)"
+                
+                    if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
+                        self.profileImage.sd_setImage(with: myURL)
+                }
+            }
+           
         })
         
-        FrameTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        FrameTableView.delegate = self
-        FrameTableView.dataSource = self
-        
-        
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        
-        //foreground 일때 위치 추적 권한 요청
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startUpdatingLocation()
-
     }
     
     

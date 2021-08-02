@@ -10,15 +10,6 @@ import UIKit
 import FirebaseFirestore
 
 
-//private enum Cells: String, CaseIterable {
-//    case TitleTableViewCell
-//    case ContentTableViewCell
-//    case LinkTableViewCell
-//    case PriceAndPeopleTableViewCell
-//    case ViewAndLikeTableViewCell
-//    case cell
-//}
-
 
 class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
     var oneBoard: Board?
@@ -209,7 +200,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         
         if(oneBoard!.content != ""){
             fullString.append(NSAttributedString(string: oneBoard!.content!))
-            fullString.append(NSAttributedString(string: "\n\n\n\n"))
+            fullString.append(NSAttributedString(string: "\n\n\n"))
            
         }
         guard let images = oneBoard!.images else {
@@ -272,7 +263,7 @@ extension DetailNoteViewController: UITableViewDelegate, UITableViewDataSource {
         if(indexPath.row == 0){
             let cell = tableView.dequeueReusableCell(withIdentifier: TitleTableViewCell.identifier) as! TitleTableViewCell
             
-            cell.configure(with: oneBoard!, modelUser: userNickName!)
+            cell.configure(with: oneBoard!)
             return cell
             
         }else if(indexPath.row == 1){ // content cell

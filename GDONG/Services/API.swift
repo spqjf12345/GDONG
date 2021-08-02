@@ -258,24 +258,10 @@ class API {
                 print(e.localizedDescription)
             }
         }
-        
-        
-        
-//        AF.request(Config.baseUrl + "/user/update", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString)).validate().responseJSON {
-//            (response) in
-//            print("[API] /user/update 유저 위치 정보 업데이트")
-//            switch response.result {
-//            case .success(let obj):
-//                print(obj)
-//            case .failure(let e):
-//                print(e.localizedDescription)
-//            }
-//           
-//            }
     }
     
     func updateUserImage(userImage: Data) {
-        let url = Config.baseUrl + "/post/upload"
+        let url = Config.baseUrl + "/user/update"
         guard let email = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
             print("updateUserImage email no")
             return
@@ -294,10 +280,13 @@ class API {
         AF.upload(multipartFormData: { multipartFormData in
             print("[API] /user/update 유저 이미지 업데이트")
             
-            print("image string get from AF : \(String(describing: String.init(data: userImage, encoding: .utf8)))")
-            
-            multipartFormData.append(userImage, withName: "images", fileName: "\(userImage).jpg", mimeType: "image/jpg")
-           
+//            print("image string get from AF : \(String(describing: String.init(data: userImage, encoding: .utf8)))")
+
+            var fileName = "\(userImage).jpg"
+            fileName = fileName.replacingOccurrences(of: " ", with: "_")
+            print(fileName)
+            multipartFormData.append(userImage, withName: "images", fileName: fileName, mimeType: "image/jpg")
+    
         }, to: url,usingThreshold: UInt64.init(), method: .post, headers: headers).validate().responseJSON { (response) in
             
             do {

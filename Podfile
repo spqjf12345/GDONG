@@ -33,6 +33,7 @@ pod 'JGProgressHUD'
 pod 'Kingfisher', '~> 6.0'
 pod 'SDWebImage', '~> 5.0'
 pod 'DropDown'
+pod 'InputBarAccessoryView'
 
 
 
