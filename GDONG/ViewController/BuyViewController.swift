@@ -241,6 +241,14 @@ extension BuyViewController: UITableViewDelegate, UITableViewDataSource{
 
         cell.timeLabel.text = ondDayDateText(date: date)
         
+        //categoryButton add
+        cell.categoryButton.setTitle(contents[indexPath.row].category, for: .normal)
+       
+        cell.categoryButton.setTitleColor(UIColor.white, for: .normal)
+        cell.categoryButton.backgroundColor = UIColor.systemOrange
+        cell.categoryButton.layer.cornerRadius = 5
+        cell.categoryButton.titleEdgeInsets = UIEdgeInsets(top: 10,left: 10,bottom: 10,right: 10)
+        
         cell.peopleLabel.text = "\(contents[indexPath.row].nowPeople ?? 0)/ \(contents[indexPath.row].needPeople ?? 0)"
         cell.indexPath = indexPath
         let indexImage =  contents[indexPath.row].images![0]
