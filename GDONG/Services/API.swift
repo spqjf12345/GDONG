@@ -37,7 +37,7 @@ class API {
     }
         
     func oAuth(from: String, access_token: String, name: String) {
-        print("[API] /auth/signin/\(from)")
+        print("[API] /auth/signin/\(from) 로그인 하기")
         guard let deviceToken: String = UserDefaults.standard.string(forKey: UserDefaultKey.deviceToken) else { return }
         let params: Parameters = [
             "access_token": access_token,
@@ -45,7 +45,7 @@ class API {
             "device_token" : deviceToken
         ]
        
-
+        print(Config.baseUrl + "/auth/signin/\(from)")
         AF.request(Config.baseUrl + "/auth/signin/\(from)", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString)).validate().responseJSON {
             (response) in
             if let httpResponse = response.response, let fields = httpResponse.allHeaderFields as? [String: String]{

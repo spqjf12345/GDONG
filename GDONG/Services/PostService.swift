@@ -10,7 +10,7 @@ import Alamofire
 import CoreLocation
 
 
-class PostService: RandomNumberGenerator {
+class PostService {
     static var shared = PostService()
 
     

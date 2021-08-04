@@ -84,7 +84,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
 //        googleLoginButton.topAnchor.constraint(equalTo: loginLabelText.bottomAnchor, constant: 400).isActive = true
         googleLoginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
         googleLoginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
-        googleLoginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        //googleLoginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         kakaoTalkLoginButton.translatesAutoresizingMaskIntoConstraints = false
         kakaoTalkLoginButton.topAnchor.constraint(equalTo: googleLoginButton.bottomAnchor, constant: 30).isActive = true

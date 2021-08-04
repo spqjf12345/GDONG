@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		54E1529344D75E72330A0B5F /* Pods_GDONG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5CB9861EE62390BC891B506 /* Pods_GDONG.framework */; };
+		8E1D605626B92B9600DF53FE /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E1D605526B92B9600DF53FE /* UserNotifications.framework */; };
+		8E1D605826B92B9600DF53FE /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E1D605726B92B9600DF53FE /* UserNotificationsUI.framework */; };
+		8E1D606226B92B9700DF53FE /* AlarmPushNotificationService.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8E1D605426B92B9600DF53FE /* AlarmPushNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8E1DA7B8268AF13B0049E658 /* GetUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1DA7B7268AF13B0049E658 /* GetUserProfileViewController.swift */; };
 		8E1DA7BA268B69F80049E658 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1DA7B9268B69F80049E658 /* Chat.swift */; };
 		8E1DA7BC268B6A020049E658 /* ChatUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1DA7BB268B6A020049E658 /* ChatUser.swift */; };
@@ -105,9 +108,37 @@
 		8EF8F7C32689C903003ADFA9 /* TitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EF8F7C22689C903003ADFA9 /* TitleCell.xib */; };
 		8EF8F7C52689C91B003ADFA9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF8F7C42689C91B003ADFA9 /* ViewController.swift */; };
 		8EF8F7CE2689D076003ADFA9 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EF8F7CD2689D076003ADFA9 /* Login.storyboard */; };
+		8EFFBFB026BAA1AF007C1868 /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFFBFAF26BAA1AF007C1868 /* ChatService.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		8E1D606026B92B9700DF53FE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8E42FEE5261D958100763B61 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8E1D605326B92B9600DF53FE;
+			remoteInfo = AlarmPushNotificationService;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8E1D606326B92B9700DF53FE /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				8E1D606226B92B9700DF53FE /* AlarmPushNotificationService.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		8E1D605426B92B9600DF53FE /* AlarmPushNotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AlarmPushNotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E1D605526B92B9600DF53FE /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		8E1D605726B92B9600DF53FE /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
 		8E1DA7B7268AF13B0049E658 /* GetUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserProfileViewController.swift; sourceTree = "<group>"; };
 		8E1DA7B9268B69F80049E658 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Chat.swift; path = "/Users/sojeong/URIPLJECT/GDONGProject/remote_total/GDONG-front/GDONG/ViewController/ChatVC/Chat.swift"; sourceTree = "<absolute>"; };
 		8E1DA7BB268B6A020049E658 /* ChatUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUser.swift; sourceTree = "<group>"; };
@@ -207,12 +238,22 @@
 		8EF8F7C22689C903003ADFA9 /* TitleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TitleCell.xib; sourceTree = "<group>"; };
 		8EF8F7C42689C91B003ADFA9 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8EF8F7CD2689D076003ADFA9 /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		8EFFBFAF26BAA1AF007C1868 /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
 		B5CB9861EE62390BC891B506 /* Pods_GDONG.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GDONG.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED3C4B96BF1AF2716918D5A6 /* Pods-GDONG.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GDONG.release.xcconfig"; path = "Target Support Files/Pods-GDONG/Pods-GDONG.release.xcconfig"; sourceTree = "<group>"; };
 		EDB6198BF78650B9DC772EC0 /* Pods-GDONG.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GDONG.debug.xcconfig"; path = "Target Support Files/Pods-GDONG/Pods-GDONG.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8E1D605126B92B9600DF53FE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8E1D605826B92B9600DF53FE /* UserNotificationsUI.framework in Frameworks */,
+				8E1D605626B92B9600DF53FE /* UserNotifications.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8E42FEEA261D958100763B61 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -228,6 +269,8 @@
 			isa = PBXGroup;
 			children = (
 				B5CB9861EE62390BC891B506 /* Pods_GDONG.framework */,
+				8E1D605526B92B9600DF53FE /* UserNotifications.framework */,
+				8E1D605726B92B9600DF53FE /* UserNotificationsUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -255,6 +298,7 @@
 			isa = PBXGroup;
 			children = (
 				8E42FEED261D958100763B61 /* GDONG.app */,
+				8E1D605426B92B9600DF53FE /* AlarmPushNotificationService.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -312,6 +356,7 @@
 				8EF00F17265785B700AA1EEA /* API.swift */,
 				8E70C1CB2691F445006F1D2C /* PostService.swift */,
 				8ED15EA42696F173002943C9 /* Config.swift */,
+				8EFFBFAF26BAA1AF007C1868 /* ChatService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -496,6 +541,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		8E1D605326B92B9600DF53FE /* AlarmPushNotificationService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8E1D606626B92B9700DF53FE /* Build configuration list for PBXNativeTarget "AlarmPushNotificationService" */;
+			buildPhases = (
+				8E1D605026B92B9600DF53FE /* Sources */,
+				8E1D605126B92B9600DF53FE /* Frameworks */,
+				8E1D605226B92B9600DF53FE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AlarmPushNotificationService;
+			productName = AlarmPushNotificationService;
+			productReference = 8E1D605426B92B9600DF53FE /* AlarmPushNotificationService.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		8E42FEEC261D958100763B61 /* GDONG */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8E42FF04261D958800763B61 /* Build configuration list for PBXNativeTarget "GDONG" */;
@@ -506,10 +568,12 @@
 				8E42FEEB261D958100763B61 /* Resources */,
 				EAB810D5791A9C95D3467623 /* [CP] Embed Pods Frameworks */,
 				BB2342CC70F752495E42247F /* [CP] Copy Pods Resources */,
+				8E1D606326B92B9700DF53FE /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				8E1D606126B92B9700DF53FE /* PBXTargetDependency */,
 			);
 			name = GDONG;
 			productName = GDONG;
@@ -522,9 +586,12 @@
 		8E42FEE5261D958100763B61 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1240;
+				LastSwiftUpdateCheck = 1250;
 				LastUpgradeCheck = 1240;
 				TargetAttributes = {
+					8E1D605326B92B9600DF53FE = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
 					8E42FEEC261D958100763B61 = {
 						CreatedOnToolsVersion = 12.4;
 						LastSwiftMigration = 1240;
@@ -545,11 +612,19 @@
 			projectRoot = "";
 			targets = (
 				8E42FEEC261D958100763B61 /* GDONG */,
+				8E1D605326B92B9600DF53FE /* AlarmPushNotificationService */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8E1D605226B92B9600DF53FE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8E42FEEB261D958100763B61 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -654,6 +729,13 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8E1D605026B92B9600DF53FE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8E42FEE9261D958100763B61 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -681,6 +763,7 @@
 				8EF2887526627DDF00840302 /* detailLocationViewController.swift in Sources */,
 				8E772BA4267C8CD10034C2BF /* SearchViewController.swift in Sources */,
 				8E772B85267C8CA40034C2BF /* ChatListCell.swift in Sources */,
+				8EFFBFB026BAA1AF007C1868 /* ChatService.swift in Sources */,
 				8EF8F7AF268598DA003ADFA9 /* StorageManager.swift in Sources */,
 				8E772B79267C8C750034C2BF /* PhotoCollectionViewCell.swift in Sources */,
 				8E772B90267C8CB30034C2BF /* ProfileViewController.swift in Sources */,
@@ -725,6 +808,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		8E1D606126B92B9700DF53FE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8E1D605326B92B9600DF53FE /* AlarmPushNotificationService */;
+			targetProxy = 8E1D606026B92B9700DF53FE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		8E42FEF6261D958100763B61 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -745,6 +836,46 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		8E1D606426B92B9700DF53FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FJ57DUH592;
+				INFOPLIST_FILE = AlarmPushNotificationService/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "Develop.com-GDONG.AlarmPushNotificationService";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8E1D606526B92B9700DF53FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FJ57DUH592;
+				INFOPLIST_FILE = AlarmPushNotificationService/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "Develop.com-GDONG.AlarmPushNotificationService";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		8E42FF02261D958800763B61 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -999,6 +1130,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8E1D606626B92B9700DF53FE /* Build configuration list for PBXNativeTarget "AlarmPushNotificationService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8E1D606426B92B9700DF53FE /* Debug */,
+				8E1D606526B92B9700DF53FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		8E42FEE8261D958100763B61 /* Build configuration list for PBXProject "GDONG" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
