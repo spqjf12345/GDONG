@@ -10,20 +10,22 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="popularpeoplecell" reuseIdentifier="popularpeoplecell" translatesAutoresizingMaskIntoConstraints="NO" id="gTV-IL-0wX" customClass="PopularPeopleCell" customModule="GDONG" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
+            <rect key="frame" x="0.0" y="0.0" width="120" height="140"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
+                <rect key="frame" x="0.0" y="0.0" width="120" height="140"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="jRz-Sf-K7T">
-                        <rect key="frame" x="15" y="10" width="90" height="69"/>
+                        <rect key="frame" x="15" y="10" width="90" height="90"/>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="jRz-Sf-K7T" secondAttribute="height" multiplier="30:23" id="il7-Es-lKm"/>
+                            <constraint firstAttribute="width" constant="90" id="I4h-jd-aFf"/>
+                            <constraint firstAttribute="width" secondItem="jRz-Sf-K7T" secondAttribute="height" multiplier="1:1" id="I6J-DV-8xb"/>
+                            <constraint firstAttribute="height" constant="90" id="Loy-vZ-HN3"/>
                         </constraints>
                         <directionalEdgeInsets key="directionalLayoutMargins" top="8" leading="8" bottom="8" trailing="8"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0gz-lN-Gls">
-                        <rect key="frame" x="20" y="89" width="80" height="21"/>
+                        <rect key="frame" x="20" y="110" width="80" height="20"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>

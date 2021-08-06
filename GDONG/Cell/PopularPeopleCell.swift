@@ -17,7 +17,7 @@ class PopularPeopleCell: UICollectionViewCell {
     
     
     override func awakeFromNib() {
-        profileimageView.layer.cornerRadius = profileimageView.frame.height/2
+        profileimageView.layer.cornerRadius = profileimageView.frame.width/2
         profileimageView.clipsToBounds = true
         
         super.awakeFromNib()

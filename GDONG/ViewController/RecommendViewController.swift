@@ -195,47 +195,50 @@ extension RecommendViewController: UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == sellerCollectionView{
-            let collectionViewCellWithd = collectionView.frame.width / 2.5
             
-            return CGSize(width: collectionViewCellWithd, height: collectionViewCellWithd)
+            return CGSize(width: 128, height: 148)
         }
         if collectionView == buyerCollectionView{
-            let collectionViewCellWithd = collectionView.frame.width / 2.5
             
-            return CGSize(width: collectionViewCellWithd, height: collectionViewCellWithd)
+            return CGSize(width: 128, height: 148)
         }
         if collectionView == sellBoardCollectionView{
-            let collectionViewCellWithd = collectionView.frame.width / 1.5
             
-            return CGSize(width: collectionViewCellWithd, height: collectionViewCellWithd)
+            return CGSize(width: 300, height: 200)
         }
         if collectionView == buyBoardCollectionView{
-            let collectionViewCellWithd = collectionView.frame.width / 1.5
             
-            return CGSize(width: collectionViewCellWithd, height: collectionViewCellWithd)
+            return CGSize(width: 300, height: 200)
         }
         if collectionView == otherpeoplelikeCollectionView{
-            let collectionViewCellWithd = collectionView.frame.width / 1.5
             
-            return CGSize(width: collectionViewCellWithd, height: collectionViewCellWithd)
+            return CGSize(width: 300, height: 200)
         }
         return CGSize()
       }
-  
+    
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == sellerCollectionView {
+            performSegue(withIdentifier: "userprofile", sender: nil)
+        }
+        if collectionView == buyerCollectionView {
+            performSegue(withIdentifier: "userprofile", sender: nil)
+        }
+        if collectionView == sellBoardCollectionView {
+            performSegue(withIdentifier: "detail", sender: nil)
+        }
+        if collectionView == buyBoardCollectionView {
+            performSegue(withIdentifier: "detail", sender: nil)
+        }
+        if collectionView == otherpeoplelikeCollectionView {
+            performSegue(withIdentifier: "detail", sender: nil)
+        }
+    }
     
 }
 
 
-//    // 디테일뷰 넘어가는 함수
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        performSegue(withIdentifier: "detail", sender: nil)
-//
-//    }
-//
-//
-//}
-//
-//
 
 
 
