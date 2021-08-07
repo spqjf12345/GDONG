@@ -145,7 +145,7 @@ extension SellViewController: UITableViewDelegate, UITableViewDataSource{
         guard contents.indices.contains(indexPath.row) else { return cell }
 
         cell.productNameLabel.text = contents[indexPath.row].title
-        cell.productPriceLabel.text = "\(contents[indexPath.row].price ?? 0)"
+        cell.productPriceLabel.text = "\(contents[indexPath.row].price ?? 0) 원"
         
         let date: Date = DateUtil.parseDate(contents[indexPath.row].updatedAt!)
 
@@ -160,7 +160,7 @@ extension SellViewController: UITableViewDelegate, UITableViewDataSource{
         cell.categoryButton.titleEdgeInsets = UIEdgeInsets(top: 10,left: 10,bottom: 10,right: 10)
         
     
-        cell.peopleLabel.text = "\(contents[indexPath.row].nowPeople ?? 0)/ \(contents[indexPath.row].needPeople ?? 0) 원"
+        cell.peopleLabel.text = "\(contents[indexPath.row].nowPeople ?? 0) / \(contents[indexPath.row].needPeople ?? 0)"
         cell.indexPath = indexPath
         let indexImage =  contents[indexPath.row].images![0]
         let urlString = Config.baseUrl + "/static/\(indexImage)"

@@ -32,16 +32,16 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         return view
     }()
     
-    let tagView: UIView = {
-        let view = UIView()
-        var label = UILabel(frame: CGRect(x: 10, y: 10, width: 200, height: 50))
-        label.text = "추천 태그"
-        label.font = .boldSystemFont(ofSize: 20)
-        view.addSubview(label)
-        view.layer.borderWidth = 2
-        view.layer.borderColor = UIColor.systemGray.cgColor
-        return view
-    }()
+//    let tagView: UIView = {
+//        let view = UIView()
+//        var label = UILabel(frame: CGRect(x: 10, y: 10, width: 200, height: 50))
+//        label.text = "추천 태그"
+//        label.font = .boldSystemFont(ofSize: 20)
+//        view.addSubview(label)
+//        view.layer.borderWidth = 2
+//        view.layer.borderColor = UIColor.systemGray.cgColor
+//        return view
+//    }()
     
     let scrollView: UIScrollView = {
         let scroll = UIScrollView()
@@ -173,15 +173,15 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         categoryView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20).isActive = true
         categoryView.heightAnchor.constraint(equalToConstant: categoryCollectionView.height + 200).isActive = true
 
-        tagView.translatesAutoresizingMaskIntoConstraints = false
-
-        scrollView.addSubview(tagView)
-        tagView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 10).isActive = true
-        tagView.topAnchor.constraint(equalTo: categoryView.bottomAnchor, constant: 10).isActive = true
-        tagView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20).isActive = true
-        tagView.heightAnchor.constraint(equalToConstant: 500).isActive = true
-
-        tagView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+//        tagView.translatesAutoresizingMaskIntoConstraints = false
+//
+//        scrollView.addSubview(tagView)
+//        tagView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 10).isActive = true
+//        tagView.topAnchor.constraint(equalTo: categoryView.bottomAnchor, constant: 10).isActive = true
+//        tagView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20).isActive = true
+//        tagView.heightAnchor.constraint(equalToConstant: 500).isActive = true
+//
+//        tagView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
     }
     
     

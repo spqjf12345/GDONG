@@ -58,7 +58,7 @@ class MyPostViewController: TabmanViewController {
         //print("현재 시간 string")
         let nowString = dateFormatter.string(from: today)
         //print(nowString)
-        
+    
         //print("현재 시간 date")
     
         var nowDate = dateFormatter.date(from: nowString)
@@ -168,12 +168,20 @@ extension myWroteViewController: UITableViewDelegate, UITableViewDataSource {
         guard myPostBoard.indices.contains(indexPath.row) else { return cell }
 
         cell.productNameLabel.text = myPostBoard[indexPath.row].title
-        cell.productPriceLabel.text = "\(myPostBoard[indexPath.row].price ?? 0)"
+        cell.productPriceLabel.text = "\(myPostBoard[indexPath.row].price ?? 0) 원"
         let date: Date = DateUtil.parseDate(myPostBoard[indexPath.row].updatedAt!)
 
-        cell.timeLabel.text = MyPostViewController.ondDayDateText(date: date)
+        cell.timeLabel.text = BuyViewController.ondDayDateText(date: date)
         
-        cell.peopleLabel.text = "\(myPostBoard[indexPath.row].nowPeople ?? 0)/ \(myPostBoard[indexPath.row].needPeople ?? 0)"
+        //categoryButton add
+        cell.categoryButton.setTitle(myPostBoard[indexPath.row].category, for: .normal)
+       
+        cell.categoryButton.setTitleColor(UIColor.white, for: .normal)
+        cell.categoryButton.backgroundColor = UIColor.darkGray
+        cell.categoryButton.layer.cornerRadius = 5
+        cell.categoryButton.titleEdgeInsets = UIEdgeInsets(top: 10,left: 10,bottom: 10,right: 10)
+        
+        cell.peopleLabel.text = "\(myPostBoard[indexPath.row].nowPeople ?? 0) / \(myPostBoard[indexPath.row].needPeople ?? 0)"
         cell.indexPath = indexPath
         let indexImage =  myPostBoard[indexPath.row].images![0]
             //print("index image \(indexImage)")
@@ -257,13 +265,20 @@ extension myHeartViewController: UITableViewDelegate, UITableViewDataSource {
         guard myHeartBoard.indices.contains(indexPath.row) else { return cell }
 
         cell.productNameLabel.text = myHeartBoard[indexPath.row].title
-        cell.productPriceLabel.text = "\(myHeartBoard[indexPath.row].price ?? 0)"
-
+        cell.productPriceLabel.text = "\(myHeartBoard[indexPath.row].price ?? 0) 원"
         let date: Date = DateUtil.parseDate(myHeartBoard[indexPath.row].updatedAt!)
 
-        cell.timeLabel.text = MyPostViewController.ondDayDateText(date: date)
+        cell.timeLabel.text = BuyViewController.ondDayDateText(date: date)
         
-        cell.peopleLabel.text = "\(myHeartBoard[indexPath.row].nowPeople ?? 0)/ \(myHeartBoard[indexPath.row].needPeople ?? 0)"
+        //categoryButton add
+        cell.categoryButton.setTitle(myHeartBoard[indexPath.row].category, for: .normal)
+       
+        cell.categoryButton.setTitleColor(UIColor.white, for: .normal)
+        cell.categoryButton.backgroundColor = UIColor.darkGray
+        cell.categoryButton.layer.cornerRadius = 5
+        cell.categoryButton.titleEdgeInsets = UIEdgeInsets(top: 10,left: 10,bottom: 10,right: 10)
+        
+        cell.peopleLabel.text = "\(myHeartBoard[indexPath.row].nowPeople ?? 0) / \(myHeartBoard[indexPath.row].needPeople ?? 0)"
         cell.moreButton.isHidden = true
         cell.indexPath = indexPath
         let indexImage =  myHeartBoard[indexPath.row].images![0]
