@@ -13,6 +13,7 @@ import CoreLocation
 
 private enum Cells: String, CaseIterable {
   case PhotoCell
+  case BuySellTableViewCell
   case TitleCell
   case CategoryCell
   case PriceCell
@@ -29,6 +30,7 @@ private enum InvalidValueError: String, Error {
   case invalidNeedPeople
   case invalidLink
   case invalidEntity
+  case invalidBuySellCell
 }
 
 struct chatData {
@@ -52,6 +54,9 @@ class CreateNewItemViewController: UIViewController {
     @IBOutlet weak var needPeople: UITextField!
     
     @IBOutlet weak var link: UITextField!
+    
+    @IBOutlet weak var buyButton: UIButton!
+    @IBOutlet weak var sellButton: UIButton!
     
     var token: NSObjectProtocol?
     var images: [Data] = []
@@ -89,7 +94,8 @@ class CreateNewItemViewController: UIViewController {
         let coor = locationManager.location?.coordinate
         let latitude = coor?.latitude
         let longitude = coor?.longitude
-        let location = Location(dictionary: ["coordinates" : [latitude, longitude]])
+        let location = Location(dictionary: ["coordinates" : [longitude, latitude]])
+        let sellMode: Bool = sellButton.isSelected ? true : false
 
         //guard let price: Int = Int(self.priceCell.priceTextField.text!) else { return }
         let pricetext = self.priceCell.priceTextField.text!
@@ -101,7 +107,7 @@ class CreateNewItemViewController: UIViewController {
         
         //self.profileImage = images[0].base64EncodedString(options: .lineLength64Characters)
         print("post price \(postprice)")
-        
+        print("sellMode \(sellMode)")
         print(titleTextField.text!)
         print(entityTextView.text)
         print(postprice)
@@ -113,7 +119,7 @@ class CreateNewItemViewController: UIViewController {
         print(type(of: needPeople))
         print(link)
         
-        PostService.shared.uploadPost(title: self.titleTextField.text!, content: self.entityTextView.text, link: link, needPeople: needPeople, price: postprice, category: self.categoryLabel.text!, images: images, profileImg: "1234", location: location!, completionHandler: { (response) in
+        PostService.shared.uploadPost(title: self.titleTextField.text!, content: self.entityTextView.text, link: link, needPeople: needPeople, price: postprice, category: self.categoryLabel.text!, images: images, profileImg: "1234", location: location!, sellMode: sellMode, completionHandler: { (response) in
             //print("postId : \(response.postid)")
             let chatData: chatData = chatData(chatId: response.postid, chatImage: response.images![0])
            
@@ -218,7 +224,7 @@ class CreateNewItemViewController: UIViewController {
     regitserCells() // nib connected
     
     token = NotificationCenter.default.addObserver(forName: Notification.Name.UserDidDeletePhotoFromPhotoList, object: nil, queue: OperationQueue.main, using: { [weak self] noti in
-      // 더 좋은 방법은 없을까?
+      
       guard let cell = noti.object as? PhotoCollectionViewCell else { return }
       
       for index in 0..<(self?.photoCollectionView.visibleCells.count)! {
@@ -424,6 +430,13 @@ extension CreateNewItemViewController: UITableViewDataSource {
           cell.collectionView.delegate = self
           
           return cell
+        }
+        
+    case .BuySellTableViewCell:
+        if let cell = cell as? BuySellTableViewCell {
+            self.buyButton = cell.buyButton
+            self.sellButton = cell.sellButton
+            return cell
         }
         
       case .TitleCell:

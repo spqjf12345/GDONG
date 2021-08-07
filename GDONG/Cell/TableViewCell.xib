@@ -60,7 +60,10 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rne-JI-0ml">
-                        <rect key="frame" x="289" y="75" width="46" height="30"/>
+                        <rect key="frame" x="255" y="75" width="80" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="80" id="WEC-Ym-SAb"/>
+                        </constraints>
                         <state key="normal" title="Button"/>
                     </button>
                 </subviews>
@@ -77,6 +80,7 @@
                     <constraint firstAttribute="trailing" secondItem="Rne-JI-0ml" secondAttribute="trailing" constant="15" id="dfk-FM-c2h"/>
                     <constraint firstItem="xwQ-Jc-frK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="esb-5S-94N"/>
                     <constraint firstItem="YxJ-iM-kHA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="ewY-HS-P8f"/>
+                    <constraint firstItem="Rne-JI-0ml" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xwQ-Jc-frK" secondAttribute="trailing" constant="20" id="gFB-hU-kIj"/>
                     <constraint firstAttribute="trailing" secondItem="pta-jM-dqp" secondAttribute="trailing" constant="20" id="lFe-67-Ify"/>
                     <constraint firstItem="75A-mO-6qU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="pOO-gJ-3uo"/>
                     <constraint firstItem="pta-jM-dqp" firstAttribute="top" secondItem="Rne-JI-0ml" secondAttribute="bottom" constant="15" id="pfK-ut-PVD"/>

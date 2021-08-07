@@ -16,7 +16,7 @@ class SellViewController: UIViewController {
     //페이징을 위한 새로운 변수 저장
     var contents = [Board]()
 
-    
+    var filtered = false
     
     //페이징을 위한 데이터 가공
     let numberOfItemsPerPage = 2 //지정한 개수마다 로딩
@@ -68,6 +68,25 @@ class SellViewController: UIViewController {
         return headerView
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        if filtered == false {
+            PostService.shared.getAllPosts(completion: { [self] (response) in
+                guard let response = response else {
+                    return
+                }
+                
+                //판매 글이 true인 글만 받아오기
+                self.contents = response.filter {$0.sell == true }
+            })
+            sellTableView.reloadData()
+        }else {
+            print("filtering view controller 글에서 받아온 글 ")
+            print(self.contents)
+            sellTableView.reloadData()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -76,16 +95,6 @@ class SellViewController: UIViewController {
         let nibName = UINib(nibName: "TableViewCell", bundle: nil)
 
         sellTableView.register(nibName, forCellReuseIdentifier: "productCell")
-        
-        //itemBoard = Dummy.shared.oneBoardDummy(model: itemBoard)
-        print("getPost in SellViewController ")
-        PostService.shared.getAllPosts(completion: { [self] (response) in
-            guard let response = response else {
-                return
-            }
-            self.contents = response
-            //print("content is \(contents)")
-        })
         
         sellTableView.delegate = self
         sellTableView.dataSource = self
@@ -137,13 +146,22 @@ extension SellViewController: UITableViewDelegate, UITableViewDataSource{
 
         cell.productNameLabel.text = contents[indexPath.row].title
         cell.productPriceLabel.text = "\(contents[indexPath.row].price ?? 0)"
-        let date: Date = DateUtil.parseDate((contents[indexPath.row].createdAt!))
-        let dateString: String = DateUtil.formatDate(date)
         
-        cell.timeLabel.text = dateString
-    
-        cell.peopleLabel.text = "\(contents[indexPath.row].nowPeople ?? 0)/ \(contents[indexPath.row].needPeople ?? 0)"
+        let date: Date = DateUtil.parseDate(contents[indexPath.row].updatedAt!)
 
+        cell.timeLabel.text = BuyViewController.ondDayDateText(date: date)
+        
+        //categoryButton add
+        cell.categoryButton.setTitle(contents[indexPath.row].category, for: .normal)
+       
+        cell.categoryButton.setTitleColor(UIColor.white, for: .normal)
+        cell.categoryButton.backgroundColor = UIColor.darkGray
+        cell.categoryButton.layer.cornerRadius = 5
+        cell.categoryButton.titleEdgeInsets = UIEdgeInsets(top: 10,left: 10,bottom: 10,right: 10)
+        
+    
+        cell.peopleLabel.text = "\(contents[indexPath.row].nowPeople ?? 0)/ \(contents[indexPath.row].needPeople ?? 0) 원"
+        cell.indexPath = indexPath
         let indexImage =  contents[indexPath.row].images![0]
         let urlString = Config.baseUrl + "/static/\(indexImage)"
     

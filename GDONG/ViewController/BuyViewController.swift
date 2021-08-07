@@ -158,12 +158,13 @@ class BuyViewController: UIViewController, TableViewCellDelegate {
         super.viewWillAppear(animated)
         //필터링 된 글에서 받아온 경우가 아닐 경우
         if filtered == false {
-            PostService.shared.getAllPosts(completion: { (response) in
+            PostService.shared.getAllPosts(completion: { [self] (response) in
                 guard let response = response else {
                     return
                 }
-                self.contents = response
-                //print("content is \(self.contents)")
+                
+                //판매 글이 false인 글만 받아오기
+                self.contents = response.filter {$0.sell == false }
             })
             buyTableView.reloadData()
         }else {
@@ -174,7 +175,7 @@ class BuyViewController: UIViewController, TableViewCellDelegate {
        
         }
     
-    func ondDayDateText(date: Date) -> String{
+    static func ondDayDateText(date: Date) -> String{
         //day Second -> 86400 60*60*24
         let dateFormatter = DateFormatter()
         let fixHour = 24
@@ -237,23 +238,22 @@ extension BuyViewController: UITableViewDelegate, UITableViewDataSource{
 
         let date: Date = DateUtil.parseDate(contents[indexPath.row].updatedAt!)
 
-        cell.timeLabel.text = ondDayDateText(date: date)
+        cell.timeLabel.text = BuyViewController.ondDayDateText(date: date)
         
         //categoryButton add
         cell.categoryButton.setTitle(contents[indexPath.row].category, for: .normal)
        
         cell.categoryButton.setTitleColor(UIColor.white, for: .normal)
-        cell.categoryButton.backgroundColor = UIColor.systemOrange
+        cell.categoryButton.backgroundColor = UIColor.darkGray
         cell.categoryButton.layer.cornerRadius = 5
         cell.categoryButton.titleEdgeInsets = UIEdgeInsets(top: 10,left: 10,bottom: 10,right: 10)
         
-        cell.peopleLabel.text = "\(contents[indexPath.row].nowPeople ?? 0)/ \(contents[indexPath.row].needPeople ?? 0)"
+        cell.peopleLabel.text = "\(contents[indexPath.row].nowPeople ?? 0)/ \(contents[indexPath.row].needPeople ?? 0) 원"
         cell.indexPath = indexPath
         let indexImage =  contents[indexPath.row].images![0]
-            //print("index image \(indexImage)")
-            let urlString = Config.baseUrl + "/static/\(indexImage)"
+        let urlString = Config.baseUrl + "/static/\(indexImage)"
         
-            if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
+        if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
                 cell.productImageView.sd_setImage(with: myURL, completed: nil)
         }
         

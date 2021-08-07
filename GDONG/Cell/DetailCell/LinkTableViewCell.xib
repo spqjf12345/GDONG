@@ -18,13 +18,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="링크 :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="miX-H5-mrg">
-                        <rect key="frame" x="20" y="40" width="38.5" height="52"/>
+                        <rect key="frame" x="20" y="20" width="38.5" height="92"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vEl-T7-XTK">
-                        <rect key="frame" x="63.5" y="10" width="236.5" height="112"/>
+                        <rect key="frame" x="63.5" y="20" width="236.5" height="92"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <color key="textColor" systemColor="labelColor"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -34,11 +34,11 @@
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="vEl-T7-XTK" secondAttribute="trailing" constant="20" symbolic="YES" id="2WK-8o-Qo3"/>
                     <constraint firstItem="vEl-T7-XTK" firstAttribute="leading" secondItem="miX-H5-mrg" secondAttribute="trailing" constant="5" id="Ji0-3l-Its"/>
-                    <constraint firstItem="miX-H5-mrg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="40" id="Lxa-lX-DSB"/>
+                    <constraint firstItem="miX-H5-mrg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="Lxa-lX-DSB"/>
                     <constraint firstItem="miX-H5-mrg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" symbolic="YES" id="fAD-V4-eVI"/>
-                    <constraint firstAttribute="bottom" secondItem="miX-H5-mrg" secondAttribute="bottom" constant="40" id="in6-V2-EoG"/>
-                    <constraint firstItem="vEl-T7-XTK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="mS4-cV-hI7"/>
-                    <constraint firstAttribute="bottom" secondItem="vEl-T7-XTK" secondAttribute="bottom" constant="10" id="zpG-TS-HdP"/>
+                    <constraint firstAttribute="bottom" secondItem="miX-H5-mrg" secondAttribute="bottom" constant="20" id="in6-V2-EoG"/>
+                    <constraint firstItem="vEl-T7-XTK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="mS4-cV-hI7"/>
+                    <constraint firstAttribute="bottom" secondItem="vEl-T7-XTK" secondAttribute="bottom" constant="20" id="zpG-TS-HdP"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

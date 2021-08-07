@@ -138,3 +138,48 @@ class EntityCell: UITableViewCell {
   }
 }
 
+
+
+class BuySellTableViewCell: UITableViewCell {
+
+    @IBOutlet weak var sellButton: UIButton!
+    
+    @IBOutlet weak var buyButton: UIButton!
+    
+    @IBAction func sellButtonAction(_ sender: UIButton) {
+        sender.isSelected = true
+        buyButton.isSelected = false
+        ButtonSetting(sender: buyButton)
+        ButtonSelectedSetting(sender: sender)
+        
+    }
+    
+    @IBAction func buyButtonAction(_ sender: UIButton) {
+        sender.isSelected = true
+        sellButton.isSelected = false
+        ButtonSetting(sender: sellButton)
+        ButtonSelectedSetting(sender: sender)
+    }
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+    }
+    
+    func ButtonSetting(sender: UIButton){
+        sender.backgroundColor = UIColor.white
+        sender.setTitleColor(UIColor.darkGray, for: .normal)
+    }
+    
+    //눌렀을 때
+    func ButtonSelectedSetting(sender: UIButton){
+        sender.backgroundColor = UIColor.darkGray
+        sender.setTitleColor(UIColor.white, for: .normal)
+    }
+    
+}
+
+

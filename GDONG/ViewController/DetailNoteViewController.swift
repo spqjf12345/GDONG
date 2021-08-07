@@ -42,7 +42,6 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableViewSetting()
-        print("postid \(oneBoard?.postid!)")
         PostService.shared.updateViewCount(postId: (oneBoard?.postid!)!)
         view.addSubview(bottomView)
         bottomView.frame = CGRect(x: 0, y: view.bottom - 100, width: view.width, height: 100)
@@ -88,6 +87,8 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         FrameTableView.allowsSelection = false
         FrameTableView.delegate = self
         FrameTableView.dataSource = self
+        FrameTableView.estimatedRowHeight = 80
+        FrameTableView.rowHeight = UITableView.automaticDimension
     }
     
     
@@ -165,7 +166,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
                 print(ChatImage)
                 
                 self.postChatRoom = ChatRoom(chatId: document.documentID, chatRoomName: ChatRoomName, chatRoomDate: Date(timeIntervalSince1970: TimeInterval(ChatRoomDate.seconds)), chatImage: ChatImage)
-                print("postChatRoom ready \(self.postChatRoom)")
+                //print("postChatRoom ready \(self.postChatRoom)")
                 completed("OK")
        
             } else {
@@ -271,7 +272,6 @@ extension DetailNoteViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: ContentTableViewCell.identifier) as! ContentTableViewCell
             
             cell.contentTextView.attributedText = makeContentView(contentTextView : cell.contentTextView)
-            //cell.calculate()
             return cell
             
         }else if(indexPath.row == 2){ // link cell

@@ -244,7 +244,7 @@
             </objects>
             <point key="canvasLocation" x="125" y="771"/>
         </scene>
-        <!--Profile-->
+        <!--프로필-->
         <scene sceneID="Nsa-OT-czS">
             <objects>
                 <viewController id="jLa-Ws-1IL" sceneMemberID="viewController">
@@ -269,7 +269,7 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Profile" image="person.crop.circle" catalog="system" id="jmC-LU-gWI"/>
-                    <navigationItem key="navigationItem" id="xYb-OU-FTB"/>
+                    <navigationItem key="navigationItem" title="프로필" id="xYb-OU-FTB"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Le-yx-hW3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -394,7 +394,7 @@
             </objects>
             <point key="canvasLocation" x="1783" y="-3481"/>
         </scene>
-        <!--Recommend-->
+        <!--추천-->
         <scene sceneID="4Qf-DP-d9c">
             <objects>
                 <viewController id="vmy-6c-Aiv" customClass="RecommendViewController" customModule="GDONG" customModuleProvider="target" sceneMemberID="viewController">
@@ -654,7 +654,7 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="recommend" image="square.grid.2x2.fill" catalog="system" id="nk4-Rr-BiQ"/>
-                    <navigationItem key="navigationItem" title="Recommend" id="uoe-vq-aLk"/>
+                    <navigationItem key="navigationItem" title="추천" id="uoe-vq-aLk"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="buyBoardCollectionView" destination="oJb-h3-EgH" id="siO-PR-Pk2"/>

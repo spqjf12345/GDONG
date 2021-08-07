@@ -37,7 +37,7 @@ class PostService {
         })
     }
     
-    func uploadPost(title: String, content: String, link: String, needPeople: Int, price: Int, category: String, images: [Data], profileImg: String, location: Location, completionHandler: @escaping (Board) -> Void){
+    func uploadPost(title: String, content: String, link: String, needPeople: Int, price: Int, category: String, images: [Data], profileImg: String, location: Location, sellMode: Bool, completionHandler: @escaping (Board) -> Void){
         let url = Config.baseUrl + "/post/upload"
         
         guard let author =  UserDefaults.standard.string(forKey: UserDefaultKey.userNickName) else { return }
@@ -60,7 +60,9 @@ class PostService {
                          "category": category,
                          "images": images,
                          "profileImg" : "1234test",
-                         "location":location]
+                         "location": location,
+                         "sellMode" : sellMode
+        ]
             
 
         
@@ -81,6 +83,10 @@ class PostService {
 
                 if let temp = value as? String {
                     multipartFormData.append(temp.data(using: .utf8)!, withName: key)
+                    print(temp)
+               }
+                if let temp = value as? Bool {
+                    multipartFormData.append(Bool(temp).description.data(using: .utf8)!, withName: key)
                     print(temp)
                }
 

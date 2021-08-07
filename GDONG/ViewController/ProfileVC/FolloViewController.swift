@@ -86,7 +86,7 @@ extension FolloViewController: UITableViewDelegate, UITableViewDataSource, Follo
     func didTapDeleteButton(cell: FolloTableViewCell) {
         let buttonPosition:CGPoint = cell.convert(CGPoint.zero, to:self.follotableView)
         let indexPath = self.follotableView.indexPathForRow(at: buttonPosition)
-        print("didTapDeleteButton indexPath \(indexPath)")
+        //print("didTapDeleteButton indexPath \(indexPath)")
         //TO DO userName delete
         deleteAlertController(deleteName: self.userList[indexPath![1]], completion: { response in
             if (response == "delete"){
