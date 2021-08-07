@@ -75,7 +75,7 @@
             </objects>
             <point key="canvasLocation" x="-268.1159420289855" y="14.732142857142856"/>
         </scene>
-        <!--<-->
+        <!--Location View Controller-->
         <scene sceneID="28a-FR-mTJ">
             <objects>
                 <viewController storyboardIdentifier="location" id="YxW-fr-NRq" customClass="LocationViewController" customModule="GDONG" customModuleProvider="target" sceneMemberID="viewController">
@@ -89,8 +89,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="ex&gt; 효창동" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PmF-te-QuS">
-                                <rect key="frame" x="40" y="376" width="300" height="50"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="ex&gt; 효창동" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PmF-te-QuS">
+                                <rect key="frame" x="40" y="375.5" width="294" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="k3w-1t-4au"/>
                                 </constraints>
@@ -98,8 +98,9 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6l8-P5-RQg">
-                                <rect key="frame" x="374" y="375.5" width="20" height="50"/>
+                                <rect key="frame" x="344" y="375.5" width="50" height="50"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="9zx-8e-3w7"/>
                                     <constraint firstAttribute="height" constant="50" id="awa-tf-fiY"/>
                                 </constraints>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -109,7 +110,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ulB-PP-lIT">
-                                <rect key="frame" x="130" y="667" width="154" height="45"/>
+                                <rect key="frame" x="130" y="660.5" width="154" height="51.5"/>
                                 <color key="backgroundColor" red="0.23921304939999999" green="0.2392139137" blue="0.2392157912" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="27"/>
                                 <state key="normal" title="다음">
@@ -125,8 +126,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YRd-K2-pPH">
-                                <rect key="frame" x="30" y="451" width="269" height="40"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YRd-K2-pPH">
+                                <rect key="frame" x="30" y="440.5" width="314" height="40"/>
                                 <color key="backgroundColor" red="0.45881891250000001" green="0.45882040260000001" blue="0.45882362129999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="5Sp-Hi-imq"/>
@@ -143,11 +144,12 @@
                         <viewLayoutGuide key="safeArea" id="Afv-b7-F0g"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6l8-P5-RQg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="PmF-te-QuS" secondAttribute="trailing" constant="10" id="5YY-Gs-IZk"/>
+                            <constraint firstItem="Afv-b7-F0g" firstAttribute="trailing" secondItem="YRd-K2-pPH" secondAttribute="trailing" constant="70" id="0x9-I2-XGJ"/>
                             <constraint firstItem="PmF-te-QuS" firstAttribute="top" secondItem="YEt-l8-k8y" secondAttribute="bottom" constant="20" id="626-uz-7vN"/>
                             <constraint firstItem="6l8-P5-RQg" firstAttribute="top" secondItem="YEt-l8-k8y" secondAttribute="bottom" constant="20" id="8US-dT-jdR"/>
+                            <constraint firstItem="6l8-P5-RQg" firstAttribute="leading" secondItem="PmF-te-QuS" secondAttribute="trailing" constant="10" id="EGi-k9-S7z"/>
                             <constraint firstItem="ulB-PP-lIT" firstAttribute="leading" secondItem="Afv-b7-F0g" secondAttribute="leading" constant="130" id="FXq-Z4-GZa"/>
-                            <constraint firstItem="YRd-K2-pPH" firstAttribute="top" secondItem="PmF-te-QuS" secondAttribute="bottom" constant="25" id="HDg-tb-ckg"/>
+                            <constraint firstItem="YRd-K2-pPH" firstAttribute="top" secondItem="PmF-te-QuS" secondAttribute="bottom" constant="15" id="HDg-tb-ckg"/>
                             <constraint firstItem="YRd-K2-pPH" firstAttribute="leading" secondItem="Afv-b7-F0g" secondAttribute="leading" constant="30" id="JEm-eF-swN"/>
                             <constraint firstItem="Afv-b7-F0g" firstAttribute="trailing" secondItem="YEt-l8-k8y" secondAttribute="trailing" constant="10" id="JGm-9O-d3Y"/>
                             <constraint firstItem="Afv-b7-F0g" firstAttribute="bottom" secondItem="ulB-PP-lIT" secondAttribute="bottom" constant="150" id="JmA-ef-jfH"/>
@@ -157,12 +159,11 @@
                             <constraint firstItem="Afv-b7-F0g" firstAttribute="trailing" secondItem="6l8-P5-RQg" secondAttribute="trailing" constant="20" id="Sq4-UH-AY4"/>
                             <constraint firstItem="YEt-l8-k8y" firstAttribute="top" secondItem="IIL-Qy-7th" secondAttribute="bottom" constant="50" id="b48-Ao-U4G"/>
                             <constraint firstItem="ulB-PP-lIT" firstAttribute="top" relation="lessThanOrEqual" secondItem="YRd-K2-pPH" secondAttribute="bottom" constant="180" id="bRY-bA-e6W"/>
-                            <constraint firstItem="Afv-b7-F0g" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="YRd-K2-pPH" secondAttribute="trailing" constant="10" id="cjl-Fa-UFH"/>
                             <constraint firstItem="IIL-Qy-7th" firstAttribute="leading" secondItem="Afv-b7-F0g" secondAttribute="leading" constant="35" id="wol-PH-jq3"/>
                             <constraint firstItem="ulB-PP-lIT" firstAttribute="centerX" secondItem="2px-Vn-JUq" secondAttribute="centerX" id="zGn-UI-MRI"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="&lt;" id="bHi-im-K5r"/>
+                    <navigationItem key="navigationItem" id="bHi-im-K5r"/>
                     <connections>
                         <outlet property="locationTextfield" destination="PmF-te-QuS" id="bpo-Bv-kV5"/>
                         <segue destination="mSC-Pr-lKp" kind="show" identifier="search" id="Get-aM-TFT"/>
@@ -232,7 +233,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eZI-um-A4N" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1194" y="15"/>
+            <point key="canvasLocation" x="1175" y="15"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Fec-SX-M8b">

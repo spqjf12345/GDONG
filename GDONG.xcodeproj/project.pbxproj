@@ -106,6 +106,10 @@
 		8EF8F7C52689C91B003ADFA9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF8F7C42689C91B003ADFA9 /* ViewController.swift */; };
 		8EF8F7CE2689D076003ADFA9 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EF8F7CD2689D076003ADFA9 /* Login.storyboard */; };
 		8EFFBFB026BAA1AF007C1868 /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFFBFAF26BAA1AF007C1868 /* ChatService.swift */; };
+		8EFFBFB626BBAE1F007C1868 /* PopularPeopleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFFBFB226BBAE1F007C1868 /* PopularPeopleCell.swift */; };
+		8EFFBFB726BBAE1F007C1868 /* PopularPeopleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EFFBFB326BBAE1F007C1868 /* PopularPeopleCell.xib */; };
+		8EFFBFB826BBAE1F007C1868 /* PopularBoardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EFFBFB426BBAE1F007C1868 /* PopularBoardCell.xib */; };
+		8EFFBFB926BBAE1F007C1868 /* PopularBoardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFFBFB526BBAE1F007C1868 /* PopularBoardCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -224,6 +228,10 @@
 		8EF8F7C42689C91B003ADFA9 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8EF8F7CD2689D076003ADFA9 /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		8EFFBFAF26BAA1AF007C1868 /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
+		8EFFBFB226BBAE1F007C1868 /* PopularPeopleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PopularPeopleCell.swift; path = "../../../../../recommend_total/GDONG-front/GDONG/Cell/PopularPeopleCell.swift"; sourceTree = "<group>"; };
+		8EFFBFB326BBAE1F007C1868 /* PopularPeopleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PopularPeopleCell.xib; path = "../../../../../recommend_total/GDONG-front/GDONG/Cell/PopularPeopleCell.xib"; sourceTree = "<group>"; };
+		8EFFBFB426BBAE1F007C1868 /* PopularBoardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PopularBoardCell.xib; path = "../../../../../recommend_total/GDONG-front/GDONG/Cell/PopularBoardCell.xib"; sourceTree = "<group>"; };
+		8EFFBFB526BBAE1F007C1868 /* PopularBoardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PopularBoardCell.swift; path = "../../../../../recommend_total/GDONG-front/GDONG/Cell/PopularBoardCell.swift"; sourceTree = "<group>"; };
 		B5CB9861EE62390BC891B506 /* Pods_GDONG.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GDONG.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED3C4B96BF1AF2716918D5A6 /* Pods-GDONG.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GDONG.release.xcconfig"; path = "Target Support Files/Pods-GDONG/Pods-GDONG.release.xcconfig"; sourceTree = "<group>"; };
 		EDB6198BF78650B9DC772EC0 /* Pods-GDONG.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GDONG.debug.xcconfig"; path = "Target Support Files/Pods-GDONG/Pods-GDONG.debug.xcconfig"; sourceTree = "<group>"; };
@@ -371,6 +379,7 @@
 		8E772B7A267C8CA40034C2BF /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				8EFFBFB126BBAE12007C1868 /* PopularCell */,
 				8ED15E982696D6B9002943C9 /* ProfileCell */,
 				8EF8F2022694AF200034BD99 /* DetailCell */,
 				8E772B7B267C8CA40034C2BF /* ChatListCell.swift */,
@@ -513,6 +522,17 @@
 			path = Chat;
 			sourceTree = "<group>";
 		};
+		8EFFBFB126BBAE12007C1868 /* PopularCell */ = {
+			isa = PBXGroup;
+			children = (
+				8EFFBFB526BBAE1F007C1868 /* PopularBoardCell.swift */,
+				8EFFBFB426BBAE1F007C1868 /* PopularBoardCell.xib */,
+				8EFFBFB226BBAE1F007C1868 /* PopularPeopleCell.swift */,
+				8EFFBFB326BBAE1F007C1868 /* PopularPeopleCell.xib */,
+			);
+			path = PopularCell;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -585,12 +605,14 @@
 				8E772BBE267C8D7D0034C2BF /* cero.jpg in Resources */,
 				8E772BBF267C8D7D0034C2BF /* bigapple.jpg in Resources */,
 				8EF8F2062694B73B0034BD99 /* ContentTableViewCell.xib in Resources */,
+				8EFFBFB726BBAE1F007C1868 /* PopularPeopleCell.xib in Resources */,
 				8E42FF00261D958800763B61 /* LaunchScreen.storyboard in Resources */,
 				8EF8F2122694BB1B0034BD99 /* ViewAndLikeTableViewCell.xib in Resources */,
 				8E772B86267C8CA40034C2BF /* RecentSearchTableViewCell.xib in Resources */,
 				8E772BBC267C8D7D0034C2BF /* perfume.jpg in Resources */,
 				8E772BBD267C8D7D0034C2BF /* strawberry.jpg in Resources */,
 				8EF8F7AD268595D6003ADFA9 /* GoogleService-Info.plist in Resources */,
+				8EFFBFB826BBAE1F007C1868 /* PopularBoardCell.xib in Resources */,
 				8EF8F7CE2689D076003ADFA9 /* Login.storyboard in Resources */,
 				8EF8F7C12689C859003ADFA9 /* Chat.storyboard in Resources */,
 				8E772B6F267C8C750034C2BF /* PriceCell.xib in Resources */,
@@ -710,6 +732,7 @@
 				8E42FEF1261D958100763B61 /* AppDelegate.swift in Sources */,
 				8E772B89267C8CA40034C2BF /* TableViewCell.swift in Sources */,
 				8E772BC7267C8FFB0034C2BF /* KeychainItem.swift in Sources */,
+				8EFFBFB926BBAE1F007C1868 /* PopularBoardCell.swift in Sources */,
 				8E772BA2267C8CD10034C2BF /* DetailNoteViewController.swift in Sources */,
 				8E772BAA267C8CD10034C2BF /* MainViewController.swift in Sources */,
 				8E772BA5267C8CD10034C2BF /* SearchResultViewController.swift in Sources */,
@@ -737,6 +760,7 @@
 				8E772BB2267C8CE70034C2BF /* MainViewModel.swift in Sources */,
 				8E772BAB267C8CD10034C2BF /* RecommendViewController.swift in Sources */,
 				8EF8F20D2694B9620034BD99 /* PriceAndPeopleTableViewCell.swift in Sources */,
+				8EFFBFB626BBAE1F007C1868 /* PopularPeopleCell.swift in Sources */,
 				8E772B70267C8C750034C2BF /* ViewCells.swift in Sources */,
 				8E42FF0A261D9B4600763B61 /* LoginViewController.swift in Sources */,
 				8E42FEF3261D958100763B61 /* SceneDelegate.swift in Sources */,

@@ -81,10 +81,9 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
         view.addSubview(kakaoTalkLoginButton)
         googleLoginButton.translatesAutoresizingMaskIntoConstraints = false
 
-//        googleLoginButton.topAnchor.constraint(equalTo: loginLabelText.bottomAnchor, constant: 400).isActive = true
+
         googleLoginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30).isActive = true
         googleLoginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
-        //googleLoginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         kakaoTalkLoginButton.translatesAutoresizingMaskIntoConstraints = false
         kakaoTalkLoginButton.topAnchor.constraint(equalTo: googleLoginButton.bottomAnchor, constant: 30).isActive = true
@@ -108,8 +107,6 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
         
 //        loginButton.frame = CGRect(x: 70, y: appleLoginButtonView.bottom + 20, width: 250, height: 40)
         
-        
-        
         appleLoginButton.frame = CGRect(x: 0, y: 0, width: 250, height: 50)
         //view.addSubview(loginButton)
     }
@@ -124,6 +121,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
         switch authorization.credential {
         case  let appleIDCredential as ASAuthorizationAppleIDCredential:
             let userIdentifier = appleIDCredential.user
+            
             guard let identifyToken = appleIDCredential.identityToken else { return }
             guard let authoredCode = appleIDCredential.authorizationCode else { return }
             guard let fullName = appleIDCredential.fullName else { return }
@@ -138,8 +136,8 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
             print("User Email : \(email)")
             print("User Name : \(fullName)")
             
-           // API.shared.oAuth(from: "apple", access_token: accessToken, name: userName)
-            //self.autoLogin(UN: fullName.givenName! + fullName.familyName!, UE: email, FROM: "apple")
+            API.shared.oAuth(from: "apple", access_token: "identifyToken is \(tokeStr) /// authorizationCode is \(codeStr)", name: "\(fullName)")
+//            self.autoLogin(UN: fullName.givenName! + fullName.familyName!, UE: email, FROM: "apple")
 
         default:
             break;
@@ -185,10 +183,10 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
                 //let refreshToken = user.authentication.refreshToken
         { //send to server
                 
-                print("google login:")
-                print("google token \(idToken)")
-                print("User Email : \(userEmail)")
-                print("User Name : \((userName))")
+//                print("google login:")
+//                print("google token \(idToken)")
+//                print("User Email : \(userEmail)")
+//                print("User Name : \((userName))")
                 
                 API.shared.oAuth(from: "google", access_token: accessToken, name: userName)
                 

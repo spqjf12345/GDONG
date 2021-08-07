@@ -21,29 +21,33 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var imageEditButton: UIImageView!
     @IBOutlet weak var userImage: SDAnimatedImageView!
     
+    
+    var nameValue: String = ""
+    var nowLatitude: Double = -1.0
+    var nowLongitude: Double = -1.0
+    
     @IBOutlet var tableView: UITableView!
+    
+  
+    //update user info from server
+    @IBAction func doneButton(_ sender: Any) {
+        if(nameValue != "" && nowLatitude != -1.0 && nowLongitude != -1.0){
+            API.shared.updateUser(nickName: nameValue, longitude: nowLongitude, latitude: nowLatitude, completion: { (users) in
+                if(users.email != ""){
+                    self.alertDone(title: "수정 완료", message: "닉네임이 변경되었습니다 ",  completionHandler: { response in
+                    })
+                }
+            })
+        }
+    }
+    
+    
     @IBAction func backButton(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
     
     private let sec = ["사용자 정보", "연동 계정"]
     
-    
-//
-//    @IBOutlet weak var nickNameTextField: UITextField!
-//
-//
-//    @IBOutlet weak var locationTextField: UITextField!
-//
-//    @IBAction func nickNameEditButton(_ sender: Any) {
-//        self.alertEditName()
-//    }
-//
-//
-//    @IBAction func locationEditButton(_ sender: Any) {
-//        self.alertEditLocation()
-//    }
-//
     
     func checktAccount(){
         let connectedAccountVC = UIStoryboard.init(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "connectAccount")
@@ -126,9 +130,9 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
         geocoder.reverseGeocodeLocation(findLocation, preferredLocale: locale, completionHandler: {(place, error) in
             if let address: [CLPlacemark] = place {
                 if let name: String = address.last?.name{
-                    print(name)
                     cellField.text = name
-                    API.shared.updateLocation(longitude: longitude, latitude: latitude)
+                    self.nowLatitude = latitude
+                    self.nowLongitude = longitude
                 }
             }
         })
@@ -137,11 +141,17 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
     
 //    //check for validate name from server
     func haveSamenickName(name: String) -> Bool{
-//        API.shared.updateNickname(nickName: name, completion: { ( responce) in })
-        if name == "jouureee"{
-           return true
-        }
-        return false
+        var bool: Bool = false
+        API.shared.checkNickName(nickName: name, completion: { (string) in
+            if(string == "false"){
+                bool = false
+            }else{
+                bool = true
+            }
+        })
+        
+        return bool
+      
     }
 
 
@@ -196,21 +206,8 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
                     label.isHidden = false
                     self.present(alertVC, animated: true, completion: nil)
                 }else{
-                   //reflect from server
-                    API.shared.updateNickname(nickName: userInput, completion: {
-                        (response) in
-                        cellField.text = userInput
-                        self.alertDone(title: "수정 완료", message: "닉네임이 변경되었습니다 ",  completionHandler: { response in
-                            if(response == "OK"){
-                                print("닉네임 \(userInput)으로 수정")
-                                
-                            }
-                        })
-                        
-
-                    })
-                    
-                   
+                    cellField.text = userInput
+                    self.nameValue = userInput
                 }
             }
 
@@ -237,7 +234,7 @@ extension EditProfileViewController: PHPickerViewControllerDelegate {
                         if let imageData = image.jpeg(.lowest) {
                           
                             //post user setting image
-                            API.shared.updateUserImage(userImage: imageData)
+                            API.shared.updateUserImage(userImage: imageData, change_img: "true")
                         }
                         
                     }
