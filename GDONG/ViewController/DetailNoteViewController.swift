@@ -10,15 +10,6 @@ import UIKit
 import FirebaseFirestore
 
 
-//private enum Cells: String, CaseIterable {
-//    case TitleTableViewCell
-//    case ContentTableViewCell
-//    case LinkTableViewCell
-//    case PriceAndPeopleTableViewCell
-//    case ViewAndLikeTableViewCell
-//    case cell
-//}
-
 
 class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
     var oneBoard: Board?
@@ -51,7 +42,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableViewSetting()
-        
+        PostService.shared.updateViewCount(postId: (oneBoard?.postid!)!)
         view.addSubview(bottomView)
         bottomView.frame = CGRect(x: 0, y: view.bottom - 100, width: view.width, height: 100)
         
@@ -96,6 +87,8 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         FrameTableView.allowsSelection = false
         FrameTableView.delegate = self
         FrameTableView.dataSource = self
+        FrameTableView.estimatedRowHeight = 80
+        FrameTableView.rowHeight = UITableView.automaticDimension
     }
     
     
@@ -114,7 +107,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
                 print("no exists user ")
                 return
             }
-            addUserToChat(userEamil: "jouureee@gmail.com", completed: {(response) in
+            addUserToChat(userEamil: userEmail, completed: {(response) in
                 if(response == "OK"){
                     self.performSegue(withIdentifier: "chatRoom", sender: nil)
                 }
@@ -173,7 +166,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
                 print(ChatImage)
                 
                 self.postChatRoom = ChatRoom(chatId: document.documentID, chatRoomName: ChatRoomName, chatRoomDate: Date(timeIntervalSince1970: TimeInterval(ChatRoomDate.seconds)), chatImage: ChatImage)
-                print("postChatRoom ready \(self.postChatRoom)")
+                //print("postChatRoom ready \(self.postChatRoom)")
                 completed("OK")
        
             } else {
@@ -209,7 +202,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         
         if(oneBoard!.content != ""){
             fullString.append(NSAttributedString(string: oneBoard!.content!))
-            fullString.append(NSAttributedString(string: "\n\n\n\n"))
+            fullString.append(NSAttributedString(string: "\n\n\n"))
            
         }
         guard let images = oneBoard!.images else {
@@ -272,14 +265,13 @@ extension DetailNoteViewController: UITableViewDelegate, UITableViewDataSource {
         if(indexPath.row == 0){
             let cell = tableView.dequeueReusableCell(withIdentifier: TitleTableViewCell.identifier) as! TitleTableViewCell
             
-            cell.configure(with: oneBoard!, modelUser: userNickName!)
+            cell.configure(with: oneBoard!)
             return cell
             
         }else if(indexPath.row == 1){ // content cell
             let cell = tableView.dequeueReusableCell(withIdentifier: ContentTableViewCell.identifier) as! ContentTableViewCell
             
             cell.contentTextView.attributedText = makeContentView(contentTextView : cell.contentTextView)
-            //cell.calculate()
             return cell
             
         }else if(indexPath.row == 2){ // link cell

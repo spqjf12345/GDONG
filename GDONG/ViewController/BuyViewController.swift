@@ -156,16 +156,15 @@ class BuyViewController: UIViewController, TableViewCellDelegate {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
-        //filteringVC.delegate = self
-        print("- filteredPost 호출 순서 확인 2 -")
         //필터링 된 글에서 받아온 경우가 아닐 경우
         if filtered == false {
-            PostService.shared.getAllPosts(completion: { (response) in
+            PostService.shared.getAllPosts(completion: { [self] (response) in
                 guard let response = response else {
                     return
                 }
-                self.contents = response
-                //print("content is \(self.contents)")
+                
+                //판매 글이 false인 글만 받아오기
+                self.contents = response.filter {$0.sell == false }
             })
             buyTableView.reloadData()
         }else {
@@ -176,7 +175,7 @@ class BuyViewController: UIViewController, TableViewCellDelegate {
        
         }
     
-    func ondDayDateText(date: Date) -> String{
+    static func ondDayDateText(date: Date) -> String{
         //day Second -> 86400 60*60*24
         let dateFormatter = DateFormatter()
         let fixHour = 24
@@ -229,7 +228,7 @@ extension BuyViewController: UITableViewDelegate, UITableViewDataSource{
         guard contents.indices.contains(indexPath.row) else { return cell }
 
         cell.productNameLabel.text = contents[indexPath.row].title
-        cell.productPriceLabel.text = "\(contents[indexPath.row].price ?? 0)"
+        cell.productPriceLabel.text = "\(contents[indexPath.row].price ?? 0) 원"
         
         //내가 쓴 글이 아니라면
         if contents[indexPath.row].email != myEmail {
@@ -239,21 +238,30 @@ extension BuyViewController: UITableViewDelegate, UITableViewDataSource{
 
         let date: Date = DateUtil.parseDate(contents[indexPath.row].updatedAt!)
 
-        cell.timeLabel.text = ondDayDateText(date: date)
+        cell.timeLabel.text = BuyViewController.ondDayDateText(date: date)
         
-        cell.peopleLabel.text = "\(contents[indexPath.row].nowPeople ?? 0)/ \(contents[indexPath.row].needPeople ?? 0)"
+        //categoryButton add
+        cell.categoryButton.setTitle(contents[indexPath.row].category, for: .normal)
+       
+        cell.categoryButton.setTitleColor(UIColor.white, for: .normal)
+        cell.categoryButton.backgroundColor = UIColor.darkGray
+        cell.categoryButton.layer.cornerRadius = 5
+        cell.categoryButton.titleEdgeInsets = UIEdgeInsets(top: 10,left: 10,bottom: 10,right: 10)
+        
+        cell.peopleLabel.text = "\(contents[indexPath.row].nowPeople ?? 0) / \(contents[indexPath.row].needPeople ?? 0)"
         cell.indexPath = indexPath
         let indexImage =  contents[indexPath.row].images![0]
-            //print("index image \(indexImage)")
-            let urlString = Config.baseUrl + "/static/\(indexImage)"
+        let urlString = Config.baseUrl + "/static/\(indexImage)"
         
-            if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
+        if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
                 cell.productImageView.sd_setImage(with: myURL, completed: nil)
-            }
+        }
         
        return cell
 
     }
+    
+    
     
     // 디테일뷰 넘어가는 함수
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -273,16 +281,6 @@ extension BuyViewController: PagingTableViewDelegate {
     self.buyTableView.isLoading = false
     }
   }
-
-}
-
-extension BuyViewController: SearchFilteringDelegate {
-    func filteredPosts(filteredPostArray: [Board]) {
-        print("- filteredPost 호출 순서 확인 1 -")
-        contents = filteredPostArray
-        filtered = true
-    }
-
 
 }
 

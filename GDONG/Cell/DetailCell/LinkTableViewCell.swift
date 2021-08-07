@@ -31,8 +31,8 @@ class LinkTableViewCell: UITableViewCell, UITextViewDelegate {
     }
     
     public func configure(link: String){
-        linkTextView.delegate = self
         linkTextView.text = "\(link)"
+        linkTextView.isScrollEnabled = false
         linkTextView.isEditable = false
         linkTextView.dataDetectorTypes = .link
     }

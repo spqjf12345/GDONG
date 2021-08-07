@@ -10,12 +10,27 @@ import Alamofire
 
 class API {
     static var shared = API()
-    
+
     func getUserInfo(completion: @escaping ((Users) -> Void) ){
-        AF.request(Config.baseUrl + "/user/info", method: .get, parameters: nil).validate().responseJSON {
+        
+        guard let email = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
+            print("getUserInfo email no")
+            return
+        }
+        guard let jwtToken = UserDefaults.standard.string(forKey: UserDefaultKey.jwtToken) else {
+            print("getUserInfo jwtToken no")
+            return
+        }
+        
+        let headers: HTTPHeaders = [
+            "Set-Cookie" : "email=\(email); token=\(jwtToken)"
+        ]
+        
+        
+        AF.request(Config.baseUrl + "/user/info", method: .get, parameters: nil, headers: headers).validate(statusCode: 200...500 ).responseJSON {
             (response) in
+            print("[API] /user/info 유저 정보 불러오기")
             switch response.result {
-            
                 case .success(let obj):
                     do {
                         let responses = obj as! NSDictionary
@@ -37,14 +52,15 @@ class API {
     }
         
     func oAuth(from: String, access_token: String, name: String) {
-        print("[API] /auth/signin/\(from)")
+        print("[API] /auth/signin/\(from) 로그인 하기")
+        
         guard let deviceToken: String = UserDefaults.standard.string(forKey: UserDefaultKey.deviceToken) else { return }
+        
         let params: Parameters = [
             "access_token": access_token,
             "name": name,
             "device_token" : deviceToken
         ]
-       
 
         AF.request(Config.baseUrl + "/auth/signin/\(from)", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString)).validate().responseJSON {
             (response) in
@@ -63,8 +79,6 @@ class API {
             switch response.result {
             
             case .success(let obj):
-                print(obj)
-                print(type(of:obj))
                     do{
         
                         let responses = obj as! NSDictionary
@@ -139,81 +153,23 @@ class API {
     }
     
     
-    func updateNickname(nickName: String, completion: @escaping ((String) -> Void) ){
+    func updateUser(nickName: String, longitude: Double, latitude: Double, completion: @escaping ((Users) -> (Void))){
+
         let params: Parameters = [
-               "nickname": nickName
-           ]
-        
-        guard let email = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
-            return
-        }
-        
-        guard let jwtToken = UserDefaults.standard.string(forKey: UserDefaultKey.jwtToken) else {
-            return
-        }
-
-        let headers: HTTPHeaders = [
-            "Content-type": "multipart/form-data",
-            "Set-Cookie" : "email=\(email); token=\(jwtToken)"
-        ]
-        
-        AF.upload(multipartFormData: { multipartFormData in
-            print("[API] /post/upload")
-        
-            for (key, value) in params {
-                if let temp = value as? Int {
-                    multipartFormData.append("\(temp)".data(using: .utf8)!, withName: key)
-                    print(temp)
-                }
-                
-                if let temp = value as? String {
-                    multipartFormData.append(temp.data(using: .utf8)!, withName: key)
-                    print(temp)
-               }
-
-            }
-           
-            
-        }, to: Config.baseUrl + "/user/update", usingThreshold: UInt64.init(), method: .post, headers: headers).validate().responseJSON { (response) in
-
-            print("[API] /user/update 유저 닉네임 업데이트")
-            switch response.result {
-            case .success(let obj):
-                print(obj)
-                do {
-                    let responses = obj as! NSDictionary
-                    guard let user = responses["user"] as? Dictionary<String, Any> else { return }
-                    
-                    let dataJSON = try JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
-
-                    let UserData = try JSONDecoder().decode(Users.self, from: dataJSON)
-                    completion(UserData.nickName)
-                } catch {
-                    print("error: ", error)
-                }
-                
-            case .failure(let e):
-                print(e.localizedDescription)
-            }
-        }
-    }
-    
-    func updateLocation(longitude: Double, latitude: Double){
-        print(longitude)
-        print(latitude)
-        let params: Parameters = [
+            "nickname" : nickName,
             "longitude": longitude,
             "latitude": latitude
         ]
-        
-        guard let email = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
-            return
-        }
-        
-        guard let jwtToken = UserDefaults.standard.string(forKey: UserDefaultKey.jwtToken) else {
-            return
-        }
 
+        guard let email = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
+            print("updateUser email no")
+            return
+        }
+        guard let jwtToken = UserDefaults.standard.string(forKey: UserDefaultKey.jwtToken) else {
+            print("updateUser jwtToken no")
+            return
+        }
+        
         let headers: HTTPHeaders = [
             "Content-type": "multipart/form-data",
             "Set-Cookie" : "email=\(email); token=\(jwtToken)"
@@ -221,7 +177,7 @@ class API {
         
         
         AF.upload(multipartFormData: { multipartFormData in
-            print("[API] /user/update 유저 위치 정보 업데이트")
+            print("[API] /user/update 유저 정보 업데이트")
         
             for (key, value) in params {
                 if let temp = value as? Double {
@@ -238,44 +194,32 @@ class API {
            
             
         }, to: Config.baseUrl + "/user/update", usingThreshold: UInt64.init(), method: .post, headers: headers).validate().responseJSON { (response) in
-
+            
+            print("[API] /user/update 유저 정보 업데이트")
             switch response.result {
             case .success(let obj):
                 print(obj)
-//                do {
-//                    let responses = obj as! NSDictionary
-//                    guard let user = responses["user"] as? Dictionary<String, Any> else { return }
-//
-//                    let dataJSON = try JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
-//
-//                    let UserData = try JSONDecoder().decode(Users.self, from: dataJSON)
-//                    completion(UserData.nickName)
-//                } catch {
-//                    print("error: ", error)
-//                }
-                
+                do {
+                    let responses = obj as! NSDictionary
+                    guard let user = responses["user"] as? Dictionary<String, Any> else { return }
+
+                    let dataJSON = try JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
+
+                    let UserData = try JSONDecoder().decode(Users.self, from: dataJSON)
+                    completion(UserData)
+                } catch {
+                    print("error: ", error)
+                }
+
             case .failure(let e):
                 print(e.localizedDescription)
             }
         }
-        
-        
-        
-//        AF.request(Config.baseUrl + "/user/update", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString)).validate().responseJSON {
-//            (response) in
-//            print("[API] /user/update 유저 위치 정보 업데이트")
-//            switch response.result {
-//            case .success(let obj):
-//                print(obj)
-//            case .failure(let e):
-//                print(e.localizedDescription)
-//            }
-//           
-//            }
     }
     
-    func updateUserImage(userImage: Data) {
-        let url = Config.baseUrl + "/post/upload"
+    func updateWithUserImage(userImage: Data, change_img: String, nickName: String, longitude: Double, latitude: Double, completion: @escaping ((Users) -> (Void))) {
+        let url = Config.baseUrl + "/user/update"
+        
         guard let email = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
             print("updateUserImage email no")
             return
@@ -290,45 +234,100 @@ class API {
             "Set-Cookie" : "email=\(email); token=\(jwtToken)"
         ]
         
+        let params: Parameters = [
+            "nickname" : nickName,
+            "longitude": longitude,
+            "latitude": latitude,
+            "change_img" : change_img
+        ]
+        
         
         AF.upload(multipartFormData: { multipartFormData in
             print("[API] /user/update 유저 이미지 업데이트")
+
+            var fileName = "\(userImage).jpg"
+            fileName = fileName.replacingOccurrences(of: " ", with: "_")
+            multipartFormData.append(userImage, withName: "images", fileName: fileName, mimeType: "image/jpg")
             
-            print("image string get from AF : \(String(describing: String.init(data: userImage, encoding: .utf8)))")
-            
-            multipartFormData.append(userImage, withName: "images", fileName: "\(userImage).jpg", mimeType: "image/jpg")
-           
-        }, to: url,usingThreshold: UInt64.init(), method: .post, headers: headers).validate().responseJSON { (response) in
-            
-            do {
-                
-                if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-                    print("String Data: \(utf8Text)") // original server data as UTF8 string
-//                    let BoardData = try JSONDecoder().decode(Board.self, from: data)
-//                    completionHandler(BoardData)
-                }
-                if let json = response.value {
-                    //print("JSON Response : \(json)") // serialized json response
+            for (key, value) in params {
+                if let temp = value as? Double {
+                    multipartFormData.append("\(temp)".data(using: .utf8)!, withName: key)
+                    print(temp)
                 }
                 
-            }catch {
-                print("error: ", error)
+                if let temp = value as? String {
+                    multipartFormData.append(temp.data(using: .utf8)!, withName: key)
+                    print(temp)
+               }
+
+            }
+    
+        }, to: url, usingThreshold: UInt64.init(), method: .post, headers: headers).validate().responseJSON { (response) in
+            switch response.result {
+            case .success(let obj):
+                print(obj)
+                do {
+                    let responses = obj as! NSDictionary
+                    guard let user = responses["user"] as? Dictionary<String, Any> else { return }
+
+                    let dataJSON = try JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
+
+                    let UserData = try JSONDecoder().decode(Users.self, from: dataJSON)
+                    completion(UserData)
+                } catch {
+                    print("error: ", error)
+                }
+
+            case .failure(let e):
+                print(e.localizedDescription)
             }
             
             
         }
     }
     
-    func userFollow(nickName: String){
-        let parameters: [String: Any] = ["nickname": nickName]
-    
+    func checkNickName(nickName: String, completion: @escaping ((String) -> Void)) {
         
         guard let email = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
-            print("updateUserImage email no")
+            print("checkNickName email no")
             return
         }
         guard let jwtToken = UserDefaults.standard.string(forKey: UserDefaultKey.jwtToken) else {
-            print("updateUserImage jwtToken no")
+            print("checkNickName jwtToken no")
+            return
+        }
+        
+        let headers: HTTPHeaders = [
+            "Set-Cookie" : "email=\(email); token=\(jwtToken)"
+        ]
+        
+        let url = Config.baseUrl + "/user/checknickname"
+     
+        let parameters: [String: Any] = ["nickname": nickName]
+        AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.queryString, headers: headers).validate().responseJSON { (response) in
+            print("[API] \(nickName) 중복 확인: \(response.result)")
+            switch response.result {
+            case .success(let obj):
+                let responses = obj as! NSDictionary
+                let bool = responses["result"] as! String
+                print(bool)
+                completion(bool)
+                break
+            case .failure(let e):
+                print(e.localizedDescription)
+            }
+        }
+    }
+    
+    func userFollow(nickName: String){
+        let parameters: [String: Any] = ["nickname": nickName]
+        
+        guard let email = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
+            print("userFollow email no")
+            return
+        }
+        guard let jwtToken = UserDefaults.standard.string(forKey: UserDefaultKey.jwtToken) else {
+            print("userFollow jwtToken no")
             return
         }
         
@@ -354,11 +353,11 @@ class API {
     
         
         guard let email = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
-            print("updateUserImage email no")
+            print("userUnfollow email no")
             return
         }
         guard let jwtToken = UserDefaults.standard.string(forKey: UserDefaultKey.jwtToken) else {
-            print("updateUserImage jwtToken no")
+            print("userUnfollow jwtToken no")
             return
         }
         
@@ -493,6 +492,7 @@ class API {
             oAuth(from: from, access_token: accseeToken, name: name)
             return true
         }
+        
         return false
     }
     

@@ -22,19 +22,20 @@ import Photos
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, CLLocationManagerDelegate {
   
     var window: UIWindow?
+    var locationManager: CLLocationManager!
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         KakaoSDKCommon.initSDK(appKey: "1cb2a37d6920168105b844b889d7766f") // native key
         GIDSignIn.sharedInstance()?.clientID = "966907908166-emcm81mpq4217qoqtkl9c3ndjcdl5to5.apps.googleusercontent.com"
         
-        let locationManager =  CLLocationManager()
-        locationManager.delegate = self
-        
-        //foreground 일때 위치 추적 권한 요청
-        locationManager.requestAlwaysAuthorization()
+        self.locationManager = CLLocationManager()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
+    
         FirebaseApp.configure()
         
         
@@ -56,43 +57,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //            }
 //        }
         
-        if #available(iOS 8.0, *) {
-              // For iOS 10 display notification (sent via APNS)
-              UNUserNotificationCenter.current().delegate = self
-
-            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-              UNUserNotificationCenter.current().requestAuthorization(
-                options: authOptions,
-                completionHandler: {_, _ in })
-            } else {
-              let settings: UIUserNotificationSettings =
-                UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-              application.registerUserNotificationSettings(settings)
-            }
-        
-        
-        //앱 추적 허용
-        UNUserNotificationCenter.current().delegate = self
-        application.registerForRemoteNotifications()
-
-        ATTrackingManager.requestTrackingAuthorization { status in
-            DispatchQueue.main.async {
-                switch status {
-                case .authorized:
-                    //idfa = identity for advertisers
-                    let idfa = ASIdentifierManager.shared().advertisingIdentifier
-                    print("앱 추적 허용")
-                    
-                case .denied,
-                     .notDetermined,
-                     .restricted:
-                    print("앱 추적 금지 요청")
-                    break
-                @unknown default:
-                    break
-                }
-            }
-        }
+//        if #available(iOS 8.0, *) {
+//              // For iOS 10 display notification (sent via APNS)
+//              UNUserNotificationCenter.current().delegate = self
+//
+//            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+//              UNUserNotificationCenter.current().requestAuthorization(
+//                options: authOptions,
+//                completionHandler: {_, _ in })
+//            } else {
+//              let settings: UIUserNotificationSettings =
+//                UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+//              application.registerUserNotificationSettings(settings)
+//            }
+//
+//
+//        //앱 추적 허용
+//        UNUserNotificationCenter.current().delegate = self
+//        application.registerForRemoteNotifications()
+//
+//        ATTrackingManager.requestTrackingAuthorization { status in
+//            DispatchQueue.main.async {
+//                switch status {
+//                case .authorized:
+//                    //idfa = identity for advertisers
+//                    let idfa = ASIdentifierManager.shared().advertisingIdentifier
+//                    //print("앱 추적 허용")
+//
+//                case .denied,
+//                     .notDetermined,
+//                     .restricted:
+//                    //print("앱 추적 금지 요청")
+//                    break
+//                @unknown default:
+//                    break
+//                }
+//            }
+//        }
         
         
         //push notification

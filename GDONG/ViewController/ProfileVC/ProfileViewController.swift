@@ -12,7 +12,7 @@ import KakaoSDKUser
 import KakaoOpenSDK
 import GoogleSignIn
 import CoreLocation
-
+import SDWebImage
 
 class ProfileViewController: UIViewController, CLLocationManagerDelegate {
 
@@ -23,7 +23,7 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var userLocation: UILabel!
     
 
-    @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var profileImage: SDAnimatedImageView!
     
     @IBAction func profileSetting(_ sender: Any) {
         performSegue(withIdentifier: "EditProfile", sender: nil)
@@ -59,24 +59,14 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var FrameTableView: UITableView!
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        loadUserInfo()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         profileImage.circle()
-        
-        API.shared.getUserInfo(completion: { (response) in
-            print("get user Info")
-            self.userInfo = response
-            self.userName.text = self.userInfo.nickName
-            self.getLocation()
-            self.setFollowingCount.setTitle("\(self.userInfo.following.count)", for: .normal)
-            self.setFollwerCount.setTitle("\(self.userInfo.followers.count)", for: .normal)
-            if(self.userInfo.isSeller == true){
-                self.isSellerButton.isHidden = false
-            }else {
-                self.isSellerButton.isHidden = true
-            }
-        })
-        
+        profileImage.contentMode = .scaleAspectFill
         FrameTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         FrameTableView.delegate = self
         FrameTableView.dataSource = self
@@ -90,6 +80,33 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
 
+    }
+    
+    func loadUserInfo(){
+        API.shared.getUserInfo(completion: { (response) in
+            print("get user Info")
+            self.userInfo = response
+            self.userName.text = self.userInfo.nickName
+            self.getLocation()
+            self.setFollowingCount.setTitle("\(self.userInfo.following.count)", for: .normal)
+            self.setFollwerCount.setTitle("\(self.userInfo.followers.count)", for: .normal)
+            if(self.userInfo.isSeller == true){
+                self.isSellerButton.isHidden = false
+            }else {
+                self.isSellerButton.isHidden = true
+            }
+            
+            //user Image
+            if(self.userInfo.profileImageUrl != ""){
+                let urlString = Config.baseUrl + "/static/\(self.userInfo.profileImageUrl)"
+                
+                    if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
+                        self.profileImage.sd_setImage(with: myURL)
+                }
+            }
+           
+        })
+        
     }
     
     
@@ -224,17 +241,28 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             text.text = sec2[indexPath.row]
             cell.textLabel?.text = text.text
             if(indexPath.row == 0){
-                let mySwitch = UISwitch()
-                //value store in userDefaults
-                mySwitch.isOn = UserDefaults.standard.bool(forKey: UserDefaultKey.notiState)
-                mySwitch.addTarget(self, action: #selector(didTapnoti), for: .touchUpInside)
-                cell.accessoryView = mySwitch
+                cell.accessoryType = .disclosureIndicator
+//                let mySwitch = UISwitch()
+//                //value store in userDefaults
+//                mySwitch.isOn = UserDefaults.standard.bool(forKey: UserDefaultKey.notiState)
+//                mySwitch.addTarget(self, action: #selector(didTapnoti), for: .touchUpInside)
+//                cell.accessoryView = mySwitch
             }
         }else if indexPath.section == 2 {
             let text = UILabel()
             text.text = sec3[indexPath.row]
             text.textColor = .red
             cell.textLabel?.text = text.text
+            if(indexPath.row == 2) { //앱 버전
+                let versionLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 42, height: 20))
+                var version: String? {
+                    guard let dictionary = Bundle.main.infoDictionary, let version = dictionary["CFBundleShortVersionString"] as? String else { return ""}
+                    return version
+                }
+                versionLabel.text = version
+                cell.accessoryView = versionLabel
+                
+            }
         }
 
         return cell
@@ -253,7 +281,9 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         if indexPath.section == 1 && indexPath.row == 0 { // 알림 허용
-            print("alarm indexpath")
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url)
+            }
         }
         if indexPath.section == 2 && indexPath.row == 0 { // 로그 아웃
             self.autoLogout(from: from, title: "로그아웃", messege: "로그아웃 하시겠습니까?")

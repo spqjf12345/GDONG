@@ -74,13 +74,14 @@ class SearchFilteringViewController: UIViewController, UITextFieldDelegate {
             self.filteredBoard = response
             print("필터링 된 글 \(self.filteredBoard)")
             self.navigationController?.popViewController(animated: true)
-            print(self.navigationController?.viewControllers.last)
+           
             let previousVC = self.navigationController?.viewControllers.last as! MainViewController
             print(previousVC.isViewLoaded)
-            let buyVC = previousVC.viewControllers[0] as! BuyViewController
-            buyVC.contents = self.filteredBoard
-            buyVC.filtered = true
-            self.delegate?.filteredPosts(filteredPostArray: self.filteredBoard)
+            print(previousVC.viewControllers[0])
+//            let buyVC = previousVC.viewControllers[0] as! BuyViewController
+//            buyVC.contents = self.filteredBoard
+//            buyVC.filtered = true
+//            self.delegate?.filteredPosts(filteredPostArray: self.filteredBoard)
 
            
         })

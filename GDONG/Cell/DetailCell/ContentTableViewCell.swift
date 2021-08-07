@@ -35,25 +35,19 @@ class ContentTableViewCell: UITableViewCell {
         contentTextView.isUserInteractionEnabled = true
         contentTextView.isSelectable = true
         contentTextView.isEditable = false
+        print("원래 height")
+        print(contentView.height)
+        print(contentTextView.height)
         //contentTextView.isScrollEnabled = false
  
     }
     
     func calculate(){
-
         frameView.translatesAutoresizingMaskIntoConstraints = false
         
         //2배 해줌
-        frameView.heightAnchor.constraint(equalToConstant: contentTextView.height * 2).isActive = true
-//        contentTextView.topAnchor.constraint(equalTo: frameView.topAnchor, constant: 10).isActive = true
-//        contentTextView.leadingAnchor.constraint(equalTo: frameView.leadingAnchor, constant: 10).isActive = true
-//        contentTextView.trailingAnchor.constraint(equalTo: frameView.trailingAnchor, constant: -10).isActive = true
-//        contentTextView.bottomAnchor.constraint(equalTo: frameView.bottomAnchor, constant: -10).isActive = true
-        
-        //height dynamic set
-//        frameView.heightAnchor.constraint(equalToConstant: contentView.height).isActive = true
-//        contentTextView.heightAnchor.constraint(equalToConstant: contentTextView.height).isActive = true
-        
+        frameView.heightAnchor.constraint(equalToConstant: contentTextView.height / 2 + 50).isActive = true
+
         print("height")
         print(contentView.height)
         print(contentTextView.height)

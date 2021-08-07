@@ -25,25 +25,24 @@ class NickNameViewController: UIViewController {
        
 
        @IBAction func nextButton(_ sender: Any) {
-           if(nickNameTextfield.text != ""){
-               //dp에 저장된 이름이 았으면
-            
-            
-            API.shared.updateNickname(nickName: nickNameTextfield.text!, completion: { (response) in
-                print("업데이트 완료 \(response)")
-                UserDefaults.standard.setValue(response, forKey: UserDefaultKey.userNickName)
-            })
+      
         
-               //다시 입력해주세요 alert view 띄우기
-
-               performSegue(withIdentifier: "location", sender: nil)
-           }else{
-               let alertVC = UIAlertController(title: "닉네임 입력", message: "닉네임을 입력해주세요", preferredStyle: .alert)
-               let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-               alertVC.addAction(okAction)
-               self.present(alertVC, animated: true, completion: nil)
-               
-           }
+           if(nickNameTextfield.text == ""){
+                let alertVC = UIAlertController(title: "닉네임 입력", message: "닉네임을 입력해주세요", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                alertVC.addAction(okAction)
+                self.present(alertVC, animated: true, completion: nil)
+           } else{
+            //dp에 저장된 이름이 았으면
+                 API.shared.checkNickName(nickName: nickNameTextfield.text!, completion: { (string) in
+              
+                     if(string == "true"){
+                        self.performSegue(withIdentifier: "location", sender: nil)
+                     }else if(string == "false"){
+                        self.alertViewController(title: "중복 아이디 존재", message: "다른 아이디를 입력해주세요", completion: {(string) in })
+                     }
+                 })
+            }
        }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

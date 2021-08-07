@@ -34,8 +34,7 @@ class ChatListViewController: UIViewController {
     var currentUser: Users = Users()
     
     @IBOutlet var chatListTableView: PagingTableView!
-    
-    private var loginObserver: NSObjectProtocol?
+
 
     
     //페이징을 위한 데이터 가공

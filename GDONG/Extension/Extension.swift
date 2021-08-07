@@ -126,6 +126,7 @@ extension UIImage {
 
 extension Notification.Name {
     static let didLogInNotification = Notification.Name("didLogInNotification")
+    static let didLatestMessageNotification = Notification.Name("didLatestMessageNotification")
 }
 
 class DateUtil {

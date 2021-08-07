@@ -38,7 +38,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBAction func nextButton(_ sender: Any) {
         //post location
-        print(nickName)
+        print("nickname is \(nickName)")
         print(locationTextfield.text)
         
         print("현재 위치 ")
@@ -49,9 +49,13 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
         print("\(nickName)")
         if (nowLatitude != 0.0 && nowLongitude != 0.0){
             //post
-            //API.shared.update(nickName: nickName, logitude: nowLongitude, latitude: nowLatitude)
-            API.shared.updateLocation(longitude: nowLongitude, latitude: nowLatitude)
-            UserDefaults.standard.setValue(getLocation, forKey: UserDefaultKey.userLocation)
+            API.shared.updateUser(nickName: nickName, longitude: nowLongitude, latitude: nowLatitude, completion: { (users) in
+                let userNickName = users.nickName
+                //let userLocation = users.location.coordinates
+                UserDefaults.standard.setValue(self.getLocation, forKey: UserDefaultKey.userLocation)
+                UserDefaults.standard.setValue(userNickName, forKey: UserDefaultKey.userNickName)
+            })
+            
             let tabBarViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "tabbar") as! UITabBarController
 
             UIApplication.shared.windows.first?.rootViewController = tabBarViewController

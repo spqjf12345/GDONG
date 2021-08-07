@@ -18,7 +18,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     
     /// Data model for the table view.
     var board = [Board]()
-    var user = [Users]()
+    //var user = [Users]()
     var filteredBoard = [Board]()
     
     let categoryView: UIView = {
@@ -32,10 +32,10 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         return view
     }()
     
-//    let bottomMostView: UIView = {
+//    let tagView: UIView = {
 //        let view = UIView()
 //        var label = UILabel(frame: CGRect(x: 10, y: 10, width: 200, height: 50))
-//        label.text = "지역 주변 인기 글"
+//        label.text = "추천 태그"
 //        label.font = .boldSystemFont(ofSize: 20)
 //        view.addSubview(label)
 //        view.layer.borderWidth = 2
@@ -45,6 +45,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     
     let scrollView: UIScrollView = {
         let scroll = UIScrollView()
+        
         return scroll
     }()
 
@@ -88,11 +89,12 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         categoryCollectionView.backgroundColor = .clear
         categoryView.addSubview(categoryCollectionView)
 
-        categoryCollectionView.frame = CGRect(x: 20, y: 80, width: view.width - 40, height: 300)
         
      
         categoryView.addSubview(categoryCollectionView)
-        categoryCollectionView.frame = CGRect(x: 10, y: 80, width: view.width - 40, height: 400)
+       
+        
+        categoryCollectionView.frame = CGRect(x: 10, y: 80, width: view.width - 40, height: 350)
         categoryCollectionView.backgroundColor = .white
         
         view.addSubview(scrollView)
@@ -100,7 +102,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
        
         //-- Dummy --
         self.categoryList = Dummy.shared.categoryList(model: categoryList)
-        self.user = Dummy.shared.oneUser(model: user)
+        //self.user = Dummy.shared.oneUser(model: user)
 
         layout.itemSize = CGSize(width: (categoryCollectionView.width / 3) - 10, height: (categoryCollectionView.width / 3) - 10)
 
@@ -169,17 +171,17 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         categoryView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10).isActive = true
 
         categoryView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20).isActive = true
-        categoryView.heightAnchor.constraint(equalToConstant: 500).isActive = true
+        categoryView.heightAnchor.constraint(equalToConstant: categoryCollectionView.height + 200).isActive = true
 
-//        bottomMostView.translatesAutoresizingMaskIntoConstraints = false
+//        tagView.translatesAutoresizingMaskIntoConstraints = false
 //
-//        scrollView.addSubview(bottomMostView)
-//        bottomMostView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 10).isActive = true
-//        bottomMostView.topAnchor.constraint(equalTo: categoryView.bottomAnchor, constant: 10).isActive = true
-//        bottomMostView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20).isActive = true
-//        bottomMostView.heightAnchor.constraint(equalToConstant: 500).isActive = true
+//        scrollView.addSubview(tagView)
+//        tagView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 10).isActive = true
+//        tagView.topAnchor.constraint(equalTo: categoryView.bottomAnchor, constant: 10).isActive = true
+//        tagView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20).isActive = true
+//        tagView.heightAnchor.constraint(equalToConstant: 500).isActive = true
 //
-//        bottomMostView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+//        tagView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
     }
     
     

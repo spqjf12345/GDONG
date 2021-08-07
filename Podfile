@@ -33,6 +33,7 @@ pod 'JGProgressHUD'
 pod 'Kingfisher', '~> 6.0'
 pod 'SDWebImage', '~> 5.0'
 pod 'DropDown'
+pod 'InputBarAccessoryView'
 
 post_install do |installer_representation|
     installer_representation.pods_project.targets.each do |target|
