@@ -8,6 +8,7 @@
 import Foundation
 
 struct Board: Codable { // response
+    var sell: Bool?
     var __v: Int?
     var _id: String?
     var author: String?
@@ -30,6 +31,7 @@ struct Board: Codable { // response
     var email: String?
     
     enum CodingKeys: String, CodingKey {
+        case sell
         case __v
         case _id
         case author

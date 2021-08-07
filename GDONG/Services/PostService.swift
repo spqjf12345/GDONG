@@ -298,6 +298,46 @@ class PostService {
         })
     }
     
+    func updateViewCount(postId: Int){
+        let url = "/post/view"
+        let parameter: Parameters = [ "postid" : postId]
+        guard let authorEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else { return }
+        guard let jwtToken = UserDefaults.standard.string(forKey: UserDefaultKey.jwtToken) else { return }
+        
+        
+        let headers: HTTPHeaders = [
+            "Set-Cookie" : "email=\(authorEmail); token=\(jwtToken)"
+        ]
+        AF.request(Config.baseUrl + url, method: .get, parameters: parameter, encoding: URLEncoding.queryString, headers: headers).validate().responseJSON {
+            (response) in
+            print("[API] \(postId) 글 조회수 1 증가")
+            switch response.result {
+                case .success(let obj):
+                    do {
+                       let responses = obj as! NSDictionary
+                        print(responses)
+                        
+                     } catch let DecodingError.dataCorrupted(context) {
+                         print(context)
+                     } catch let DecodingError.keyNotFound(key, context) {
+                         print("Key '\(key)' not found:", context.debugDescription)
+                         print("codingPath:", context.codingPath)
+                     } catch let DecodingError.valueNotFound(value, context) {
+                         print("Value '\(value)' not found:", context.debugDescription)
+                         print("codingPath:", context.codingPath)
+                     } catch let DecodingError.typeMismatch(type, context)  {
+                         print("Type '\(type)' mismatch:", context.debugDescription)
+                         print("codingPath:", context.codingPath)
+                     } catch {
+                         print("error: ", error)
+                     }
+                 case .failure(let e):
+                     print(e.localizedDescription)
+                 }
+        }
+        
+    }
+    
     func filteredPost(start: Int, num: Int, min_price: Int, max_price: Int, min_dist: Int, max_dist: Int, sortby: String, completion: @escaping (([Board]) -> Void)){
         
         let parameter: Parameters = [ "start" : start,

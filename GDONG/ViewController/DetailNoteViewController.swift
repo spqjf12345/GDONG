@@ -42,7 +42,8 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableViewSetting()
-        
+        print("postid \(oneBoard?.postid!)")
+        PostService.shared.updateViewCount(postId: (oneBoard?.postid!)!)
         view.addSubview(bottomView)
         bottomView.frame = CGRect(x: 0, y: view.bottom - 100, width: view.width, height: 100)
         
