@@ -156,8 +156,6 @@ class BuyViewController: UIViewController, TableViewCellDelegate {
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
-        //filteringVC.delegate = self
-        print("- filteredPost 호출 순서 확인 2 -")
         //필터링 된 글에서 받아온 경우가 아닐 경우
         if filtered == false {
             PostService.shared.getAllPosts(completion: { (response) in
@@ -263,6 +261,8 @@ extension BuyViewController: UITableViewDelegate, UITableViewDataSource{
 
     }
     
+    
+    
     // 디테일뷰 넘어가는 함수
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "detail", sender: nil)
@@ -281,16 +281,6 @@ extension BuyViewController: PagingTableViewDelegate {
     self.buyTableView.isLoading = false
     }
   }
-
-}
-
-extension BuyViewController: SearchFilteringDelegate {
-    func filteredPosts(filteredPostArray: [Board]) {
-        print("- filteredPost 호출 순서 확인 1 -")
-        contents = filteredPostArray
-        filtered = true
-    }
-
 
 }
 

@@ -135,40 +135,6 @@ class PostService {
             case .failure(let error):
                 print(error.localizedDescription)
             }
-//            do {
-//
-//                let responses = obj as! NSDictionary
-//                 print(response)
-//                 //print(String(data: response.data!, encoding: .utf8))
-//
-//                 guard let posts = responses["posts"] as? [Dictionary<String, Any>] else { return }
-//                  let dataJSON = try JSONSerialization.data(withJSONObject: posts, options: .prettyPrinted)
-//                  let postData = try JSONDecoder().decode([Board].self, from: dataJSON)
-//
-//
-//                if let jsonData = response.data {
-//                    let responseObj = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]
-//                    if let response = responseObj as? [String: Any] {
-//                        if let data = response["post"] as? [String : Any]{
-//                            completionHandler(data["postid"] as! Int)
-//                            print("json :  \(data["postid"])") }
-//                        }
-//                    }
-//
-//                if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-//                    print("String Data: \(utf8Text)") // original server data as UTF8 string
-//                    let BoardData = try JSONDecoder().decode(Board?.self, from: data)
-//                    print(BoardData)
-//                    completionHandler(BoardData)
-//                }
-//                if let json = response.value {
-//                    print("JSON Response : \(json)") // serialized json response
-//                }
-//
-//            }catch {
-//                print("error: ", error)
-//            }
-
         }
     }
     

@@ -22,19 +22,51 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var userImage: SDAnimatedImageView!
     
     
-    var nameValue: String = ""
-    var nowLatitude: Double = -1.0
-    var nowLongitude: Double = -1.0
+//    var nameValue: String = ""
+//    var nowLatitude: Double = -1.0
+//    var nowLongitude: Double = -1.0
     
     @IBOutlet var tableView: UITableView!
     
   
     //update user info from server
     @IBAction func doneButton(_ sender: Any) {
-        if(nameValue != "" && nowLatitude != -1.0 && nowLongitude != -1.0){
-            API.shared.updateUser(nickName: nameValue, longitude: nowLongitude, latitude: nowLatitude, completion: { (users) in
+        guard let image: Data =  userImage.image?.jpeg(.lowest) else {
+            return
+        }
+        guard let nickname = userInfo.nickName as String? else { return }
+        guard let nowLongitude = userInfo.location.coordinates[0] as Double? else {
+            return
+        }
+        guard let nowLatitude = userInfo.location.coordinates[1] as Double? else {
+            return
+        }
+        print(image)
+        print(nickname)
+        print(nowLongitude)
+        print(nowLatitude)
+       
+        if(!image.isEmpty){ // 유저 이미지도 같이 업데이트 되었다면
+            //post user setting image
+            print("image도 같이 업데이트")
+            API.shared.updateWithUserImage(userImage: image, change_img: "true", nickName: nickname, longitude: nowLongitude, latitude: nowLatitude, completion: { (users) in
+               if(users.email != ""){
+                   self.alertDone(title: "수정 완료", message: "프로필이 수정 되었습니다",  completionHandler: { response in
+                        if(response == "OK"){
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                   })
+               }
+           })
+            
+        } else {  // 이름과 위치 정보만 업데이트시
+            print("image x이 업데이트")
+            API.shared.updateUser(nickName: nickname, longitude: nowLongitude, latitude: nowLatitude, completion: { (users) in
                 if(users.email != ""){
-                    self.alertDone(title: "수정 완료", message: "닉네임이 변경되었습니다 ",  completionHandler: { response in
+                    self.alertDone(title: "수정 완료", message: "프로필이 수정 되었습니다",  completionHandler: { response in
+                        if(response == "OK"){
+                            self.navigationController?.popViewController(animated: true)
+                        }
                     })
                 }
             })
@@ -69,26 +101,29 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
         tableView.dataSource = self
         tableView.register(InputTableViewCell.nib(), forCellReuseIdentifier: InputTableViewCell.identifier)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        
-        imageViewLoad()
-       
+
+        infoLoad()
 
 
     }
     
-    func imageViewLoad(){
+    func infoLoad(){
         self.userImage.circle()
         API.shared.getUserInfo(completion: { (user) in
             self.userInfo = user
-            
-            let urlString = Config.baseUrl + "/static/\(user.profileImageUrl)"
-            
-                if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
-                    self.userImage.sd_setImage(with: myURL, completed: nil)
+            if(user.profileImageUrl != ""){
+                print("db에 있는 유저 이미지 불러오기")
+                let urlString = Config.baseUrl + "/static/\(user.profileImageUrl)"
+                    
+                    if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
+                        self.userImage.sd_setImage(with: myURL, completed: nil)
+                        self.userImage.contentMode = .scaleAspectFill
+                }
             }
-
         })
     }
+    
+
     
     @objc func editImage(){
         var configuration = PHPickerConfiguration()
@@ -131,31 +166,13 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
             if let address: [CLPlacemark] = place {
                 if let name: String = address.last?.name{
                     cellField.text = name
-                    self.nowLatitude = latitude
-                    self.nowLongitude = longitude
+                    self.userInfo.location.coordinates[0] = longitude
+                    self.userInfo.location.coordinates[1] = latitude
                 }
             }
         })
     }
-    
-    
-//    //check for validate name from server
-    func haveSamenickName(name: String) -> Bool{
-        var bool: Bool = false
-        API.shared.checkNickName(nickName: name, completion: { (string) in
-            if(string == "false"){
-                bool = false
-            }else{
-                bool = true
-            }
-        })
-        
-        return bool
-      
-    }
 
-
-    
     
     func alertEditLocation(cellField: UITextField){
         let alertVC = UIAlertController(title:"위치 정보 수정", message: nil, preferredStyle: .alert)
@@ -201,13 +218,18 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
                     label.isHidden = false
                     self.present(alertVC, animated: true, completion: nil)
 
-                }else if self.haveSamenickName(name: userInput){
-                    label.text = "이미 같은 이름을 가진 사용자가 있습니다"
-                    label.isHidden = false
-                    self.present(alertVC, animated: true, completion: nil)
                 }else{
-                    cellField.text = userInput
-                    self.nameValue = userInput
+                    API.shared.checkNickName(nickName: userInput, completion: { (string) in
+                        if(string == "false"){
+                            label.text = "이미 같은 이름을 가진 사용자가 있습니다"
+                            label.isHidden = false
+                            self.present(alertVC, animated: true, completion: nil)
+                        }else{
+                            cellField.text = userInput
+                            self.userInfo.nickName = userInput
+                        }
+                        
+                    })
                 }
             }
 
@@ -231,12 +253,6 @@ extension EditProfileViewController: PHPickerViewControllerDelegate {
                     if let image = image as? UIImage {
                         self.userImage.image = image
                         self.userImage.contentMode = .scaleAspectFill
-                        if let imageData = image.jpeg(.lowest) {
-                          
-                            //post user setting image
-                            API.shared.updateUserImage(userImage: imageData, change_img: "true")
-                        }
-                        
                     }
                 }
 
@@ -312,6 +328,7 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
             connectedVC.modalPresentationStyle = .fullScreen
             self.present(connectedVC, animated: true, completion: nil)
         }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
