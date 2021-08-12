@@ -381,6 +381,27 @@ class ChatViewController: MessagesViewController, InputBarAccessoryViewDelegate,
         DispatchQueue.main.async {
             self.messagesCollectionView.scrollToLastItem(at: .bottom, animated: true)
         }
+        postPushNotification(messageContent: message.content)
+    }
+    
+    
+    //채팅 방 내 사람들에게 push noti 보내기
+    private func postPushNotification(messageContent: String){
+        var nickNameList = [String]()
+        
+        guard let postId = Int((chatRoom?.chatId)!) else {
+            print("insertNewMessage can't find \(String(describing: chatRoom?.chatId))")
+            return
+        }
+        
+        ChatService.shared.getChatList(postId: postId, completionHandler: { (response) in
+            for i in response {
+                nickNameList.append(i.nickName)
+                API.shared.pushNotification(nickname: i.nickName, message: messageContent)
+            }
+        })
+        
+        
     }
     
     private func save(_ message: Message) {
