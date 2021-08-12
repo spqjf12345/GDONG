@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		54E1529344D75E72330A0B5F /* Pods_GDONG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5CB9861EE62390BC891B506 /* Pods_GDONG.framework */; };
+		0CF2138C1B09291073ACA2DA /* Pods_GDONG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5CB9861EE62390BC891B506 /* Pods_GDONG.framework */; };
+		409D0E3526B5A64700D67626 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		8E1DA7B8268AF13B0049E658 /* GetUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1DA7B7268AF13B0049E658 /* GetUserProfileViewController.swift */; };
 		8E1DA7BA268B69F80049E658 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1DA7B9268B69F80049E658 /* Chat.swift */; };
 		8E1DA7BC268B6A020049E658 /* ChatUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1DA7BB268B6A020049E658 /* ChatUser.swift */; };
@@ -73,7 +74,7 @@
 		8E9A61D426BE65E0007AD6EB /* PopularPeopleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E9A61D026BE65E0007AD6EB /* PopularPeopleCell.xib */; };
 		8E9A61D526BE65E0007AD6EB /* PopularBoardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A61D126BE65E0007AD6EB /* PopularBoardCell.swift */; };
 		8E9A61D926BE7BD0007AD6EB /* BuySellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E9A61D726BE7BCF007AD6EB /* BuySellTableViewCell.xib */; };
-		8EC87291266616DF00C1B7C5 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		8EC87291266616DF00C1B7C5 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		8ED15E9F2696D816002943C9 /* InputTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8ED15E9D2696D815002943C9 /* InputTableViewCell.xib */; };
 		8ED15EA02696D816002943C9 /* InputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED15E9E2696D815002943C9 /* InputTableViewCell.swift */; };
 		8ED15EA32696E7A9002943C9 /* UserInfo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8ED15EA22696E7A9002943C9 /* UserInfo.storyboard */; };
@@ -130,7 +131,7 @@
 		8E1D605526B92B9600DF53FE /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		8E1D605726B92B9600DF53FE /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
 		8E1DA7B7268AF13B0049E658 /* GetUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserProfileViewController.swift; sourceTree = "<group>"; };
-		8E1DA7B9268B69F80049E658 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Chat.swift; path = "/Users/sojeong/URIPLJECT/GDONGProject/remote_total/GDONG-front/GDONG/ViewController/ChatVC/Chat.swift"; sourceTree = "<absolute>"; };
+		8E1DA7B9268B69F80049E658 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		8E1DA7BB268B6A020049E658 /* ChatUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUser.swift; sourceTree = "<group>"; };
 		8E1DA7BD268B6A1F0049E658 /* Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
 		8E42FEED261D958100763B61 /* GDONG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GDONG.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -244,7 +245,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				54E1529344D75E72330A0B5F /* Pods_GDONG.framework in Frameworks */,
+				0CF2138C1B09291073ACA2DA /* Pods_GDONG.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,9 +461,8 @@
 				8ED15EA22696E7A9002943C9 /* UserInfo.storyboard */,
 				8ED15EAC269AEAD1002943C9 /* Search.storyboard */,
 			);
-			name = Storyboard;
-			path = "/Users/sojeong/URIPLJECT/GDONGProject/remote_total/GDONG-front/GDONG/Storyboard";
-			sourceTree = "<absolute>";
+			path = Storyboard;
+			sourceTree = "<group>";
 		};
 		8E772BB7267C8D7D0034C2BF /* Image */ = {
 			isa = PBXGroup;
@@ -734,6 +734,7 @@
 				8E772B90267C8CB30034C2BF /* ProfileViewController.swift in Sources */,
 				8EF8F7A6268468C5003ADFA9 /* MessageModel.swift in Sources */,
 				8E42FEF1261D958100763B61 /* AppDelegate.swift in Sources */,
+				409D0E3526B5A64700D67626 /* BuildFile in Sources */,
 				8E772B89267C8CA40034C2BF /* TableViewCell.swift in Sources */,
 				8E772BC7267C8FFB0034C2BF /* KeychainItem.swift in Sources */,
 				8E9A61D526BE65E0007AD6EB /* PopularBoardCell.swift in Sources */,
@@ -755,7 +756,7 @@
 				8EF8F2052694B73B0034BD99 /* ContentTableViewCell.swift in Sources */,
 				8E772BC5267C8DC00034C2BF /* ChatListModel.swift in Sources */,
 				8EDD9A1A2674B046003AFE65 /* UserDefaultKey.swift in Sources */,
-				8EC87291266616DF00C1B7C5 /* (null) in Sources */,
+				8EC87291266616DF00C1B7C5 /* BuildFile in Sources */,
 				8E772B60267C8C6D0034C2BF /* Extension.swift in Sources */,
 				8E772B77267C8C750034C2BF /* CategoryTableViewController.swift in Sources */,
 				8E61FDD926301739008CCB8A /* Model.swift in Sources */,
@@ -987,6 +988,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = GDONG/GDONG.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.0.2;
 				DEVELOPMENT_TEAM = FJ57DUH592;
@@ -1041,6 +1043,7 @@
 				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "Develop.com-GDONG";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

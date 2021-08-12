@@ -296,9 +296,10 @@ final public class UserApi {
     
     /// 사용자가 카카오 간편가입을 통해 동의한 서비스 약관 내역을 반환합니다.
     /// - seealso: `UserServiceTerms`
-    public func serviceTerms(completion:@escaping (UserServiceTerms?, Error?) -> Void) {
+    public func serviceTerms(extra:String? = nil, completion:@escaping (UserServiceTerms?, Error?) -> Void) {
         AUTH.responseData(.get,
                           Urls.compose(path:Paths.userServiceTerms),
+                          parameters: ["extra": extra].filterNil(),
                           apiType: .KApi) { (response, data, error) in
                             if let error = error {
                                 completion(nil, error)
@@ -313,5 +314,7 @@ final public class UserApi {
                             completion(nil, SdkError())
         }
     }
+    
+    
 }
 
