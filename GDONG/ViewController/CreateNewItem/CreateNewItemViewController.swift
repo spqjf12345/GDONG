@@ -104,8 +104,6 @@ class CreateNewItemViewController: UIViewController {
         let needPeople:Int = Int(String(needPeople.text!))!
         
         let link = link.text!
-        
-        //self.profileImage = images[0].base64EncodedString(options: .lineLength64Characters)
         print("post price \(postprice)")
         print("sellMode \(sellMode)")
         print(titleTextField.text!)
@@ -130,83 +128,7 @@ class CreateNewItemViewController: UIViewController {
         
             
     }
-    
-//    //post 코드 완성버전
-//    func post() throws {
-//
-//        let url = Config.baseUrl + "/post/upload"
-//        let headers: HTTPHeaders = [
-//            "Content-type": "multipart/form-data"
-//        ]
-//
-//        var postboard = PostBoard()
-//
-//        guard let author =  UserDefaults.standard.string(forKey: UserDefaultKey.userNickName) else { return }
-//        guard let authorEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else { return }
-//
-//        var locationManager: CLLocationManager!
-//        let coor = locationManager.location?.coordinate
-//        let latitude = coor?.latitude
-//        let longitude = coor?.longitude
-//
-//        postboard.author = "test nicname"
-//        postboard.title = self.titleTextField.text!
-//        postboard.content = self.entityTextView.text
-//        postboard.link = "link"
-//        postboard.needPeople = "5"
-//        guard let price: Int = Int(self.priceCell.priceTextField.text!) else { return }
-//        postboard.price = price
-//        postboard.category = self.categoryLabel.text!
-//
-//
-//        //콤마 지우고 디비에 저장될 수 있게 해주는코드
-//        let pricetext = price
-//        let priceCharList = [Character](pricetext.filter { $0 != "," })
-//        let postprice = String(priceCharList)
-//
-//
-//        이미지 전송위한 코드
-//        let image = UIImage(named: "strawberry.jpg")
-//        let imgData = image!.jpegData(compressionQuality: 0.2)! //압축퀄리티 조정 필요
-//
-//
-//
-//        AF.upload(multipartFormData: { multipartFormData in do {
-//            print("[API] /post/upload 유저 글 쓰기 업데이트")
-//            multipartFormData.append(Data(postboard.author!.utf8), withName: "author", mimeType:"text/plain")
-//            multipartFormData.append(Data(postboard.title!.utf8), withName: "title", mimeType:"text/plain")
-//            multipartFormData.append(Data(postboard.content!.utf8), withName: "content", mimeType:"text/plain")
-//            multipartFormData.append(Data(postboard.link!.utf8), withName: "link", mimeType:"text/plain")
-//            multipartFormData.append(Data(postboard.needPeople!.utf8), withName: "needPeople", mimeType:"text/plain")
-//            multipartFormData.append(Data(postprice.utf8), withName: "price", mimeType:"text/plain")
-//            multipartFormData.append(Data(postboard.category!.utf8), withName: "category", mimeType:"text/plain")
-//            multipartFormData.append(Data(authorEmail.utf8), withName: "email", mimeType:"text/plain")
-//            }
-//            이미지추가
-//            multipartFormData.append(img, withName: "images", fileName: "\(imgData).jpg", mimeType: "image/jpg")
-//
-//            if let imageArray = postboard.images {
-//                for images in imageArray {
-//                    multipartFormData.append(images, withName: "images", fileName: "\(images).jpg", mimeType: "image/jpeg")
-//                }
-//            }
-//
-//
-//            }, to: url, method: .post, headers: headers).responseJSON { response in
-//
-//            guard let statusCode = response.response?.statusCode else { return }
-//
-//                switch statusCode {
-//                    case 200:
-//                        print("성공")
-//
-//                    default:
-//                        print("\(statusCode)" + "실패")
-//                }
-//
-//            }
-//
-//        }
+
 
   
   /// AllCases of enum `Cells`, the list used as tableview Layout order.
@@ -235,6 +157,7 @@ class CreateNewItemViewController: UIViewController {
         }
       }
     })
+
     
     
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -261,6 +184,26 @@ class CreateNewItemViewController: UIViewController {
          self.view.endEditing(true)
 
    }
+    
+   @objc func didTapBuyButton(){
+    print("did tap buy button")
+    }
+    
+    @objc func didTapSellButton(){
+        print("did tap sell button")
+        guard let isSeller = UserDefaults.standard.bool(forKey: UserDefaultKey.isSeller) as? Bool else {
+            return
+        }
+        print(isSeller)
+        if(isSeller == false){ // seller 권한 없는데 이 모드로 글 쓰려 한다면
+            self.alertViewController(title: "권한 없음", message: "판매자 글쓰기 권한이 없습니다", completion: { (response) in
+                if response == "OK"{
+                    self.sellButton.isSelected = false
+                    BuySellTableViewCell.ButtonSetting(sender: self.sellButton)
+                }
+            })
+        }
+     }
   
   deinit {
     NotificationCenter.default.removeObserver(token as Any)
@@ -436,6 +379,8 @@ extension CreateNewItemViewController: UITableViewDataSource {
         if let cell = cell as? BuySellTableViewCell {
             self.buyButton = cell.buyButton
             self.sellButton = cell.sellButton
+            self.buyButton.addTarget(self, action: #selector(didTapBuyButton), for: .touchUpInside)
+            self.sellButton.addTarget(self, action: #selector(didTapSellButton), for: .touchUpInside)
             return cell
         }
         
