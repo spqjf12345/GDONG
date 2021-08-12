@@ -104,18 +104,18 @@ class CreateNewItemViewController: UIViewController {
         let needPeople:Int = Int(String(needPeople.text!))!
         
         let link = link.text!
-        print("post price \(postprice)")
-        print("sellMode \(sellMode)")
-        print(titleTextField.text!)
-        print(entityTextView.text)
-        print(postprice)
-        print(type(of: postprice))
-        print(self.categoryLabel.text!)
-        print(self.images)
-        print(location?.coordinates)
-        print(needPeople)
-        print(type(of: needPeople))
-        print(link)
+//        print("post price \(postprice)")
+//        print("sellMode \(sellMode)")
+//        print(titleTextField.text!)
+//        print(entityTextView.text)
+//        print(postprice)
+//        print(type(of: postprice))
+//        print(self.categoryLabel.text!)
+//        print(self.images)
+//        print(location?.coordinates)
+//        print(needPeople)
+//        print(type(of: needPeople))
+//        print(link)
         
         PostService.shared.uploadPost(title: self.titleTextField.text!, content: self.entityTextView.text, link: link, needPeople: needPeople, price: postprice, category: self.categoryLabel.text!, images: images, profileImg: "1234", location: location!, sellMode: sellMode, completionHandler: { (response) in
             //print("postId : \(response.postid)")

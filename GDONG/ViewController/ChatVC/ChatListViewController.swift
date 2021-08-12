@@ -175,7 +175,7 @@ class ChatListViewController: UIViewController {
             return
         }
         
-        let postId = Int(chatRoomId)
+        guard let postId = Int(chatRoomId)! as? Int else { return }
         
         print("deleteFromChat test")
         let document = Firestore.firestore().collection("Chats").document("\(chatRoomId)")
@@ -191,9 +191,13 @@ class ChatListViewController: UIViewController {
                     print("user count is 1")
                     
                     //채팅방 삭제
-                    self.deleteChatRoom(postId: postId!)
+                    self.deleteChatRoom(postId: postId)
+                    
+                    //사람 chatList에서 나가기
+                    ChatService.shared.quitChatList(postId: postId)
+                    
                     //게시글 삭제
-                    PostService.shared.deletePost(postId: postId!)
+                    PostService.shared.deletePost(postId: postId)
                     completed("OK")
                 }else { // 아직 유저 여러명일때
                     // 글쓴이인경우 == users[0]
@@ -203,7 +207,7 @@ class ChatListViewController: UIViewController {
                         completed("NO")
                     }else {
                         // 글쓴이가 아닌경우 -> 채팅방에서 나가기
-                        self.deleteUser(indexPath: indexPath)
+                        self.deleteUser(postId: postId)
                         completed("OK")
                     }
                    
@@ -235,16 +239,16 @@ class ChatListViewController: UIViewController {
 
     }
     
-    func deleteUser(indexPath: IndexPath){
+    func deleteUser(postId: Int){
         guard let userEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
             print("deleteFromChat no userEmail")
             return
         }
        
-        guard let chatRoomId = mychatRoom[indexPath.row].chatId else {
-            return
-        }
-        let document = Firestore.firestore().collection("Chats").document("\(chatRoomId)")
+//        guard let chatRoomId = mychatRoom[indexPath.row].chatId else {
+//            return
+//        }
+        let document = Firestore.firestore().collection("Chats").document("\(postId)")
 
         document.updateData([
             "users": FieldValue.arrayRemove(["\(userEmail)"])
