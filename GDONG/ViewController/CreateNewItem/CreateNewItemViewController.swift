@@ -277,7 +277,7 @@ class CreateNewItemViewController: UIViewController {
         // TODO: Post Function
         self.postData(completed: {(chatData) in
             //make new chat room
-            print("completed data : \(chatData.chatId) and \(chatData.chatImage)")
+            //print("completed data : \(chatData.chatId) and \(chatData.chatImage)")
             self.createNewChat(postId: chatData.chatId!, chatImage: chatData.chatImage!)
         })
 
