@@ -6,6 +6,7 @@ target 'GDONG' do
   use_frameworks!
 
   # Pods for GDONG
+
 pod 'Tabman', '~> 2.9'
 pod 'DLRadioButton', '~> 1.4'
 pod 'PagingTableView'
@@ -34,15 +35,6 @@ pod 'Kingfisher', '~> 6.0'
 pod 'SDWebImage', '~> 5.0'
 pod 'DropDown'
 pod 'InputBarAccessoryView'
-
-post_install do |installer_representation|
-    installer_representation.pods_project.targets.each do |target|
-        target.build_configurations.each do |config|
-            config.build_settings['ONLY_ACTIVE_ARCH'] = 'NO'
-            config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
-        end
-    end
-end
 
 
 end

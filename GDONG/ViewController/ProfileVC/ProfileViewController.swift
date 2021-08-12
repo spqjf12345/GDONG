@@ -341,7 +341,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             }else{
                 if(from == "google"){
                     print("auto login from google")
-                    guard let signIn = GIDSignIn.sharedInstance() else { return }
+                    guard let signIn = GIDSignIn.sharedInstance else { return }
                     signIn.signOut()
                 }else if(from == "kakao"){
                     print("auto login from kakao")

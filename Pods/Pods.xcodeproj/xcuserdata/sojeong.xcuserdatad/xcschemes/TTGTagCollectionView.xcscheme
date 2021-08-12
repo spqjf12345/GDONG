@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F4949B35B65C78C4D7DCBEEA66EC61D4"
-               BuildableName = "TTGTagCollectionView"
+               BuildableName = "TTGTagCollectionView.framework"
                BlueprintName = "TTGTagCollectionView"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>

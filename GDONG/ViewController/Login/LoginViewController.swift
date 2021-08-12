@@ -61,7 +61,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
         super.viewDidLoad()
         view.backgroundColor = .white
         GIDSignIn.sharedInstance()?.presentingViewController = self // 로그인화면 불러오기
-        GIDSignIn.sharedInstance().restorePreviousSignIn() // 자동 로그인
+        GIDSignIn.sharedInstance.restorePreviousSignIn() // 자동 로그인
         GIDSignIn.sharedInstance()?.delegate = self
         
         loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification, object: nil, queue:.main, using: { [weak self] _ in
