@@ -27,7 +27,7 @@ struct ChatRoom {
 class ChatListViewController: UIViewController {
     var mychatRoom = [ChatRoom]()
     var userCount = [Int]()
-    
+    var lastestMessage = Message(id: "", content: "", created: Date(), senderID: "", senderName: "")
     var mychatRoomitem = [ChatRoom]()
     
 
@@ -76,7 +76,7 @@ class ChatListViewController: UIViewController {
         chatListTableView.delegate = self
         chatListTableView.dataSource = self
         
-        API.shared.getUserInfo(completion: { (response) in
+        UserService.shared.getUserInfo(completion: { (response) in
             self.currentUser = response
         })
         
@@ -124,7 +124,60 @@ class ChatListViewController: UIViewController {
                 }else if queryCount >= 1 {
                     print("query count is \(queryCount)")
                     for doc in chatQuerySnap!.documents {
-                        print(doc.documentID) //N9f8ugKxMGslE8oNusnA
+                        
+    //최근 메시지 불러오기
+                       let postId = doc.documentID
+                       let document = Firestore.firestore().collection("Chats").document("\(postId)")
+                       document.collection("thread").order(by: "created", descending: false).addSnapshotListener(includeMetadataChanges: true, listener: { [self] (threadQuery, error)
+                           in
+                               if let error = error {
+                                   print("Error: \(error)")
+                                   return
+                               } else {
+                                   if let threads = threadQuery?.documents {
+                                       if(threads != []){ //빈 배열이 아닐때
+                                           for message in threads {
+                                               print(type(of: message.data()))
+                                               let DateFromFireStore: Dictionary<String, Any> = message.data()
+
+                                               guard let content = DateFromFireStore["content"] as? String else {
+                                                   print("content type error")
+                                                   return
+                                               }
+
+                                               guard let id = DateFromFireStore["id"] as? String else {
+                                                   print("id type error")
+                                                   return
+
+                                               }
+
+                                               guard let created = DateFromFireStore["created"] as? Timestamp else {
+                                                   print("created type error")
+                                                   return
+                                               }
+                                               guard let senderName = DateFromFireStore["senderName"] as? String else {
+                                                   print("senderName type error")
+                                                   return
+                                               }
+
+                                               guard let senderID = DateFromFireStore["senderID"] as? String else {
+                                                   print("senderID type error")
+                                                   return
+                                               }
+
+
+                                              print("======================")
+                                               lastestMessage =  Message(id: id, content: content, created: Date(timeIntervalSince1970: TimeInterval(created.seconds)) , senderID: senderID, senderName: senderName)
+                                              print(lastestMessage)
+                                           }
+                                       }
+
+                                   }else {
+                                       print("This will run if threadQuery?.documents returns nil")
+                                   }
+                               }
+                           })
+
                         guard let ChatRoomName = doc.data()["ChatRoomName"] as? String else {
                             print("no chat room name in database")
                             return

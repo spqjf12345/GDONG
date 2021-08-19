@@ -24,9 +24,7 @@
 			<key>CFBundleURLName</key>
 			<string>googleSignIn</string>
 			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.googleusercontent.apps.966907908166-emcm81mpq4217qoqtkl9c3ndjcdl5to5</string>
-			</array>
+			<array/>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>

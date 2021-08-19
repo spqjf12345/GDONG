@@ -9,6 +9,8 @@ import Foundation
 
 
 struct UserDefaultKey {
+    
+    static let appleIdentifier: String = "appleIdentifier"
     static let isSeller: String = "isSeller"
     static let accessToken: String = "accessToken"
     static let userName: String = "userName"

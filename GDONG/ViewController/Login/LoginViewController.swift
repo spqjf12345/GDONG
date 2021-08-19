@@ -13,7 +13,7 @@ import KakaoOpenSDK
 import GoogleSignIn
 import Alamofire
 
-class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding, GIDSignInDelegate {
+class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     let viewModel = AuthenticationViewModel()
     var user: [Users] = []
  
@@ -60,10 +60,10 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        GIDSignIn.sharedInstance()?.presentingViewController = self // 로그인화면 불러오기
-        GIDSignIn.sharedInstance.restorePreviousSignIn() // 자동 로그인
-        GIDSignIn.sharedInstance()?.delegate = self
-        
+//        GIDSignIn.sharedInstance()?.presentingViewController = self // 로그인화면 불러오기
+//        GIDSignIn.sharedInstance.restorePreviousSignIn() // 자동 로그인
+//        GIDSignIn.sharedInstance()?.delegate = self
+        googleLoginButton.addTarget(self, action: #selector(didTapGIDButton), for: .touchUpInside)
         loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification, object: nil, queue:.main, using: { [weak self] _ in
             guard let strongSelf = self else{
                 return
@@ -71,6 +71,26 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
             strongSelf.navigationController?.dismiss(animated: true, completion: nil)
         })
 
+    }
+    
+    @objc func didTapGIDButton(sender: Any){
+        let signInCofig = GIDConfiguration.init(clientID: "966907908166-emcm81mpq4217qoqtkl9c3ndjcdl5to5.apps.googleusercontent.com")
+        GIDSignIn.sharedInstance.signIn(with: signInCofig, presenting: self) { user, error in
+            guard error == nil else { return }
+            
+            guard let user = user else { return }
+
+            guard let fullName = user.profile?.name as? String else { return }
+                user.authentication.do { authentication, error in
+                   guard error == nil else { return }
+                   guard let authentication = authentication else { return }
+
+                    guard let accessToken = authentication.accessToken as? String else { return }
+                    LoginService.shared.oAuth(from: "google", access_token: accessToken, name: fullName)
+               }
+           
+            
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -166,40 +186,40 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
     
 
     //google login
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        if let error = error {
-            if(error as NSError).code == GIDSignInErrorCode.hasNoAuthInKeychain.rawValue {
-                print("the user has not signed in before or they have since signed out ")
-            }else {
-                print("error : \(error.localizedDescription)")
-            }
-            return
-        }
-        // 사용자 정보 가져오기
-            if let userName = user.profile.name,
-               let userEmail = user.profile.email,
-               let idToken = user.authentication.idToken,
-               let accessToken = user.authentication.accessToken
-                //let refreshToken = user.authentication.refreshToken
-        { //send to server
-                
-//                print("google login:")
-//                print("google token \(idToken)")
-//                print("User Email : \(userEmail)")
-//                print("User Name : \((userName))")
-                
-                API.shared.oAuth(from: "google", access_token: accessToken, name: userName)
-                
-            } else {
-                print("Error : User Data Not Found")
-            }
-
-    }
+//    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+//        if let error = error {
+//            if(error as NSError).code == GIDSignInErrorCode.hasNoAuthInKeychain.rawValue {
+//                print("the user has not signed in before or they have since signed out ")
+//            }else {
+//                print("error : \(error.localizedDescription)")
+//            }
+//            return
+//        }
+//        // 사용자 정보 가져오기
+//            if let userName = user.profile.name,
+//               let userEmail = user.profile.email,
+//               let idToken = user.authentication.idToken,
+//               let accessToken = user.authentication.accessToken
+//                //let refreshToken = user.authentication.refreshToken
+//        { //send to server
+//
+////                print("google login:")
+////                print("google token \(idToken)")
+////                print("User Email : \(userEmail)")
+////                print("User Name : \((userName))")
+//
+//                API.shared.oAuth(from: "google", access_token: accessToken, name: userName)
+//
+//            } else {
+//                print("Error : User Data Not Found")
+//            }
+//
+//    }
     
     // 구글 로그인 연동 해제했을때 불러오는 메소드
-    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
-        print("Disconnect")
-    }
+//    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
+//        print("Disconnect")
+//    }
     
     @objc func didTapLoginButton(){
         self.MoveToAdditionalInfo()

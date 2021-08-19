@@ -94,10 +94,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
         }
         
-        guard let scheme = URLContexts.first?.url.scheme else { return }
-        if scheme.contains("com.googleusercontent.apps") {
-            GIDSignIn.sharedInstance().handle(URLContexts.first?.url)
-        }
+//        guard let scheme = URLContexts.first?.url.scheme else { return }
+//        if scheme.contains("com.googleusercontent.apps") {
+//            GIDSignIn.sharedInstance().handle(URLContexts.first?.url)
+//        }
         
     
     }
