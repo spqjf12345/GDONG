@@ -12,22 +12,42 @@ import CoreLocation
 
 class PostService {
     static var shared = PostService()
+    
+    var email: String
+    var jwtToken: String
+    
+    init(){
+        email = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail)!
+        jwtToken = UserDefaults.standard.string(forKey: UserDefaultKey.jwtToken)!
+    }
 
     
     func deletePost(postId: Int){
         
-        guard let authorEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else { return }
-        guard let jwtToken = UserDefaults.standard.string(forKey: UserDefaultKey.jwtToken) else { return }
-        
-        
         let headers: HTTPHeaders = [
-            "Set-Cookie" : "email=\(authorEmail); token=\(jwtToken)"
+            "Set-Cookie" : "email=\(email); token=\(jwtToken)"
         ]
         
         let parameter:Parameters = ["postid" : postId]
+        
+        
         AF.request(Config.baseUrl + "/post/delete", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString), headers: headers).validate().responseJSON(completionHandler: { (response) in
 
             print("[API] post/delete \(postId) 번째 게시글 삭제")
+            
+            if let httpResponse = response.response, let fields = httpResponse.allHeaderFields as? [String: String]{
+                let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.response?.url)!)
+                HTTPCookieStorage.shared.setCookies(cookies, for: response.response?.url, mainDocumentURL: nil)
+
+                //서버로 부터 받아오는 쿠키 값이 undefined가 아니면 앱 상 jwtToken 값 업데이트 하기
+                if let session = cookies.filter({$0.name == "token"}).first {
+                    print("============ Cookie vlaue =========== : \(session.value)")
+                    if(session.value != "undefined"){
+                        print("////////// update cookie value ///////")
+                        UserDefaults.standard.setValue(session.value, forKey: UserDefaultKey.jwtToken)
+                    }
+                }
+            }
             switch response.result {
                 case .success(let obj):
                     print(obj)
@@ -37,11 +57,34 @@ class PostService {
         })
     }
     
+    //좋아요 한 게시글
     func getMyHeartPost(nickName: String,  completion: @escaping (([Board]?) -> Void)){
+        
+        
+        let headers: HTTPHeaders = [
+            "Set-Cookie" : "email=\(email); token=\(jwtToken)"
+        ]
+        
         let params: Parameters = ["nickname" : nickName]
-        AF.request(Config.baseUrl + "/post/likelist", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString)).validate().responseJSON { (response) in
+        
+        AF.request(Config.baseUrl + "/post/likelist", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString), headers: headers).validate().responseJSON { (response) in
                 print(response)
                 print("[API] /post/likeList \(nickName)가 좋아요 한 글 가져오기")
+            
+            if let httpResponse = response.response, let fields = httpResponse.allHeaderFields as? [String: String]{
+                let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.response?.url)!)
+                HTTPCookieStorage.shared.setCookies(cookies, for: response.response?.url, mainDocumentURL: nil)
+
+                //서버로 부터 받아오는 쿠키 값이 undefined가 아니면 앱 상 jwtToken 값 업데이트 하기
+                if let session = cookies.filter({$0.name == "token"}).first {
+                    print("============ Cookie vlaue =========== : \(session.value)")
+                    if(session.value != "undefined"){
+                        print("////////// update cookie value ///////")
+                        UserDefaults.standard.setValue(session.value, forKey: UserDefaultKey.jwtToken)
+                    }
+                }
+            }
+            
                 switch response.result {
                     case .success(let obj):
                         do {
@@ -74,13 +117,33 @@ class PostService {
     }
     
     func getauthorPost(start: Int, author: String, num: Int, completion: @escaping (([Board]?) -> Void)){
+        
+        
+        let headers: HTTPHeaders = [
+            "Set-Cookie" : "email=\(email); token=\(jwtToken)"
+        ]
+        
            let params: Parameters = ["start" : start,
                                    "author": author,
                                      "num": num]
    
-           AF.request(Config.baseUrl + "/post/author", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString)).validate().responseJSON { (response) in
+           AF.request(Config.baseUrl + "/post/author", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString), headers: headers).validate().responseJSON { (response) in
                    print(response)
                    print("[API] /post/author \(author) 유저 게시글 가져오기")
+            
+                    if let httpResponse = response.response, let fields = httpResponse.allHeaderFields as? [String: String]{
+                        let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.response?.url)!)
+                        HTTPCookieStorage.shared.setCookies(cookies, for: response.response?.url, mainDocumentURL: nil)
+
+                        //서버로 부터 받아오는 쿠키 값이 undefined가 아니면 앱 상 jwtToken 값 업데이트 하기
+                        if let session = cookies.filter({$0.name == "token"}).first {
+                            print("============ Cookie vlaue =========== : \(session.value)")
+                            if(session.value != "undefined"){
+                                print("////////// update cookie value ///////")
+                                UserDefaults.standard.setValue(session.value, forKey: UserDefaultKey.jwtToken)
+                            }
+                        }
+                    }
                    switch response.result {
                        case .success(let obj):
                            do {
@@ -121,8 +184,8 @@ class PostService {
         
         
         let headers: HTTPHeaders = [
-            "Content-type": "multipart/form-data"
-            
+            "Content-type": "multipart/form-data",
+            "Set-Cookie" : "email=\(authorEmail); token=\(jwtToken)"
         ]
 
         let parameter:Parameters = ["author" : author,//
@@ -143,7 +206,6 @@ class PostService {
         
         AF.upload(multipartFormData: { multipartFormData in
             print("[API] /post/upload")
-
         for imageData in images {
             var fileName = "\(imageData).jpg"
             fileName = fileName.replacingOccurrences(of: " ", with: "_") 
@@ -196,6 +258,20 @@ class PostService {
 
 
         }, to: url, usingThreshold: UInt64.init(), method: .post, headers: headers).validate().responseJSON { (response) in
+            
+            if let httpResponse = response.response, let fields = httpResponse.allHeaderFields as? [String: String]{
+                let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.response?.url)!)
+                HTTPCookieStorage.shared.setCookies(cookies, for: response.response?.url, mainDocumentURL: nil)
+
+                //서버로 부터 받아오는 쿠키 값이 undefined가 아니면 앱 상 jwtToken 값 업데이트 하기
+                if let session = cookies.filter({$0.name == "token"}).first {
+                    print("============ Cookie vlaue =========== : \(session.value)")
+                    if(session.value != "undefined"){
+                        print("////////// update cookie value ///////")
+                        UserDefaults.standard.setValue(session.value, forKey: UserDefaultKey.jwtToken)
+                    }
+                }
+            }
             switch response.result {
 
             case .success(let obj):
@@ -219,12 +295,32 @@ class PostService {
         }
     }
     
+    // 게시글 가져오기
     func getAllPosts(completion: @escaping (([Board]?) -> Void)){
+        
+        
+        let headers: HTTPHeaders = [
+            "Set-Cookie" : "email=\(email); token=\(jwtToken)"
+        ]
+        
         let parameter:Parameters = ["start" : -1,
                                     "num" : 10] // start : -1 처음부터 ~ 5개
-        AF.request(Config.baseUrl + "/post/recent", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString)).validate().responseJSON(completionHandler: { (response) in
+        AF.request(Config.baseUrl + "/post/recent", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString), headers: headers).validate().responseJSON(completionHandler: { (response) in
 
             print("[API] post/recent")
+            if let httpResponse = response.response, let fields = httpResponse.allHeaderFields as? [String: String]{
+                let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.response?.url)!)
+                HTTPCookieStorage.shared.setCookies(cookies, for: response.response?.url, mainDocumentURL: nil)
+
+                //서버로 부터 받아오는 쿠키 값이 undefined가 아니면 앱 상 jwtToken 값 업데이트 하기
+                if let session = cookies.filter({$0.name == "token"}).first {
+                    print("============ Cookie vlaue =========== : \(session.value)")
+                    if(session.value != "undefined"){
+                        print("////////// update cookie value ///////")
+                        UserDefaults.standard.setValue(session.value, forKey: UserDefaultKey.jwtToken)
+                    }
+                }
+            }
             switch response.result {
                 case .success(let obj):
                     do {
@@ -248,7 +344,7 @@ class PostService {
                          print("Type '\(type)' mismatch:", context.debugDescription)
                          print("codingPath:", context.codingPath)
                      } catch {
-                         print("error: ", error)
+                        print("error: ", error)
                      }
                  case .failure(let e):
                      print(e.localizedDescription)
@@ -259,32 +355,37 @@ class PostService {
     
     func clickHeart(postId: Int){
         
+        
+        let headers: HTTPHeaders = [
+            "Set-Cookie" : "email=\(email); token=\(jwtToken)"
+        ]
+        
         let parameter: Parameters = ["postid": postId]
-        AF.request(Config.baseUrl + "/post/like", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString)).validate().responseJSON(completionHandler: {
+        
+        AF.request(Config.baseUrl + "/post/like", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString), headers: headers).validate().responseJSON(completionHandler: {
             (response) in
                 print(response)
                 print("[API] /post/like 좋아요 누르기")
-                
+                if let httpResponse = response.response, let fields = httpResponse.allHeaderFields as? [String: String]{
+                    let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.response?.url)!)
+                    HTTPCookieStorage.shared.setCookies(cookies, for: response.response?.url, mainDocumentURL: nil)
+
+                    //서버로 부터 받아오는 쿠키 값이 undefined가 아니면 앱 상 jwtToken 값 업데이트 하기
+                    if let session = cookies.filter({$0.name == "token"}).first {
+                        print("============ Cookie vlaue =========== : \(session.value)")
+                        if(session.value != "undefined"){
+                            print("////////// update cookie value ///////")
+                            UserDefaults.standard.setValue(session.value, forKey: UserDefaultKey.jwtToken)
+                        }
+                    }
+                }
+            
                 switch response.result {
                     case .success(let obj):
-                        do {
                            let responses = obj as! NSDictionary
                             print(response)
                         
-                         } catch let DecodingError.dataCorrupted(context) {
-                             print(context)
-                         } catch let DecodingError.keyNotFound(key, context) {
-                             print("Key '\(key)' not found:", context.debugDescription)
-                             print("codingPath:", context.codingPath)
-                         } catch let DecodingError.valueNotFound(value, context) {
-                             print("Value '\(value)' not found:", context.debugDescription)
-                             print("codingPath:", context.codingPath)
-                         } catch let DecodingError.typeMismatch(type, context)  {
-                             print("Type '\(type)' mismatch:", context.debugDescription)
-                             print("codingPath:", context.codingPath)
-                         } catch {
-                             print("error: ", error)
-                         }
+                         
                      case .failure(let e):
                          print(e.localizedDescription)
                      }
@@ -294,15 +395,33 @@ class PostService {
     }
     
     func getSearchPost(start: Int, searWord: String, num: Int, completion: @escaping (([Board]) -> Void)){
+        
+        
+        let headers: HTTPHeaders = [
+            "Set-Cookie" : "email=\(email); token=\(jwtToken)"
+        ]
+        
         let parameter: Parameters = ["start" : start,
                                     "word" : searWord,
                                     "num" : num]
         
-        AF.request(Config.baseUrl + "/post/search", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString)).validate().responseJSON(completionHandler: {
+        AF.request(Config.baseUrl + "/post/search", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString), headers: headers).validate().responseJSON(completionHandler: {
             (response) in
 
                 print("[API] /post/search \(searWord)에 해당하는 글 가져오기")
-                
+                if let httpResponse = response.response, let fields = httpResponse.allHeaderFields as? [String: String]{
+                    let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.response?.url)!)
+                    HTTPCookieStorage.shared.setCookies(cookies, for: response.response?.url, mainDocumentURL: nil)
+
+                    //서버로 부터 받아오는 쿠키 값이 undefined가 아니면 앱 상 jwtToken 값 업데이트 하기
+                    if let session = cookies.filter({$0.name == "token"}).first {
+                        print("============ Cookie vlaue =========== : \(session.value)")
+                        if(session.value != "undefined"){
+                            print("////////// update cookie value ///////")
+                            UserDefaults.standard.setValue(session.value, forKey: UserDefaultKey.jwtToken)
+                        }
+                    }
+                }
                 switch response.result {
                     case .success(let obj):
                         do {
@@ -337,15 +456,33 @@ class PostService {
     }
     
     func getCategoryPost(start: Int, category: String, num: Int, completion: @escaping (([Board]) -> Void)){
+        
+        
+        let headers: HTTPHeaders = [
+            "Set-Cookie" : "email=\(email); token=\(jwtToken)"
+        ]
+        
         let parameter: Parameters = ["start" : start,
                                     "category" : category,
                                     "num" : num]
         
-        AF.request(Config.baseUrl + "/post/category", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString)).validate().responseJSON(completionHandler: {
+        AF.request(Config.baseUrl + "/post/category", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString), headers: headers).validate().responseJSON(completionHandler: {
             (response) in
 
                 print("[API] /post/category \(category)에 해당하는 글 가져오기")
-                
+                if let httpResponse = response.response, let fields = httpResponse.allHeaderFields as? [String: String]{
+                    let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.response?.url)!)
+                    HTTPCookieStorage.shared.setCookies(cookies, for: response.response?.url, mainDocumentURL: nil)
+
+                    //서버로 부터 받아오는 쿠키 값이 undefined가 아니면 앱 상 jwtToken 값 업데이트 하기
+                    if let session = cookies.filter({$0.name == "token"}).first {
+                        print("============ Cookie vlaue =========== : \(session.value)")
+                        if(session.value != "undefined"){
+                            print("////////// update cookie value ///////")
+                            UserDefaults.standard.setValue(session.value, forKey: UserDefaultKey.jwtToken)
+                        }
+                    }
+                }
                 switch response.result {
                     case .success(let obj):
                         do {
@@ -380,18 +517,32 @@ class PostService {
     }
     
     func updateViewCount(postId: Int){
-        let url = "/post/view"
+        let url = Config.baseUrl + "/post/view"
         let parameter: Parameters = [ "postid" : postId]
-        guard let authorEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else { return }
-        guard let jwtToken = UserDefaults.standard.string(forKey: UserDefaultKey.jwtToken) else { return }
         
         
         let headers: HTTPHeaders = [
-            "Set-Cookie" : "email=\(authorEmail); token=\(jwtToken)"
+            "Set-Cookie" : "email=\(email); token=\(jwtToken)"
         ]
-        AF.request(Config.baseUrl + url, method: .get, parameters: parameter, encoding: URLEncoding.queryString, headers: headers).validate().responseJSON {
+        
+        
+
+        AF.request(url, method: .get, parameters: parameter, encoding: URLEncoding.queryString, headers: headers).validate().responseJSON {
             (response) in
             print("[API] \(postId) 글 조회수 1 증가")
+            if let httpResponse = response.response, let fields = httpResponse.allHeaderFields as? [String: String]{
+                let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.response?.url)!)
+                HTTPCookieStorage.shared.setCookies(cookies, for: response.response?.url, mainDocumentURL: nil)
+
+                //서버로 부터 받아오는 쿠키 값이 undefined가 아니면 앱 상 jwtToken 값 업데이트 하기
+                if let session = cookies.filter({$0.name == "token"}).first {
+                    print("============ Cookie vlaue =========== : \(session.value)")
+                    if(session.value != "undefined"){
+                        print("////////// update cookie value ///////")
+                        UserDefaults.standard.setValue(session.value, forKey: UserDefaultKey.jwtToken)
+                    }
+                }
+            }
             switch response.result {
                 case .success(let obj):
                     do {
@@ -421,6 +572,11 @@ class PostService {
     
     func filteredPost(start: Int, num: Int, min_price: Int, max_price: Int, min_dist: Int, max_dist: Int, sortby: String, completion: @escaping (([Board]) -> Void)){
         
+        
+        let headers: HTTPHeaders = [
+            "Set-Cookie" : "email=\(email); token=\(jwtToken)"
+        ]
+        
         let parameter: Parameters = [ "start" : start,
                                     "num" : num,
                                     "min_price" : min_price,
@@ -430,10 +586,22 @@ class PostService {
                                     "sortby" : sortby
                                     ]
         
-        AF.request(Config.baseUrl + "/post/filter", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString)).validate().responseJSON(completionHandler: {
+        AF.request(Config.baseUrl + "/post/filter", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString), headers: headers).validate().responseJSON(completionHandler: {
             (response) in
             print("[API] /post/filter 된 글 가져오기")
-            
+            if let httpResponse = response.response, let fields = httpResponse.allHeaderFields as? [String: String]{
+                let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.response?.url)!)
+                HTTPCookieStorage.shared.setCookies(cookies, for: response.response?.url, mainDocumentURL: nil)
+
+                //서버로 부터 받아오는 쿠키 값이 undefined가 아니면 앱 상 jwtToken 값 업데이트 하기
+                if let session = cookies.filter({$0.name == "token"}).first {
+                    print("============ Cookie vlaue =========== : \(session.value)")
+                    if(session.value != "undefined"){
+                        print("////////// update cookie value ///////")
+                        UserDefaults.standard.setValue(session.value, forKey: UserDefaultKey.jwtToken)
+                    }
+                }
+            }
             switch response.result {
                 case .success(let obj):
                     do {
