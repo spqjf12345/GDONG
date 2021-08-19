@@ -83,7 +83,7 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func loadUserInfo(){
-        API.shared.getUserInfo(completion: { (response) in
+        UserService.shared.getUserInfo(completion: { (response) in
             print("get user Info")
             self.userInfo = response
             self.userName.text = self.userInfo.nickName
@@ -139,7 +139,7 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
             print("turn")
             guard let nickName =  UserDefaults.standard.string(forKey: UserDefaultKey.userNickName) else { return }
             print(nickName)
-            API.shared.pushNotification(nickname: nickName, message: "apn test message")
+            PushService.shared.pushNotification(nickname: nickName, message: "apn test message")
             UserDefaults.standard.set(sender.isOn, forKey: UserDefaultKey.notiState)
 
         }else{
@@ -337,7 +337,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         let alertVC = UIAlertController(title: title, message: messege, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "확인", style: .default, handler: {_ in
             if(title == "회원 탈퇴"){
-                API.shared.userQuit()
+                UserService.shared.userQuit()
             }else{
                 if(from == "google"){
                     print("auto login from google")

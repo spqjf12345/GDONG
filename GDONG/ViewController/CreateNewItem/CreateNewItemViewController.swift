@@ -222,6 +222,7 @@ class CreateNewItemViewController: UIViewController {
             //make new chat room
             //print("completed data : \(chatData.chatId) and \(chatData.chatImage)")
             self.createNewChat(postId: chatData.chatId!, chatImage: chatData.chatImage!)
+            ChatService.shared.joinChatList(postId: chatData.chatId!)
         })
 
         self.dismiss(animated: true, completion: nil)

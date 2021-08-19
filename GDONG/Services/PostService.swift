@@ -37,6 +37,81 @@ class PostService {
         })
     }
     
+    func getMyHeartPost(nickName: String,  completion: @escaping (([Board]?) -> Void)){
+        let params: Parameters = ["nickname" : nickName]
+        AF.request(Config.baseUrl + "/post/likelist", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString)).validate().responseJSON { (response) in
+                print(response)
+                print("[API] /post/likeList \(nickName)가 좋아요 한 글 가져오기")
+                switch response.result {
+                    case .success(let obj):
+                        do {
+                           let responses = obj as! NSDictionary
+                            //print(responses)
+                            let posts = responses["posts"] as Any
+                           let dataJSON = try JSONSerialization.data(withJSONObject: posts, options: .prettyPrinted)
+
+                           let heartBoard = try JSONDecoder().decode([Board]?.self, from: dataJSON)
+                            print("hearted post -> \(heartBoard!)")
+                            completion(heartBoard)
+                        } catch let DecodingError.dataCorrupted(context) {
+                            print(context)
+                        } catch let DecodingError.keyNotFound(key, context) {
+                            print("Key '\(key)' not found:", context.debugDescription)
+                            print("codingPath:", context.codingPath)
+                        } catch let DecodingError.valueNotFound(value, context) {
+                            print("Value '\(value)' not found:", context.debugDescription)
+                            print("codingPath:", context.codingPath)
+                        } catch let DecodingError.typeMismatch(type, context)  {
+                            print("Type '\(type)' mismatch:", context.debugDescription)
+                            print("codingPath:", context.codingPath)
+                        } catch {
+                            print("error: ", error)
+                        }
+                    case .failure(let e):
+                        print(e.localizedDescription)
+                    }
+            }
+    }
+    
+    func getauthorPost(start: Int, author: String, num: Int, completion: @escaping (([Board]?) -> Void)){
+           let params: Parameters = ["start" : start,
+                                   "author": author,
+                                     "num": num]
+   
+           AF.request(Config.baseUrl + "/post/author", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString)).validate().responseJSON { (response) in
+                   print(response)
+                   print("[API] /post/author \(author) 유저 게시글 가져오기")
+                   switch response.result {
+                       case .success(let obj):
+                           do {
+                              let responses = obj as! NSDictionary
+                               print(responses)
+                              let posts = responses["posts"] as Any
+                              let dataJSON = try JSONSerialization.data(withJSONObject: posts, options: .prettyPrinted)
+   
+                              let authorBoard = try JSONDecoder().decode([Board]?.self, from: dataJSON)
+                               print("authorBoard \(authorBoard!)")
+                               completion(authorBoard)
+                           } catch let DecodingError.dataCorrupted(context) {
+                               print(context)
+                           } catch let DecodingError.keyNotFound(key, context) {
+                               print("Key '\(key)' not found:", context.debugDescription)
+                               print("codingPath:", context.codingPath)
+                           } catch let DecodingError.valueNotFound(value, context) {
+                               print("Value '\(value)' not found:", context.debugDescription)
+                               print("codingPath:", context.codingPath)
+                           } catch let DecodingError.typeMismatch(type, context)  {
+                               print("Type '\(type)' mismatch:", context.debugDescription)
+                               print("codingPath:", context.codingPath)
+                           } catch {
+                               print("error: ", error)
+                           }
+                       case .failure(let e):
+                           print(e.localizedDescription)
+                       }
+               }
+           }
+
     func uploadPost(title: String, content: String, link: String, needPeople: Int, price: Int, category: String, images: [Data], profileImg: String, location: Location, sellMode: Bool, completionHandler: @escaping (Board) -> Void){
         let url = Config.baseUrl + "/post/upload"
         

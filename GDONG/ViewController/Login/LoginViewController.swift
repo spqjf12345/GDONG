@@ -156,8 +156,9 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
             print("User Email : \(email)")
             print("User Name : \(fullName)")
             
-            API.shared.oAuth(from: "apple", access_token: "identifyToken is \(tokeStr) /// authorizationCode is \(codeStr)", name: "\(fullName)")
-//            self.autoLogin(UN: fullName.givenName! + fullName.familyName!, UE: email, FROM: "apple")
+
+            
+            LoginService.shared.oAuth(from: "apple", access_token: tokeStr, name: "\(fullName)")
 
         default:
             break;
@@ -260,7 +261,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
                 _ = user
                 print("kakao login")
                 guard let userName = user?.kakaoAccount?.profile?.nickname else { return }
-                API.shared.oAuth(from: "kakao", access_token: accessToken, name: userName)
+                LoginService.shared.oAuth(from: "kakao", access_token: accessToken, name: userName)
 
                 
             }

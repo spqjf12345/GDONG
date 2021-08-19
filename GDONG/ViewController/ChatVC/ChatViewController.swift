@@ -248,7 +248,7 @@ class ChatViewController: MessagesViewController, InputBarAccessoryViewDelegate,
 //    var user2UID: String? = "jouureee@gmail.com"
     
     override func viewWillAppear(_ animated: Bool) {
-        API.shared.getUserInfo(completion: { (response) in
+        UserService.shared.getUserInfo(completion: { (response) in
             self.currentUser = response
             print("currentUser \(response)")
             self.messagesCollectionView.reloadData()
@@ -273,8 +273,8 @@ class ChatViewController: MessagesViewController, InputBarAccessoryViewDelegate,
         messageInputBar.setLeftStackViewWidthConstant(to: 50, animated: false)
         messageInputBar.setRightStackViewWidthConstant(to: 50, animated: false)
 
-        messageInputBar.leftStackView.alignment = .center //HERE
-        messageInputBar.rightStackView.alignment = .center //HERE
+        messageInputBar.leftStackView.alignment = .center
+        messageInputBar.rightStackView.alignment = .center
 
         reloadInputViews()
         
@@ -321,7 +321,6 @@ class ChatViewController: MessagesViewController, InputBarAccessoryViewDelegate,
                     print("Error: \(error)")
                     return
                 } else {
-                    print("here")
                     self.docReference = document
                     self.messages.removeAll()
                     if let threads = threadQuery?.documents {
@@ -397,7 +396,7 @@ class ChatViewController: MessagesViewController, InputBarAccessoryViewDelegate,
         ChatService.shared.getChatList(postId: postId, completionHandler: { (response) in
             for i in response {
                 nickNameList.append(i.nickName)
-                API.shared.pushNotification(nickname: i.nickName, message: messageContent)
+                PushService.shared.pushNotification(nickname: i.nickName, message: messageContent)
             }
         })
         
@@ -420,7 +419,7 @@ class ChatViewController: MessagesViewController, InputBarAccessoryViewDelegate,
                 print("Error Sending message: \(error)")
                 return
             }
-            print("save \(data)")
+            
             self.messagesCollectionView.scrollToLastItem(at: .bottom, animated: true)
         })
     }
@@ -428,9 +427,9 @@ class ChatViewController: MessagesViewController, InputBarAccessoryViewDelegate,
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         //When use press send button this method is called.
 //        let message = Message(id: UUID().uuidString, content: text, created: Date(), senderID: currentUser.uid, senderName: currentUser.displayName!)
-        print("messageid \(UUID().uuidString)")
+        //print("messageid \(UUID().uuidString)")
         let message = Message(id: UUID().uuidString, content: text, created: Date(), senderID: currentUser.email, senderName: currentUser.nickName)
-        print("messageid \(message)")
+        
         //calling function to insert and save message
         insertNewMessage(message)
         save(message)
@@ -495,15 +494,15 @@ class ChatViewController: MessagesViewController, InputBarAccessoryViewDelegate,
     
         //If it's current user show current user photo.
 
-        API.shared.getUserInfo(completion: { (response) in
+        UserService.shared.getUserInfo(completion: { (response) in
             self.currentUser = response
-            print("currentUser \(response)")
+            //print("currentUser \(response)")
             let urlString = Config.baseUrl + "/static/\(self.currentUser.profileImageUrl)"
            
-            print(urlString)
-            print(self.currentUser.nickName)
+            //print(urlString)
+            //print(self.currentUser.nickName)
             if(message.sender.senderId == self.currentUser.email){
-                print("it's me")
+                //print("it's me")
                 SDWebImageManager.shared.loadImage(with: URL(string: urlString), options: .highPriority, progress: nil) { (image, data, error, cacheType, isFinished, imageUrl) in
                     avatarView.image = image
                     avatarView.isHidden = self.isNextMessageSameSender(at: indexPath)

@@ -228,8 +228,8 @@ class ChatListViewController: UIViewController {
             return
         }
         
-        guard let postId = Int(chatRoomId)! as? Int else { return }
-        
+     
+        guard let postId = Int(chatRoomId) else { return }
         print("deleteFromChat test")
         let document = Firestore.firestore().collection("Chats").document("\(chatRoomId)")
         document.getDocument { (document, error) in
@@ -261,6 +261,7 @@ class ChatListViewController: UIViewController {
                     }else {
                         // 글쓴이가 아닌경우 -> 채팅방에서 나가기
                         self.deleteUser(postId: postId)
+                        ChatService.shared.quitChatList(postId: postId)
                         completed("OK")
                     }
                    
@@ -311,46 +312,6 @@ class ChatListViewController: UIViewController {
     }
         
     
-    
-//    private func getConversation() {
-//        guard let email = UserDefaults.standard.value(forKey: UserDefaultKey.userEmail) as? String else {
-//            return
-//        }
-//
-//        if let observer = loginObserver {
-//            NotificationCenter.default.removeObserver(observer)
-//        }
-//
-//        print("starting conversation fetch...")
-
-       // let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
-        
-        // get all conversation
-        //DatabaseManager.shared.getAllConversations(for: safeEmail, completion: { [weak self] (result) in
-               //                                     print(result)})
- //       DatabaseManager.shared.getAllConversations(for: safeEmail, completion: { [weak //self] result in
-//            switch result {
-//            case .success(let conversations):
-//                print("successfully got conversation models")
-//                guard !conversations.isEmpty else {
-//                    self?.tableView.isHidden = true
-//                    self?.noConversationsLabel.isHidden = false
-//                    return
-//                }
-//                self?.noConversationsLabel.isHidden = true
-//                self?.tableView.isHidden = false
-//                self?.conversations = conversations
-//
-//                DispatchQueue.main.async {
-//                    self?.tableView.reloadData()
-//                }
-//            case .failure(let error):
-//                self?.tableView.isHidden = true
-//                self?.noConversationsLabel.isHidden = false
-//                print("failed to get convos: \(error)")
-//            }
-//        })    }
-
 }
 
 extension ChatListViewController: UITableViewDelegate, UITableViewDataSource {
@@ -366,10 +327,12 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = chatListTableView.dequeueReusableCell(withIdentifier: "chatList", for: indexPath) as! ChatListCell
         
         cell.roomName.text = mychatRoom[indexPath.row].chatRoomName
-        let dateString = DateUtil.formatDate(mychatRoom[indexPath.row].chatRoomDate!)
-        
+        let dateString = DateUtil.latestMessageformatDate(lastestMessage.created)
+        print(lastestMessage.created)
+        let latestSenderName  = lastestMessage.senderName
         cell.latestMessageTime.text = dateString
         cell.peopleLabel.text =  "\(userCount[indexPath.row])명 참여 중"
+        cell.message.text = "\(latestSenderName) : \(lastestMessage.content)"
         
         if let indexImage =  mychatRoom[indexPath.row].chatImage {
             //print("index image \(indexImage)")
