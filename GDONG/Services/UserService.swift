@@ -110,7 +110,7 @@ class UserService {
     }
 
     //no such user
-    func userQuit(){
+    func userQuit(completed: @escaping ((Bool) -> (Void))){
 
         let headers: HTTPHeaders = [
             "Set-Cookie" : "email=\(email); token=\(jwtToken)"
@@ -134,6 +134,7 @@ class UserService {
             switch response.result {
             case .success(let code):
                 print(code)
+                completed(true)
                 break
             case .failure(let e):
                 print(e.localizedDescription)

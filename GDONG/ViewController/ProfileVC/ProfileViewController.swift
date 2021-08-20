@@ -251,7 +251,6 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         }else if indexPath.section == 2 {
             let text = UILabel()
             text.text = sec3[indexPath.row]
-            text.textColor = .red
             cell.textLabel?.text = text.text
             if(indexPath.row == 2) { //앱 버전
                 let versionLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 42, height: 20))
@@ -289,7 +288,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             self.autoLogout(from: from, title: "로그아웃", messege: "로그아웃 하시겠습니까?")
         }else if indexPath.section == 2 && indexPath.row == 1 { //회원 탈퇴
             self.autoLogout(from: from, title: "회원 탈퇴", messege: "회원을 탈퇴하시겠습니까?")
-        }else if indexPath.section == 2 && indexPath.row == 2 { //판매자 문의
+        }else if indexPath.section == 2 && indexPath.row == 3 { //판매자 문의
             self.alertController(title: "판매자 문의", message: "불편하신 사항이 있나요? 언제든 spqjf12345@gmail.com로 메일 보내주세요. 메일 앱으로 이동합니다.", completion: { action in
                 if action == "OK"{
                     self.openMail()
@@ -343,11 +342,20 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         let alertVC = UIAlertController(title: title, message: messege, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "확인", style: .default, handler: {_ in
             if(title == "회원 탈퇴"){
-                UserService.shared.userQuit()
+                UserService.shared.userQuit(completed: { (response) in
+                    if( response == true ) { // 정상 탈퇴
+                        self.alertController(title: "탈퇴 완료", message: "탈퇴를 완료하였습니다. 그간 앱을 이용해주셔서 감사합니다.", completion: { (response) in
+                            if(response == "OK"){
+                                exit(0)
+                            }
+                        })
+                    }
+                })
             }else{
                 if(from == "google"){
                     print("auto login from google")
                     GIDSignIn.sharedInstance.signOut()
+                    self.moveToLoginVC()
                 }else if(from == "kakao"){
                     print("auto login from kakao")
                     UserApi.shared.logout {(error) in
@@ -358,13 +366,17 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                             print("logout() success.")
                         }
                     }
+                    self.moveToLoginVC()
                 }else if(from == "apple"){
                     print("auto login from apple")
+                    self.alertController(title: "로그아웃 실패", message: "로그아웃에 실패하였습니다. 앱을 종료합니다.", completion: { (response) in
+                        exit(0)
+                    })
                 }
                 
             }
             
-            self.moveToLoginVC()
+            
         })
         
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
@@ -372,6 +384,8 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         alertVC.addAction(cancelAction)
         self.present(alertVC, animated: true, completion: nil)
     }
+    
+
     
     func moveToLoginVC(){
         UserDefaults.standard.removeObject(forKey: UserDefaultKey.userName)
