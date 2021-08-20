@@ -81,6 +81,8 @@ class ChatListViewController: UIViewController {
         })
         
         loadChat()
+        self.chatListTableView.refreshControl?.endRefreshing() // 당겨서 새로고침 종료
+        self.chatListTableView.reloadData()
         
         //당겨서 새로고침
         chatListTableView.refreshControl = UIRefreshControl()
@@ -92,6 +94,7 @@ class ChatListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         chatListTableView.reloadData()
+        print("reload")
         
     }
     
@@ -203,12 +206,13 @@ class ChatListViewController: UIViewController {
                         self.mychatRoom.append(
                             ChatRoom(chatId: doc.documentID, chatRoomName: ChatRoomName, chatRoomDate: Date(timeIntervalSince1970: TimeInterval(ChatRoomDate.seconds)), chatImage: ChatImage))
                         
-                     
+                        self.chatListTableView.reloadData()
                         print(self.mychatRoom)
                     }
-//                    if(self.mychatRoom.count > 1){
-//                        self.chatListTableView.reloadData()
-//                    }
+                    
+                    if(self.mychatRoom.count > 1){
+                        self.chatListTableView.reloadData()
+                    }
                    
                 }
             }
@@ -330,12 +334,19 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource {
         let dateString = DateUtil.latestMessageformatDate(lastestMessage.created)
         print(lastestMessage.created)
         let latestSenderName  = lastestMessage.senderName
-        cell.latestMessageTime.text = dateString
+       
         cell.peopleLabel.text =  "\(userCount[indexPath.row])명 참여 중"
-        cell.message.text = "\(latestSenderName) : \(lastestMessage.content)"
+        
+        if(latestSenderName != ""){
+            cell.message.text = "\(latestSenderName):\(lastestMessage.content)"
+            cell.latestMessageTime.text = dateString
+        }else{
+            cell.message.text = ""
+            cell.latestMessageTime.text = ""
+        }
+        
         
         if let indexImage =  mychatRoom[indexPath.row].chatImage {
-            //print("index image \(indexImage)")
             let urlString = Config.baseUrl + "/static/\(indexImage)"
             if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
                 cell.thumbnail.sd_setImage(with: myURL, completed: nil)
@@ -352,22 +363,6 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
         
     }
-    
-//    // this method handles row deletion
-//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-//
-//        if editingStyle == .delete {
-//
-//            // remove the item from the data model
-//            animals.remove(at: indexPath.row)
-//
-//            // delete the table view row
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-//
-//        } else if editingStyle == .insert {
-//            // Not used in our example, but if you were adding a new row, this is where you would do it.
-//        }
-//    }
     
     //swipe 하여 채팅방 나가기
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

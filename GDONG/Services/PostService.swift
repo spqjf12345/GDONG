@@ -265,7 +265,7 @@ class PostService {
 
                 //서버로 부터 받아오는 쿠키 값이 undefined가 아니면 앱 상 jwtToken 값 업데이트 하기
                 if let session = cookies.filter({$0.name == "token"}).first {
-                    print("============ Cookie vlaue =========== : \(session.value)")
+                    print("============ post upload : Cookie vlaue =========== : \(session.value)")
                     if(session.value != "undefined"){
                         print("////////// update cookie value ///////")
                         UserDefaults.standard.setValue(session.value, forKey: UserDefaultKey.jwtToken)
@@ -296,7 +296,7 @@ class PostService {
     }
     
     // 게시글 가져오기
-    func getAllPosts(completion: @escaping (([Board]?) -> Void)){
+    func getAllPosts(sell: String, completion: @escaping (([Board]?) -> Void)){
         
         
         let headers: HTTPHeaders = [
@@ -304,7 +304,7 @@ class PostService {
         ]
         
         let parameter:Parameters = ["start" : -1,
-                                    "num" : 10] // start : -1 처음부터 ~ 5개
+                                    "num" : 10, "sell" : sell] // start : -1 처음부터 ~ 5개
         AF.request(Config.baseUrl + "/post/recent", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString), headers: headers).validate().responseJSON(completionHandler: { (response) in
 
             print("[API] post/recent")
@@ -327,7 +327,7 @@ class PostService {
                        let responses = obj as! NSDictionary
                
                        guard let posts = responses["posts"] as? [Dictionary<String, Any>] else { return }
-                        //print(posts)
+                        print(posts)
                         let dataJSON = try JSONSerialization.data(withJSONObject: posts, options: .prettyPrinted)
                         let postData = try JSONDecoder().decode([Board]?.self, from: dataJSON)
                         completion(postData)
@@ -570,7 +570,7 @@ class PostService {
         
     }
     
-    func filteredPost(start: Int, num: Int, min_price: Int, max_price: Int, min_dist: Int, max_dist: Int, sortby: String, completion: @escaping (([Board]) -> Void)){
+    func filteredPost(start: Int, num: Int, min_price: Int, max_price: Int, min_dist: Int, max_dist: Int, sortby: String, sell: String, completion: @escaping (([Board]) -> Void)){
         
         
         let headers: HTTPHeaders = [
@@ -583,7 +583,8 @@ class PostService {
                                     "max_price" : max_price,
                                     "min_dist": min_dist,
                                     "max_dist" : max_dist,
-                                    "sortby" : sortby
+                                    "sortby" : sortby,
+                                    "sell" : sell
                                     ]
         
         AF.request(Config.baseUrl + "/post/filter", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString), headers: headers).validate().responseJSON(completionHandler: {

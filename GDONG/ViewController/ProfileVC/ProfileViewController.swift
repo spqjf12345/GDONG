@@ -36,12 +36,12 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var setFollowingCount: UIButton!
     
     @IBAction func followerCount(_ sender: Any) {
-        let dataString = "followers"
+        let dataString = "팔로우"
         performSegue(withIdentifier: "follo", sender: dataString)
     }
     
     @IBAction func followingCount(_ sender: Any) {
-        let dataString = "following"
+        let dataString = "팔로잉"
         performSegue(withIdentifier: "follo", sender: dataString)
     }
     
@@ -52,7 +52,7 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
     private let sec = ["사용자 정보", "알림 설정", "계정 설정"]
     var sec1 = ["판매자 인증하기"]
     var sec2 = ["메세지 알림 허용"]
-    var sec3 = ["로그아웃", "회원 탈퇴", "앱 정보"]
+    var sec3 = ["로그아웃", "회원 탈퇴", "앱 정보", "관리자 문의"]
     
     
     
@@ -289,6 +289,12 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             self.autoLogout(from: from, title: "로그아웃", messege: "로그아웃 하시겠습니까?")
         }else if indexPath.section == 2 && indexPath.row == 1 { //회원 탈퇴
             self.autoLogout(from: from, title: "회원 탈퇴", messege: "회원을 탈퇴하시겠습니까?")
+        }else if indexPath.section == 2 && indexPath.row == 2 { //판매자 문의
+            self.alertController(title: "판매자 문의", message: "불편하신 사항이 있나요? 언제든 spqjf12345@gmail.com로 메일 보내주세요. 메일 앱으로 이동합니다.", completion: { action in
+                if action == "OK"{
+                    self.openMail()
+                }
+            })
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }

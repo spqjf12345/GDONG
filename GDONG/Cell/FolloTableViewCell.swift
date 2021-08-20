@@ -48,10 +48,22 @@ class FolloTableViewCell: UITableViewCell {
     }
     
     public func configure(userName: String){
-        //userImage Set
-//        self.userImage.image = UIImage(named: "person.fill")
-//        print(userImage)
-//        self.userImage.makeCircle()
+        //userImage Set 설정된 이미지가 있으면
+        UserService.shared.getUserProfile(nickName: userName, completion: { (response) in
+            print(response.profileImageUrl)
+            if(response.profileImageUrl != ""){
+                let urlString = Config.baseUrl + "/static/\(response.profileImageUrl)"
+                if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
+                    print(myURL)
+                    self.userImage.sd_setImage(with: myURL, completed: nil)
+                    self.userImage.circle()
+                }
+            }else{
+                let baseImage: UIImage? = UIImage(systemName: "person.fill")?.withRenderingMode(.alwaysOriginal)
+                self.userImage.image = baseImage
+                self.userImage.circle()
+            }
+        })
         self.userName.text = userName
     }
     

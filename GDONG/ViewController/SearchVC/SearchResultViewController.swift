@@ -93,8 +93,7 @@ class SearchResultViewController: UIViewController, TableViewCellDelegate {
 
         FrameTableView.register(nibName, forCellReuseIdentifier: "productCell")
         
-//        HeaderView.frame = CGRect(x: 0, y: 0, width: view.width, height: 50)
-//        FrameTableView.tableHeaderView = HeaderView
+        FrameTableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         FrameTableView.frame = view.bounds
         
         

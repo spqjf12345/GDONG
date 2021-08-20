@@ -88,13 +88,10 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
 
         categoryCollectionView.backgroundColor = .clear
         categoryView.addSubview(categoryCollectionView)
-
-        
-     
-        categoryView.addSubview(categoryCollectionView)
        
         
-        categoryCollectionView.frame = CGRect(x: 10, y: 80, width: view.width - 40, height: 350)
+        categoryCollectionView.frame = CGRect(x: 50, y: 80, width: view.width - 100, height: view.height - 320)
+        
         categoryCollectionView.backgroundColor = .white
         
         view.addSubview(scrollView)
@@ -102,7 +99,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
        
         //-- Dummy --
         self.categoryList = Dummy.shared.categoryList(model: categoryList)
-        //self.user = Dummy.shared.oneUser(model: user)
 
         layout.itemSize = CGSize(width: (categoryCollectionView.width / 3) - 10, height: (categoryCollectionView.width / 3) - 10)
 
@@ -171,7 +167,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         categoryView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10).isActive = true
 
         categoryView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20).isActive = true
-        categoryView.heightAnchor.constraint(equalToConstant: categoryCollectionView.height + 200).isActive = true
+        print("categoru height == \(categoryCollectionView.height) ==")
+        categoryView.heightAnchor.constraint(equalTo: view.heightAnchor, constant: -150).isActive = true
 
 //        tagView.translatesAutoresizingMaskIntoConstraints = false
 //

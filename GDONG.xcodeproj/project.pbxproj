@@ -369,21 +369,9 @@
 		8E772B61267C8C750034C2BF /* CreateNewItem */ = {
 			isa = PBXGroup;
 			children = (
-				8E772B62267C8C750034C2BF /* PhotoCollectionViewCell.xib */,
-				8EF8F7C22689C903003ADFA9 /* TitleCell.xib */,
-				8E772B63267C8C750034C2BF /* PriceCell.xib */,
-				8E772B64267C8C750034C2BF /* ViewCells.swift */,
-				8E772B65267C8C750034C2BF /* PhotoCell.xib */,
-				8E772B67267C8C750034C2BF /* CreateNewItem.storyboard */,
+				8EB54A9F26CE5AAF009C7F7C /* Cell */,
 				8E772B66267C8C750034C2BF /* CreateNewItemViewController.swift */,
-				8E772B68267C8C750034C2BF /* CategoryCell.xib */,
-				8E772B6A267C8C750034C2BF /* CategoryTableView.storyboard */,
 				8E772B6B267C8C750034C2BF /* CategoryTableViewController.swift */,
-				8E772B6C267C8C750034C2BF /* EntityCell.xib */,
-				8E772B6D267C8C750034C2BF /* PhotoCollectionViewCell.swift */,
-				8EF8F1F926935DFD0034BD99 /* NeedCell.xib */,
-				8EF8F1FF26935FD90034BD99 /* LinkCell.xib */,
-				8E9A61D726BE7BCF007AD6EB /* BuySellTableViewCell.xib */,
 			);
 			path = CreateNewItem;
 			sourceTree = "<group>";
@@ -461,6 +449,7 @@
 		8E772BB6267C8CFA0034C2BF /* Storyboard */ = {
 			isa = PBXGroup;
 			children = (
+				8E772B67267C8C750034C2BF /* CreateNewItem.storyboard */,
 				8E42FEFE261D958800763B61 /* LaunchScreen.storyboard */,
 				8EF3BF9F268EE87400415150 /* AdditionalInfo.storyboard */,
 				8E42FEF6261D958100763B61 /* Main.storyboard */,
@@ -481,6 +470,25 @@
 				8E772BBB267C8D7D0034C2BF /* bigapple.jpg */,
 			);
 			path = Image;
+			sourceTree = "<group>";
+		};
+		8EB54A9F26CE5AAF009C7F7C /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				8E772B68267C8C750034C2BF /* CategoryCell.xib */,
+				8E772B6A267C8C750034C2BF /* CategoryTableView.storyboard */,
+				8E772B6C267C8C750034C2BF /* EntityCell.xib */,
+				8E772B6D267C8C750034C2BF /* PhotoCollectionViewCell.swift */,
+				8EF8F1F926935DFD0034BD99 /* NeedCell.xib */,
+				8EF8F1FF26935FD90034BD99 /* LinkCell.xib */,
+				8E9A61D726BE7BCF007AD6EB /* BuySellTableViewCell.xib */,
+				8E772B62267C8C750034C2BF /* PhotoCollectionViewCell.xib */,
+				8EF8F7C22689C903003ADFA9 /* TitleCell.xib */,
+				8E772B63267C8C750034C2BF /* PriceCell.xib */,
+				8E772B64267C8C750034C2BF /* ViewCells.swift */,
+				8E772B65267C8C750034C2BF /* PhotoCell.xib */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		8ED15E982696D6B9002943C9 /* ProfileCell */ = {
@@ -913,7 +921,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = GDONG/GDONG.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.2;
+				CURRENT_PROJECT_VERSION = 1.0.3;
 				DEVELOPMENT_TEAM = FJ57DUH592;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -963,7 +971,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "Develop.com-GDONG";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -982,7 +990,7 @@
 				CODE_SIGN_ENTITLEMENTS = GDONG/GDONG.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.2;
+				CURRENT_PROJECT_VERSION = 1.0.3;
 				DEVELOPMENT_TEAM = FJ57DUH592;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1032,7 +1040,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "Develop.com-GDONG";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -63,7 +63,51 @@ class UserService {
         }
     }
 
+    func getUserProfile(nickName: String, completion: @escaping ((Users) -> Void) ) {
+        let headers: HTTPHeaders = [
+            "Set-Cookie" : "email=\(email); token=\(jwtToken)"
+        ]
+        
+        let parameter: Parameters = ["nickname" : nickName]
+        
+        AF.request(Config.baseUrl + "/user/info", method: .get, parameters: parameter, headers: headers).validate(statusCode: 200...500 ).responseJSON {
+            (response) in
+            print("[UserService] /user/info \(nickName)유저 정보 불러오기")
+            if let httpResponse = response.response, let fields = httpResponse.allHeaderFields as? [String: String]{
+                let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.response?.url)!)
+                HTTPCookieStorage.shared.setCookies(cookies, for: response.response?.url, mainDocumentURL: nil)
 
+                //서버로 부터 받아오는 쿠키 값이 undefined가 아니면 앱 상 jwtToken 값 업데이트 하기
+                if let session = cookies.filter({$0.name == "token"}).first {
+                    print("============ Cookie vlaue =========== : \(session.value)")
+                    if(session.value != "undefined"){
+                        print("////////// update cookie value ///////")
+                        UserDefaults.standard.setValue(session.value, forKey: UserDefaultKey.jwtToken)
+                    }
+                }
+            }
+
+            switch response.result {
+                case .success(let obj):
+                    do {
+                        let responses = obj as! NSDictionary
+                        guard let user = responses["user"] as? Dictionary<String, Any> else { return }
+
+                        let dataJSON = try JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
+
+                        let UserData = try JSONDecoder().decode(Users.self, from: dataJSON)
+                        completion(UserData)
+                    } catch {
+                        print("error: ", error)
+                    }
+
+
+                case .failure(let e):
+                    print(e.errorDescription as Any)
+            }
+        }
+        
+    }
 
     //no such user
     func userQuit(){
@@ -286,6 +330,19 @@ class UserService {
 
         AF.request(Config.baseUrl + "/user/follow", method: .get, parameters: parameters, encoding: URLEncoding.default, headers: headers).validate().responseJSON { (response) in
             print("[UserService] user 팔로우: \(response.result)")
+            if let httpResponse = response.response, let fields = httpResponse.allHeaderFields as? [String: String]{
+                let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.response?.url)!)
+                HTTPCookieStorage.shared.setCookies(cookies, for: response.response?.url, mainDocumentURL: nil)
+
+                //서버로 부터 받아오는 쿠키 값이 undefined가 아니면 앱 상 jwtToken 값 업데이트 하기
+                if let session = cookies.filter({$0.name == "token"}).first {
+                    print("============ Cookie vlaue =========== : \(session.value)")
+                    if(session.value != "undefined"){
+                        print("////////// update cookie value ///////")
+                        UserDefaults.standard.setValue(session.value, forKey: UserDefaultKey.jwtToken)
+                    }
+                }
+            }
             switch response.result {
             case .success(let code):
                 print(code)
@@ -306,6 +363,19 @@ class UserService {
 
         AF.request(Config.baseUrl + "/user/unfollow", method: .get, parameters: parameters, encoding: URLEncoding.default, headers: headers).validate().responseJSON { (response) in
             print("[UserService] user 언팔로우: \(response.result)")
+            if let httpResponse = response.response, let fields = httpResponse.allHeaderFields as? [String: String]{
+                let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.response?.url)!)
+                HTTPCookieStorage.shared.setCookies(cookies, for: response.response?.url, mainDocumentURL: nil)
+
+                //서버로 부터 받아오는 쿠키 값이 undefined가 아니면 앱 상 jwtToken 값 업데이트 하기
+                if let session = cookies.filter({$0.name == "token"}).first {
+                    print("============ Cookie vlaue =========== : \(session.value)")
+                    if(session.value != "undefined"){
+                        print("////////// update cookie value ///////")
+                        UserDefaults.standard.setValue(session.value, forKey: UserDefaultKey.jwtToken)
+                    }
+                }
+            }
             switch response.result {
             case .success(let code):
                 print(code)

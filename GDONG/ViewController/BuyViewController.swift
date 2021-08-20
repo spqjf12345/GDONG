@@ -15,7 +15,7 @@ class BuyViewController: UIViewController, TableViewCellDelegate {
     let more_dropDown: DropDown = {
         let dropDown = DropDown()
         dropDown.width = 100
-        dropDown.dataSource = ["게시글 삭제"]
+        dropDown.dataSource = ["게시글 삭제", "게시글 수정"]
         return dropDown
     }()
     
@@ -53,14 +53,17 @@ class BuyViewController: UIViewController, TableViewCellDelegate {
                                 self.alertViewController(title: "삭제 완료", message: "게시글을 삭제하였습니다", completion: { (response) in})
                             }
                         })
-                        
-                        
-                        
-                       
-                        
                
                     }
                 })
+            }else if(index == 1){ // 게시글 수정
+                let storyBoard = UIStoryboard(name: "CreateNewItem", bundle: nil)
+                let createVC = storyBoard.instantiateViewController(identifier: "CreateNewItemViewController") as? CreateNewItemViewController
+                
+                let content = contents[cell.indexPath![1]]
+                createVC?.selected = content
+                createVC?.editMode = true
+                
             }
         }
     }
@@ -143,7 +146,6 @@ class BuyViewController: UIViewController, TableViewCellDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     
-
         if let detailVC = segue.destination as? DetailNoteViewController {
             if let index = buyTableView.indexPathForSelectedRow {
                 detailVC.oneBoard = contents[index.row]
@@ -157,12 +159,13 @@ class BuyViewController: UIViewController, TableViewCellDelegate {
     var HeaderView: UIView = {
         let headerView = UIView()
         var filterButton = UIButton()
-        filterButton.setTitle(" 검색 필터", for: .normal)
+        filterButton.setTitle("검색 필터", for: .normal)
         filterButton.setImage(UIImage(systemName: "square.fill.text.grid.1x2"), for: .normal)
-        filterButton.tintColor = .black
+        filterButton.tintColor = .systemBackground
         filterButton.setTitleColor(.black, for: .normal)
         headerView.addSubview(filterButton)
-        filterButton.frame = CGRect(x: 280, y: 0, width: 100, height: 50)
+        print("====== header view \( UIScreen.main.bounds.width)")
+        filterButton.frame = CGRect(x: UIScreen.main.bounds.width - 100, y: 0, width: 100, height: 50)
         filterButton.addTarget(self, action: #selector(didTapFilteringButton), for: .touchUpInside)
         return headerView
     }()
@@ -208,13 +211,11 @@ class BuyViewController: UIViewController, TableViewCellDelegate {
         super.viewWillAppear(animated)
         //필터링 된 글에서 받아온 경우가 아닐 경우
         if filtered == false {
-            PostService.shared.getAllPosts(completion: { [self] (response) in
+            PostService.shared.getAllPosts(sell: "false", completion: { [self] (response) in
                 guard let response = response else {
                     return
                 }
-                
-                //판매 글이 false인 글만 받아오기
-                self.contents = response.filter {$0.sell == false }
+                self.contents = response
             })
             buyTableView.reloadData()
         }else {
@@ -232,16 +233,11 @@ class BuyViewController: UIViewController, TableViewCellDelegate {
         let today = Date()
         dateFormatter.locale = Locale(identifier: "ko_kr")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        //print("현재 시간 string")
         let nowString = dateFormatter.string(from: today)
-        //print(nowString)
-        
-        //print("현재 시간 date")
     
         var nowDate = dateFormatter.date(from: nowString)
 
         nowDate = nowDate?.addingTimeInterval(3600 * 9)
-        //print(nowDate)
         
         let interval = nowDate!.timeIntervalSince(date) // -> 초만큼으로 환산
         let diffHour = Int(interval / 3600)
@@ -281,7 +277,9 @@ extension BuyViewController: UITableViewDelegate, UITableViewDataSource{
         cell.productPriceLabel.text = "\(contents[indexPath.row].price ?? 0) 원"
         
         //내가 쓴 글이 아니라면
+        
         if contents[indexPath.row].email != myEmail {
+            
            cell.moreButton.isHidden = true
             cell.moreButton.isEnabled = false
         }
@@ -310,7 +308,7 @@ extension BuyViewController: UITableViewDelegate, UITableViewDataSource{
        return cell
 
     }
-    
+
     
     
     // 디테일뷰 넘어가는 함수

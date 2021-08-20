@@ -36,7 +36,7 @@ class RecentSearchViewController: UITableViewController, RecentSearchTableViewCe
             allButton.setTitle("전체 삭제", for: .normal)
             allButton.addTarget(self, action: #selector(didTapAlldelete), for: .touchUpInside)
             allButton.setTitleColor(UIColor.systemGray, for: .normal)
-            allButton.frame = CGRect(x: 270, y: 5, width: 100, height: 30)
+            allButton.frame = CGRect(x: UIScreen.main.bounds.width - 100, y: 5, width: 100, height: 30)
             view.addSubview(label)
             view.addSubview(allButton)
             return view
@@ -83,7 +83,7 @@ class RecentSearchViewController: UITableViewController, RecentSearchTableViewCe
         let cell = tableView.dequeueReusableCell(withIdentifier: RecentSearchTableViewCell.identifier) as! RecentSearchTableViewCell
         cell.cellDelegate = self
         cell.searchWord.text = searchHistory[indexPath.row]
-
+        cell.searchWord.textColor = UIColor.black
         return cell
     }
     

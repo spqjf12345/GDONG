@@ -137,11 +137,13 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        
         switch authorization.credential {
+        
         case  let appleIDCredential as ASAuthorizationAppleIDCredential:
-            let userIdentifier = appleIDCredential.user
+            print(appleIDCredential)
             
+            let userIdentifier = appleIDCredential.user
+            print(userIdentifier)
             guard let identifyToken = appleIDCredential.identityToken else { return }
             guard let authoredCode = appleIDCredential.authorizationCode else { return }
             guard let fullName = appleIDCredential.fullName else { return }
@@ -156,9 +158,10 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
             print("User Email : \(email)")
             print("User Name : \(fullName)")
             
+            let name = fullName.givenName! + " " + fullName.familyName!
 
             
-            LoginService.shared.oAuth(from: "apple", access_token: tokeStr, name: "\(fullName)")
+            LoginService.shared.oAuth(from: "apple", access_token: tokeStr, name: name)
 
         default:
             break;

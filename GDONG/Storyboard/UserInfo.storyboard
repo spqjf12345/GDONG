@@ -587,14 +587,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8nw-mg-FZQ">
-                                <rect key="frame" x="0.0" y="150" width="414" height="658"/>
+                                <rect key="frame" x="0.0" y="80" width="414" height="728"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ad9-0Z-wi1" userLabel="SearchView">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="150"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder=" 검색" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="zg2-c1-qbi">
-                                        <rect key="frame" x="20" y="50" width="374" height="50"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder=" 검색" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="zg2-c1-qbi">
+                                        <rect key="frame" x="20" y="20" width="374" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemGray4Color"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
@@ -602,9 +603,9 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="zg2-c1-qbi" secondAttribute="trailing" constant="20" id="1ar-QU-reX"/>
-                                    <constraint firstItem="zg2-c1-qbi" firstAttribute="top" secondItem="Ad9-0Z-wi1" secondAttribute="top" constant="50" id="2wn-sS-9wa"/>
-                                    <constraint firstAttribute="height" constant="150" id="N9h-cL-ltp"/>
-                                    <constraint firstAttribute="bottom" secondItem="zg2-c1-qbi" secondAttribute="bottom" constant="50" id="YFz-Fx-Oql"/>
+                                    <constraint firstItem="zg2-c1-qbi" firstAttribute="top" secondItem="Ad9-0Z-wi1" secondAttribute="top" constant="20" id="2wn-sS-9wa"/>
+                                    <constraint firstAttribute="height" constant="80" id="F0v-Bn-ufD"/>
+                                    <constraint firstAttribute="bottom" secondItem="zg2-c1-qbi" secondAttribute="bottom" constant="10" id="YFz-Fx-Oql"/>
                                     <constraint firstItem="zg2-c1-qbi" firstAttribute="leading" secondItem="Ad9-0Z-wi1" secondAttribute="leading" constant="20" id="wLz-lB-8eV"/>
                                 </constraints>
                             </view>
@@ -674,6 +675,9 @@
         <image name="person" catalog="system" width="128" height="117"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -70,30 +70,30 @@ class SearchFilteringViewController: UIViewController, UITextFieldDelegate {
         
         let sortText = find_sortText()
         
-        PostService.shared.filteredPost(start: -1, num: 100, min_price: minPrice, max_price: maxPrice, min_dist: 0, max_dist: distValue, sortby: sortText, completion: { [self] (response) in
-            self.filteredBoard = response
-            
-            self.navigationController?.popViewController(animated: true)
-           
-            let previousVC = self.navigationController?.viewControllers.last as! MainViewController
-            
-            if(self.from == "buy") { // 구매글
+        self.navigationController?.popViewController(animated: true)
+       
+        let previousVC = self.navigationController?.viewControllers.last as! MainViewController
+        
+        if(self.from == "buy") { // 구매글
+            PostService.shared.filteredPost(start: -1, num: 100, min_price: minPrice, max_price: maxPrice, min_dist: 0, max_dist: distValue, sortby: sortText, sell: "false", completion: { [self] (response) in
+                self.filteredBoard = response
                 
-                filteredBoard = filteredBoard.filter { $0.sell == false}
-                print("\(from) 필터링 된 글 \(self.filteredBoard)")
-                let buyVC = previousVC.viewControllers[0] as! BuyViewController
-                buyVC.contents = self.filteredBoard
-                buyVC.filtered = true
-                self.delegate?.filteredPosts(filteredPostArray: self.filteredBoard)
-            }else {
-                filteredBoard = filteredBoard.filter { $0.sell == true}
-                print("\(from) 필터링 된 글 \(self.filteredBoard)")
-                let sellVC = previousVC.viewControllers[0] as! SellViewController
-                sellVC.contents = self.filteredBoard
-                sellVC.filtered = true
-                self.delegate?.filteredPosts(filteredPostArray: self.filteredBoard)
-            }
+            print("\(from) 필터링 된 글 \(self.filteredBoard)")
+            let buyVC = previousVC.viewControllers[0] as! BuyViewController
+            buyVC.contents = self.filteredBoard
+            buyVC.filtered = true
+            self.delegate?.filteredPosts(filteredPostArray: self.filteredBoard)
+            })
+        }else {
+            PostService.shared.filteredPost(start: -1, num: 100, min_price: minPrice, max_price: maxPrice, min_dist: 0, max_dist: distValue, sortby: sortText, sell: "true", completion: { [self] (response) in
+                self.filteredBoard = response
+            print("\(from) 필터링 된 글 \(self.filteredBoard)")
+            let sellVC = previousVC.viewControllers[0] as! SellViewController
+            sellVC.contents = self.filteredBoard
+            sellVC.filtered = true
+            self.delegate?.filteredPosts(filteredPostArray: self.filteredBoard)
         })
+        }
     }
     
     override func viewDidLoad() {

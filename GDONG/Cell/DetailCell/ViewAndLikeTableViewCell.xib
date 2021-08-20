@@ -18,25 +18,27 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="조회수  no " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AbI-2v-gvx">
-                        <rect key="frame" x="20" y="10" width="77" height="38"/>
+                        <rect key="frame" x="20" y="20" width="77" height="48"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" name="avatarViewBackground"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="관심 수 no " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eoT-vU-urj">
-                        <rect key="frame" x="127" y="10" width="77" height="38"/>
+                        <rect key="frame" x="127" y="20" width="77" height="48"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" name="avatarViewBackground"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="AbI-2v-gvx" secondAttribute="bottom" constant="40" id="1TY-X3-d6q"/>
-                    <constraint firstItem="eoT-vU-urj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="W4Q-qr-hYZ"/>
-                    <constraint firstAttribute="bottom" secondItem="eoT-vU-urj" secondAttribute="bottom" constant="40" id="ZUR-af-NwR"/>
-                    <constraint firstItem="AbI-2v-gvx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="hTq-0H-TuX"/>
+                    <constraint firstItem="AbI-2v-gvx" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="98y-jp-8OD"/>
+                    <constraint firstItem="AbI-2v-gvx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="Esi-O8-nNE"/>
+                    <constraint firstItem="eoT-vU-urj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="Nvn-7d-e3O"/>
+                    <constraint firstAttribute="bottom" secondItem="AbI-2v-gvx" secondAttribute="bottom" constant="20" id="Xjq-mz-6bc"/>
+                    <constraint firstItem="eoT-vU-urj" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="ezV-UP-Ana"/>
                     <constraint firstItem="eoT-vU-urj" firstAttribute="leading" secondItem="AbI-2v-gvx" secondAttribute="trailing" constant="30" id="p3w-sr-lyj"/>
                     <constraint firstItem="AbI-2v-gvx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" symbolic="YES" id="rEx-U3-EDS"/>
+                    <constraint firstAttribute="bottom" secondItem="eoT-vU-urj" secondAttribute="bottom" constant="20" id="ttI-M9-tZY"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

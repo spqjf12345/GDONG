@@ -36,6 +36,7 @@ class categoryCollectionViewCell: UICollectionViewCell {
         self.categoryImage.contentMode = .scaleAspectFill
         self.categoryImage.clipsToBounds = true
         self.categoryText.text = model.categoryText
+        self.categoryText.textColor = UIColor.darkGray
     }
     
     func settupFont(){

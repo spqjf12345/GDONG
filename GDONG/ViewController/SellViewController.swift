@@ -63,7 +63,7 @@ class SellViewController: UIViewController {
         filterButton.tintColor = .black
         filterButton.setTitleColor(.black, for: .normal)
         headerView.addSubview(filterButton)
-        filterButton.frame = CGRect(x: 280, y: 0, width: 100, height: 50)
+        filterButton.frame = CGRect(x: UIScreen.main.bounds.width - 100, y: 0, width: 100, height: 50)
         filterButton.addTarget(self, action: #selector(didTapFilteringButton), for: .touchUpInside)
         return headerView
     }()
@@ -71,13 +71,13 @@ class SellViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         if filtered == false {
-            PostService.shared.getAllPosts(completion: { [self] (response) in
+            PostService.shared.getAllPosts(sell: "true", completion: { [self] (response) in
                 guard let response = response else {
                     return
                 }
                 
                 //판매 글이 true인 글만 받아오기
-                self.contents = response.filter {$0.sell == true }
+                self.contents = response
             })
             sellTableView.reloadData()
         }else {

@@ -28,7 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Override point for customization after application launch.
         KakaoSDKCommon.initSDK(appKey: "1cb2a37d6920168105b844b889d7766f") // native key
         let signInCofig = GIDConfiguration.init(clientID: "966907908166-emcm81mpq4217qoqtkl9c3ndjcdl5to5.apps.googleusercontent.com")
-//        GIDSignIn.sharedInstance.clientID = "966907908166-emcm81mpq4217qoqtkl9c3ndjcdl5to5.apps.googleusercontent.com"
         
         self.locationManager = CLLocationManager()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -41,22 +40,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         
         //apple id 기반으로 사용자 인증 요청
-//        let appleIDProvider = ASAuthorizationAppleIDProvider()
-//        appleIDProvider.getCredentialState(forUserID: KeychainItem.currentUserIdentifier) { (credentialState, error) in
-//            switch credentialState {
-//            case .authorized:
-//                print("apple authorized")
-//                break // The Apple ID credential is valid.
-//            case .revoked, .notFound:
-//                // The Apple ID credential is either revoked or was not found, so show the sign-in UI.
-//                DispatchQueue.main.async {
-//                    print(".revoked, .notFound")
-//                    //self.window?.rootViewController?.showLoginViewController()
-//                }
-//            default:
-//                break
-//            }
-//        }
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        appleIDProvider.getCredentialState(forUserID: KeychainItem.currentUserIdentifier) { (credentialState, error) in
+            switch credentialState {
+            case .authorized:
+                print("apple authorized")
+                break // The Apple ID credential is valid.
+            case .revoked, .notFound:
+                // The Apple ID credential is either revoked or was not found, so show the sign-in UI.
+                DispatchQueue.main.async {
+                    print(".revoked, .notFound")
+                    //self.window?.rootViewController?.showLoginViewController()
+                }
+            default:
+                break
+            }
+        }
         
 //        if #available(iOS 8.0, *) {
 //              // For iOS 10 display notification (sent via APNS)

@@ -134,9 +134,15 @@ class CreateNewItemViewController: UIViewController {
   /// AllCases of enum `Cells`, the list used as tableview Layout order.
   private let cellList = Cells.allCases
   
+    
+    var editMode: Bool = false
+    var selected: Board?
+    
   /// MARK: ViewDidLoad
   override func viewDidLoad() {
     super.viewDidLoad()
+    print("수정하기에서 넘어온 글 \(selected)")
+    
     
     tableView.dataSource = self
     tableView.delegate = self
@@ -194,6 +200,7 @@ class CreateNewItemViewController: UIViewController {
         guard let isSeller = UserDefaults.standard.bool(forKey: UserDefaultKey.isSeller) as? Bool else {
             return
         }
+        
         print(isSeller)
         if(isSeller == false){ // seller 권한 없는데 이 모드로 글 쓰려 한다면
             self.alertViewController(title: "권한 없음", message: "판매자 글쓰기 권한이 없습니다", completion: { (response) in
@@ -428,6 +435,10 @@ extension CreateNewItemViewController: UITableViewDataSource {
           
       default:
         break
+    }
+    
+    if(selected != nil) {
+        print("여기서 수정")
     }
     
     return cell

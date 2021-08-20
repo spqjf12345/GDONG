@@ -19,6 +19,7 @@ class RecentSearchTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        contentView.backgroundColor = UIColor.white
     }
     weak var cellDelegate: RecentSearchTableViewCellDelegate?
     

@@ -23,17 +23,17 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
     
     var bottomView: UIView = {
         var view = UIView()
-        view.backgroundColor = .systemYellow
+        view.backgroundColor = .systemGray2
         var goToChatButton = UIButton()
         goToChatButton.setTitle("채팅 방 가기", for: .normal)
         goToChatButton.setTitleColor(UIColor.white, for: .highlighted)
-        goToChatButton.backgroundColor = UIColor.orange
+        goToChatButton.backgroundColor = UIColor.darkGray
         goToChatButton.layer.cornerRadius = 5
         goToChatButton.titleEdgeInsets = UIEdgeInsets(top: 10,left: 10,bottom: 10,right: 10)
         goToChatButton.addTarget(self, action: #selector(didTapGoToChatRoom), for: .touchUpInside)
         
         view.addSubview(goToChatButton)
-        goToChatButton.frame = CGRect(x: 220, y: 20, width: 150, height: 50)
+        goToChatButton.frame = CGRect(x: UIScreen.main.bounds.width - 200, y: 20, width: 150, height: 50)
         return view
     }()
     
@@ -79,7 +79,6 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         FrameTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 
         FrameTableView.separatorInset.left = 0
-
   
         FrameTableView.separatorColor = UIColor.lightGray
         FrameTableView.isEditing = false
@@ -88,6 +87,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         FrameTableView.delegate = self
         FrameTableView.dataSource = self
         FrameTableView.estimatedRowHeight = 80
+        FrameTableView.tableFooterView = UIView()
         FrameTableView.rowHeight = UITableView.automaticDimension
     }
     
@@ -104,7 +104,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
             alertController()
         }else {
             guard let userEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
-                print("no exists user ")
+                print("no exists user")
                 return
             }
             addUserToChat(userEamil: userEmail, completed: {(response) in
@@ -195,6 +195,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
             self.showToast(message: "관심 글에 등록되었습니다.", font: .systemFont(ofSize: 12.0))
         }
     }
+    
     //contentView content
     func makeContentView(contentTextView : UITextView) -> NSAttributedString {
         
@@ -251,7 +252,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
 extension DetailNoteViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

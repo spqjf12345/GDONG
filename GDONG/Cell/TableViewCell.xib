@@ -53,7 +53,6 @@
                         <constraints>
                             <constraint firstAttribute="width" secondItem="YxJ-iM-kHA" secondAttribute="height" multiplier="22:23" id="fh3-lz-VXD"/>
                         </constraints>
-                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <state key="normal" backgroundImage="ellipsis" catalog="system"/>
                         <connections>
                             <action selector="moreButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="3P1-Np-Vvp"/>

@@ -25,7 +25,9 @@ class MainViewController : TabmanViewController {
     
     
     @IBAction func search(_ sender: Any) {
-        performSegue(withIdentifier: "searchButton", sender: self)
+        guard let searchVC = self.storyboard?.instantiateViewController(identifier: "searchButton") as? SearchViewController else { return }
+        self.navigationController?.pushViewController(searchVC, animated: true)
+        //performSegue(withIdentifier: "searchButton", sender: self)
     }
     
     @IBAction func add(_ sender: Any) {
@@ -67,7 +69,7 @@ class MainViewController : TabmanViewController {
             self.getLocation(longitude: longitude, latitude: latitude, complete: { [self] (response) in
                 self.locationString = response
                 let LocationBarButton: UIBarButtonItem = UIBarButtonItem(title: locationString, style: .plain, target: nil, action: nil)
-                LocationBarButton.tintColor = .black
+                LocationBarButton.tintColor = .systemFill
                 navigationItem.leftBarButtonItem = LocationBarButton
             })
         })
