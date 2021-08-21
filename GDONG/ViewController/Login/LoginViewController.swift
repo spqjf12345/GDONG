@@ -143,7 +143,22 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
             print(appleIDCredential)
             
             let userIdentifier = appleIDCredential.user
-            print(userIdentifier)
+            
+            if (appleIDCredential.fullName?.givenName) != nil && (appleIDCredential.fullName?.familyName) != nil {
+                print("initial login")
+                let initialName = (appleIDCredential.fullName?.givenName!)! + " " + (appleIDCredential.fullName?.familyName!)!
+                UserDefaults.standard.setValue(initialName, forKey: UserDefaultKey.appleIdentifier)
+                LoginService.shared.oAuth(from: "apple", access_token: String(data: appleIDCredential.identityToken!,encoding: .utf8)!, name: initialName)
+            }else {
+                print("logout and re apple login")
+                guard let name = UserDefaults.standard.string(forKey: UserDefaultKey.appleIdentifier) else {
+                    return
+                }
+                LoginService.shared.oAuth(from: "apple", access_token: String(data: appleIDCredential.identityToken!,encoding: .utf8)!, name: name)
+            }
+            print(String(data: appleIDCredential.identityToken!,encoding: .utf8)!)
+
+            
             guard let identifyToken = appleIDCredential.identityToken else { return }
             guard let authoredCode = appleIDCredential.authorizationCode else { return }
             guard let fullName = appleIDCredential.fullName else { return }
@@ -151,17 +166,14 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
             guard let tokeStr = String(data: identifyToken, encoding: .utf8) else { return }
             guard let codeStr = String(data: authoredCode, encoding: .utf8) else { return }
             
+           
             print("Apple login")
             print("identifyToken : \(tokeStr)")
             print("authoredCode : \(codeStr)")
             print("User ID : \(userIdentifier)")
             print("User Email : \(email)")
             print("User Name : \(fullName)")
-            
-            let name = fullName.givenName! + " " + fullName.familyName!
-
-            
-            LoginService.shared.oAuth(from: "apple", access_token: tokeStr, name: name)
+           
 
         default:
             break;

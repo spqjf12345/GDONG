@@ -125,6 +125,13 @@ class LoginService {
             UIApplication.shared.windows.first?.makeKeyAndVisible()
 
         }else {
+            UserService.shared.getUserInfo(completion: { (response) in
+                //위치 정보 값이 없으면
+                if(response.location.coordinates[0] == -1 || response.location.coordinates[1] == -1){
+                    let locationVC = UIStoryboard.init(name: "AdditionalInfo", bundle: nil).instantiateViewController(withIdentifier: "nickName")
+                }
+            })
+            //메인 뷰로 진입
             let tabBarViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "tabbar") as! UITabBarController
 
             UIApplication.shared.windows.first?.rootViewController = tabBarViewController

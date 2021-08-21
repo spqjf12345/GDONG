@@ -133,7 +133,7 @@ extension FolloViewController: UITableViewDelegate, UITableViewDataSource, Follo
         guard let getUserProfileVC = self.storyboard?.instantiateViewController(identifier: "getUserProfile") as? GetUserProfileViewController else { return }
         let userNickName = FilteredList[indexPath.row]
         UserService.shared.getUserProfile(nickName: userNickName, completion: { (response) in
-            getUserProfileVC.userInfo = response
+            getUserProfileVC.userInfo = response.nickName
             self.navigationController?.pushViewController(getUserProfileVC, animated: true)
         })
         

@@ -304,7 +304,7 @@ class PostService {
         ]
         
         let parameter:Parameters = ["start" : -1,
-                                    "num" : 10, "sell" : sell] // start : -1 처음부터 ~ 5개
+                                    "num" : 1000, "sell" : sell] // start : -1 처음부터 ~ 5개
         AF.request(Config.baseUrl + "/post/recent", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString), headers: headers).validate().responseJSON(completionHandler: { (response) in
 
             print("[API] post/recent")
@@ -586,7 +586,7 @@ class PostService {
                                     "sortby" : sortby,
                                     "sell" : sell
                                     ]
-        
+        print(parameter)
         AF.request(Config.baseUrl + "/post/filter", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString), headers: headers).validate().responseJSON(completionHandler: {
             (response) in
             print("[API] /post/filter 된 글 가져오기")

@@ -262,8 +262,6 @@ class CreateNewItemViewController: UIViewController {
         let db = Firestore.firestore().collection("Chats").document("\(postId)")
         db.setData(data)
         ChatListViewController().loadChat()
-        
-
     }
     
 
