@@ -5,6 +5,7 @@
 //
 //  Created by Woochan Park on 2021/04/22.
 //
+
 import UIKit
 import PhotosUI
 import Alamofire
@@ -31,6 +32,7 @@ private enum InvalidValueError: String, Error {
   case invalidLink
   case invalidEntity
   case invalidBuySellCell
+  case invalidLocation
 }
 
 struct chatData {
@@ -137,6 +139,14 @@ class CreateNewItemViewController: UIViewController {
     
     var editMode: Bool = false
     var selected: Board?
+    var user: Users?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        UserService.shared.getUserInfo(completion: { (response) in
+            self.user = response
+        })
+    }
     
   /// MARK: ViewDidLoad
   override func viewDidLoad() {
@@ -307,11 +317,55 @@ class CreateNewItemViewController: UIViewController {
       throw InvalidValueError.invalidEntity
     }
     
+    guard let user = user else { return }
+    
+    if(user.location.coordinates[0] == -1 || user.location.coordinates[0] == -1) {
+        //유저의 위치 값 설정이 되어 있지 않을때
+        //글쓸 수 없음 -> 프로파일 -> 위치값 셋팅 후 글 쓰기 가능
+        throw InvalidValueError.invalidLocation
+    }
+    
+    
+    
+    
+    
   }
   
   fileprivate func presentAlert(with error: InvalidValueError) {
+    var errorMessage: String = ""
     
-    let alert = UIAlertController(title: "비어있는 곳들을 채워주세요", message: error.rawValue , preferredStyle: .alert)
+    switch error {
+        case .invalidBuySellCell:
+            errorMessage = "구매글인지 판매글인지 선택해주세요"
+            break
+        case .invalidCategory:
+            errorMessage = "카테고리를 선택해주세요"
+            break
+        case .invalidEntity:
+            errorMessage = "글 내용을 입력해주세요"
+            break
+        case .invalidLink:
+            errorMessage = "링크를 입력해주세요"
+            break
+        case .invalidLocation:
+            errorMessage = "프로파일 -> 위치 값을 설정해주세요"
+            break
+        case .invalidNeedPeople:
+            errorMessage = "필요 인원을 입력해주세요"
+            break
+        case .invalidPhoto:
+            errorMessage = "사진을 한장 이상 선택해주세요"
+            break
+        case .invalidTitle:
+            errorMessage = "글 제목을 입력해주세요"
+            break
+        case .invalidePrice:
+            errorMessage = "가격을 입력해주세요"
+            break
+    }
+    
+    
+    let alert = UIAlertController(title: "글 생성 실패", message: errorMessage , preferredStyle: .alert)
     
     let action = UIAlertAction(title: "확인", style: .default, handler: nil)
     

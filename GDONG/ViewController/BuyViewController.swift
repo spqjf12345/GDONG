@@ -15,7 +15,7 @@ class BuyViewController: UIViewController, TableViewCellDelegate {
     let more_dropDown: DropDown = {
         let dropDown = DropDown()
         dropDown.width = 100
-        dropDown.dataSource = ["게시글 삭제", "게시글 수정"]
+        dropDown.dataSource = ["게시글 삭제"]
         return dropDown
     }()
     
@@ -56,15 +56,16 @@ class BuyViewController: UIViewController, TableViewCellDelegate {
                
                     }
                 })
-            }else if(index == 1){ // 게시글 수정
-                let storyBoard = UIStoryboard(name: "CreateNewItem", bundle: nil)
-                let createVC = storyBoard.instantiateViewController(identifier: "CreateNewItemViewController") as? CreateNewItemViewController
-                
-                let content = contents[cell.indexPath![1]]
-                createVC?.selected = content
-                createVC?.editMode = true
-                
             }
+//            else if(index == 1){ // 게시글 수정
+//                let storyBoard = UIStoryboard(name: "CreateNewItem", bundle: nil)
+//                let createVC = storyBoard.instantiateViewController(identifier: "CreateNewItemViewController") as? CreateNewItemViewController
+//
+//                let content = contents[cell.indexPath![1]]
+//                createVC?.selected = content
+//                createVC?.editMode = true
+//
+//            }
         }
     }
     
@@ -159,19 +160,17 @@ class BuyViewController: UIViewController, TableViewCellDelegate {
     var HeaderView: UIView = {
         let headerView = UIView()
         var filterButton = UIButton()
-        filterButton.setTitle("검색 필터", for: .normal)
+        filterButton.setTitle(" 검색 필터", for: .normal)
         filterButton.setImage(UIImage(systemName: "square.fill.text.grid.1x2"), for: .normal)
-        filterButton.tintColor = .systemBackground
+        filterButton.tintColor = .black
         filterButton.setTitleColor(.black, for: .normal)
         headerView.addSubview(filterButton)
-        print("====== header view \( UIScreen.main.bounds.width)")
         filterButton.frame = CGRect(x: UIScreen.main.bounds.width - 100, y: 0, width: 100, height: 50)
         filterButton.addTarget(self, action: #selector(didTapFilteringButton), for: .touchUpInside)
         return headerView
     }()
     
     @objc func didTapFilteringButton(){
-        
         let filteringVC = UIStoryboard.init(name: "Search", bundle: nil).instantiateViewController(withIdentifier: "searchFilter") as! SearchFilteringViewController
         filteringVC.from = "buy"
         filteringVC.hidesBottomBarWhenPushed = true

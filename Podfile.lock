@@ -421,6 +421,7 @@ PODS:
   - Starscream (2.1.1)
   - Tabman (2.11.1):
     - Pageboy (~> 3.6.0)
+  - TagListView (1.4.1)
   - TTGTagCollectionView (2.0.1)
 
 DEPENDENCIES:
@@ -446,6 +447,7 @@ DEPENDENCIES:
   - Scaledrone (~> 0.3.0)
   - SDWebImage (~> 5.0)
   - Tabman (~> 2.9)
+  - TagListView (~> 1.0)
   - TTGTagCollectionView
 
 SPEC REPOS:
@@ -490,6 +492,7 @@ SPEC REPOS:
     - SDWebImage
     - Starscream
     - Tabman
+    - TagListView
     - TTGTagCollectionView
 
 SPEC CHECKSUMS:
@@ -533,8 +536,9 @@ SPEC CHECKSUMS:
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   Starscream: 142bd8ef24592d985daee9fa48c936070b85b15f
   Tabman: 792ac76fd1ec95af175c93db880a3c47cabedc91
+  TagListView: a1c236d17960a0cf64156725a76ce6d73ebce2be
   TTGTagCollectionView: 29d01ece199c257943ba490e9989734382cda5ae
 
-PODFILE CHECKSUM: b6eff05fd6a83aa2ad51a9b3c2aaa433ae7b0a4c
+PODFILE CHECKSUM: 0aecbade8eea4e1297b97d6c5f3704e0fefeaee2
 
 COCOAPODS: 1.10.1

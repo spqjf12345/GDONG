@@ -22,7 +22,8 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var userImage: SDAnimatedImageView!
     
     
-//    var nameValue: String = ""
+    @IBOutlet weak var isSellerButton: UIButton!
+    //    var nameValue: String = ""
 //    var nowLatitude: Double = -1.0
 //    var nowLongitude: Double = -1.0
     
@@ -88,11 +89,10 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
         
     }
 
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        locationSetting()
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(editImage))
         imageEditButton.addGestureRecognizer(tapGestureRecognizer)
         imageEditButton.isUserInteractionEnabled = true
@@ -109,6 +109,7 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
     
     func infoLoad(){
         self.userImage.circle()
+        self.userImage.contentMode = .scaleAspectFill
         UserService.shared.getUserInfo(completion: { (user) in
             self.userInfo = user
             if(user.profileImageUrl != ""){
@@ -117,9 +118,17 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
                     
                     if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
                         self.userImage.sd_setImage(with: myURL, completed: nil)
-                        self.userImage.contentMode = .scaleAspectFill
                 }
+            }else {
+                self.userImage.image = UIImage(systemName: "person.fill")
+                
             }
+            if(user.isSeller == true){
+                self.isSellerButton.isHidden = false
+            }else {
+                self.isSellerButton.isHidden = true
+            }
+  
         })
     }
     
@@ -306,7 +315,7 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
         }else if(indexPath.section == 0 && indexPath.row == 1){
             let cell = tableView.dequeueReusableCell(withIdentifier: InputTableViewCell.identifier) as! InputTableViewCell
             cell.label.text = "위치 :"
-            cell.setLocation()
+            cell.setLocation(longitude: self.userInfo.location.coordinates[0], latitude: self.userInfo.location.coordinates[1])
             cell.delegate = self
             cell.indexPath = indexPath
             return cell

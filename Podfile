@@ -35,6 +35,7 @@ pod 'Kingfisher', '~> 6.0'
 pod 'SDWebImage', '~> 5.0'
 pod 'DropDown'
 pod 'InputBarAccessoryView'
+pod 'TagListView', '~> 1.0'
 
 
 end

@@ -48,17 +48,9 @@ class InputTableViewCell: UITableViewCell, CLLocationManagerDelegate {
            return UINib(nibName: "InputTableViewCell", bundle: nil)
     }
     
-    func setLocation(){
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        let coor = locationManager.location?.coordinate
-        let latitude = coor?.latitude
-        let longitude = coor?.longitude
+    func setLocation(longitude: Double, latitude: Double){
 
-        print(latitude!)
-        print(longitude!)
-
-        let findLocation = CLLocation(latitude: latitude!, longitude: longitude!)
+        let findLocation = CLLocation(latitude: latitude, longitude: longitude)
         let geocoder = CLGeocoder()
         let locale = Locale(identifier: "Ko-kr")
 

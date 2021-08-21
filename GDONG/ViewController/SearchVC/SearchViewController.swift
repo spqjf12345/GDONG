@@ -6,8 +6,10 @@
 //
 
 import UIKit
+import TagListView
 
 class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate {
+    
     
     var searchController: UISearchController!
     var resultsTableController: SearchResultViewController!
@@ -15,22 +17,21 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     
 
     var categoryList:[Category] = []
-    
+    var tagList: [String] = ["배달 음식", "알리 익스프레스", "정규 앨범", "복숭아"]
     /// Data model for the table view.
     var board = [Board]()
     //var user = [Users]()
     var filteredBoard = [Board]()
     
-    let categoryView: UIView = {
-        let view = UIView()
-        var label = UILabel(frame: CGRect(x: 20, y: 10, width: 200, height: 50))
-        label.text = "구매 카테고리"
-        label.font = .boldSystemFont(ofSize: 20)
-        view.addSubview(label)
-        view.layer.borderWidth = 2
-        view.layer.borderColor = UIColor.systemGray.cgColor
-        return view
-    }()
+    @IBOutlet weak var mainView: UIView!
+    
+    @IBOutlet weak var categoryView: UIView!
+    
+    @IBOutlet weak var recommendView: UIView!
+    @IBOutlet weak var tagCollectionView: TagListView!
+    @IBOutlet weak var categoryCollectionView: UICollectionView!
+    
+    
     
 //    let tagView: UIView = {
 //        let view = UIView()
@@ -43,11 +44,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
 //        return view
 //    }()
     
-    let scrollView: UIScrollView = {
-        let scroll = UIScrollView()
-        
-        return scroll
-    }()
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
@@ -63,52 +59,70 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         
     }
 
-    var categoryCollectionView: UICollectionView!
+
     
     //var tagCollectionview: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .white
+        UISetting()
+        collectionViewSetting()
         initSearchController()
-        let layout = UICollectionViewFlowLayout()
+        tagCollectionViewSetting()
         
-//        tagCollectionview = UICollectionView(frame: .zero, collectionViewLayout: layout)
-//        tagCollectionview.dataSource = self
-//        tagCollectionview.delegate = self
-//        tagCollectionview.register(categoryCollectionViewCell.nib(), forCellWithReuseIdentifier: categoryCollectionViewCell.identifier)
-        
-        
-        categoryCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        categoryCollectionView.register(categoryCollectionViewCell.nib(), forCellWithReuseIdentifier: categoryCollectionViewCell.identifier)
-        categoryCollectionView.delegate = self
-        categoryCollectionView.dataSource = self
-        makeLayout(layout: layout)
 
-        categoryCollectionView.backgroundColor = .clear
-        categoryView.addSubview(categoryCollectionView)
-       
-        
-        categoryCollectionView.frame = CGRect(x: 50, y: 80, width: view.width - 100, height: view.height - 320)
-        
-        categoryCollectionView.backgroundColor = .white
-        
-        view.addSubview(scrollView)
-        auto_layout()
-       
         //-- Dummy --
         self.categoryList = Dummy.shared.categoryList(model: categoryList)
 
-        layout.itemSize = CGSize(width: (categoryCollectionView.width / 3) - 10, height: (categoryCollectionView.width / 3) - 10)
 
 
+    }
+    
+    func UISetting(){
+        categoryView.layer.borderWidth = 2
+        categoryView.layer.borderColor = UIColor.systemGray.cgColor
+        categoryView.backgroundColor = .white
+        
+        recommendView.layer.borderWidth = 2
+        recommendView.layer.borderColor = UIColor.systemGray.cgColor
+        recommendView.backgroundColor = .white
+    }
+    
+    func collectionViewSetting(){
+        categoryCollectionView.register(categoryCollectionViewCell.nib(), forCellWithReuseIdentifier: categoryCollectionViewCell.identifier)
+        categoryCollectionView.delegate = self
+        categoryCollectionView.dataSource = self
+        categoryCollectionView.backgroundColor = .blue
+        let flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        categoryCollectionView.collectionViewLayout = flowLayout
+        makeLayout(layout: flowLayout)
+
+        categoryCollectionView.backgroundColor = .clear
+    }
+    
+    func tagCollectionViewSetting(){
+        
+        tagCollectionView.textFont = UIFont.systemFont(ofSize: 16)
+        tagCollectionView.cornerRadius = 15
+        
+        tagCollectionView.textColor = .white
+        tagCollectionView.tagBackgroundColor = .darkGray
+        tagCollectionView.marginY = 15
+        tagCollectionView.marginX = 15
+        tagCollectionView.paddingX = 10
+        tagCollectionView.paddingY = 10
+        tagCollectionView.alignment = .center // possible values are .Left, .Center, and .Right
+        tagCollectionView.addTags(tagList)
+        tagCollectionView.delegate = self
+        
     }
 
     
     func makeLayout(layout: UICollectionViewFlowLayout){
+        layout.itemSize = CGSize(width: (categoryCollectionView.width / 3) - 20, height: (categoryCollectionView.width / 3) - 20)
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 15
+        //layout.minimumLineSpacing = 15
+        
     }
     
 
@@ -154,22 +168,32 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     
 
     func auto_layout(){
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        scrollView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        scrollView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+//        scrollView.translatesAutoresizingMaskIntoConstraints = false
+//        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+//        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+//        scrollView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+//        scrollView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+//
+//        categoryView.translatesAutoresizingMaskIntoConstraints = false
+//        scrollView.addSubview(categoryView)
+//
+//        categoryView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 10).isActive = true
+//        categoryView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10).isActive = true
+//
+//        categoryView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20).isActive = true
+//        print("categoru height == \(categoryCollectionView.height) ==")
+//        categoryView.heightAnchor.constraint(equalTo: view.heightAnchor, constant: -150).isActive = true
 
-        categoryView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(categoryView)
         
-        categoryView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 10).isActive = true
-        categoryView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10).isActive = true
-
-        categoryView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20).isActive = true
-        print("categoru height == \(categoryCollectionView.height) ==")
-        categoryView.heightAnchor.constraint(equalTo: view.heightAnchor, constant: -150).isActive = true
-
+//        categoryCollectionView.translatesAutoresizingMaskIntoConstraints = false
+//        categoryCollectionView.leadingAnchor.constraint(equalTo: categoryView.leadingAnchor).isActive = true
+//        //categoryCollectionView.trailingAnchor.constraint(equalTo: categoryView.trailingAnchor).isActive = true
+//        categoryCollectionView.topAnchor.constraint(equalTo: categoryView.topAnchor).isActive = true
+//        categoryCollectionView.bottomAnchor.constraint(equalTo: categoryView.bottomAnchor).isActive = true
+//        categoryCollectionView.widthAnchor.constraint(equalTo: categoryView.widthAnchor, constant: -20).isActive = true
+//        categoryCollectionView.heightAnchor.constraint(equalTo: categoryView.heightAnchor, constant: -150).isActive = true
+        
+        
 //        tagView.translatesAutoresizingMaskIntoConstraints = false
 //
 //        scrollView.addSubview(tagView)
@@ -227,6 +251,14 @@ extension SearchViewController: UISearchResultsUpdating {
     
 }
 
+extension SearchViewController: TagListViewDelegate{
+    func tagPressed(_ title: String, tagView: TagView, sender: TagListView) {
+      
+        let searchResultVC = SearchResultViewController()
+        searchResultVC.searchWord = title
+        self.navigationController?.pushViewController(searchResultVC, animated: true)
+    }
+}
 
 
 
