@@ -257,6 +257,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="Get-aM-TFT"/>
         <segue reference="Hs9-pf-0yQ"/>
     </inferredMetricsTieBreakers>
     <resources>

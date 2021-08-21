@@ -370,9 +370,6 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 }else if(from == "apple"){
                     print("auto login from apple")
                     self.moveToLoginVC()
-//                    self.alertController(title: "로그아웃 실패", message: "로그아웃에 실패하였습니다. 앱을 종료합니다.", completion: { (response) in
-//                        exit(0)
-//                    })
                 }
                 
             }

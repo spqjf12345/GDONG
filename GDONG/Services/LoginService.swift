@@ -126,9 +126,12 @@ class LoginService {
 
         }else {
             UserService.shared.getUserInfo(completion: { (response) in
-                //위치 정보 값이 없으면
+                //위치 정보 값이 없으면 값 받아오기
                 if(response.location.coordinates[0] == -1 || response.location.coordinates[1] == -1){
-                    let locationVC = UIStoryboard.init(name: "AdditionalInfo", bundle: nil).instantiateViewController(withIdentifier: "nickName")
+                    let locationVC = UIStoryboard.init(name: "AdditionalInfo", bundle: nil).instantiateViewController(withIdentifier: "location")
+                    let additionalNavVC = UINavigationController(rootViewController: locationVC)
+                    UIApplication.shared.windows.first?.rootViewController = additionalNavVC
+                    UIApplication.shared.windows.first?.makeKeyAndVisible()
                 }
             })
             //메인 뷰로 진입

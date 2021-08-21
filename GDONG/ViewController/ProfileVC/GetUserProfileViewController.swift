@@ -31,74 +31,66 @@ class GetUserProfileViewController: UIViewController, CLLocationManagerDelegate 
             detailVC.oneBoard = userBoard[index.row]
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        getUserprofile()
+        getUserPost()
+
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        UserService.shared.getUserProfile(nickName: "\(userInfo)",completion: {(response) in
-
-            print(response)
-            //self.userInfo = response
-            self.username.text = response.nickName
-            self.getLocation()
-
-            if(response.isSeller == true){
-                self.isSellerBt.isHidden = false
-            }else {
-                self.isSellerBt.isHidden = true
-            }
-
-
-            //user Image
-            if(response.profileImageUrl != ""){
-                let urlString = Config.baseUrl + "/static/\(response.profileImageUrl)"
-
-                    if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
-                        self.userimage.sd_setImage(with: myURL)
-                }
-            }
-
-    })
-
-
-
         // 테이블뷰와 테이블뷰 셀인 xib 파일과 연결
         let nibName = UINib(nibName: "TableViewCell", bundle: nil)
         boardTableView.register(nibName, forCellReuseIdentifier: "productCell")
 
         boardTableView.delegate = self
         boardTableView.dataSource = self
-
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
     }
 
-    func getLocation(){
-        let coor = locationManager.location?.coordinate
-        let latitude = coor?.latitude
-        let longitude = coor?.longitude
+    func getLocation(longitude: Double, latitude: Double) {
 
-        //처음 위치 설정 x 후 함수 호출시 default location setting
-        if let latitude = latitude, let longitude = longitude {
-            let findLocation = CLLocation(latitude: latitude, longitude: longitude)
-            let geocoder = CLGeocoder()
-            let locale = Locale(identifier: "Ko-kr")
-
-            geocoder.reverseGeocodeLocation(findLocation, preferredLocale: locale, completionHandler: {(place, error) in
-                if let address: [CLPlacemark] = place {
-                    if let name: String = address.last?.name{
-                        print(name)
-                        self.userLocation.text = name
-                    }
+        let findLocation = CLLocation(latitude: latitude, longitude: longitude)
+        let geocoder = CLGeocoder()
+        let locale = Locale(identifier: "Ko-kr")
+        print(findLocation)
+        geocoder.reverseGeocodeLocation(findLocation, preferredLocale: locale, completionHandler: {(place, error) in
+            if let address: [CLPlacemark] = place {
+                if let name: String = address.last?.name{
+                    print("user Location : \(name)")
+                    self.userLocation.text = name
                 }
-            })
-        }else {
-            self.userLocation.text = "no location"
-        }
+            }
+        })
+
     }
 
-    func didTapfollow(){
+    @IBAction func didTapfollow(sender: UIButton){
         //팔로우버튼 클릭했을때
+        print("didTapfollow")
+        if(sender.currentTitle == "팔로잉 중"){
+            //언팔 로직
+            UserService.shared.userUnfollow(nickName: self.userInfo)
+            self.unfollowButtonSetting(sender: sender)
+        }else {
+            // 새롭게 팔로우
+            UserService.shared.userFollow(nickName: self.userInfo)
+            self.followingButtonSetting(sender: sender)
+        }
+        
+    }
+    
+    func followingButtonSetting(sender: UIButton) {
+        sender.setTitle("팔로잉 중", for: .normal)
+        sender.setTitleColor(UIColor.white, for: .normal)
+        sender.backgroundColor = .systemGray3
+    }
+    
+    func unfollowButtonSetting(sender: UIButton) {
+        sender.setTitleColor(UIColor.white, for: .normal)
+        sender.setTitle("팔로우 하기", for: .normal)
+        sender.backgroundColor = #colorLiteral(red: 0.414729476, green: 0.5849462152, blue: 0.9022548795, alpha: 1)
+        
     }
 
 
@@ -129,10 +121,48 @@ class GetUserProfileViewController: UIViewController, CLLocationManagerDelegate 
         let dateString: String = DateUtil.formatDate(date)
         return dateString
     }
+    
+    func getUserprofile(){
+        UserService.shared.getUserProfile(nickName: "\(userInfo)",completion: {(response) in
 
-    override func viewWillAppear(_ animated: Bool) {
+            print(response)
+            //self.userInfo = response
+            self.username.text = response.nickName
+            self.getLocation(longitude: response.location.coordinates[0], latitude: response.location.coordinates[1])
+            
+            if(response.isSeller == true){
+                self.isSellerBt.isHidden = false
+            }else {
+                self.isSellerBt.isHidden = true
+            }
 
 
+            //user Image
+            if(response.profileImageUrl != ""){
+                let urlString = Config.baseUrl + "/static/\(response.profileImageUrl)"
+
+                    if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
+                        self.userimage.sd_setImage(with: myURL)
+                }
+            }else {
+                self.userimage.image = UIImage(systemName: "person.fill")
+            }
+            
+            
+            //팔로잉 중인지 확인
+            UserService.shared.getUserInfo(completion: { (response) in
+                let myFollowingList: [String] = response.following
+                let myFollowList: [String] = response.followers
+                if(myFollowingList.contains(self.userInfo) || myFollowList.contains(self.userInfo)){
+                    print("here")
+                    self.followingButtonSetting(sender: self.followBt)
+                }
+            })
+
+    })
+    }
+    
+    func getUserPost(){
         PostService.shared.getauthorPost(start: -1, author: "\(userInfo)", num: 100, completion: {
             response in
             self.userBoard = response!
@@ -140,7 +170,6 @@ class GetUserProfileViewController: UIViewController, CLLocationManagerDelegate 
                 self.boardTableView.reloadData()
             }
         })
-
     }
 
 

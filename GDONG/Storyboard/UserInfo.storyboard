@@ -506,11 +506,14 @@
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AGL-vr-7Ph">
                                         <rect key="frame" x="40" y="190" width="334" height="60"/>
-                                        <color key="backgroundColor" red="0.45492076869999998" green="0.58010101319999996" blue="0.8823886514" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="backgroundColor" red="0.45490196078431372" green="0.58039215686274503" blue="0.88235294117647056" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                         <state key="normal" title="팔로우 하기">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="didTapfollow" destination="XBY-lm-VL1" eventType="touchUpInside" id="b5l-NV-EjK"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -563,6 +566,14 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="7eA-eo-2fm"/>
+                    <connections>
+                        <outlet property="boardTableView" destination="xd9-vk-9Tv" id="GNm-hN-I1O"/>
+                        <outlet property="followBt" destination="AGL-vr-7Ph" id="ASf-fu-tD0"/>
+                        <outlet property="isSellerBt" destination="kQc-QF-RP6" id="vfY-vH-tdo"/>
+                        <outlet property="userLocation" destination="a8K-If-d55" id="kfl-Ys-GgA"/>
+                        <outlet property="userimage" destination="8dV-3u-Tm0" id="QiD-cd-ibY"/>
+                        <outlet property="username" destination="ifR-E5-Vyl" id="zP4-of-X28"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sCt-ph-vya" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
