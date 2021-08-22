@@ -61,8 +61,6 @@
 	<string>Used to Location's Info for Using Beacon when In Use.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>사진 권한을 허용해주세요</string>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>This identifier will be used to deliver personalized ads to you.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
