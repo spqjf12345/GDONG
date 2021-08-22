@@ -57,7 +57,7 @@ class InputTableViewCell: UITableViewCell, CLLocationManagerDelegate {
         geocoder.reverseGeocodeLocation(findLocation, preferredLocale: locale, completionHandler: {(place, error) in
             if let address: [CLPlacemark] = place {
                 if let name: String = address.last?.name{
-                    print(name)
+                    print("setLocation : \(name)")
                     self.textfield.text = name
                 }
             }

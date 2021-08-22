@@ -19,7 +19,7 @@ class UserService {
     }
 
     //user info
-    func getUserInfo(completion: @escaping ((Users) -> Void) ){
+    func getUserInfo(completion: @escaping ((Users) throws -> (Void))){
 
         let headers: HTTPHeaders = [
             "Set-Cookie" : "email=\(email); token=\(jwtToken)"
@@ -51,7 +51,7 @@ class UserService {
                         let dataJSON = try JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
 
                         let UserData = try JSONDecoder().decode(Users.self, from: dataJSON)
-                        completion(UserData)
+                        try completion(UserData)
                     } catch {
                         print("error: ", error)
                     }

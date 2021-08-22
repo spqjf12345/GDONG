@@ -87,7 +87,7 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
             print("get user Info")
             self.userInfo = response
             self.userName.text = self.userInfo.nickName
-            self.getLocation()
+            self.getLocation(longitude: self.userInfo.location.coordinates[0], latitude: self.userInfo.location.coordinates[1])
             self.setFollowingCount.setTitle("\(self.userInfo.following.count)", for: .normal)
             self.setFollwerCount.setTitle("\(self.userInfo.followers.count)", for: .normal)
             if(self.userInfo.isSeller == true){
@@ -110,13 +110,9 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     
-    func getLocation(){
-        let coor = locationManager.location?.coordinate
-        let latitude = coor?.latitude
-        let longitude = coor?.longitude
-        
+    func getLocation(longitude: Double, latitude: Double){
         //처음 위치 설정 x 후 함수 호출시 default location setting
-        if let latitude = latitude, let longitude = longitude {
+        if(longitude != -1 || latitude != -1) {
             let findLocation = CLLocation(latitude: latitude, longitude: longitude)
             let geocoder = CLGeocoder()
             let locale = Locale(identifier: "Ko-kr")

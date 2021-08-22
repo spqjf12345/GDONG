@@ -36,12 +36,13 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
             return
         }
         guard let nickname = userInfo.nickName as String? else { return }
-        guard let nowLongitude = userInfo.location.coordinates[0] as Double? else {
+        guard let nowLongitude = self.userInfo.location.coordinates[0] as Double? else {
             return
         }
-        guard let nowLatitude = userInfo.location.coordinates[1] as Double? else {
+        guard let nowLatitude = self.userInfo.location.coordinates[1] as Double? else {
             return
         }
+        
         print(image)
         print(nickname)
         print(nowLongitude)
@@ -158,7 +159,7 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
 
     
     func getLocation(cellField: UITextField){
-        
+        //현재 위치 값 받아와 업데이트
         locationManager = CLLocationManager()
         locationManager.delegate = self
         let coor = locationManager.location?.coordinate
@@ -175,6 +176,7 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
             if let address: [CLPlacemark] = place {
                 if let name: String = address.last?.name{
                     cellField.text = name
+                    
                     self.userInfo.location.coordinates[0] = longitude
                     self.userInfo.location.coordinates[1] = latitude
                 }
@@ -315,6 +317,7 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
         }else if(indexPath.section == 0 && indexPath.row == 1){
             let cell = tableView.dequeueReusableCell(withIdentifier: InputTableViewCell.identifier) as! InputTableViewCell
             cell.label.text = "위치 :"
+            print("db 위치 값 :\(self.userInfo.location.coordinates[0]) \\ \(self.userInfo.location.coordinates[1])")
             cell.setLocation(longitude: self.userInfo.location.coordinates[0], latitude: self.userInfo.location.coordinates[1])
             cell.delegate = self
             cell.indexPath = indexPath
