@@ -272,13 +272,14 @@ class CreateNewItemViewController: UIViewController {
         
         let db = Firestore.firestore().collection("Chats").document("\(postId)")
         db.setData(data)
-        ChatListViewController().loadChat()
+        ChatListViewController().loadChat(from: "detail")
     }
     
 
   
   // 유효한 글인지 검사하는 메서드
   private func validateWriting() throws {
+
     
     if userSelectedPhotoImageList.isEmpty {
       throw InvalidValueError.invalidPhoto
@@ -444,7 +445,6 @@ extension CreateNewItemViewController: UITableViewDataSource {
       case .TitleCell:
         if let cell = cell as? TitleCell {
           self.titleTextField = cell.titleTextField
-          
           return cell
         }
         
@@ -458,19 +458,20 @@ extension CreateNewItemViewController: UITableViewDataSource {
       case .PriceCell:
         if let cell = cell as? PriceCell {
           self.priceCell = cell
-          
           return cell
         }
         
     case .NeedCell:
         if let cell = cell as? NeedCell {
             self.needPeople = cell.needTextField
+            
             return cell
         }
         
     case .LinkCell:
         if let cell = cell as? LinkCell {
             self.link = cell.linkTextfield
+            
             return cell
         }
         
@@ -478,6 +479,7 @@ extension CreateNewItemViewController: UITableViewDataSource {
         if let cell = cell as? EntityCell {
           cell.textView.delegate = self
           self.entityTextView = cell.textView
+          
           return cell
         }
         
@@ -537,7 +539,19 @@ extension CreateNewItemViewController: UITextViewDelegate {
       EntityCell.setPlaceHolderText(with: textView)
       return
     }
+    
   }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+    
+    
+    
 }
 
 extension CreateNewItemViewController: PHPickerViewControllerDelegate {

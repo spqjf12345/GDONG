@@ -18,10 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UNO-0w-3NS">
-                                <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="fkH-YM-dzn"/>
-                                </constraints>
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="50"/>
                                 <items>
                                     <navigationItem title="공동구매 글쓰기" id="Vwe-z9-7iv">
                                         <barButtonItem key="leftBarButtonItem" title="닫기" id="BdI-Jx-eYb">
@@ -47,7 +44,7 @@
                                 <items/>
                             </toolbar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tfD-JT-3ah">
-                                <rect key="frame" x="0.0" y="44" width="1024" height="1273"/>
+                                <rect key="frame" x="0.0" y="50" width="1024" height="1267"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                                 <prototypes>
@@ -265,7 +262,7 @@
                             <constraint firstItem="UNO-0w-3NS" firstAttribute="top" secondItem="oTs-zM-iYJ" secondAttribute="top" id="jsT-9U-2sO"/>
                             <constraint firstItem="K3Z-1G-HRs" firstAttribute="top" secondItem="tfD-JT-3ah" secondAttribute="bottom" id="knc-8X-F2i"/>
                             <constraint firstItem="K3Z-1G-HRs" firstAttribute="leading" secondItem="oTs-zM-iYJ" secondAttribute="leading" id="o5y-LZ-juB"/>
-                            <constraint firstItem="tfD-JT-3ah" firstAttribute="leading" secondItem="oTs-zM-iYJ" secondAttribute="leading" id="qpy-ym-wud"/>
+                            <constraint firstItem="tfD-JT-3ah" firstAttribute="leading" secondItem="UNO-0w-3NS" secondAttribute="leading" id="qpy-ym-wud"/>
                             <constraint firstItem="tfD-JT-3ah" firstAttribute="top" secondItem="UNO-0w-3NS" secondAttribute="bottom" id="zop-gD-8zz"/>
                         </constraints>
                     </view>

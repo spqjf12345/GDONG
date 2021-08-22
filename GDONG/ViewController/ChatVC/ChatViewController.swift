@@ -357,7 +357,7 @@ class ChatViewController: MessagesViewController, InputBarAccessoryViewDelegate,
                                 let msg = Message(id: id, content: content, created: Date(timeIntervalSince1970: TimeInterval(created.seconds)) , senderID: senderID, senderName: senderName)
                                
                                 self.messages.append(msg) //TO DO
-                                print("loadMessage : \(self.messages)")
+                                //print("loadMessage : \(self.messages)")
                                 self.messagesCollectionView.reloadData()
                                 self.messagesCollectionView.scrollToLastItem(at: .bottom, animated: true)
                             }

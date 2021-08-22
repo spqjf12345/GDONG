@@ -15,21 +15,22 @@ struct ChatRoom {
     var chatRoomName: String?
     var chatRoomDate: Date?
     var chatImage: String?
+    var latestMessage: Message
     
-    init(chatId: String, chatRoomName: String, chatRoomDate: Date, chatImage:String){
+    init(chatId: String, chatRoomName: String, chatRoomDate: Date, chatImage:String, latestMessage: Message){
         self.chatId = chatId
         self.chatRoomName = chatRoomName
         self.chatRoomDate = chatRoomDate
         self.chatImage = chatImage
+        self.latestMessage = latestMessage
     }
 }
 
 class ChatListViewController: UIViewController {
     var mychatRoom = [ChatRoom]()
     var userCount = [Int]()
-    var lastestMessage = Message(id: "", content: "", created: Date(), senderID: "", senderName: "")
     var mychatRoomitem = [ChatRoom]()
-    
+    var lastestMessage: Message?
 
     var currentUser: Users = Users()
     
@@ -56,12 +57,19 @@ class ChatListViewController: UIViewController {
     
     //당겨서 새로고침시 갱신되어야 할 내용
     @objc func pullToRefresh(_ sender: UIRefreshControl) {
-        
         self.chatListTableView.refreshControl?.endRefreshing() // 당겨서 새로고침 종료
         self.chatListTableView.reloadData() // Reload하여 뷰를 비워주기
 
     }
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+       
+        loadChat(from: "")
+        print("reload")
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,7 +88,6 @@ class ChatListViewController: UIViewController {
             self.currentUser = response
         })
         
-        loadChat()
         self.chatListTableView.refreshControl?.endRefreshing() // 당겨서 새로고침 종료
         self.chatListTableView.reloadData()
         
@@ -90,13 +97,7 @@ class ChatListViewController: UIViewController {
 
         
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        chatListTableView.reloadData()
-        print("reload")
-        
-    }
+ 
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let chatVC = segue.destination as! ChatViewController
@@ -105,7 +106,12 @@ class ChatListViewController: UIViewController {
         
     }
     
-    public func loadChat(){
+    public func loadChat(from: String){
+        print("load chat called")
+        if(!mychatRoom.isEmpty){ //viewwillapear 시 mychatRoom 비우고 다시 로드
+            mychatRoom.removeAll()
+        }
+        
         guard let myEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else{
             print("there are no email")
             return
@@ -129,84 +135,46 @@ class ChatListViewController: UIViewController {
                     for doc in chatQuerySnap!.documents {
                         
                         //최근 메시지 불러오기
-                       let postId = doc.documentID
-                       let document = Firestore.firestore().collection("Chats").document("\(postId)")
-                       document.collection("thread").order(by: "created", descending: false).addSnapshotListener(includeMetadataChanges: true, listener: { [self] (threadQuery, error)
-                           in
-                               if let error = error {
-                                   print("Error: \(error)")
-                                   return
-                               } else {
-                                   if let threads = threadQuery?.documents {
-                                       if(threads != []){ //빈 배열이 아닐때
-                                           for message in threads {
-                                               print(type(of: message.data()))
-                                               let DateFromFireStore: Dictionary<String, Any> = message.data()
+                        let postId = doc.documentID
+                     
+                        self.getLatestMessge(docId: postId, completed: { (message) in
+                            guard let ChatRoomName = doc.data()["ChatRoomName"] as? String else {
+                                print("no chat room name in database")
+                                return
+                            }
+                            
+                            guard let ChatRoomDate = doc.data()["Date"] as? Timestamp else {
+                                print("no chat room date in database")
+                                return
+                            }
+                            
+                            guard let users = doc.data()["users"] as? [String] else {
+                                print("no users string array in database")
+                                return
+                            }
+                            self.userCount.append(users.count)
+                            
+                            guard let ChatImage = doc.data()["ChatImage"] as? String else {
+                                print("no ChatImage string in database")
+                                return
+                            }
+                            
+                            
+                            self.mychatRoom.append(
+                                ChatRoom(chatId: doc.documentID, chatRoomName: ChatRoomName, chatRoomDate: Date(timeIntervalSince1970: TimeInterval(ChatRoomDate.seconds)), chatImage: ChatImage, latestMessage: message)
+                             )
+                            if(from == "detail"){
+                                print("from create and called ")
+                            }else {
+                                self.chatListTableView.reloadData()
+                            }
+                            
+                            
+                            print(self.mychatRoom)
+                        })
+                      
 
-                                               guard let content = DateFromFireStore["content"] as? String else {
-                                                   print("content type error")
-                                                   return
-                                               }
-
-                                               guard let id = DateFromFireStore["id"] as? String else {
-                                                   print("id type error")
-                                                   return
-
-                                               }
-
-                                               guard let created = DateFromFireStore["created"] as? Timestamp else {
-                                                   print("created type error")
-                                                   return
-                                               }
-                                               guard let senderName = DateFromFireStore["senderName"] as? String else {
-                                                   print("senderName type error")
-                                                   return
-                                               }
-
-                                               guard let senderID = DateFromFireStore["senderID"] as? String else {
-                                                   print("senderID type error")
-                                                   return
-                                               }
-
-
-                                              print("======================")
-                                               lastestMessage =  Message(id: id, content: content, created: Date(timeIntervalSince1970: TimeInterval(created.seconds)) , senderID: senderID, senderName: senderName)
-                                              print(lastestMessage)
-                                           }
-                                       }
-
-                                   }else {
-                                       print("This will run if threadQuery?.documents returns nil")
-                                   }
-                               }
-                           })
-
-                        guard let ChatRoomName = doc.data()["ChatRoomName"] as? String else {
-                            print("no chat room name in database")
-                            return
-                        }
                         
-                        guard let ChatRoomDate = doc.data()["Date"] as? Timestamp else {
-                            print("no chat room date in database")
-                            return
-                        }
-                        
-                        guard let users = doc.data()["users"] as? [String] else {
-                            print("no users string array in database")
-                            return
-                        }
-                        self.userCount.append(users.count)
-                        
-                        guard let ChatImage = doc.data()["ChatImage"] as? String else {
-                            print("no ChatImage string in database")
-                            return
-                        }
-                        
-                        
-                        self.mychatRoom.append(
-                            ChatRoom(chatId: doc.documentID, chatRoomName: ChatRoomName, chatRoomDate: Date(timeIntervalSince1970: TimeInterval(ChatRoomDate.seconds)), chatImage: ChatImage))
-                        
-                        print(self.mychatRoom)
                     }
                     
                     if(self.mychatRoom.count > 1){
@@ -220,6 +188,61 @@ class ChatListViewController: UIViewController {
         
         
     }
+    
+    
+    
+    public func getLatestMessge(docId: String, completed: @escaping (Message) -> (Void)){
+        print("docId \(docId)")
+        
+        Firestore.firestore().collection("Chats").document("\(docId)").collection("thread").order(by: "created", descending: true).getDocuments() { (querySnapshot ,err) in
+            if let err = err {
+                        print("Error getting documents: \(err)")
+                completed(Message(id: "", content: "", created: Date(), senderID: "", senderName: ""))
+                    } else {
+                        
+                        if(querySnapshot!.documents.first?.data().isEmpty != nil){ // 최근 문자 있다면
+                            guard let content = querySnapshot!.documents.first?.data()["content"] as? String else {
+                                  print("content type error")
+                                  return
+                              }
+
+                          guard let id = querySnapshot!.documents.first?.data()["id"] as? String else {
+                              print("id type error")
+                              return
+
+                          }
+
+                          guard let created = querySnapshot!.documents.first?.data()["created"] as? Timestamp else {
+                              print("created type error")
+                              return
+                          }
+                          guard let senderName = querySnapshot!.documents.first?.data()["senderName"] as? String else {
+                              print("senderName type error")
+                              return
+                          }
+
+                          guard let senderID = querySnapshot!.documents.first?.data()["senderID"] as? String else {
+                              print("senderID type error")
+                              return
+                          }
+                            print("latest message : \(Message(id: id, content: content, created: Date(timeIntervalSince1970: TimeInterval(created.seconds)), senderID: senderID, senderName: senderName))")
+                            completed(Message(id: id, content: content, created: Date(timeIntervalSince1970: TimeInterval(created.seconds)), senderID: senderID, senderName: senderName))
+                        }else { // 최근 문자 없을 시 빈 문자열 리턴
+                            completed(Message(id: "", content: "", created: Date(), senderID: "", senderName: ""))
+                        }
+          
+//                        for document in querySnapshot!.documents {
+//                            print("\(document.documentID) => \(document.data())")
+//                            completed(Message(dictionary: DateFromFireStore!)!)
+//                        }
+                    }
+        }
+
+  
+    }
+
+    
+    
     public func deleteFromChat(indexPath: IndexPath, completed: @escaping (String)-> (Void)){
         
         guard let userEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
@@ -262,7 +285,7 @@ class ChatListViewController: UIViewController {
                         })
                         completed("NO")
                     }else {
-                        // 글쓴이가 아닌경우 -> 채팅방에서 나가기
+                        // 글쓴이가 아닌경우 -> 채팅방에서 혼자만 나가기
                         self.deleteUser(postId: postId)
                         ChatService.shared.quitChatList(postId: postId)
                         completed("OK")
@@ -328,35 +351,37 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = chatListTableView.dequeueReusableCell(withIdentifier: "chatList", for: indexPath) as! ChatListCell
-        
-        cell.roomName.text = mychatRoom[indexPath.row].chatRoomName
-        let dateString = DateUtil.latestMessageformatDate(lastestMessage.created)
-        print(lastestMessage.created)
-        let latestSenderName  = lastestMessage.senderName
-       
-        cell.peopleLabel.text =  "\(userCount[indexPath.row])명 참여 중"
-        
-        if(latestSenderName != ""){
-            cell.message.text = "\(latestSenderName):\(lastestMessage.content)"
-            cell.latestMessageTime.text = dateString
-        }else{
-            cell.message.text = ""
-            cell.latestMessageTime.text = ""
-        }
-        
-        
-        if let indexImage =  mychatRoom[indexPath.row].chatImage {
-            let urlString = Config.baseUrl + "/static/\(indexImage)"
-            if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
-                cell.thumbnail.sd_setImage(with: myURL, completed: nil)
+        if(!mychatRoom.isEmpty) {
+            let chatRoomCell = mychatRoom[indexPath.row]
+            cell.roomName.text = chatRoomCell.chatRoomName
+            let dateString = DateUtil.latestMessageformatDate(chatRoomCell.latestMessage.created)
+            print(chatRoomCell.latestMessage.created)
+           
+            cell.peopleLabel.text =  "\(userCount[indexPath.row])명 참여 중"
+            
+            if(chatRoomCell.latestMessage.senderName != ""){
+                cell.message.text = "\(chatRoomCell.latestMessage.senderName):\(chatRoomCell.latestMessage.content)"
+                cell.latestMessageTime.text = dateString
+            }else{
+                cell.message.text = ""
+                cell.latestMessageTime.text = ""
             }
+            
+            
+            if let indexImage =  mychatRoom[indexPath.row].chatImage {
+                let urlString = Config.baseUrl + "/static/\(indexImage)"
+                if let encoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let myURL = URL(string: encoded) {
+                    cell.thumbnail.sd_setImage(with: myURL, completed: nil)
+                }
+            }
+          
+            cell.roomName.sizeToFit()
+            cell.latestMessageTime.sizeToFit()
+            cell.message.sizeToFit()
+            cell.thumbnail.sizeToFit()
+            cell.peopleLabel.sizeToFit()
+            
         }
-      
-        cell.roomName.sizeToFit()
-        cell.latestMessageTime.sizeToFit()
-        cell.message.sizeToFit()
-        cell.thumbnail.sizeToFit()
-        cell.peopleLabel.sizeToFit()
         
         
         return cell
@@ -369,16 +394,19 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource {
         let deleteAction = UIContextualAction(style: .normal, title: "나가기") { (action, view, success) in
             
             //swipe 할 때의 action 정의
-           
-            self.deleteFromChat(indexPath: indexPath, completed: {(response) in
-                if(response != "NO"){
-                    self.mychatRoom.remove(at: indexPath.row)
-                    tableView.deleteRows(at: [indexPath], with: .fade)
+            self.alertViewController(title: "채팅방 나가기", message: "채팅방에서 나가시겠습니까?", completion: { (response) in
+                if(response == "OK"){
+                    self.deleteFromChat(indexPath: indexPath, completed: {(response) in
+                        if(response != "NO"){
+                            self.mychatRoom.remove(at: indexPath.row)
+                            self.alertViewController(title: "나가기 완료", message: "채팅방에서 나갔습니다.", completion: { (response) in })
+                        }
+                        tableView.reloadData()
+                    })
                 }
-                tableView.reloadRows(at: [indexPath], with: .fade)
             })
+           
             
-        
         }
         
         let config = UISwipeActionsConfiguration(actions: [deleteAction])

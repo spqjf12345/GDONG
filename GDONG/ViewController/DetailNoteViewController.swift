@@ -210,9 +210,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
                     print("no chat room date in database")
                     return
                 }
-                
-
-                
+            
                 guard let ChatImage = document.data()!["ChatImage"] as? String else {
                     print("no ChatImage string in database")
                     return
@@ -221,7 +219,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
                 print(ChatRoomDate)
                 print(ChatImage)
                 
-                self.postChatRoom = ChatRoom(chatId: document.documentID, chatRoomName: ChatRoomName, chatRoomDate: Date(timeIntervalSince1970: TimeInterval(ChatRoomDate.seconds)), chatImage: ChatImage)
+                self.postChatRoom = ChatRoom(chatId: document.documentID, chatRoomName: ChatRoomName, chatRoomDate: Date(timeIntervalSince1970: TimeInterval(ChatRoomDate.seconds)), chatImage: ChatImage, latestMessage: Message(id: "", content: "", created: Date(), senderID: "", senderName: "")) // latestMessage 무의미한 셀로 보내기
                 //print("postChatRoom ready \(self.postChatRoom)")
                 completed("OK")
        

@@ -47,6 +47,7 @@ class SearchResultViewController: UIViewController, TableViewCellDelegate {
                     }
                 })
             }
+            more_dropDown.clearSelection()
         }
     }
     

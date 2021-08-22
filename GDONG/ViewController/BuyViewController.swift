@@ -242,12 +242,14 @@ class BuyViewController: UIViewController, TableViewCellDelegate {
         let nowDate = now?.addingTimeInterval(3600 * 9)
         //print("now \(nowDate)")
         let interval = nowDate?.timeIntervalSince(addNineDate)
-        let diffHour = Int(interval! / 3600)
+        let diffHours = Int(interval! / 3600)
+        let diffMinutes = Int(interval! / 60)
         //print("diff four \(diffHour)")
-        if (diffHour < 1){
-            return "방금"
-        }else if (diffHour < fixHour){
-            return "\(diffHour) 시간 전"
+        if (diffHours < 1){
+            if(diffMinutes < 5) { return "방금" }
+            else if(diffMinutes > 5) { return "\(diffMinutes) 분전" }
+        }else if (diffHours < fixHour){
+            return "\(diffHours) 시간 전"
         }
 
         let dateString: String = DateUtil.formatDate(date)
