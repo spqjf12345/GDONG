@@ -170,7 +170,7 @@ extension SearchResultViewController: UITableViewDelegate, UITableViewDataSource
             cell.moreButton.isEnabled = false
         }
 
-        let date: Date = DateUtil.parseDate(filteredBoard[indexPath.row].updatedAt!)
+        let date: Date = DateUtil.parseDate(filteredBoard[indexPath.row].createdAt!)
 
         cell.timeLabel.text = BuyViewController.ondDayDateText(date: date)
         

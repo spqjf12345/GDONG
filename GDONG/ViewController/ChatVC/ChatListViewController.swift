@@ -72,7 +72,7 @@ class ChatListViewController: UIViewController {
 
         chatListTableView.register(nibName, forCellReuseIdentifier: "chatList")
         
-        
+        chatListTableView.pagingDelegate = self
         chatListTableView.delegate = self
         chatListTableView.dataSource = self
         
@@ -128,7 +128,7 @@ class ChatListViewController: UIViewController {
                     print("query count is \(queryCount)")
                     for doc in chatQuerySnap!.documents {
                         
-    //최근 메시지 불러오기
+                        //최근 메시지 불러오기
                        let postId = doc.documentID
                        let document = Firestore.firestore().collection("Chats").document("\(postId)")
                        document.collection("thread").order(by: "created", descending: false).addSnapshotListener(includeMetadataChanges: true, listener: { [self] (threadQuery, error)
@@ -206,7 +206,6 @@ class ChatListViewController: UIViewController {
                         self.mychatRoom.append(
                             ChatRoom(chatId: doc.documentID, chatRoomName: ChatRoomName, chatRoomDate: Date(timeIntervalSince1970: TimeInterval(ChatRoomDate.seconds)), chatImage: ChatImage))
                         
-                        self.chatListTableView.reloadData()
                         print(self.mychatRoom)
                     }
                     
@@ -402,10 +401,12 @@ extension ChatListViewController: PagingTableViewDelegate {
 
   func paginate(_ tableView: PagingTableView, to page: Int) {
     chatListTableView.isLoading = true
+    print("isLoading")
         self.loadData(at: page) { contents in
             self.mychatRoom.append(contentsOf: contents)
-       
+            print(contents)
         self.chatListTableView.isLoading = false
+            print("isLoading false")
     }
   }
 

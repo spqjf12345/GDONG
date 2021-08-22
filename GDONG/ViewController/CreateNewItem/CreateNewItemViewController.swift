@@ -234,6 +234,7 @@ class CreateNewItemViewController: UIViewController {
     
     do {
       try validateWriting()
+        
         // TODO: Post Function
         self.postData(completed: {(chatData) in
             //make new chat room
@@ -324,10 +325,6 @@ class CreateNewItemViewController: UIViewController {
         //글쓸 수 없음 -> 프로파일 -> 위치값 셋팅 후 글 쓰기 가능
         throw InvalidValueError.invalidLocation
     }
-    
-    
-    
-    
     
   }
   

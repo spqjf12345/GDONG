@@ -92,35 +92,6 @@ class GetUserProfileViewController: UIViewController, CLLocationManagerDelegate 
         sender.backgroundColor = #colorLiteral(red: 0.414729476, green: 0.5849462152, blue: 0.9022548795, alpha: 1)
         
     }
-
-
-    static func ondDayDateText(date: Date) -> String{
-        //day Second -> 86400 60*60*24
-        let dateFormatter = DateFormatter()
-        let fixHour = 24
-        let today = Date()
-        dateFormatter.locale = Locale(identifier: "ko_kr")
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        //print("현재 시간 string")
-        let nowString = dateFormatter.string(from: today)
-        //print(nowString)
-    
-        //print("현재 시간 date")
-    
-        var nowDate = dateFormatter.date(from: nowString)
-
-        nowDate = nowDate?.addingTimeInterval(3600 * 9)
-        //print(nowDate)
-        
-        let interval = nowDate!.timeIntervalSince(date) // -> 초만큼으로 환산
-        let diffHour = Int(interval / 3600)
-        if(diffHour < fixHour){
-            return "\(diffHour) 시간 전"
-        }
-
-        let dateString: String = DateUtil.formatDate(date)
-        return dateString
-    }
     
     func getUserprofile(){
         UserService.shared.getUserProfile(nickName: "\(userInfo)",completion: {(response) in
@@ -191,9 +162,9 @@ extension GetUserProfileViewController: UITableViewDelegate, UITableViewDataSour
 
         cell.productNameLabel.text = userBoard[indexPath.row].title
         cell.productPriceLabel.text = "\(userBoard[indexPath.row].price ?? 0) 원"
-        let date: Date = DateUtil.parseDate(userBoard[indexPath.row].updatedAt!)
+        let date: Date = DateUtil.parseDate(userBoard[indexPath.row].createdAt!)
 
-        cell.timeLabel.text = GetUserProfileViewController.ondDayDateText(date: date)
+        cell.timeLabel.text = BuyViewController.ondDayDateText(date: date)
 
         //categoryButton add
         cell.categoryButton.setTitle(userBoard[indexPath.row].category, for: .normal)

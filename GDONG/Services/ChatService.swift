@@ -46,7 +46,7 @@ class ChatService {
         })
     }
     
-    func getChatList(postId: Int, completionHandler: @escaping (([Users]) -> (Void))){
+    func getChatList(postId: Int, completionHandler: @escaping (([Users]) throws -> (Void))){
         guard let authorEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else { return }
         guard let jwtToken = UserDefaults.standard.string(forKey: UserDefaultKey.jwtToken) else { return }
         
@@ -81,7 +81,7 @@ class ChatService {
                             return }
                         let dataJSON = try JSONSerialization.data(withJSONObject: list, options: .prettyPrinted)
                         let postData = try JSONDecoder().decode([Users].self, from: dataJSON)
-                        completionHandler(postData)
+                        try completionHandler(postData)
                     }
                     
                     catch {

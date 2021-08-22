@@ -39,7 +39,8 @@ class TitleTableViewCell: UITableViewCell {
     
     public func configure(with modelBoard: Board){
         self.titleBoard.text = modelBoard.title
-        let dateDate = DateUtil.parseDate(modelBoard.createdAt!)
+        var dateDate = DateUtil.parseDate(modelBoard.createdAt!)
+        dateDate = dateDate.addingTimeInterval(32400) //9시간 더하기
         let dateString = DateUtil.formatDate(dateDate)
         self.dateBoard.text = dateString
         self.userName.text = modelBoard.author

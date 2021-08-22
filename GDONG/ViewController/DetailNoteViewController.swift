@@ -9,7 +9,12 @@
 import UIKit
 import FirebaseFirestore
 
-
+private enum InvalidError: String, Error {
+    case alreadyExists
+    case nowEqualsToNeed
+    case locationNull
+    case invalidUser
+}
 
 class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
     var oneBoard: Board?
@@ -96,24 +101,75 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         //make with dropDown button
     }
     
-    @objc func didTapGoToChatRoom(){
-        print("didTapGoToChatRoom")
-        //TO-DO
-        //if post user 인원 찼을 때
+    private func validating(completed: @escaping (Error?) -> ()) {
+        print("validate called")
         if(oneBoard!.needPeople! == oneBoard!.nowPeople){
-            alertController()
-        }else {
-            guard let userEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
-                print("no exists user")
-                return
-            }
-            addUserToChat(userEamil: userEmail, completed: {(response) in
-                if(response == "OK"){
-                    self.performSegue(withIdentifier: "chatRoom", sender: nil)
-                }
-            })
+            completed(InvalidError.nowEqualsToNeed)
         }
         
+        guard let userEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
+            completed(InvalidError.invalidUser)
+            return
+        }
+        
+        var chatListUser = [Users]()
+        //이미 채팅방에 존재하는 유저인지 중복 체크
+        ChatService.shared.getChatList(postId: (oneBoard?.postid)!, completionHandler: { (response) in
+            print("validate getChatList called")
+            chatListUser = response.filter { $0.email == userEmail }
+            if(!chatListUser.isEmpty) {
+                completed(InvalidError.alreadyExists)
+            }
+        })
+        
+        completed(nil)
+    
+    }
+    
+    @objc func didTapGoToChatRoom(){
+        print("didTapGoToChatRoom")
+        
+            validating { (error) in
+                guard error == nil else {
+                    print(error)
+                    self.presentAlert(with: error as! InvalidError)
+                    return
+                }
+                
+                
+                let userEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail)
+                self.addUserToChat(userEamil: userEmail!, completed: {(response) in
+                    if(response == "OK"){
+                        self.performSegue(withIdentifier: "chatRoom", sender: nil)
+                    }
+                })
+            }
+
+    }
+    
+    private func presentAlert(with error: InvalidError){
+        var errorTitle: String = ""
+        var errorMessage: String = ""
+        
+        switch error {
+        case .alreadyExists:
+                errorTitle = "채팅방 들어가기 실패"
+                errorMessage = "이미 채팅방에 존재하는 유저입니다."
+                break
+        case .invalidUser:
+            errorTitle = "유효하지 않은 사용자"
+            errorMessage = "유효하지 않은 사용자 입니다."
+        case .locationNull:
+            errorTitle = "유효하지 않은 사용자"
+            errorMessage = "프로파일 -> 위치 값을 설정해주세요"
+            break
+        case .nowEqualsToNeed:
+            errorTitle = "인원 초과"
+            errorMessage = "채팅방에 인원이 꽉 찼습니다."
+            break
+        }
+        
+        self.alertViewController(title: errorTitle, message: errorMessage, completion: { (response) in })
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -176,14 +232,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
 
     }
     
-    public func alertController() {
-       let AlertVC = UIAlertController(title: "인원 초과", message: "채팅방에 인원이 꽉 찼습니다.", preferredStyle: .alert)
-        let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        
-        AlertVC.addAction(OKAction)
-        
-        self.present(AlertVC, animated: true, completion: nil)
-    }
+
     
     
     @objc func didTapHeart(_ sender: UIButton){

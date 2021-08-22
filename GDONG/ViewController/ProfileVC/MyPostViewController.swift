@@ -48,35 +48,6 @@ class MyPostViewController: TabmanViewController {
     }
     
     
-    static func ondDayDateText(date: Date) -> String{
-        //day Second -> 86400 60*60*24
-        let dateFormatter = DateFormatter()
-        let fixHour = 24
-        let today = Date()
-        dateFormatter.locale = Locale(identifier: "ko_kr")
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        //print("현재 시간 string")
-        let nowString = dateFormatter.string(from: today)
-        //print(nowString)
-    
-        //print("현재 시간 date")
-    
-        var nowDate = dateFormatter.date(from: nowString)
-
-        nowDate = nowDate?.addingTimeInterval(3600 * 9)
-        //print(nowDate)
-        
-        let interval = nowDate!.timeIntervalSince(date) // -> 초만큼으로 환산
-        let diffHour = Int(interval / 3600)
-        if(diffHour < fixHour){
-            return "\(diffHour) 시간 전"
-        }
-        
-        let dateString: String = DateUtil.formatDate(date)
-        return dateString
-    }
-    
-    
 
 
 
@@ -136,6 +107,7 @@ class myWroteViewController: UIViewController {
         PostService.shared.getauthorPost(start: -1, author: userNickName, num: 100, completion: {
             response in
             self.myPostBoard = response!
+            
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -169,7 +141,7 @@ extension myWroteViewController: UITableViewDelegate, UITableViewDataSource {
 
         cell.productNameLabel.text = myPostBoard[indexPath.row].title
         cell.productPriceLabel.text = "\(myPostBoard[indexPath.row].price ?? 0) 원"
-        let date: Date = DateUtil.parseDate(myPostBoard[indexPath.row].updatedAt!)
+        let date: Date = DateUtil.parseDate(myPostBoard[indexPath.row].createdAt!)
 
         cell.timeLabel.text = BuyViewController.ondDayDateText(date: date)
         
@@ -266,7 +238,7 @@ extension myHeartViewController: UITableViewDelegate, UITableViewDataSource {
 
         cell.productNameLabel.text = myHeartBoard[indexPath.row].title
         cell.productPriceLabel.text = "\(myHeartBoard[indexPath.row].price ?? 0) 원"
-        let date: Date = DateUtil.parseDate(myHeartBoard[indexPath.row].updatedAt!)
+        let date: Date = DateUtil.parseDate(myHeartBoard[indexPath.row].createdAt!)
 
         cell.timeLabel.text = BuyViewController.ondDayDateText(date: date)
         

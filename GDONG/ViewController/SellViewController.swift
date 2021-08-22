@@ -142,7 +142,7 @@ extension SellViewController: UITableViewDelegate, UITableViewDataSource{
         cell.productNameLabel.text = contents[indexPath.row].title
         cell.productPriceLabel.text = "\(contents[indexPath.row].price ?? 0) 원"
         
-        let date: Date = DateUtil.parseDate(contents[indexPath.row].updatedAt!)
+        let date: Date = DateUtil.parseDate(contents[indexPath.row].createdAt!)
 
         cell.timeLabel.text = BuyViewController.ondDayDateText(date: date)
         

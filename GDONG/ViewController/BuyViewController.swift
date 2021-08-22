@@ -227,6 +227,9 @@ class BuyViewController: UIViewController, TableViewCellDelegate {
     
     static func ondDayDateText(date: Date) -> String{
         //day Second -> 86400 60*60*24
+        //print("oritinal date : \(date)")
+        let addNineDate = date.addingTimeInterval(32400)
+        //print("addNineDate : \(addNineDate)")
         let dateFormatter = DateFormatter()
         let fixHour = 24
         let today = Date()
@@ -234,16 +237,19 @@ class BuyViewController: UIViewController, TableViewCellDelegate {
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         let nowString = dateFormatter.string(from: today)
     
-        var nowDate = dateFormatter.date(from: nowString)
-
-        nowDate = nowDate?.addingTimeInterval(3600 * 9)
+        let now = dateFormatter.date(from: nowString)
         
-        let interval = nowDate!.timeIntervalSince(date) // -> 초만큼으로 환산
-        let diffHour = Int(interval / 3600)
-        if(diffHour < fixHour){
+        let nowDate = now?.addingTimeInterval(3600 * 9)
+        //print("now \(nowDate)")
+        let interval = nowDate?.timeIntervalSince(addNineDate)
+        let diffHour = Int(interval! / 3600)
+        //print("diff four \(diffHour)")
+        if (diffHour < 1){
+            return "방금"
+        }else if (diffHour < fixHour){
             return "\(diffHour) 시간 전"
         }
-        
+
         let dateString: String = DateUtil.formatDate(date)
         return dateString
     }
@@ -283,7 +289,7 @@ extension BuyViewController: UITableViewDelegate, UITableViewDataSource{
             cell.moreButton.isEnabled = false
         }
 
-        let date: Date = DateUtil.parseDate(contents[indexPath.row].updatedAt!)
+        let date: Date = DateUtil.parseDate(contents[indexPath.row].createdAt!)
 
         cell.timeLabel.text = BuyViewController.ondDayDateText(date: date)
         
