@@ -529,7 +529,7 @@ class PostService {
 
         AF.request(url, method: .get, parameters: parameter, encoding: URLEncoding.queryString, headers: headers).validate().responseJSON {
             (response) in
-            print("[API] \(postId) 글 조회수 1 증가")
+            print("[PostService] \(postId) 글 조회수 1 증가")
             if let httpResponse = response.response, let fields = httpResponse.allHeaderFields as? [String: String]{
                 let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.response?.url)!)
                 HTTPCookieStorage.shared.setCookies(cookies, for: response.response?.url, mainDocumentURL: nil)
@@ -589,7 +589,7 @@ class PostService {
         print(parameter)
         AF.request(Config.baseUrl + "/post/filter", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString), headers: headers).validate().responseJSON(completionHandler: {
             (response) in
-            print("[API] /post/filter 된 글 가져오기")
+            print("[PostService] /post/filter 된 글 가져오기")
             if let httpResponse = response.response, let fields = httpResponse.allHeaderFields as? [String: String]{
                 let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.response?.url)!)
                 HTTPCookieStorage.shared.setCookies(cookies, for: response.response?.url, mainDocumentURL: nil)
@@ -615,6 +615,7 @@ class PostService {
                          let postData = try JSONDecoder().decode([Board].self, from: dataJSON)
                          completion(postData)
                         
+                        
                      } catch let DecodingError.dataCorrupted(context) {
                          print(context)
                      } catch let DecodingError.keyNotFound(key, context) {
@@ -637,6 +638,134 @@ class PostService {
         
         
     }
+    
+    
+    func getOtherPeopleLikePosts(completion: @escaping (([Board]?) -> Void)){
+
+
+            let headers: HTTPHeaders = [
+                        "Set-Cookie" : "email=\(email); token=\(jwtToken)"
+            ]
+
+            let parameter:Parameters = ["start" : -1,
+                                        "num" : 7] // start : -1 처음부터 ~ 5개
+                                        
+
+            AF.request(Config.baseUrl + "/post/favorite", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString), headers: headers).validate().responseJSON(completionHandler: { (response) in
+
+                print("[PostService] post/favorite")
+                
+                if let httpResponse = response.response, let fields = httpResponse.allHeaderFields as? [String: String]{
+                    let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.response?.url)!)
+                    HTTPCookieStorage.shared.setCookies(cookies, for: response.response?.url, mainDocumentURL: nil)
+
+                    //서버로 부터 받아오는 쿠키 값이 undefined가 아니면 앱 상 jwtToken 값 업데이트 하기
+                    if let session = cookies.filter({$0.name == "token"}).first {
+                        print("============ Cookie vlaue =========== : \(session.value)")
+                        if(session.value != "undefined"){
+                            print("////////// update cookie value ///////")
+                            UserDefaults.standard.setValue(session.value, forKey: UserDefaultKey.jwtToken)
+                        }
+                    }
+                }
+                
+                switch response.result {
+                    case .success(let obj):
+                        do {
+                           let responses = obj as! NSDictionary
+
+                           guard let posts = responses["posts"] as? [Dictionary<String, Any>] else { return }
+
+                            let dataJSON = try JSONSerialization.data(withJSONObject: posts, options: .prettyPrinted)
+                            let postData = try JSONDecoder().decode([Board]?.self, from: dataJSON)
+                            print(postData)
+                            completion(postData)
+
+                         } catch let DecodingError.dataCorrupted(context) {
+                             print(context)
+                         } catch let DecodingError.keyNotFound(key, context) {
+                             print("Key '\(key)' not found:", context.debugDescription)
+                             print("codingPath:", context.codingPath)
+                         } catch let DecodingError.valueNotFound(value, context) {
+                             print("Value '\(value)' not found:", context.debugDescription)
+                             print("codingPath:", context.codingPath)
+                         } catch let DecodingError.typeMismatch(type, context)  {
+                             print("Type '\(type)' mismatch:", context.debugDescription)
+                             print("codingPath:", context.codingPath)
+                         } catch {
+                             print("error: ", error)
+                         }
+                     case .failure(let e):
+                         print(e.localizedDescription)
+                     }
+            })
+
+        }
+
+
+
+        func getRecommendSellPosts(completion: @escaping (([Board]?) -> Void)){
+
+            let headers: HTTPHeaders = [
+                "Set-Cookie" : "email=\(email); token=\(jwtToken)"
+            ]
+            
+
+            let parameter:Parameters = ["start" : -1,
+                                        "num" : 7] // start : -1 처음부터 ~ 5개
+                                        
+
+            AF.request(Config.baseUrl + "/post/recommended", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString),headers: headers).validate().responseJSON(completionHandler: { (response) in
+
+                print("[PostService] post/recommended")
+                if let httpResponse = response.response, let fields = httpResponse.allHeaderFields as? [String: String]{
+                    let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.response?.url)!)
+                    HTTPCookieStorage.shared.setCookies(cookies, for: response.response?.url, mainDocumentURL: nil)
+
+                    //서버로 부터 받아오는 쿠키 값이 undefined가 아니면 앱 상 jwtToken 값 업데이트 하기
+                    if let session = cookies.filter({$0.name == "token"}).first {
+                        print("============ Cookie vlaue =========== : \(session.value)")
+                        if(session.value != "undefined"){
+                            print("////////// update cookie value ///////")
+                            UserDefaults.standard.setValue(session.value, forKey: UserDefaultKey.jwtToken)
+                        }
+                    }
+                }
+                
+                switch response.result {
+                    case .success(let obj):
+                        do {
+                            //print("성공")
+                            //print(response)
+                           let responses = obj as! NSDictionary
+
+                           guard let posts = responses["posts"] as? [Dictionary<String, Any>] else { return }
+
+                            let dataJSON = try JSONSerialization.data(withJSONObject: posts, options: .prettyPrinted)
+                            let postData = try JSONDecoder().decode([Board]?.self, from: dataJSON)
+                            print(postData)
+                            completion(postData)
+
+                         } catch let DecodingError.dataCorrupted(context) {
+                             print(context)
+                         } catch let DecodingError.keyNotFound(key, context) {
+                             print("Key '\(key)' not found:", context.debugDescription)
+                             print("codingPath:", context.codingPath)
+                         } catch let DecodingError.valueNotFound(value, context) {
+                             print("Value '\(value)' not found:", context.debugDescription)
+                             print("codingPath:", context.codingPath)
+                         } catch let DecodingError.typeMismatch(type, context)  {
+                             print("Type '\(type)' mismatch:", context.debugDescription)
+                             print("codingPath:", context.codingPath)
+                         } catch {
+                             print("error: ", error)
+                         }
+                     case .failure(let e):
+                         print(e.localizedDescription)
+                     }
+            })
+
+        }
     
 }
 

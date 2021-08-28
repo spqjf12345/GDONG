@@ -387,6 +387,67 @@ class UserService {
         }
 
     }
+    
+    func getRecommendUserInfo(completion: @escaping (([Users]?) -> Void) ){
+
+            let headers: HTTPHeaders = [
+                "Set-Cookie" : "email=\(email); token=\(jwtToken)"
+            ]
+            
+            let parameter:Parameters = ["start" : 2,
+                                        "num" : 7] // start : -1 처음부터 ~ 5개
+                                        
+
+            AF.request(Config.baseUrl + "/user/popular", method: .get, parameters: parameter, encoding: URLEncoding(destination: .queryString), headers: headers).validate().responseJSON(completionHandler: { (response) in
+
+                print("[UserService] user/popular")
+                if let httpResponse = response.response, let fields = httpResponse.allHeaderFields as? [String: String]{
+                    let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.response?.url)!)
+                    HTTPCookieStorage.shared.setCookies(cookies, for: response.response?.url, mainDocumentURL: nil)
+
+                    //서버로 부터 받아오는 쿠키 값이 undefined가 아니면 앱 상 jwtToken 값 업데이트 하기
+                    if let session = cookies.filter({$0.name == "token"}).first {
+                        print("============ Cookie vlaue =========== : \(session.value)")
+                        if(session.value != "undefined"){
+                            print("////////// update cookie value ///////")
+                            UserDefaults.standard.setValue(session.value, forKey: UserDefaultKey.jwtToken)
+                        }
+                    }
+                }
+                switch response.result {
+                    case .success(let obj):
+                        do {
+
+                           let responses = obj as! NSDictionary
+
+                           guard let users = responses["users"] as? [Dictionary<String, Any>] else { return }
+                            //print(posts)
+                            let dataJSON = try JSONSerialization.data(withJSONObject: users, options: .prettyPrinted)
+                            let userData = try JSONDecoder().decode([Users]?.self, from: dataJSON)
+                            print(userData)
+                            completion(userData)
+
+                         } catch let DecodingError.dataCorrupted(context) {
+                             print(context)
+                         } catch let DecodingError.keyNotFound(key, context) {
+                             print("Key '\(key)' not found:", context.debugDescription)
+                             print("codingPath:", context.codingPath)
+                         } catch let DecodingError.valueNotFound(value, context) {
+                             print("Value '\(value)' not found:", context.debugDescription)
+                             print("codingPath:", context.codingPath)
+                         } catch let DecodingError.typeMismatch(type, context)  {
+                             print("Type '\(type)' mismatch:", context.debugDescription)
+                             print("codingPath:", context.codingPath)
+                         } catch {
+                             print("error: ", error)
+                         }
+                     case .failure(let e):
+                         print(e.localizedDescription)
+                     }
+            })
+
+
+        }
 
 
 

@@ -437,11 +437,11 @@
             <objects>
                 <viewController storyboardIdentifier="detail" hidesBottomBarWhenPushed="YES" id="6lN-HR-gAP" customClass="DetailNoteViewController" customModule="GDONG" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pWo-CF-PyA">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CEy-g5-4gV">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>
@@ -804,9 +804,14 @@
             <point key="canvasLocation" x="1551" y="-238"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="HW3-E1-fSP">
+            <size key="intrinsicContentSize" width="374" height="16"/>
+        </designable>
+    </designables>
     <inferredMetricsTieBreakers>
         <segue reference="fgN-hA-wdn"/>
-        <segue reference="UMt-Yq-bSM"/>
+        <segue reference="j6e-YJ-kXc"/>
         <segue reference="Fbt-Cr-eBe"/>
     </inferredMetricsTieBreakers>
     <resources>

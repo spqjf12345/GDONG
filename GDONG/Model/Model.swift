@@ -151,6 +151,8 @@ struct Users: Codable {
     var location: Location = Location()
     var posts:[Int] = []
     var likes: [Int] = []
+    var n_followers: Int = 0
+    var n_following: Int = 0
     
     enum CodingKeys: String, CodingKey {
         case __v
@@ -170,6 +172,8 @@ struct Users: Codable {
         case location
         case posts
         case likes
+        case n_followers
+        case n_following
 
     }
 }
