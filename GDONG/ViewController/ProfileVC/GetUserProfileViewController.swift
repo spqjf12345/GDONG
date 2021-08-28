@@ -6,6 +6,7 @@
 //
 import UIKit
 import CoreLocation
+import Foundation
 
 class GetUserProfileViewController: UIViewController, CLLocationManagerDelegate {
 
@@ -18,6 +19,7 @@ class GetUserProfileViewController: UIViewController, CLLocationManagerDelegate 
 
     var locationManager: CLLocationManager!
     var userInfo = ""
+    
     //var userInfo = Users()
     var userBoard = [Board]()
 
@@ -96,8 +98,6 @@ class GetUserProfileViewController: UIViewController, CLLocationManagerDelegate 
     func getUserprofile(){
         UserService.shared.getUserProfile(nickName: "\(userInfo)",completion: {(response) in
 
-            print(response)
-            //self.userInfo = response
             self.username.text = response.nickName
             self.getLocation(longitude: response.location.coordinates[0], latitude: response.location.coordinates[1])
             
@@ -119,16 +119,25 @@ class GetUserProfileViewController: UIViewController, CLLocationManagerDelegate 
                 self.userimage.image = UIImage(systemName: "person.fill")
             }
             
-            
-            //팔로잉 중인지 확인
-            UserService.shared.getUserInfo(completion: { (response) in
-                let myFollowingList: [String] = response.following
-                let myFollowList: [String] = response.followers
-                if(myFollowingList.contains(self.userInfo) || myFollowList.contains(self.userInfo)){
-                    print("here")
-                    self.followingButtonSetting(sender: self.followBt)
-                }
-            })
+            DispatchQueue.global().async {
+                //팔로잉 중인지 확인
+                UserService.shared.getUserInfo(completion: { (response) in
+                    guard let nickName = UserDefaults.standard.string(forKey: UserDefaultKey.userNickName) else {
+                        return
+                    }
+                    let myFollowingList: [String] = response.following
+                    let myFollowList: [String] = response.followers
+                    if(nickName == self.userInfo){ //본인
+                        print("팔로우 확인 중 본인 확인")
+                        self.followBt.isHidden = true
+                    }
+                    else if(myFollowingList.contains(self.userInfo) || myFollowList.contains(self.userInfo)){
+                        //팔로잉 중인 상태로 변경
+                        self.followingButtonSetting(sender: self.followBt)
+                    }
+                })
+            }
+           
 
     })
     }
@@ -136,7 +145,9 @@ class GetUserProfileViewController: UIViewController, CLLocationManagerDelegate 
     func getUserPost(){
         PostService.shared.getauthorPost(start: -1, author: "\(userInfo)", num: 100, completion: {
             response in
+
             self.userBoard = response!
+            
             DispatchQueue.main.async {
                 self.boardTableView.reloadData()
             }
@@ -152,7 +163,23 @@ extension GetUserProfileViewController: UITableViewDelegate, UITableViewDataSour
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userBoard.count
+        var numberOfSections: Int = 0
+        
+        if userBoard.count > 0 {
+            tableView.separatorStyle = .singleLine
+            numberOfSections = userBoard.count
+            tableView.backgroundView = nil
+        }
+        else
+            {
+                let noDataLabel: UILabel  = UILabel(frame: CGRect(x: 0, y: 0, width:tableView.bounds.size.width, height: tableView.bounds.size.height))
+                noDataLabel.text          = "쓴 글이 존재하지 않습니다."
+                noDataLabel.textColor     = UIColor.systemGray2
+                noDataLabel.textAlignment = .center
+                tableView.backgroundView  = noDataLabel
+                tableView.separatorStyle  = .none
+            }
+        return numberOfSections
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -194,3 +221,4 @@ extension GetUserProfileViewController: UITableViewDelegate, UITableViewDataSour
         
     }
 }
+

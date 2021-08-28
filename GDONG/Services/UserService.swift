@@ -72,7 +72,7 @@ class UserService {
         
         AF.request(Config.baseUrl + "/user/info", method: .get, parameters: parameter, headers: headers).validate(statusCode: 200...500 ).responseJSON {
             (response) in
-            print("[UserService] /user/info \(nickName)유저 정보 불러오기")
+            print("[UserService] /user/info -n \(nickName)유저 정보 불러오기")
             if let httpResponse = response.response, let fields = httpResponse.allHeaderFields as? [String: String]{
                 let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.response?.url)!)
                 HTTPCookieStorage.shared.setCookies(cookies, for: response.response?.url, mainDocumentURL: nil)

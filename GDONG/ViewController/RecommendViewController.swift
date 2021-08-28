@@ -94,6 +94,7 @@ class RecommendViewController: UIViewController {
             guard let getUserProfileViewController = segue.destination as? GetUserProfileViewController else { return }
             if let buyerindex = buyerCollectionView.indexPathsForSelectedItems?.first {
                 getUserProfileViewController.userInfo =  recommendUser[buyerindex.row].nickName
+                print(getUserProfileViewController.userInfo)
             }
 
         }
@@ -342,12 +343,24 @@ extension RecommendViewController: UICollectionViewDelegate, UICollectionViewDat
 
 
         func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            let profile = UIStoryboard(name: "UserInfo", bundle: nil)
+            guard let getUserProfileVC = profile.instantiateViewController(identifier: "getUserProfile") as? GetUserProfileViewController else { return }
+           
+           
             if collectionView == sellerCollectionView {
-                performSegue(withIdentifier: "userprofile", sender: nil)
+                let username = recommendSellUser[indexPath.row].nickName
+                getUserProfileVC.userInfo = username
+                self.navigationController?.pushViewController(getUserProfileVC, animated: true)
+                //performSegue(withIdentifier: "userprofile", sender: nil)
             }
+            
             if collectionView == buyerCollectionView {
-                performSegue(withIdentifier: "userprofile", sender: nil)
+                let username = recommendUser[indexPath.row].nickName
+                getUserProfileVC.userInfo = username
+                self.navigationController?.pushViewController(getUserProfileVC, animated: true)
+                //performSegue(withIdentifier: "userprofile", sender: nil)
             }
+            
             if collectionView == sellBoardCollectionView {
                 performSegue(withIdentifier: "detail", sender: nil)
             }

@@ -288,6 +288,8 @@ class ChatListViewController: UIViewController {
                         // 글쓴이가 아닌경우 -> 채팅방에서 혼자만 나가기
                         self.deleteUser(postId: postId)
                         ChatService.shared.quitChatList(postId: postId)
+                        //nowpeople 감소
+                        PostService.shared.nowPeople(postId: postId, num: -1)
                         completed("OK")
                     }
                    
@@ -305,9 +307,7 @@ class ChatListViewController: UIViewController {
     }
     
     public func deleteChatRoom(postId: Int){
-        print("deleteChatRoom called")
-  
-        
+
         Firestore.firestore().collection("Chats").document("\(postId)").delete(){ err in
             if let err = err {
                 self.alertViewController(title: "채팅방 삭제 실패", message: "채팅방이 존재하지 않습니다.", completion: { (response) in })
@@ -324,10 +324,6 @@ class ChatListViewController: UIViewController {
             print("deleteFromChat no userEmail")
             return
         }
-       
-//        guard let chatRoomId = mychatRoom[indexPath.row].chatId else {
-//            return
-//        }
         let document = Firestore.firestore().collection("Chats").document("\(postId)")
 
         document.updateData([

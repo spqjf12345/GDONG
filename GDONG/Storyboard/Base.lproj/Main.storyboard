@@ -548,7 +548,7 @@
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </collectionViewCellContentView>
                                                                 <connections>
-                                                                    <segue destination="J8Y-lP-JYk" kind="show" id="giL-Gx-i6h"/>
+                                                                    <segue destination="J8Y-lP-JYk" kind="show" identifier="userprofile" id="giL-Gx-i6h"/>
                                                                 </connections>
                                                             </collectionViewCell>
                                                         </cells>
@@ -810,7 +810,7 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="fgN-hA-wdn"/>
+        <segue reference="giL-Gx-i6h"/>
         <segue reference="j6e-YJ-kXc"/>
         <segue reference="Fbt-Cr-eBe"/>
     </inferredMetricsTieBreakers>

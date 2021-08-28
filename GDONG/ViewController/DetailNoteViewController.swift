@@ -119,27 +119,35 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
             chatListUser = response.filter { $0.email == userEmail }
             if(!chatListUser.isEmpty) {
                 completed(InvalidError.alreadyExists)
+            }else {
+                print("here")
+                completed(nil)
             }
         })
         
-        completed(nil)
+        
     
     }
     
+    //채팅방 들어가기
     @objc func didTapGoToChatRoom(){
-        print("didTapGoToChatRoom")
-        
+
+        guard let postId = oneBoard?.postid else {
+            print("no post id")
+            return
+        }
             validating { (error) in
                 guard error == nil else {
-                    print(error)
+                    print(error as! InvalidError)
                     self.presentAlert(with: error as! InvalidError)
                     return
                 }
                 
-                
                 let userEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail)
-                self.addUserToChat(userEamil: userEmail!, completed: {(response) in
+                self.addUserToChat(postId: postId, userEamil: userEmail!, completed: {(response) in
                     if(response == "OK"){
+                        PostService.shared.nowPeople(postId: postId, num: 1)
+                        
                         self.performSegue(withIdentifier: "chatRoom", sender: nil)
                     }
                 })
@@ -169,7 +177,11 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
             break
         }
         
-        self.alertViewController(title: errorTitle, message: errorMessage, completion: { (response) in })
+        self.alertViewController(title: errorTitle, message: errorMessage, completion: { (response) in
+            if(response == "OK"){
+                self.dismiss(animated: true, completion: nil)
+            }
+        })
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -182,14 +194,10 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         
     }
     
-    func addUserToChat(userEamil: String, completed: @escaping (String) -> Void){
+    func addUserToChat(postId: Int, userEamil: String, completed: @escaping (String) -> Void){
         //getPostInfo
         //postId == chatId
         print("addUserToChat called")
-        guard let postId = oneBoard?.postid else {
-            print("no post id")
-            return
-        }
         
         //채팅방에 유저 넣기
         let document = Firestore.firestore().collection("Chats").document("\(postId)")
