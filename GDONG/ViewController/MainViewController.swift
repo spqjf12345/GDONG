@@ -42,6 +42,13 @@ class MainViewController : TabmanViewController {
         
         //처음 위치 설정 x 후 함수 호출시 default location setting
         if let latitude = latitude, let longitude = longitude {
+            if(latitude == -1 || longitude == -1){
+                self.alertViewController(title: "위치 정보 실패", message: "사용자의 위치 값을 설정해주세요. 위치 설정으로 이동합니다.", completion: { (response) in
+                    if(response == "OK"){
+                        self.goToLocationSetting()
+                    }
+                })
+            }
             
             let findLocation = CLLocation(latitude: latitude, longitude: longitude)
             let geocoder = CLGeocoder()
@@ -56,6 +63,18 @@ class MainViewController : TabmanViewController {
                 }
             })
         }
+    }
+    
+    
+    func goToLocationSetting(){
+        let storyBoard = UIStoryboard(name: "UserInfo", bundle: nil)
+        guard let profileEditVC = storyBoard.instantiateViewController(identifier: "editProfile") as? EditProfileViewController else { return }
+        guard let profileVC = storyBoard.instantiateViewController(identifier: "ProfileViewController") as? ProfileViewController else { return }
+        let navigationController = UINavigationController(rootViewController: profileVC)
+        navigationController.pushViewController(profileEditVC, animated: false)
+        self.navigationController?.pushViewController(navigationController, animated: false)
+//        UIApplication.shared.windows.first?.rootViewController = navigationController
+//        UIApplication.shared.windows.first?.makeKeyAndVisible()
     }
     
     override func viewWillAppear(_ animated: Bool) {

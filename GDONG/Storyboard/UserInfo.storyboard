@@ -230,7 +230,7 @@
         <!--프로필 수정-->
         <scene sceneID="36o-71-kEC">
             <objects>
-                <viewController id="pwh-BK-6Nn" customClass="EditProfileViewController" customModule="GDONG" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="editProfile" id="pwh-BK-6Nn" customClass="EditProfileViewController" customModule="GDONG" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VeE-Fo-asA">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

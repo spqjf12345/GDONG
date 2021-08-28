@@ -98,7 +98,7 @@ class LoginService {
 
 
     func checkAutoLogin() -> Bool {
-        guard let from = UserDefaults.standard.string(forKey: UserDefaultKey.authProvider) , let accseeToken = UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) , let name = UserDefaults.standard.string(forKey: UserDefaultKey.userName) , let jwt = UserDefaults.standard.string(forKey: UserDefaultKey.jwtToken) else {
+        guard let from = UserDefaults.standard.string(forKey: UserDefaultKey.authProvider), let accseeToken = UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) , let name = UserDefaults.standard.string(forKey: UserDefaultKey.userName) , let nickName = UserDefaults.standard.string(forKey: UserDefaultKey.userNickName), let jwt = UserDefaults.standard.string(forKey: UserDefaultKey.jwtToken) else {
             print("저장된 정보가 없어 login view로 이동")
             return false
         }

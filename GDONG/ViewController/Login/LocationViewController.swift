@@ -50,10 +50,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
         if (nowLatitude != 0.0 && nowLongitude != 0.0){
             //post
             UserService.shared.updateUser(nickName: nickName, longitude: nowLongitude, latitude: nowLatitude, completion: { (users) in
-                let userNickName = users.nickName
-                //let userLocation = users.location.coordinates
-                UserDefaults.standard.setValue(self.getLocation, forKey: UserDefaultKey.userLocation)
-                UserDefaults.standard.setValue(userNickName, forKey: UserDefaultKey.userNickName)
+                UserDefaults.standard.setValue(users.nickName, forKey: UserDefaultKey.userNickName)
             })
             
             let tabBarViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "tabbar") as! UITabBarController

@@ -317,8 +317,15 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
         }else if(indexPath.section == 0 && indexPath.row == 1){
             let cell = tableView.dequeueReusableCell(withIdentifier: InputTableViewCell.identifier) as! InputTableViewCell
             cell.label.text = "위치 :"
-            print("db 위치 값 :\(self.userInfo.location.coordinates[0]) \\ \(self.userInfo.location.coordinates[1])")
-            cell.setLocation(longitude: self.userInfo.location.coordinates[0], latitude: self.userInfo.location.coordinates[1])
+            print("위치 정보 : \(self.userInfo.location.coordinates)")
+            if(self.userInfo.location.coordinates.isEmpty){
+                cell.textfield.placeholder = "위치 값을 설정해주세요"
+            }else {
+                print("db 위치 값 :\(self.userInfo.location.coordinates[0]) \\ \(self.userInfo.location.coordinates[1])")
+                cell.setLocation(longitude: self.userInfo.location.coordinates[0], latitude: self.userInfo.location.coordinates[1])
+            }
+            
+           
             cell.delegate = self
             cell.indexPath = indexPath
             return cell

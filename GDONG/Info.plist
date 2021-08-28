@@ -54,13 +54,11 @@
 		<true/>
 	</dict>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Used to Location's Info always for Using Beacon.</string>
+	<string>위치 정보 기반의 글들을 조회하기 위해선 위치 정보 동의가 필요합니다.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Used to Location's Info always for Using Beacon.</string>
+	<string>위치 정보 기반의 글들을 조회하기 위해선 위치 정보 동의가 필요합니다.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Used to Location's Info for Using Beacon when In Use.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>사진 권한을 허용해주세요</string>
+	<string>위치 정보 기반의 글들을 조회하기 위해선 위치 정보 동의가 필요합니다.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

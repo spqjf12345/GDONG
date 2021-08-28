@@ -340,12 +340,11 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             if(title == "회원 탈퇴"){
                 UserService.shared.userQuit(completed: { (response) in
                     if( response == true ) { // 정상 탈퇴
-                        self.alertController(title: "탈퇴 완료", message: "탈퇴를 완료하였습니다. 그간 앱을 이용해주셔서 감사합니다.", completion: { (response) in
+                        self.alertViewController(title: "탈퇴 완료", message: "탈퇴를 완료하였습니다. 그간 앱을 이용해주셔서 감사합니다.", completion: { (response) in
                             if(response == "OK"){
-                                exit(0)
+                                self.moveToLoginVC()
+                                                 } })
                             }
-                        })
-                    }
                 })
             }else{
                 if(from == "google"){
@@ -387,7 +386,11 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         UserDefaults.standard.removeObject(forKey: UserDefaultKey.accessToken)
         UserDefaults.standard.removeObject(forKey: UserDefaultKey.authProvider)
         UserDefaults.standard.removeObject(forKey: UserDefaultKey.userNickName)
+        UserDefaults.standard.removeObject(forKey: UserDefaultKey.jwtToken)
+        UserDefaults.standard.removeObject(forKey: UserDefaultKey.deviceToken)
         UserDefaults.standard.removeObject(forKey: UserDefaultKey.isNewUser)
+        UserDefaults.standard.removeObject(forKey: UserDefaultKey.isSeller)
+        
 
         
         let loginVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "login")
