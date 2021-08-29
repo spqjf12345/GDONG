@@ -257,6 +257,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
                         let token = oauthToken
                         print("kakao login \(token)")
                         guard let accessToken = token?.accessToken else {
+                            print("return here")
                             return
                         }
 
@@ -274,10 +275,17 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
             }else{
                 print("me() success")
                 _ = user
-                print("kakao login")
-                guard let userName = user?.kakaoAccount?.profile?.nickname else { return }
+                guard let userName = user?.kakaoAccount?.profile?.nickname else {
+                    print("return userName" )
+                    return
+                    
+                }
+                print("here")
+                
                 LoginService.shared.oAuth(from: "kakao", access_token: accessToken, name: userName)
-
+                print("accessToken \(accessToken)")
+                print("userName \(userName)")
+                print("here 22")
                 
             }
         }

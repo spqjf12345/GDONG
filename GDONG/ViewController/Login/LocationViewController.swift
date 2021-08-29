@@ -51,12 +51,16 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate {
             //post
             UserService.shared.updateUser(nickName: nickName, longitude: nowLongitude, latitude: nowLatitude, completion: { (users) in
                 UserDefaults.standard.setValue(users.nickName, forKey: UserDefaultKey.userNickName)
+                
+                
+                let tabBarViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "tabbar") as! UITabBarController
+                let mainVC = tabBarViewController.viewControllers![0] as? MainViewController
+                mainVC?.longitude = users.location.coordinates[0]
+                mainVC?.latitude = users.location.coordinates[1]
+                UIApplication.shared.windows.first?.rootViewController = tabBarViewController
+                UIApplication.shared.windows.first?.makeKeyAndVisible()
             })
             
-            let tabBarViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "tabbar") as! UITabBarController
-
-            UIApplication.shared.windows.first?.rootViewController = tabBarViewController
-            UIApplication.shared.windows.first?.makeKeyAndVisible()
         }else {
             showAlertVC()
         }

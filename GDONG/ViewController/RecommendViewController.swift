@@ -141,42 +141,42 @@ class RecommendViewController: UIViewController {
         super.viewWillAppear(animated)
         
         PostService.shared.getRecommendSellPosts(completion: { [self] (response) in
-                    guard let response = response else {
-                        return
-                    }
+            guard let response = response else {
+                return
+            }
 
-                    //판매 글이 true인 글만 받아오기
-                    self.sellItemBoard = response.filter {$0.sell == true }
-                    //판매 글이 false인 글만 받아오기
-                    self.buyItemBoard = response.filter {$0.sell == false }
+            //판매 글이 true인 글만 받아오기
+            self.sellItemBoard = response.filter {$0.sell == true }
+            //판매 글이 false인 글만 받아오기
+            self.buyItemBoard = response.filter {$0.sell == false }
+            
+            sellerCollectionView.reloadData()
+            buyerCollectionView.reloadData()
 
-                })
+        })
 
 
-                PostService.shared.getOtherPeopleLikePosts(completion: { [self] (response) in
-                    guard let response = response else {
-                        return
-                    }
+        PostService.shared.getOtherPeopleLikePosts(completion: { [self] (response) in
+            guard let response = response else {
+                return
+            }
 
-                    self.otherPeopleLikeItemBoard = response
+            self.otherPeopleLikeItemBoard = response
+            otherpeoplelikeCollectionView.reloadData()
+        })
 
-                })
+        UserService.shared.getRecommendUserInfo( completion: { [self] (response) in
+            guard let response = response else {
+                return
+            }
 
-                UserService.shared.getRecommendUserInfo( completion: { [self] (response) in
-                    guard let response = response else {
-                        return
-                    }
+            self.recommendUser = response.filter {$0.isSeller == false }
+            self.recommendSellUser = response.filter {$0.isSeller == true }
 
-                    self.recommendUser = response.filter {$0.isSeller == false }
-                    self.recommendSellUser = response.filter {$0.isSeller == true }
-
-                })
+            sellBoardCollectionView.reloadData()
+            buyBoardCollectionView.reloadData()
+        })
         
-        sellerCollectionView.reloadData()
-        buyerCollectionView.reloadData()
-        sellBoardCollectionView.reloadData()
-        buyBoardCollectionView.reloadData()
-        otherpeoplelikeCollectionView.reloadData()
         
     }
     
@@ -374,18 +374,6 @@ extension RecommendViewController: UICollectionViewDelegate, UICollectionViewDat
 
     
 }
-
-
-//    // 디테일뷰 넘어가는 함수
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        performSegue(withIdentifier: "detail", sender: nil)
-//
-//    }
-//
-//
-//}
-//
-//
 
 
 

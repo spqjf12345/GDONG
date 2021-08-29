@@ -20,7 +20,10 @@ class MainViewController : TabmanViewController {
     
     var locationString: String?
     
-    //view array
+    var latitude: Double?
+    var longitude: Double?
+    
+    
     var viewControllers: Array<UIViewController> = []
     
     
@@ -43,11 +46,12 @@ class MainViewController : TabmanViewController {
         //처음 위치 설정 x 후 함수 호출시 default location setting
         if let latitude = latitude, let longitude = longitude {
             if(latitude == -1 || longitude == -1){
-                self.alertViewController(title: "위치 정보 실패", message: "사용자의 위치 값을 설정해주세요. 위치 설정으로 이동합니다.", completion: { (response) in
-                    if(response == "OK"){
-                        self.goToLocationSetting()
-                    }
-                })
+                complete("위치 로딩 중")
+//                self.alertViewController(title: "위치 정보 실패", message: "사용자의 위치 값을 설정해주세요. 위치 설정으로 이동합니다.", completion: { (response) in
+//                    if(response == "OK"){
+//                        self.goToLocationSetting()
+//                    }
+//                })
             }
             
             let findLocation = CLLocation(latitude: latitude, longitude: longitude)
@@ -79,13 +83,15 @@ class MainViewController : TabmanViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         //locationString update
-
+        print("get location : \(longitude) \(latitude)")
+        
         UserService.shared.getUserInfo(completion: {
             response in
-            let longitude = response.location.coordinates[0]
-            let latitude = response.location.coordinates[1]
-            
-            self.getLocation(longitude: longitude, latitude: latitude, complete: { [self] (response) in
+            if(self.longitude == nil || self.latitude == nil){
+                self.longitude = response.location.coordinates[0]
+                self.latitude = response.location.coordinates[1]
+            }
+            self.getLocation(longitude: self.longitude, latitude: self.latitude, complete: { [self] (response) in
                 self.locationString = response
                 let LocationBarButton: UIBarButtonItem = UIBarButtonItem(title: locationString, style: .plain, target: nil, action: nil)
                 LocationBarButton.tintColor = .darkGray

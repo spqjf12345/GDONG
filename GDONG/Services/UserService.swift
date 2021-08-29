@@ -173,7 +173,7 @@ class UserService {
 
 
         }, to: Config.baseUrl + "/user/update", usingThreshold: UInt64.init(), method: .post, headers: headers).validate().responseJSON { (response) in
-
+            print(params)
             print("[UserService] /user/update 유저 정보 업데이트")
 
             if let httpResponse = response.response, let fields = httpResponse.allHeaderFields as? [String: String]{

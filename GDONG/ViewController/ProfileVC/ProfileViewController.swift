@@ -338,6 +338,19 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         let alertVC = UIAlertController(title: title, message: messege, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "확인", style: .default, handler: {_ in
             if(title == "회원 탈퇴"){
+                if(from == "google"){
+                    GIDSignIn.sharedInstance.signOut()
+                }else if(from == "kakao"){
+                    UserApi.shared.logout {(error) in
+                        if let error = error {
+                            print(error)
+                        }
+                        else {
+                            print("logout() success.")
+                        }
+                    }
+                }
+                
                 UserService.shared.userQuit(completed: { (response) in
                     if( response == true ) { // 정상 탈퇴
                         self.alertViewController(title: "탈퇴 완료", message: "탈퇴를 완료하였습니다. 그간 앱을 이용해주셔서 감사합니다.", completion: { (response) in
