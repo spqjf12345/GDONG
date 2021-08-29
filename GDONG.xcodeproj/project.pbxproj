@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0CF2138C1B09291073ACA2DA /* Pods_GDONG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5CB9861EE62390BC891B506 /* Pods_GDONG.framework */; };
 		409D0E3526B5A64700D67626 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		8E0A5BEE26DBD99000B14118 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E0A5BED26DBD99000B14118 /* Assets.xcassets */; };
 		8E1DA7B8268AF13B0049E658 /* GetUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1DA7B7268AF13B0049E658 /* GetUserProfileViewController.swift */; };
 		8E1DA7BA268B69F80049E658 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1DA7B9268B69F80049E658 /* Chat.swift */; };
 		8E1DA7BC268B6A020049E658 /* ChatUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1DA7BB268B6A020049E658 /* ChatUser.swift */; };
@@ -17,7 +18,6 @@
 		8E42FEF3261D958100763B61 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E42FEF2261D958100763B61 /* SceneDelegate.swift */; };
 		8E42FEF8261D958100763B61 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E42FEF6261D958100763B61 /* Main.storyboard */; };
 		8E42FEFB261D958100763B61 /* GDONG.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E42FEF9261D958100763B61 /* GDONG.xcdatamodeld */; };
-		8E42FEFD261D958800763B61 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E42FEFC261D958800763B61 /* Assets.xcassets */; };
 		8E42FF00261D958800763B61 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E42FEFE261D958800763B61 /* LaunchScreen.storyboard */; };
 		8E42FF0A261D9B4600763B61 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E42FF09261D9B4600763B61 /* LoginViewController.swift */; };
 		8E61FDD926301739008CCB8A /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E61FDD826301739008CCB8A /* Model.swift */; };
@@ -130,6 +130,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8E0A5BED26DBD99000B14118 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "../../../../../GDONG-front-main/GDONG/Assets.xcassets"; sourceTree = "<group>"; };
 		8E1D605526B92B9600DF53FE /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		8E1D605726B92B9600DF53FE /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
 		8E1DA7B7268AF13B0049E658 /* GetUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserProfileViewController.swift; sourceTree = "<group>"; };
@@ -141,7 +142,6 @@
 		8E42FEF2261D958100763B61 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8E42FEF7261D958100763B61 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8E42FEFA261D958100763B61 /* GDONG.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GDONG.xcdatamodel; sourceTree = "<group>"; };
-		8E42FEFC261D958800763B61 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8E42FEFF261D958800763B61 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8E42FF01261D958800763B61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E42FF09261D9B4600763B61 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -297,6 +297,7 @@
 		8E42FEEF261D958100763B61 /* GDONG */ = {
 			isa = PBXGroup;
 			children = (
+				8E0A5BED26DBD99000B14118 /* Assets.xcassets */,
 				8E70C1CA2691F425006F1D2C /* Services */,
 				8EF8F7AC268595D6003ADFA9 /* GoogleService-Info.plist */,
 				8E772B7A267C8CA40034C2BF /* Cell */,
@@ -309,7 +310,6 @@
 				8E42FF462620B4BD00763B61 /* GDONG.entitlements */,
 				8E42FEF0261D958100763B61 /* AppDelegate.swift */,
 				8E42FEF2261D958100763B61 /* SceneDelegate.swift */,
-				8E42FEFC261D958800763B61 /* Assets.xcassets */,
 				8E42FF01261D958800763B61 /* Info.plist */,
 				8E42FEF9261D958100763B61 /* GDONG.xcdatamodeld */,
 			);
@@ -632,6 +632,7 @@
 				8EF8F7AD268595D6003ADFA9 /* GoogleService-Info.plist in Resources */,
 				8EB54A9B26CE2B44009C7F7C /* PopularBoardCell.xib in Resources */,
 				8EF8F7CE2689D076003ADFA9 /* Login.storyboard in Resources */,
+				8E0A5BEE26DBD99000B14118 /* Assets.xcassets in Resources */,
 				8EF8F7C12689C859003ADFA9 /* Chat.storyboard in Resources */,
 				8E772B6F267C8C750034C2BF /* PriceCell.xib in Resources */,
 				8EF2887D2662A97500840302 /* JusoTableViewCell.xib in Resources */,
@@ -644,7 +645,6 @@
 				8E772B74267C8C750034C2BF /* CategoryCell.xib in Resources */,
 				8EF8F1FB26935DFD0034BD99 /* NeedCell.xib in Resources */,
 				8EF8F7C32689C903003ADFA9 /* TitleCell.xib in Resources */,
-				8E42FEFD261D958800763B61 /* Assets.xcassets in Resources */,
 				8E772B8B267C8CA40034C2BF /* TableViewCell.xib in Resources */,
 				8E42FEF8261D958100763B61 /* Main.storyboard in Resources */,
 				8EF8F20A2694B8310034BD99 /* LinkTableViewCell.xib in Resources */,
