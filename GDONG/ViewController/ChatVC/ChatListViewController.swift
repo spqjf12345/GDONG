@@ -112,13 +112,15 @@ class ChatListViewController: UIViewController {
             mychatRoom.removeAll()
         }
         
-        guard let myEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else{
-            print("there are no email")
+        guard let myNickName = UserDefaults.standard.string(forKey: UserDefaultKey.userNickName) else {
+            self.alertViewController(title: "유효하지 않은 사용자", message: "다시 로그인을 진행해주세요", completion: { (response) in})
             return
         }
         
-        //useremail 을 가진 document들을 불러옴
-        let db = Firestore.firestore().collection("Chats").whereField("users", arrayContains: myEmail)
+
+        
+        //nickName 을 가진 document들을 불러옴
+        let db = Firestore.firestore().collection("Chats").whereField("users", arrayContains: myNickName)
         db.getDocuments { (chatQuerySnap, error) in
         if let error = error {
             print("Error: \(error)")
@@ -230,11 +232,7 @@ class ChatListViewController: UIViewController {
                         }else { // 최근 문자 없을 시 빈 문자열 리턴
                             completed(Message(id: "", content: "", created: Date(), senderID: "", senderName: ""))
                         }
-          
-//                        for document in querySnapshot!.documents {
-//                            print("\(document.documentID) => \(document.data())")
-//                            completed(Message(dictionary: DateFromFireStore!)!)
-//                        }
+
                     }
         }
 
@@ -245,8 +243,8 @@ class ChatListViewController: UIViewController {
     
     public func deleteFromChat(indexPath: IndexPath, completed: @escaping (String)-> (Void)){
         
-        guard let userEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
-            print("deleteFromChat no userEmail")
+        guard let usernickName = UserDefaults.standard.string(forKey: UserDefaultKey.userName) else {
+            print("deleteFromChat no usernickName")
             return
         }
        
@@ -280,7 +278,7 @@ class ChatListViewController: UIViewController {
                     completed("OK")
                 }else { // 아직 유저 여러명일때
                     // 글쓴이인경우 == users[0]
-                    if(users[0] == userEmail){
+                    if(users[0] == usernickName){
                         self.alertViewController(title: "나가기 실패", message: "글쓴이인경우 채팅방을 나갈 수 없습니다.", completion: {(response) in
                         })
                         completed("NO")
@@ -320,16 +318,16 @@ class ChatListViewController: UIViewController {
     }
     
     func deleteUser(postId: Int){
-        guard let userEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
-            print("deleteFromChat no userEmail")
+        guard let userNickname = UserDefaults.standard.string(forKey: UserDefaultKey.userNickName) else {
+            print("deleteFromChat no userNickname")
             return
         }
         let document = Firestore.firestore().collection("Chats").document("\(postId)")
 
         document.updateData([
-            "users": FieldValue.arrayRemove(["\(userEmail)"])
+            "users": FieldValue.arrayRemove(["\(userNickname)"])
         ])
-        print("유저 아직 여러명 -> \(userEmail) 유저만 삭제")
+        print("유저 아직 여러명 -> \(userNickname) 유저만 삭제")
         
     }
         

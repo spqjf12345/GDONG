@@ -333,33 +333,38 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         self.present(AlertVC, animated: true, completion: nil)
     }
     
+    func signOut(from: String){
+        if(from == "google"){
+            GIDSignIn.sharedInstance.signOut()
+        }else if(from == "kakao"){
+            UserApi.shared.logout {(error) in
+                if let error = error {
+                    print(error)
+                }
+                else {
+                    print("logout() success.")
+                }
+            }
+        }
+        
+        UserService.shared.userQuit(completed: { (response) in
+            if( response == true ) { // 정상 탈퇴
+                self.alertViewController(title: "탈퇴 완료", message: "탈퇴를 완료하였습니다. 그간 앱을 이용해주셔서 감사합니다.", completion: { (response) in
+                    if(response == "OK"){
+                        //삭제 해야 할 데이터
+                        self.moveToLoginVC()
+                                         } })
+                    }
+        })
+    }
     
     func autoLogout(from: String, title: String, messege: String){
         let alertVC = UIAlertController(title: title, message: messege, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "확인", style: .default, handler: {_ in
-            if(title == "회원 탈퇴"){
-                if(from == "google"){
-                    GIDSignIn.sharedInstance.signOut()
-                }else if(from == "kakao"){
-                    UserApi.shared.logout {(error) in
-                        if let error = error {
-                            print(error)
-                        }
-                        else {
-                            print("logout() success.")
-                        }
-                    }
-                }
+            if(title == "회원 탈퇴"){ /// 회원 탈퇴
+                self.signOut(from: from)
                 
-                UserService.shared.userQuit(completed: { (response) in
-                    if( response == true ) { // 정상 탈퇴
-                        self.alertViewController(title: "탈퇴 완료", message: "탈퇴를 완료하였습니다. 그간 앱을 이용해주셔서 감사합니다.", completion: { (response) in
-                            if(response == "OK"){
-                                self.moveToLoginVC()
-                                                 } })
-                            }
-                })
-            }else{
+            }else{ /// 로그 아웃
                 if(from == "google"){
                     print("auto login from google")
                     GIDSignIn.sharedInstance.signOut()
@@ -402,8 +407,6 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         UserDefaults.standard.removeObject(forKey: UserDefaultKey.jwtToken)
 //        UserDefaults.standard.removeObject(forKey: UserDefaultKey.deviceToken) // for logout 후 다시 로그인 하는 상황
         UserDefaults.standard.removeObject(forKey: UserDefaultKey.isNewUser)
-        UserDefaults.standard.removeObject(forKey: UserDefaultKey.isSeller)
-        
 
         
         let loginVC = UIStoryboard.init(name: "Login", bundle: nil).instantiateViewController(withIdentifier: "login")

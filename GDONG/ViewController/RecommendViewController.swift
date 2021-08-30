@@ -346,29 +346,36 @@ extension RecommendViewController: UICollectionViewDelegate, UICollectionViewDat
             let profile = UIStoryboard(name: "UserInfo", bundle: nil)
             guard let getUserProfileVC = profile.instantiateViewController(identifier: "getUserProfile") as? GetUserProfileViewController else { return }
            
+            let detailVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "detail") as! DetailNoteViewController
            
-            if collectionView == sellerCollectionView {
+            if collectionView == sellerCollectionView { //인기 판매자
                 let username = recommendSellUser[indexPath.row].nickName
                 getUserProfileVC.userInfo = username
                 self.navigationController?.pushViewController(getUserProfileVC, animated: true)
                 //performSegue(withIdentifier: "userprofile", sender: nil)
             }
             
-            if collectionView == buyerCollectionView {
+            if collectionView == buyerCollectionView { //인기 구매자
                 let username = recommendUser[indexPath.row].nickName
                 getUserProfileVC.userInfo = username
                 self.navigationController?.pushViewController(getUserProfileVC, animated: true)
                 //performSegue(withIdentifier: "userprofile", sender: nil)
             }
             
-            if collectionView == sellBoardCollectionView {
-                performSegue(withIdentifier: "detail", sender: nil)
+            if collectionView == sellBoardCollectionView { //인기 판매글
+                
+                detailVC.oneBoard = sellItemBoard[indexPath.row]
+                navigationController?.pushViewController(detailVC, animated: true)
             }
-            if collectionView == buyBoardCollectionView {
-                performSegue(withIdentifier: "detail", sender: nil)
+            if collectionView == buyBoardCollectionView { //인기 구매글
+
+                detailVC.oneBoard = buyItemBoard[indexPath.row]
+                navigationController?.pushViewController(detailVC, animated: true)
             }
-            if collectionView == otherpeoplelikeCollectionView {
-                performSegue(withIdentifier: "detail", sender: nil)
+            if collectionView == otherpeoplelikeCollectionView { // 다른 사용자들의 관심글
+                
+                detailVC.oneBoard = otherPeopleLikeItemBoard[indexPath.row]
+                navigationController?.pushViewController(detailVC, animated: true)
             }
         }
 

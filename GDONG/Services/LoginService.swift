@@ -72,7 +72,7 @@ class LoginService {
                         print(UserData)
 
                         UserDefaults.standard.set(UserData.email, forKey: UserDefaultKey.userEmail)
-                        UserDefaults.standard.set(UserData.isSeller, forKey: UserDefaultKey.isSeller)
+                        //UserDefaults.standard.set(UserData.isSeller, forKey: UserDefaultKey.isSeller)
                         UserDefaults.standard.set(access_token, forKey: UserDefaultKey.accessToken)
                         UserDefaults.standard.set(isNew, forKey: UserDefaultKey.isNewUser)
                         UserDefaults.standard.set(UserData.name, forKey: UserDefaultKey.userName)

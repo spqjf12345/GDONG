@@ -330,7 +330,7 @@ class UserService {
         ]
 
         AF.request(Config.baseUrl + "/user/follow", method: .get, parameters: parameters, encoding: URLEncoding.default, headers: headers).validate().responseJSON { (response) in
-            print("[UserService] user 팔로우: \(response.result)")
+            print("[UserService] \(nickName) user 팔로우: \(response.result)")
             if let httpResponse = response.response, let fields = httpResponse.allHeaderFields as? [String: String]{
                 let cookies = HTTPCookie.cookies(withResponseHeaderFields: fields, for: (response.response?.url)!)
                 HTTPCookieStorage.shared.setCookies(cookies, for: response.response?.url, mainDocumentURL: nil)

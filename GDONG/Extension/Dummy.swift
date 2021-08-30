@@ -46,7 +46,7 @@ class Dummy {
         categoryList.append(Category(categoryImage: "delivery_blue", categoryText: "배달"))
         categoryList.append(Category(categoryImage: "cosmetic", categoryText: "화장품"))
         categoryList.append(Category(categoryImage: "record", categoryText: "음반"))
-        categoryList.append(Category(categoryImage: "oversees_delivery", categoryText: "해외 배송"))
+        categoryList.append(Category(categoryImage: "oversees_delivery", categoryText: "해외배송"))
         categoryList.append(Category(categoryImage: "more", categoryText: "기타"))
         return categoryList
     }

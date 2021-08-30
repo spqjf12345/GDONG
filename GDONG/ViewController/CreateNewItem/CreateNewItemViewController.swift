@@ -207,19 +207,18 @@ class CreateNewItemViewController: UIViewController {
     
     @objc func didTapSellButton(){
         print("did tap sell button")
-        guard let isSeller = UserDefaults.standard.bool(forKey: UserDefaultKey.isSeller) as? Bool else {
-            return
-        }
+        UserService.shared.getUserInfo(completion: { (user) in
+            if(user.isSeller == false){ // seller 권한 없는데 이 모드로 글 쓰려 한다면
+                self.alertViewController(title: "권한 없음", message: "판매자 글쓰기 권한이 없습니다", completion: { (response) in
+                    if response == "OK"{
+                        self.sellButton.isSelected = false
+                        BuySellTableViewCell.ButtonSetting(sender: self.sellButton)
+                    }
+                })
+            }
+        })
         
-        print(isSeller)
-        if(isSeller == false){ // seller 권한 없는데 이 모드로 글 쓰려 한다면
-            self.alertViewController(title: "권한 없음", message: "판매자 글쓰기 권한이 없습니다", completion: { (response) in
-                if response == "OK"{
-                    self.sellButton.isSelected = false
-                    BuySellTableViewCell.ButtonSetting(sender: self.sellButton)
-                }
-            })
-        }
+       
      }
   
   deinit {
@@ -253,15 +252,15 @@ class CreateNewItemViewController: UIViewController {
     
     func createNewChat(postId: Int, chatImage: String) {
         print("createNewChat called")
-        guard let myEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else{
+        guard let userNickName = UserDefaults.standard.string(forKey: UserDefaultKey.userNickName) else{
             print("there are no email")
             return
         }
-        print(myEmail)
+        print(userNickName)
     
         print("postId : \(postId)")
         
-        let users = [myEmail] // 방 생성 시 혼자만 있음
+        let users = [userNickName] // 방 생성 시 혼자만 있음
         let data: [String: Any] = [
             "users": users,
             "ChatRoomName" : titleTextField.text!, // 채팅 방 이름

@@ -132,8 +132,8 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
                 print("no post id")
                 return
             }
-            let userEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail)
-            addUserToChat(postId: postId, userEamil: userEmail!, completed: {(response) in
+            let userNickName = UserDefaults.standard.string(forKey: UserDefaultKey.userNickName)
+            addUserToChat(postId: postId, users: userNickName!, completed: {(response) in
                 if(response == "OK"){
                     //now 인원 증가
                     PostService.shared.nowPeople(postId: postId, num: 1)
@@ -188,7 +188,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         
     }
 
-    func addUserToChat(postId: Int, userEamil: String, completed: @escaping (String) -> Void){
+    func addUserToChat(postId: Int, users: String, completed: @escaping (String) -> Void){
         //getPostInfo
         //postId == chatId
         print("addUserToChat called")
@@ -198,7 +198,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         print(document.documentID)
         
         document.updateData([
-            "users": FieldValue.arrayUnion(["\(userEamil)"])
+            "users": FieldValue.arrayUnion(["\(users)"])
         ])
         
         document.getDocument { (document, error) in

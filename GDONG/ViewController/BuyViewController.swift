@@ -220,6 +220,7 @@ class BuyViewController: UIViewController, TableViewCellDelegate {
         }else {
             print("filtering view controller 글에서 받아온 글 ")
             print(self.contents)
+            
             buyTableView.reloadData()
         }
        

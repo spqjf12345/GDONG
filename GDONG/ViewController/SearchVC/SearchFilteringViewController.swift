@@ -8,10 +8,6 @@
 import UIKit
 import DLRadioButton
 
-protocol SearchFilteringDelegate {
-    func filteredPosts(filteredPostArray: [Board])
-}
-
 class SearchFilteringViewController: UIViewController, UITextFieldDelegate {
 
     var from: String = ""
@@ -31,7 +27,7 @@ class SearchFilteringViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var endPriceTextfield: UITextField!
     
     @IBOutlet weak var kmTextLabel: UILabel!
-    var delegate: SearchFilteringDelegate?
+    
     
     @objc func MyTapMethod(sender: UITapGestureRecognizer) {
 
@@ -71,7 +67,6 @@ class SearchFilteringViewController: UIViewController, UITextFieldDelegate {
         let sortText = find_sortText()
         
         self.navigationController?.popViewController(animated: true)
-       
         let previousVC = self.navigationController?.viewControllers.last as! MainViewController
         
         if(self.from == "buy") { // 구매글
@@ -82,18 +77,19 @@ class SearchFilteringViewController: UIViewController, UITextFieldDelegate {
             let buyVC = previousVC.viewControllers[0] as! BuyViewController
             buyVC.contents = self.filteredBoard
             buyVC.filtered = true
-            self.delegate?.filteredPosts(filteredPostArray: self.filteredBoard)
+            buyVC.buyTableView.reloadData()
             })
         }else {
             PostService.shared.filteredPost(start: -1, num: 100, min_price: minPrice, max_price: maxPrice, min_dist: 0, max_dist: distValue, sortby: sortText, sell: "true", completion: { [self] (response) in
                 self.filteredBoard = response
             print("\(from) 필터링 된 글 \(self.filteredBoard)")
-            let sellVC = previousVC.viewControllers[0] as! SellViewController
+            let sellVC = previousVC.viewControllers[1] as! SellViewController
             sellVC.contents = self.filteredBoard
             sellVC.filtered = true
-            self.delegate?.filteredPosts(filteredPostArray: self.filteredBoard)
+            sellVC.sellTableView.reloadData()
         })
         }
+        
     }
     
     override func viewDidLoad() {
