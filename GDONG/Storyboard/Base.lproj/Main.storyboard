@@ -804,11 +804,6 @@
             <point key="canvasLocation" x="1551" y="-238"/>
         </scene>
     </scenes>
-    <designables>
-        <designable name="HW3-E1-fSP">
-            <size key="intrinsicContentSize" width="374" height="16"/>
-        </designable>
-    </designables>
     <inferredMetricsTieBreakers>
         <segue reference="giL-Gx-i6h"/>
         <segue reference="j6e-YJ-kXc"/>

@@ -13,12 +13,13 @@ class LoginService {
     static var shared = LoginService()
 
 
-    func oAuth(from: String, access_token: String, name: String) {
+    func oAuth(from: String, access_token: String, name: String, completion: @escaping (String) -> (Void)) {
 
 //        guard let authorEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else { return }
 //        guard let jwtToken = UserDefaults.standard.string(forKey: UserDefaultKey.jwtToken) else { return }
         
         guard let deviceToken: String = UserDefaults.standard.string(forKey: UserDefaultKey.deviceToken) else { return }
+        
 
         let params: Parameters = [
                 "access_token": access_token,
@@ -27,7 +28,7 @@ class LoginService {
             ]
 
 
-        AF.request(Config.baseUrl + "/auth/signin/\(from)", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString)).validate().responseJSON {
+        AF.request(Config.baseUrl + "/auth/signin/\(from)", method: .get, parameters: params, encoding: URLEncoding(destination: .queryString)).validate(statusCode: 200...500).responseJSON {
 
             (response) in
             print("[API] /auth/signin/\(from) 로그인 하기")
@@ -48,9 +49,20 @@ class LoginService {
 
             case .success(let obj):
                     do{
+                        
                         let responses = obj as! NSDictionary
-
-                        guard let user = responses["user"] as? Dictionary<String, Any> else { return }
+                        print(response)
+                        guard let user = responses["user"] as? Dictionary<String, Any> else {
+                            print(type(of: responses["msg"]))
+                            guard let message = responses["msg"] as? String else {
+                                print("return")
+                                return
+                            }
+                            print("completion message \(message)")
+                            completion(message)
+                        
+                            return
+                        }
 
                         let isNew = responses["isNew"]
 
@@ -66,8 +78,8 @@ class LoginService {
                         UserDefaults.standard.set(UserData.name, forKey: UserDefaultKey.userName)
                         UserDefaults.standard.set(UserData.authProvider, forKey: UserDefaultKey.authProvider)
                         UserDefaults.standard.set(UserData.nickName, forKey: UserDefaultKey.userNickName)
-
-                        self.autoLogin()
+                        
+                        
                     }
                     catch let DecodingError.dataCorrupted(context) {
                             print(context)
@@ -83,8 +95,12 @@ class LoginService {
                     } catch {
                         print("error: ", error)
                     }
+                completion("")
             case .failure(let e):
-                print("connected failed")
+                if(response.response?.statusCode == 500){
+                    print("connection faild")
+                    completion("failed")
+                }
                 print(e.localizedDescription)
 
         }
@@ -104,7 +120,9 @@ class LoginService {
         }
 
         if from != "", accseeToken != "", name != "", jwt != "" {
-            oAuth(from: from, access_token: accseeToken, name: name)
+            oAuth(from: from, access_token: accseeToken, name: name, completion: { response in
+                self.autoLogin()
+            } )
             return true
         }
 

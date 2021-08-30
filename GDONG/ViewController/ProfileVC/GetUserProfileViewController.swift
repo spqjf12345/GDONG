@@ -201,7 +201,7 @@ extension GetUserProfileViewController: UITableViewDelegate, UITableViewDataSour
         cell.categoryButton.layer.cornerRadius = 5
         cell.categoryButton.titleEdgeInsets = UIEdgeInsets(top: 10,left: 10,bottom: 10,right: 10)
 
-        cell.peopleLabel.text = "\(userBoard[indexPath.row].nowPeople ?? 0) / \(userBoard[indexPath.row].needPeople ?? 0)"
+        cell.peopleLabel.text = "\(userBoard[indexPath.row].nowPeople + 1) / \(userBoard[indexPath.row].needPeople ?? 0)"
         cell.indexPath = indexPath
         let indexImage =  userBoard[indexPath.row].images![0]
             //print("index image \(indexImage)")

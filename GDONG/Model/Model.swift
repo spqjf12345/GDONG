@@ -22,7 +22,7 @@ struct Board: Codable { // response
     var view: Int?
     var interest: Int?
     var needPeople: Int?
-    var nowPeople: Int?
+    var nowPeople: Int
     var link: String?
     var tags: [String]?
     var createdAt: String?

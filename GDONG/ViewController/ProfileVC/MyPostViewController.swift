@@ -153,7 +153,7 @@ extension myWroteViewController: UITableViewDelegate, UITableViewDataSource {
         cell.categoryButton.layer.cornerRadius = 5
         cell.categoryButton.titleEdgeInsets = UIEdgeInsets(top: 10,left: 10,bottom: 10,right: 10)
         
-        cell.peopleLabel.text = "\(myPostBoard[indexPath.row].nowPeople ?? 0) / \(myPostBoard[indexPath.row].needPeople ?? 0)"
+        cell.peopleLabel.text = "\(myPostBoard[indexPath.row].nowPeople + 1) / \(myPostBoard[indexPath.row].needPeople ?? 0)"
         cell.indexPath = indexPath
         let indexImage =  myPostBoard[indexPath.row].images![0]
             //print("index image \(indexImage)")
@@ -250,7 +250,7 @@ extension myHeartViewController: UITableViewDelegate, UITableViewDataSource {
         cell.categoryButton.layer.cornerRadius = 5
         cell.categoryButton.titleEdgeInsets = UIEdgeInsets(top: 10,left: 10,bottom: 10,right: 10)
         
-        cell.peopleLabel.text = "\(myHeartBoard[indexPath.row].nowPeople ?? 0) / \(myHeartBoard[indexPath.row].needPeople ?? 0)"
+        cell.peopleLabel.text = "\(myHeartBoard[indexPath.row].nowPeople + 1)/ \(myHeartBoard[indexPath.row].needPeople ?? 0)"
         cell.moreButton.isHidden = true
         cell.indexPath = indexPath
         let indexImage =  myHeartBoard[indexPath.row].images![0]

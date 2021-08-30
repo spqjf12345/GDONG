@@ -261,7 +261,7 @@ extension RecommendViewController: UICollectionViewDelegate, UICollectionViewDat
             cell.boardtitleLabel.text = sellItemBoard[indexPath.row].title
 
 
-            cell.chatpeopleLabel.text = "참여인원: \(sellItemBoard[indexPath.row].nowPeople ?? 0)/ \(sellItemBoard[indexPath.row].needPeople ?? 0)"
+            cell.chatpeopleLabel.text = "참여인원: \(sellItemBoard[indexPath.row].nowPeople + 1)/ \(sellItemBoard[indexPath.row].needPeople ?? 0)"
 
             let indexImage =  sellItemBoard[indexPath.row].images![0]
             let urlString = Config.baseUrl + "/static/\(indexImage)"
@@ -281,7 +281,7 @@ extension RecommendViewController: UICollectionViewDelegate, UICollectionViewDat
             cell.boardtitleLabel.text = buyItemBoard[indexPath.row].title
 
 
-            cell.chatpeopleLabel.text = "참여인원: \(buyItemBoard[indexPath.row].nowPeople ?? 0)/ \(buyItemBoard[indexPath.row].needPeople ?? 0)"
+            cell.chatpeopleLabel.text = "참여인원: \(buyItemBoard[indexPath.row].nowPeople + 1)/ \(buyItemBoard[indexPath.row].needPeople ?? 0)"
 
             let indexImage =  buyItemBoard[indexPath.row].images![0]
             let urlString = Config.baseUrl + "/static/\(indexImage)"
@@ -301,7 +301,7 @@ extension RecommendViewController: UICollectionViewDelegate, UICollectionViewDat
             cell.boardtitleLabel.text = otherPeopleLikeItemBoard[indexPath.row].title
 
 
-            cell.chatpeopleLabel.text = "참여인원: \(otherPeopleLikeItemBoard[indexPath.row].nowPeople ?? 0)/ \(otherPeopleLikeItemBoard[indexPath.row].needPeople ?? 0)"
+            cell.chatpeopleLabel.text = "참여인원: \(otherPeopleLikeItemBoard[indexPath.row].nowPeople + 1)/ \(otherPeopleLikeItemBoard[indexPath.row].needPeople ?? 0)"
 
             let indexImage =  otherPeopleLikeItemBoard[indexPath.row].images![0]
             let urlString = Config.baseUrl + "/static/\(indexImage)"

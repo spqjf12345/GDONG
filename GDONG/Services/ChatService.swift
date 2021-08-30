@@ -75,7 +75,7 @@ class ChatService {
                 case .success(let obj):
                     do {
                         let response = obj as! NSDictionary
-                        //print(response)
+                        print(response)
                         guard let list = response["list"] as? [Dictionary<String, Any>] else {
                             print("chatList data can't load")
                             return }

@@ -183,7 +183,7 @@ extension SearchResultViewController: UITableViewDelegate, UITableViewDataSource
         cell.categoryButton.layer.cornerRadius = 5
         cell.categoryButton.titleEdgeInsets = UIEdgeInsets(top: 10,left: 10,bottom: 10,right: 10)
         
-        cell.peopleLabel.text = "\(filteredBoard[indexPath.row].nowPeople ?? 0) / \(filteredBoard[indexPath.row].needPeople ?? 0)"
+        cell.peopleLabel.text = "\(filteredBoard[indexPath.row].nowPeople + 1) / \(filteredBoard[indexPath.row].needPeople ?? 0)"
         cell.indexPath = indexPath
         let indexImage =  filteredBoard[indexPath.row].images![0]
         let urlString = Config.baseUrl + "/static/\(indexImage)"

@@ -400,7 +400,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         UserDefaults.standard.removeObject(forKey: UserDefaultKey.authProvider)
         UserDefaults.standard.removeObject(forKey: UserDefaultKey.userNickName)
         UserDefaults.standard.removeObject(forKey: UserDefaultKey.jwtToken)
-        UserDefaults.standard.removeObject(forKey: UserDefaultKey.deviceToken)
+//        UserDefaults.standard.removeObject(forKey: UserDefaultKey.deviceToken) // for logout 후 다시 로그인 하는 상황
         UserDefaults.standard.removeObject(forKey: UserDefaultKey.isNewUser)
         UserDefaults.standard.removeObject(forKey: UserDefaultKey.isSeller)
         

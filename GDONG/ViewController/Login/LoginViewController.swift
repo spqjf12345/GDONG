@@ -14,7 +14,7 @@ import GoogleSignIn
 import Alamofire
 
 class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
-    let viewModel = AuthenticationViewModel()
+    
     var user: [Users] = []
  
     private var loginObserver: NSObjectProtocol?
@@ -80,18 +80,45 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
             
             guard let user = user else { return }
 
-            guard let fullName = user.profile?.name as? String else { return }
+            guard let fullName = user.profile?.name else { return }
                 user.authentication.do { authentication, error in
                    guard error == nil else { return }
                    guard let authentication = authentication else { return }
 
                     guard let accessToken = authentication.accessToken as? String else { return }
-                    LoginService.shared.oAuth(from: "google", access_token: accessToken, name: fullName)
+                    LoginService.shared.oAuth(from: "google", access_token: accessToken, name: fullName, completion: { (response) in
+                        print("LoginService.shared.oAuth \(response)")
+                        if(response == ""){
+                            LoginService.shared.autoLogin()
+                        }else if(response.contains("email exists")){
+                            let authProvider = self.checkFromEmail(message: response)
+                            self.alertViewController(title: "로그인 실패", message: "이미 \(authProvider) 로그인으로 존재하는 이메일 정보 입니다. 다른 소셜 로그인을 이용해주세요", completion: { (response) in
+                                if(response == "OK"){ }
+                            })
+                        }
+                        else{
+                            self.alertViewController(title: "로그인 실패", message: "이미 다른 소셜 로그인으로 존재하는 이메일 정보 입니다. 다른 소셜 로그인을 이용해주세요", completion: { (response) in
+                                if(response == "OK"){
+                                    
+                                }
+                            })
+                        }
+                    })
                }
            
             
         }
     }
+    
+    func checkFromEmail(message: String) -> String{
+        if(message.contains("google")){
+            return "google"
+        }else if(message.contains("kakao")){
+            return "kakao"
+        }
+        return "apple"
+    }
+    
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -143,18 +170,54 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
             print(appleIDCredential)
             
             let userIdentifier = appleIDCredential.user
-            
+            print(userIdentifier)
+            print("\(appleIDCredential.fullName?.givenName) + \(appleIDCredential.fullName?.familyName)")
             if (appleIDCredential.fullName?.givenName) != nil && (appleIDCredential.fullName?.familyName) != nil {
                 print("initial login")
                 let initialName = (appleIDCredential.fullName?.givenName!)! + " " + (appleIDCredential.fullName?.familyName!)!
                 UserDefaults.standard.setValue(initialName, forKey: UserDefaultKey.appleIdentifier)
-                LoginService.shared.oAuth(from: "apple", access_token: String(data: appleIDCredential.identityToken!,encoding: .utf8)!, name: initialName)
+                LoginService.shared.oAuth(from: "apple", access_token: String(data: appleIDCredential.identityToken!,encoding: .utf8)!, name: initialName, completion: { (response) in
+                    print("LoginService.shared.oAuth \(response)")
+                    if(response == ""){
+                        LoginService.shared.autoLogin()
+                    }else if(response.contains("email exists")){
+                        let authProvider = self.checkFromEmail(message: response)
+                        self.alertViewController(title: "로그인 실패", message: "이미 \(authProvider) 로그인으로 존재하는 이메일 정보 입니다. 다른 소셜 로그인을 이용해주세요", completion: { (response) in
+                            if(response == "OK"){ }
+                        })
+                    }
+                    else{
+                        self.alertViewController(title: "로그인 실패", message: "이미 다른 소셜 로그인으로 존재하는 이메일 정보 입니다. 다른 소셜 로그인을 이용해주세요", completion: { (response) in
+                            if(response == "OK"){
+                                
+                            }
+                        })
+                    }
+                })
             }else {
                 print("logout and re apple login")
                 guard let name = UserDefaults.standard.string(forKey: UserDefaultKey.appleIdentifier) else {
+                    self.alertViewController(title: "인증 실패", message: "설정 -> Apple ID를 사용하는 앱에서 GDONG를 삭제 한뒤 다시 로그인 요청해주세요", completion: { (response) in })
                     return
                 }
-                LoginService.shared.oAuth(from: "apple", access_token: String(data: appleIDCredential.identityToken!,encoding: .utf8)!, name: name)
+                LoginService.shared.oAuth(from: "apple", access_token: String(data: appleIDCredential.identityToken!,encoding: .utf8)!, name: name, completion: { (response) in
+                    print("LoginService.shared.oAuth \(response)")
+                    if(response == ""){
+                        LoginService.shared.autoLogin()
+                    }else if(response.contains("email exists")){
+                        let authProvider = self.checkFromEmail(message: response)
+                        self.alertViewController(title: "로그인 실패", message: "이미 \(authProvider) 로그인으로 존재하는 이메일 정보 입니다. 다른 소셜 로그인을 이용해주세요", completion: { (response) in
+                            if(response == "OK"){ }
+                        })
+                    }
+                    else{
+                        self.alertViewController(title: "로그인 실패", message: "이미 다른 소셜 로그인으로 존재하는 이메일 정보 입니다. 다른 소셜 로그인을 이용해주세요", completion: { (response) in
+                            if(response == "OK"){
+                                
+                            }
+                        })
+                    }
+                })
             }
             print(String(data: appleIDCredential.identityToken!,encoding: .utf8)!)
 
@@ -184,6 +247,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
     // Apple ID 연동 실패 시
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         print(error.localizedDescription)
+        print("apple id 연동 실패")
         // Handle error.
     }
     
@@ -193,7 +257,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
         
         let request = appleIDProvider.createRequest()
         request.requestedScopes = [.fullName, .email]
-        
+        print(request)
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
@@ -282,7 +346,24 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
                 }
                 print("here")
                 
-                LoginService.shared.oAuth(from: "kakao", access_token: accessToken, name: userName)
+                LoginService.shared.oAuth(from: "kakao", access_token: accessToken, name: userName, completion: { (response) in
+                    print("LoginService.shared.oAuth \(response)")
+                    if(response == ""){
+                        LoginService.shared.autoLogin()
+                    }else if(response.contains("email exists")){
+                        let authProvider = self.checkFromEmail(message: response)
+                        self.alertViewController(title: "로그인 실패", message: "이미 \(authProvider) 로그인으로 존재하는 이메일 정보 입니다. 다른 소셜 로그인을 이용해주세요", completion: { (response) in
+                            if(response == "OK"){ }
+                        })
+                    }
+                    else{
+                        self.alertViewController(title: "로그인 실패", message: "이미 다른 소셜 로그인으로 존재하는 이메일 정보 입니다. 다른 소셜 로그인을 이용해주세요", completion: { (response) in
+                            if(response == "OK"){
+                                
+                            }
+                        })
+                    }
+                })
                 print("accessToken \(accessToken)")
                 print("userName \(userName)")
                 print("here 22")
@@ -293,7 +374,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
     }
     
     public func alertController(completion: @escaping ((String) -> Void)){
-       let AlertVC = UIAlertController(title: "네트워크 오류", message: "네트워크 연결이 약해 앱을 종료합니다. 잠시 후 다시 이용헤주세요.", preferredStyle: .alert)
+       let AlertVC = UIAlertController(title: "네트워크 오류", message: "네트워크 연결이 불안정하여 앱을 종료합니다. 잠시 후 다시 이용헤주세요.", preferredStyle: .alert)
         let OKAction = UIAlertAction(title: "OK", style: .default, handler: { action in
             completion("OK")
          })

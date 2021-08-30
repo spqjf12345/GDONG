@@ -484,7 +484,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <action selector="didTapfollow" destination="XBY-lm-VL1" eventType="touchUpInside" id="b5l-NV-EjK"/>
+                                            <action selector="didTapfollowWithSender:" destination="XBY-lm-VL1" eventType="touchUpInside" id="kd0-EX-9GM"/>
                                         </connections>
                                     </button>
                                 </subviews>

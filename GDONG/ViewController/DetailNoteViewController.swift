@@ -42,8 +42,9 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         return view
     }()
     
-    let userNickName = UserDefaults.standard.string(forKey: UserDefaultKey.userNickName)
-    
+    let userEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail)
+    var chatListUser = [Users]()
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         tableViewSetting()
@@ -71,7 +72,11 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         // navigaion bar - report button
 //        navigationController?.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(didTapReport))
         
-    
+        //이미 채팅방에 존재하는 유저인지 중복 체크
+        ChatService.shared.getChatList(postId: (oneBoard?.postid)!, completionHandler: { (response) in
+            print("validate getChatList called")
+            self.chatListUser = response.filter { $0.email == self.userEmail }
+        })
 
     }
     
@@ -101,57 +106,50 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         //make with dropDown button
     }
     
-    private func validating(completed: @escaping (Error?) -> ()) {
+    private func validating() throws {
         print("validate called")
-        if(oneBoard!.needPeople! == oneBoard!.nowPeople){
-            completed(InvalidError.nowEqualsToNeed)
+        guard (UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) != nil) else {
+            throw InvalidError.invalidUser
         }
         
-        guard let userEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else {
-            completed(InvalidError.invalidUser)
-            return
+        if(oneBoard!.needPeople! == oneBoard!.nowPeople + 1){
+            throw InvalidError.nowEqualsToNeed
         }
         
-        var chatListUser = [Users]()
-        //이미 채팅방에 존재하는 유저인지 중복 체크
-        ChatService.shared.getChatList(postId: (oneBoard?.postid)!, completionHandler: { (response) in
-            print("validate getChatList called")
-            chatListUser = response.filter { $0.email == userEmail }
-            if(!chatListUser.isEmpty) {
-                completed(InvalidError.alreadyExists)
-            }else {
-                print("here")
-                completed(nil)
-            }
-        })
-        
-        
-    
+        if(!self.chatListUser.isEmpty) {
+            throw InvalidError.alreadyExists
+        }
     }
     
     //채팅방 들어가기
     @objc func didTapGoToChatRoom(){
 
-        guard let postId = oneBoard?.postid else {
-            print("no post id")
-            return
-        }
-            validating { (error) in
-                guard error == nil else {
-                    print(error as! InvalidError)
-                    self.presentAlert(with: error as! InvalidError)
-                    return
-                }
-                
-                let userEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail)
-                self.addUserToChat(postId: postId, userEamil: userEmail!, completed: {(response) in
-                    if(response == "OK"){
-                        PostService.shared.nowPeople(postId: postId, num: 1)
-                        
-                        self.performSegue(withIdentifier: "chatRoom", sender: nil)
-                    }
-                })
+        
+        do {
+          try validating()
+          
+            guard let postId = oneBoard?.postid else {
+                print("no post id")
+                return
             }
+            let userEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail)
+            addUserToChat(postId: postId, userEamil: userEmail!, completed: {(response) in
+                if(response == "OK"){
+                    //now 인원 증가
+                    PostService.shared.nowPeople(postId: postId, num: 1)
+                    //chat list에 추가
+                    ChatService.shared.joinChatList(postId: postId)
+                    self.performSegue(withIdentifier: "chatRoom", sender: nil)
+                }
+            })
+            
+        } catch {
+            print(error)
+            self.presentAlert(with: error as! InvalidError)
+        }
+        
+       
+
 
     }
     
@@ -189,11 +187,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         chatVC.chatRoom = self.postChatRoom
         
     }
-    
-    func findChatInfo(){
-        
-    }
-    
+
     func addUserToChat(postId: Int, userEamil: String, completed: @escaping (String) -> Void){
         //getPostInfo
         //postId == chatId
@@ -338,7 +332,7 @@ extension DetailNoteViewController: UITableViewDelegate, UITableViewDataSource {
         }
         else if(indexPath.row == 3){ // price cell
             let cell = tableView.dequeueReusableCell(withIdentifier: PriceAndPeopleTableViewCell.identifier) as! PriceAndPeopleTableViewCell
-            cell.configure(price: oneBoard!.price!, nowPeople: oneBoard!.nowPeople!, needPeople: oneBoard!.needPeople!)
+            cell.configure(price: oneBoard!.price!, nowPeople: oneBoard!.nowPeople + 1, needPeople: oneBoard!.needPeople!)
            return cell
             
         }else if(indexPath.row == 4){
