@@ -29,10 +29,10 @@
                         <color key="textColor" systemColor="systemGrayColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="sIh-bB-sC5">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="sIh-bB-sC5">
                         <rect key="frame" x="15" y="16" width="270" height="125"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="125" id="a37-k0-geX"/>
+                            <constraint firstAttribute="width" secondItem="sIh-bB-sC5" secondAttribute="height" multiplier="54:25" id="cyL-Gm-5Hs"/>
                         </constraints>
                     </imageView>
                 </subviews>
