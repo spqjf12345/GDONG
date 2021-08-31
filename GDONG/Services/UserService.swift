@@ -397,13 +397,14 @@ class UserService {
 
     }
     
-    func getRecommendUserInfo(completion: @escaping (([Users]?) -> Void) ){
+    func getRecommendUserInfo(sell: String, completion: @escaping (([Users]?) -> Void) ){
 
             let headers: HTTPHeaders = [
                 "Set-Cookie" : "email=\(email); token=\(jwtToken)"
             ]
             
-            let parameter:Parameters = ["start" : 2,
+        let parameter:Parameters = ["sell" : sell,
+                "start" : 0,
                                         "num" : 7] // start : -1 처음부터 ~ 5개
                                         
 

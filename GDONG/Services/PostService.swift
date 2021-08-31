@@ -353,7 +353,7 @@ class PostService {
         
     }
     
-    func clickHeart(postId: Int){
+    func clickHeart(postId: Int, completion: @escaping (Bool) -> (Void)){
         
         
         let headers: HTTPHeaders = [
@@ -384,9 +384,10 @@ class PostService {
                     case .success(let obj):
                            let responses = obj as! NSDictionary
                             print(response)
-                        
+                            completion(true)
                          
                      case .failure(let e):
+                        completion(false)
                          print(e.localizedDescription)
                      }
                 
@@ -704,14 +705,15 @@ class PostService {
 
 
 
-        func getRecommendSellPosts(completion: @escaping (([Board]?) -> Void)){
+    func getRecommendSellPosts(sell: String, completion: @escaping (([Board]?) -> Void)){
 
             let headers: HTTPHeaders = [
                 "Set-Cookie" : "email=\(email); token=\(jwtToken)"
             ]
             
 
-            let parameter:Parameters = ["start" : -1,
+        let parameter:Parameters = ["sell" :sell,
+                "start" : -1,
                                         "num" : 7] // start : -1 처음부터 ~ 5개
                                         
 

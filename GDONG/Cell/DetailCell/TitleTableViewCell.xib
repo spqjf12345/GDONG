@@ -51,7 +51,7 @@
                     <constraint firstAttribute="trailing" secondItem="Xnv-by-vDY" secondAttribute="trailing" constant="30" id="AdX-3q-pWQ"/>
                     <constraint firstItem="N2j-vI-G4S" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Dmr-HL-sUp"/>
                     <constraint firstAttribute="bottom" secondItem="N2j-vI-G4S" secondAttribute="bottom" constant="10" id="F2U-PB-hpa"/>
-                    <constraint firstItem="N2j-vI-G4S" firstAttribute="top" secondItem="RQv-Wm-nbb" secondAttribute="bottom" constant="31.5" id="Gbe-yR-NcC"/>
+                    <constraint firstItem="N2j-vI-G4S" firstAttribute="top" relation="greaterThanOrEqual" secondItem="RQv-Wm-nbb" secondAttribute="bottom" constant="10" id="Gbe-yR-NcC"/>
                     <constraint firstItem="JPZ-0F-0uB" firstAttribute="top" secondItem="Xnv-by-vDY" secondAttribute="bottom" constant="15" id="LC9-G8-fRe"/>
                     <constraint firstItem="RQv-Wm-nbb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" symbolic="YES" id="OCI-pC-mmQ"/>
                     <constraint firstItem="RQv-Wm-nbb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Oyl-ei-yp6"/>

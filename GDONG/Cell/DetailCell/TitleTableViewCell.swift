@@ -48,7 +48,8 @@ class TitleTableViewCell: UITableViewCell {
     }
     
     func settingForLabel(){
-        self.titleBoard.font = UIFont.boldSystemFont(ofSize: 25)
+        self.titleBoard.font = UIFont.boldSystemFont(ofSize: 20)
+        self.titleBoard.numberOfLines = 0
         self.categoryBoard.setTitleColor(UIColor.white, for: .normal)
         self.categoryBoard.backgroundColor = UIColor.darkGray
         self.categoryBoard.layer.cornerRadius = 5

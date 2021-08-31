@@ -240,8 +240,12 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
         guard let button = sender as? HeartButton else { return }
         if(button.flipLikedState() == true){
             //관심 글 등록 toast message // TO DO post likes
-            PostService.shared.clickHeart(postId: oneBoard!.postid!)
-            self.showToast(message: "관심 글에 등록되었습니다.", font: .systemFont(ofSize: 12.0))
+            PostService.shared.clickHeart(postId: oneBoard!.postid!, completion: { (response) in
+                if(response){
+                    self.showToast(message: "관심 글에 등록되었습니다.", font: .systemFont(ofSize: 12.0))
+                }
+            })
+            
         }
     }
     
@@ -301,7 +305,7 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
 extension DetailNoteViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 6
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -337,7 +341,7 @@ extension DetailNoteViewController: UITableViewDelegate, UITableViewDataSource {
             
         }else if(indexPath.row == 4){
             let cell = tableView.dequeueReusableCell(withIdentifier: ViewAndLikeTableViewCell.identifier) as! ViewAndLikeTableViewCell
-            cell.configure(view: oneBoard!.view!, like: oneBoard!.interest!)
+            cell.configure(view: oneBoard!.view! + 1, like: oneBoard!.interest!)
            return cell
         }else if (indexPath.row == 5){
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!

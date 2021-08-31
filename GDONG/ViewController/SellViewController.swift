@@ -173,6 +173,7 @@ class SellViewController: UIViewController, TableViewCellDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        indicator.startAnimating()
         if filtered == false {
             indicator.startAnimating()
             PostService.shared.getAllPosts(sell: "true", completion: { [self] (response) in

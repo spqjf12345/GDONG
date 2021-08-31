@@ -55,49 +55,49 @@ class RecommendViewController: UIViewController {
     }
     
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-            //판매글
-            guard let sellBoardindex = sellBoardCollectionView.indexPathsForSelectedItems?.first else {
-                return
-            }
-
-            if let sellBoardDetailVC = segue.destination as? DetailNoteViewController {
-                sellBoardDetailVC.oneBoard = sellItemBoard[sellBoardindex.row]
-            }
-
-            //구매글
-            guard let buyBoardindex = buyBoardCollectionView.indexPathsForSelectedItems?.first else {
-                return
-            }
-
-            if let buyBoardDetailVC = segue.destination as? DetailNoteViewController {
-                buyBoardDetailVC.oneBoard = buyItemBoard[buyBoardindex.row]
-            }
-
-            //관심글
-            guard let otherBoardindex = otherpeoplelikeCollectionView.indexPathsForSelectedItems?.first else {
-                return
-            }
-
-            if let otherBoardDetailVC = segue.destination as? DetailNoteViewController {
-                otherBoardDetailVC.oneBoard = otherPeopleLikeItemBoard[otherBoardindex.row]
-            }
-
-            //판매자
-            guard let getUserProfileViewController = segue.destination as? GetUserProfileViewController else { return }
-            if let sellerindex = sellerCollectionView.indexPathsForSelectedItems?.first {
-                getUserProfileViewController.userInfo =  recommendSellUser[sellerindex.row].nickName
-            }
-
-            //구매자
-            guard let getUserProfileViewController = segue.destination as? GetUserProfileViewController else { return }
-            if let buyerindex = buyerCollectionView.indexPathsForSelectedItems?.first {
-                getUserProfileViewController.userInfo =  recommendUser[buyerindex.row].nickName
-                print(getUserProfileViewController.userInfo)
-            }
-
-        }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//
+//            //판매글
+//            guard let sellBoardindex = sellBoardCollectionView.indexPathsForSelectedItems?.first else {
+//                return
+//            }
+//
+//            if let sellBoardDetailVC = segue.destination as? DetailNoteViewController {
+//                sellBoardDetailVC.oneBoard = sellItemBoard[sellBoardindex.row]
+//            }
+//
+//            //구매글
+//            guard let buyBoardindex = buyBoardCollectionView.indexPathsForSelectedItems?.first else {
+//                return
+//            }
+//
+//            if let buyBoardDetailVC = segue.destination as? DetailNoteViewController {
+//                buyBoardDetailVC.oneBoard = buyItemBoard[buyBoardindex.row]
+//            }
+//
+//            //관심글
+//            guard let otherBoardindex = otherpeoplelikeCollectionView.indexPathsForSelectedItems?.first else {
+//                return
+//            }
+//
+//            if let otherBoardDetailVC = segue.destination as? DetailNoteViewController {
+//                otherBoardDetailVC.oneBoard = otherPeopleLikeItemBoard[otherBoardindex.row]
+//            }
+//
+//            //판매자
+//            guard let getUserProfileViewController = segue.destination as? GetUserProfileViewController else { return }
+//            if let sellerindex = sellerCollectionView.indexPathsForSelectedItems?.first {
+//                getUserProfileViewController.userInfo =  recommendSellUser[sellerindex.row].nickName
+//            }
+//
+//            //구매자
+//            guard let getUserProfileViewController = segue.destination as? GetUserProfileViewController else { return }
+//            if let buyerindex = buyerCollectionView.indexPathsForSelectedItems?.first {
+//                getUserProfileViewController.userInfo =  recommendUser[buyerindex.row].nickName
+//                print(getUserProfileViewController.userInfo)
+//            }
+//
+//        }
     
     
     override func viewDidLoad() {
@@ -140,21 +140,28 @@ class RecommendViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        PostService.shared.getRecommendSellPosts(completion: { [self] (response) in
+        PostService.shared.getRecommendSellPosts(sell: "true",  completion: { [self] (response) in
             guard let response = response else {
                 return
             }
 
-            //판매 글이 true인 글만 받아오기
-            self.sellItemBoard = response.filter {$0.sell == true }
-            //판매 글이 false인 글만 받아오기
-            self.buyItemBoard = response.filter {$0.sell == false }
+            self.sellItemBoard = response
             
             sellerCollectionView.reloadData()
+
+        })
+        
+        
+        PostService.shared.getRecommendSellPosts(sell: "false",  completion: { [self] (response) in
+            guard let response = response else {
+                return
+            }
+            
+            self.buyItemBoard = response
+           
             buyerCollectionView.reloadData()
 
         })
-
 
         PostService.shared.getOtherPeopleLikePosts(completion: { [self] (response) in
             guard let response = response else {
@@ -165,24 +172,31 @@ class RecommendViewController: UIViewController {
             otherpeoplelikeCollectionView.reloadData()
         })
 
-        UserService.shared.getRecommendUserInfo( completion: { [self] (response) in
+        UserService.shared.getRecommendUserInfo(sell: "false", completion: { [self] (response) in
             guard let response = response else {
                 return
             }
-
-            self.recommendUser = response // 모든 유저들
             
-            self.recommendSellUser = response.filter {$0.isSeller == true }
-            print("인기 사용자 \(recommendUser)")
-            print("판매자 유저 \(recommendSellUser)")
+            self.recommendUser = response // 구매자
             
             DispatchQueue.main.async {
-                self.sellBoardCollectionView.reloadData()
                 self.buyBoardCollectionView.reloadData()
             }
            
         })
         
+        UserService.shared.getRecommendUserInfo(sell: "true", completion: { [self] (response) in
+            guard let response = response else {
+                return
+            }
+            
+            self.recommendSellUser = response
+            
+            DispatchQueue.main.async {
+                self.sellBoardCollectionView.reloadData()
+                
+            }
+        })
         
     }
     
