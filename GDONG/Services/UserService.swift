@@ -322,7 +322,7 @@ class UserService {
         }
     }
 
-    func userFollow(nickName: String){
+    func userFollow(nickName: String, completion: @escaping (Bool) -> (Void)){
         let parameters: [String: Any] = ["nickname": nickName]
 
         let headers: HTTPHeaders = [
@@ -347,15 +347,17 @@ class UserService {
             switch response.result {
             case .success(let code):
                 print(code)
+                completion(true)
                 break
             case .failure(let e):
+                completion(false)
                 print(e.localizedDescription)
             }
         }
 
     }
 
-    func userUnfollow(nickName: String){
+    func userUnfollow(nickName: String, completion: @escaping (Bool) -> (Void)){
         let parameters: [String: Any] = ["nickname": nickName]
 
         let headers: HTTPHeaders = [
@@ -380,8 +382,15 @@ class UserService {
             switch response.result {
             case .success(let code):
                 print(code)
+                do {
+                    completion(true)
+                }catch {
+                    print(error)
+                }
+                
                 break
             case .failure(let e):
+
                 print(e.localizedDescription)
             }
         }

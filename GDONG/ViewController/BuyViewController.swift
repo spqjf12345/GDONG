@@ -9,6 +9,7 @@ import UIKit
 import PagingTableView
 import FirebaseFirestore
 import DropDown
+import NVActivityIndicatorView
 
 class BuyViewController: UIViewController, TableViewCellDelegate {
     
@@ -178,10 +179,15 @@ class BuyViewController: UIViewController, TableViewCellDelegate {
 
     }
     
+    let indicator = NVActivityIndicatorView(frame: CGRect(x: UIScreen.main.bounds.width/2 - 10, y: UIScreen.main.bounds.height / 2, width: 50, height: 50),
+                                               type: .ballPulse,
+                                               color: .black,
+                                               padding: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.addSubview(indicator) //indicator
 
         // 테이블뷰와 테이블뷰 셀인 xib 파일과 연결
         let nibName = UINib(nibName: "TableViewCell", bundle: nil)
@@ -210,13 +216,17 @@ class BuyViewController: UIViewController, TableViewCellDelegate {
         super.viewWillAppear(animated)
         //필터링 된 글에서 받아온 경우가 아닐 경우
         if filtered == false {
+            indicator.startAnimating()
             PostService.shared.getAllPosts(sell: "false", completion: { [self] (response) in
                 guard let response = response else {
                     return
                 }
+                
                 self.contents = response
+                
             })
             buyTableView.reloadData()
+            indicator.stopAnimating()
         }else {
             print("filtering view controller 글에서 받아온 글 ")
             print(self.contents)
@@ -267,9 +277,7 @@ extension BuyViewController: UITableViewDelegate, UITableViewDataSource{
         return 150
     }
     
-    //segmented control 인덱스에 따른 테이블뷰 설정
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //print("page count \(contents.count)")
         return contents.count
     }
     

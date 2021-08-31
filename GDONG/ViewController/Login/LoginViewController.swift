@@ -12,14 +12,16 @@ import KakaoSDKUser
 import KakaoOpenSDK
 import GoogleSignIn
 import Alamofire
+import NVActivityIndicatorView
 
 class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     
     var user: [Users] = []
- 
+    var activityIndicator : NVActivityIndicatorView!
     private var loginObserver: NSObjectProtocol?
     
     @IBOutlet weak var loginLabelText: UILabel!
+
     //temp button
 //    private let loginButton: UIButton = {
 //        let button = UIButton()
@@ -89,6 +91,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
                     LoginService.shared.oAuth(from: "google", access_token: accessToken, name: fullName, completion: { (response) in
                         print("LoginService.shared.oAuth \(response)")
                         if(response == ""){
+                            
                             LoginService.shared.autoLogin()
                         }else if(response.contains("email exists")){
                             let authProvider = self.checkFromEmail(message: response)

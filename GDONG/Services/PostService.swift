@@ -199,7 +199,7 @@ class PostService {
                          "images": images,
                          "profileImg" : "1234test",
                          "location": location,
-                         "sellMode" : sellMode
+                         "sell" : sellMode
         ]
             
 

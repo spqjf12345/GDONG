@@ -17,22 +17,28 @@ class FolloViewController: UIViewController {
     var userFollowingList = [String]()
     
     var dataFrom: String = "" // follow data or following data
-    
+    func getFollowingData(){
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("dataFrom :\(dataFrom)")
+        print("dataFrom : \(dataFrom)")
+        getFollowingData()
         UserService.shared.getUserInfo(completion: { [self] (response) in
-            
-            self.userFollowList = response.following
-            self.userFollowingList = response.followers
+            print(response)
+            self.userFollowList = response.followers
+            self.userFollowingList = response.following
             
             if(self.dataFrom == "팔로잉"){
                 self.userList = self.userFollowingList
             }else if(self.dataFrom == "팔로우"){
                 self.userList = self.userFollowList
             }
+            //print(response.following)
             self.FilteredList = self.userList
-            print(self.FilteredList)
+            //print(userFollowingList)
+            //print(self.userList)
+            //print(self.FilteredList)
             self.follotableView.reloadData()
     })
         follotableView.delegate = self
@@ -90,17 +96,22 @@ extension FolloViewController: UITableViewDelegate, UITableViewDataSource, Follo
         //TO DO userName delete
         deleteAlertController(deleteName: self.userList[indexPath![1]], completion: { response in
             if (response == "delete"){
-                UserService.shared.userUnfollow(nickName: self.userList[indexPath!.row])
-                self.userList.remove(at: indexPath!.row)
-                self.FilteredList = self.userList
-                self.follotableView.reloadData()
-                //나의 친구 리스트에서도 삭제
-                //unfollow
-                self.alertViewController(title: "삭제 완료", message: "친구 리스트에서 삭제하였습니다", completion: { (response) in
-                    if(response == "OK"){
-                        
+                UserService.shared.userUnfollow(nickName: self.userList[indexPath!.row], completion: { (response) in
+                    if(response == true) {
+                        self.userList.remove(at: indexPath!.row)
+                        self.FilteredList = self.userList
+                        self.follotableView.reloadData()
+                        //나의 친구 리스트에서도 삭제
+                        //unfollow
+                        self.alertViewController(title: "삭제 완료", message: "친구 리스트에서 삭제하였습니다", completion: { (response) in
+                            if(response == "OK"){
+                                
+                            }
+                        })
                     }
+                  
                 })
+              
                 
                 
             }

@@ -7,6 +7,7 @@
 import UIKit
 import CoreLocation
 import Foundation
+import NVActivityIndicatorView
 
 class GetUserProfileViewController: UIViewController, CLLocationManagerDelegate {
 
@@ -34,14 +35,22 @@ class GetUserProfileViewController: UIViewController, CLLocationManagerDelegate 
         }
     }
     
+    let indicator = NVActivityIndicatorView(frame: CGRect(x: UIScreen.main.bounds.width/2 - 10, y: UIScreen.main.bounds.height / 2, width: 50, height: 50),
+                                               type: .ballPulse,
+                                               color: .black,
+                                               padding: 0)
+    
     override func viewWillAppear(_ animated: Bool) {
         getUserprofile()
         getUserPost()
+//        print("UIScreen.main.bounds.minX \(UIScreen.main.bounds.width/2)")
+//        print("UIScreen.main.bounds.minY \(UIScreen.main.bounds.height / 2)")
 
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(indicator) //indicator
         // 테이블뷰와 테이블뷰 셀인 xib 파일과 연결
         let nibName = UINib(nibName: "TableViewCell", bundle: nil)
         boardTableView.register(nibName, forCellReuseIdentifier: "productCell")
@@ -72,12 +81,18 @@ class GetUserProfileViewController: UIViewController, CLLocationManagerDelegate 
         print("didTapfollow")
         if(sender.currentTitle == "팔로잉 중"){
             //언팔 로직
-            UserService.shared.userUnfollow(nickName: self.userInfo)
-            self.unfollowButtonSetting(sender: sender)
+            UserService.shared.userUnfollow(nickName: self.userInfo, completion: { (response) in
+                self.unfollowButtonSetting(sender: sender)
+            })
+            
         }else {
             // 새롭게 팔로우
-            UserService.shared.userFollow(nickName: self.userInfo)
-            self.followingButtonSetting(sender: sender)
+            UserService.shared.userFollow(nickName: self.userInfo, completion: { (response) in
+                if(response == true){
+                    self.followingButtonSetting(sender: sender)
+                }
+            })
+            
         }
         
     }
@@ -96,6 +111,7 @@ class GetUserProfileViewController: UIViewController, CLLocationManagerDelegate 
     }
     
     func getUserprofile(){
+        indicator.startAnimating()
         UserService.shared.getUserProfile(nickName: "\(userInfo)",completion: {(response) in
 
             self.username.text = response.nickName
@@ -134,6 +150,7 @@ class GetUserProfileViewController: UIViewController, CLLocationManagerDelegate 
                     else if(myFollowingList.contains(self.userInfo) || myFollowList.contains(self.userInfo)){
                         //팔로잉 중인 상태로 변경
                         self.followingButtonSetting(sender: self.followBt)
+                        self.indicator.stopAnimating()
                     }
                 })
             }

@@ -9,6 +9,7 @@ import UIKit
 import Tabman
 import Pageboy
 import CoreLocation
+import NVActivityIndicatorView
 
 class MainViewController : TabmanViewController {
     
@@ -26,6 +27,10 @@ class MainViewController : TabmanViewController {
     
     var viewControllers: Array<UIViewController> = []
     
+    let indicator = NVActivityIndicatorView(frame: CGRect(x: 162, y: 100, width: 50, height: 50),
+                                            type: .ballPulse,
+                                            color: .black,
+                                            padding: 0)
     
     @IBAction func search(_ sender: Any) {
         guard let searchVC = self.storyboard?.instantiateViewController(identifier: "searchButton") as? SearchViewController else { return }

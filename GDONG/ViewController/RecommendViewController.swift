@@ -170,11 +170,17 @@ class RecommendViewController: UIViewController {
                 return
             }
 
-            self.recommendUser = response.filter {$0.isSeller == false }
+            self.recommendUser = response // 모든 유저들
+            
             self.recommendSellUser = response.filter {$0.isSeller == true }
-
-            sellBoardCollectionView.reloadData()
-            buyBoardCollectionView.reloadData()
+            print("인기 사용자 \(recommendUser)")
+            print("판매자 유저 \(recommendSellUser)")
+            
+            DispatchQueue.main.async {
+                self.sellBoardCollectionView.reloadData()
+                self.buyBoardCollectionView.reloadData()
+            }
+           
         })
         
         

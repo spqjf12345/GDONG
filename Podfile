@@ -37,5 +37,7 @@ pod 'DropDown'
 pod 'InputBarAccessoryView'
 pod 'TagListView', '~> 1.0'
 
+pod 'NVActivityIndicatorView'
+
 
 end
