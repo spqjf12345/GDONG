@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseFirestore
+import NVActivityIndicatorView
 
 private enum InvalidError: String, Error {
     case alreadyExists
@@ -24,7 +25,10 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
     
     private var docReference: DocumentReference? //현재 document
 
-
+    let indicator = NVActivityIndicatorView(frame: CGRect(x: UIScreen.main.bounds.width/2 - 10, y: UIScreen.main.bounds.height / 2, width: 50, height: 50),
+                                                   type: .ballPulse,
+                                                   color: .black,
+                                                   padding: 0)
     
     var bottomView: UIView = {
         var view = UIView()
@@ -45,6 +49,10 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
     let userEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail)
     var chatListUser = [Users]()
   
+    override func viewWillAppear(_ animated: Bool) {
+        view.addSubview(indicator) //indicator
+        print("start animating")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         tableViewSetting()
