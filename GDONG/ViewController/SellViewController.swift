@@ -119,7 +119,7 @@ class SellViewController: UIViewController, TableViewCellDelegate {
     var filtered = false
     
     //페이징을 위한 데이터 가공
-    let numberOfItemsPerPage = 2 //지정한 개수마다 로딩
+    let numberOfItemsPerPage = 5 //지정한 개수마다 로딩
 
       func loadData(at page: Int, onComplete: @escaping ([Board]) -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {

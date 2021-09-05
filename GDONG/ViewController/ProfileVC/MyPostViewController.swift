@@ -168,10 +168,15 @@ extension myWroteViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 150
     }
     
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "detail") as! DetailNoteViewController
+        
+        detailVC.oneBoard = myPostBoard[indexPath.row]
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
 }
 
 
@@ -265,8 +270,13 @@ extension myHeartViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 150
     }
     
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "detail") as! DetailNoteViewController
+        
+        detailVC.oneBoard = myHeartBoard[indexPath.row]
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
 }
