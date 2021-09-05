@@ -140,8 +140,8 @@ class DetailNoteViewController: UIViewController, UIGestureRecognizerDelegate {
                 print("no post id")
                 return
             }
-            let userNickName = UserDefaults.standard.string(forKey: UserDefaultKey.userNickName)
-            addUserToChat(postId: postId, users: userNickName!, completed: {(response) in
+            let userEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail)
+            addUserToChat(postId: postId, users: userEmail!, completed: {(response) in
                 if(response == "OK"){
                     //now 인원 증가
                     PostService.shared.nowPeople(postId: postId, num: 1)

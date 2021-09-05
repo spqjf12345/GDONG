@@ -10,6 +10,9 @@
 		0CF2138C1B09291073ACA2DA /* Pods_GDONG.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5CB9861EE62390BC891B506 /* Pods_GDONG.framework */; };
 		409D0E3526B5A64700D67626 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		8E0A5BEE26DBD99000B14118 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E0A5BED26DBD99000B14118 /* Assets.xcassets */; };
+		8E0A5BF426DE6C6700B14118 /* PopularBoardCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = 8EB54A9726CE2B44009C7F7C /* PopularBoardCell.xib */; };
+		8E0A5BF526DE6C6B00B14118 /* PopularPeopleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB54A9A26CE2B44009C7F7C /* PopularPeopleCell.swift */; };
+		8E0A5BF626DE6C6D00B14118 /* PopularPeopleCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = 8EB54A9826CE2B44009C7F7C /* PopularPeopleCell.xib */; };
 		8E1DA7B8268AF13B0049E658 /* GetUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1DA7B7268AF13B0049E658 /* GetUserProfileViewController.swift */; };
 		8E1DA7BA268B69F80049E658 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1DA7B9268B69F80049E658 /* Chat.swift */; };
 		8E1DA7BC268B6A020049E658 /* ChatUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1DA7BB268B6A020049E658 /* ChatUser.swift */; };
@@ -73,8 +76,6 @@
 		8EB54A9226CE2A63009C7F7C /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB54A9126CE2A63009C7F7C /* LoginService.swift */; };
 		8EB54A9426CE2A80009C7F7C /* PushService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB54A9326CE2A80009C7F7C /* PushService.swift */; };
 		8EB54A9626CE2A9C009C7F7C /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB54A9526CE2A9C009C7F7C /* UserService.swift */; };
-		8EB54A9B26CE2B44009C7F7C /* PopularBoardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EB54A9726CE2B44009C7F7C /* PopularBoardCell.xib */; };
-		8EB54A9C26CE2B44009C7F7C /* PopularPeopleCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = 8EB54A9826CE2B44009C7F7C /* PopularPeopleCell.xib */; };
 		8EB54A9D26CE2B44009C7F7C /* PopularBoardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB54A9926CE2B44009C7F7C /* PopularBoardCell.swift */; };
 		8EB54A9E26CE2B44009C7F7C /* PopularPeopleCell.swift in Resources */ = {isa = PBXBuildFile; fileRef = 8EB54A9A26CE2B44009C7F7C /* PopularPeopleCell.swift */; };
 		8EC87291266616DF00C1B7C5 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -622,7 +623,6 @@
 				8E772BBC267C8D7D0034C2BF /* perfume.jpg in Resources */,
 				8E772BBD267C8D7D0034C2BF /* strawberry.jpg in Resources */,
 				8EF8F7AD268595D6003ADFA9 /* GoogleService-Info.plist in Resources */,
-				8EB54A9B26CE2B44009C7F7C /* PopularBoardCell.xib in Resources */,
 				8EF8F7CE2689D076003ADFA9 /* Login.storyboard in Resources */,
 				8E0A5BEE26DBD99000B14118 /* Assets.xcassets in Resources */,
 				8EF8F7C12689C859003ADFA9 /* Chat.storyboard in Resources */,
@@ -695,6 +695,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E0A5BF626DE6C6D00B14118 /* PopularPeopleCell.xib in Sources */,
+				8E0A5BF526DE6C6B00B14118 /* PopularPeopleCell.swift in Sources */,
+				8E0A5BF426DE6C6700B14118 /* PopularBoardCell.xib in Sources */,
 				8EF8F7C52689C91B003ADFA9 /* ViewController.swift in Sources */,
 				8E772B8E267C8CA40034C2BF /* RecentSearchTableViewCell.swift in Sources */,
 				8EF00F18265785B700AA1EEA /* API.swift in Sources */,
@@ -746,7 +749,6 @@
 				8E772BA7267C8CD10034C2BF /* RecentSearchViewController.swift in Sources */,
 				8EF8F2052694B73B0034BD99 /* ContentTableViewCell.swift in Sources */,
 				8E772BC5267C8DC00034C2BF /* ChatListModel.swift in Sources */,
-				8EB54A9C26CE2B44009C7F7C /* PopularPeopleCell.xib in Sources */,
 				8EDD9A1A2674B046003AFE65 /* UserDefaultKey.swift in Sources */,
 				8EC87291266616DF00C1B7C5 /* (null) in Sources */,
 				8E772B60267C8C6D0034C2BF /* Extension.swift in Sources */,
@@ -913,7 +915,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = GDONG/GDONG.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.8;
+				CURRENT_PROJECT_VERSION = 1.1.0;
 				DEVELOPMENT_TEAM = FJ57DUH592;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -963,7 +965,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.8;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Develop.com-GDONG";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -982,7 +984,7 @@
 				CODE_SIGN_ENTITLEMENTS = GDONG/GDONG.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.8;
+				CURRENT_PROJECT_VERSION = 1.1.0;
 				DEVELOPMENT_TEAM = FJ57DUH592;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1032,7 +1034,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.8;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Develop.com-GDONG";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

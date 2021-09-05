@@ -239,7 +239,7 @@ extension RecommendViewController: UICollectionViewDelegate, UICollectionViewDat
             
             guard recommendSellUser.indices.contains(indexPath.row) else { return cell }
 
-            cell.peoplenameLabel.text = recommendSellUser[indexPath.row].nickName
+            cell.peolenameLabel.text = recommendSellUser[indexPath.row].nickName
 
 
             let indexImage =  recommendSellUser[indexPath.row].profileImageUrl
@@ -260,7 +260,8 @@ extension RecommendViewController: UICollectionViewDelegate, UICollectionViewDat
             
             guard recommendUser.indices.contains(indexPath.row) else { return cell }
 
-               cell.peoplenameLabel.text = recommendUser[indexPath.row].nickName
+            
+               cell.peolenameLabel.text = recommendUser[indexPath.row].nickName
 
 
                let indexImage =  recommendUser[indexPath.row].profileImageUrl

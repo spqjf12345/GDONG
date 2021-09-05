@@ -39,7 +39,7 @@ class SellViewController: UIViewController, TableViewCellDelegate {
                             return
                         }
                         
-                        
+                        print(postId)
                         checkPostDelete(postId: postId, completed: { (response) in
                             if(response == "OK") { //삭제 할 수 있을 때
                                 print("선택한 셀 \(cell.indexPath!)")
@@ -93,11 +93,13 @@ class SellViewController: UIViewController, TableViewCellDelegate {
                 }else { // 아직 유저 여러명일때
                     // 글쓴이인경우 == users[0]
                     guard let userEamil = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else { return }
+                    print(userEamil)
                     if(users[0] == userEamil){
                         self.alertViewController(title: "글 삭제 실패", message: "채팅방에 다른 누군가가 있는경우 글을 삭제할 수 없습니다.", completion: {(response) in
                         })
                         completed("NOT OK")
                     }
+                    
                     completed("NOT OK")
                 }
        
@@ -182,13 +184,13 @@ class SellViewController: UIViewController, TableViewCellDelegate {
                 }
                 
                 //판매 글이 true인 글만 받아오기
-                self.contents = response
+                self.itemBoard = response
             })
             sellTableView.reloadData()
             indicator.stopAnimating()
         }else {
             print("filtering view controller 글에서 받아온 글 ")
-            print(self.contents)
+            print(self.itemBoard)
             sellTableView.reloadData()
         }
     }
@@ -250,7 +252,6 @@ extension SellViewController: UITableViewDelegate, UITableViewDataSource{
         cell.delegate = self
         
         //내가 쓴 글이 아니라면
-        
         if contents[indexPath.row].email != myEmail {
             
            cell.moreButton.isHidden = true

@@ -252,15 +252,15 @@ class CreateNewItemViewController: UIViewController {
     
     func createNewChat(postId: Int, chatImage: String) {
         print("createNewChat called")
-        guard let userNickName = UserDefaults.standard.string(forKey: UserDefaultKey.userNickName) else{
+        guard let myEmail = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail) else{
             print("there are no email")
             return
         }
-        print(userNickName)
+        print(myEmail)
     
         print("postId : \(postId)")
         
-        let users = [userNickName] // 방 생성 시 혼자만 있음
+        let users = [myEmail] // 방 생성 시 혼자만 있음
         let data: [String: Any] = [
             "users": users,
             "ChatRoomName" : titleTextField.text!, // 채팅 방 이름

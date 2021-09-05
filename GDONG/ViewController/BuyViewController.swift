@@ -222,14 +222,14 @@ class BuyViewController: UIViewController, TableViewCellDelegate {
                     return
                 }
                 
-                self.contents = response
+                self.itemBoard = response
                 
             })
             buyTableView.reloadData()
             indicator.stopAnimating()
         }else {
             print("filtering view controller 글에서 받아온 글 ")
-            print(self.contents)
+            print(self.itemBoard)
             
             buyTableView.reloadData()
         }

@@ -30,8 +30,11 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet var tableView: UITableView!
     
   
+    let defaultImage: UIImage = UIImage(systemName: "person.fill")!
+    
     //update user info from server
     @IBAction func doneButton(_ sender: Any) {
+        
         guard let image: Data =  userImage.image?.jpeg(.lowest) else {
             return
         }
@@ -48,7 +51,19 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
         print(nowLongitude)
         print(nowLatitude)
        
-        if(!image.isEmpty){ // 유저 이미지도 같이 업데이트 되었다면
+        if(userImage.image == defaultImage){ // 이름과 위치 정보만 업데이트시
+            print("image x이 업데이트")
+            UserService.shared.updateUser(nickName: nickname, longitude: nowLongitude, latitude: nowLatitude, completion: { (users) in
+                if(users.email != ""){
+                    self.alertDone(title: "수정 완료", message: "프로필이 수정 되었습니다",  completionHandler: { response in
+                        if(response == "OK"){
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                    })
+                }
+            })
+            
+        } else { // 유저 이미지도 같이 업데이트 되었다면
             //post user setting image
             print("image도 같이 업데이트")
             UserService.shared.updateWithUserImage(userImage: image, change_img: "true", nickName: nickname, longitude: nowLongitude, latitude: nowLatitude, completion: { (users) in
@@ -60,18 +75,6 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
                    })
                }
            })
-            
-        } else {  // 이름과 위치 정보만 업데이트시
-            print("image x이 업데이트")
-            UserService.shared.updateUser(nickName: nickname, longitude: nowLongitude, latitude: nowLatitude, completion: { (users) in
-                if(users.email != ""){
-                    self.alertDone(title: "수정 완료", message: "프로필이 수정 되었습니다",  completionHandler: { response in
-                        if(response == "OK"){
-                            self.navigationController?.popViewController(animated: true)
-                        }
-                    })
-                }
-            })
         }
     }
     
@@ -94,7 +97,7 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         locationSetting()
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(editImage))
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(gallery))
         imageEditButton.addGestureRecognizer(tapGestureRecognizer)
         imageEditButton.isUserInteractionEnabled = true
         
@@ -121,7 +124,7 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
                         self.userImage.sd_setImage(with: myURL, completed: nil)
                 }
             }else {
-                self.userImage.image = UIImage(systemName: "person.fill")
+                self.userImage.image = self.defaultImage
                 
             }
             if(user.isSeller == true){
@@ -135,7 +138,20 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
     
 
     
-    @objc func editImage(){
+//    @objc func editImage(){
+//        let alertVC = UIAlertController(title: "이미지 변경", message: nil, preferredStyle: .actionSheet)
+//        alertVC.addAction(UIAlertAction(title: "갤러리에서 열기", style: .default, handler: {
+//            (_) in
+//            self.gallery()
+//        }))
+//        alertVC.addAction(UIAlertAction(title: "기본 이미지로 변경", style: .default, handler: {_ in
+//            self.userImage.image = self.defaultImage
+//        }))
+//        alertVC.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+//        self.present(alertVC, animated: false)
+//    }
+    
+    @objc func gallery(){
         var configuration = PHPickerConfiguration()
         configuration.selectionLimit = 1
         configuration.filter = .any(of: [.images])
@@ -308,9 +324,9 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
         if(indexPath.section == 0 && indexPath.row == 0){
             let cell = tableView.dequeueReusableCell(withIdentifier: InputTableViewCell.identifier)as! InputTableViewCell
             cell.label.text = "아이디 :"
-            if let userNickName = UserDefaults.standard.string(forKey: UserDefaultKey.userNickName) {
-                cell.textfield.text = userNickName
-            }
+//            if let userNickName = UserDefaults.standard.string(forKey: UserDefaultKey.userNickName) {
+            cell.textfield.text = self.userInfo.nickName
+            
             cell.indexPath = indexPath
             cell.delegate = self
             return cell

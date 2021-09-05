@@ -409,7 +409,7 @@ class ChatViewController: MessagesViewController, InputBarAccessoryViewDelegate,
             "content": message.content,
             "created": message.created,
             "id": message.id,
-            "senderID": message.senderID, // userNickName
+            "senderID": message.senderID, 
             "senderName": message.senderName
         ]
         
@@ -428,7 +428,7 @@ class ChatViewController: MessagesViewController, InputBarAccessoryViewDelegate,
         //When use press send button this method is called.
 //        let message = Message(id: UUID().uuidString, content: text, created: Date(), senderID: currentUser.uid, senderName: currentUser.displayName!)
         //print("messageid \(UUID().uuidString)")
-        let message = Message(id: UUID().uuidString, content: text, created: Date(), senderID: currentUser.nickName, senderName: currentUser.nickName)
+        let message = Message(id: UUID().uuidString, content: text, created: Date(), senderID: currentUser.email, senderName: currentUser.nickName)
         
         //calling function to insert and save message
         insertNewMessage(message)
@@ -443,8 +443,8 @@ class ChatViewController: MessagesViewController, InputBarAccessoryViewDelegate,
     //This method return the current sender ID and name
     func currentSender() -> SenderType {
         let chatUser: ChatUser?
-        if let senderId = UserDefaults.standard.string(forKey: UserDefaultKey.userNickName), let nickName = UserDefaults.standard.string(forKey: UserDefaultKey.userName)  {
-            chatUser = ChatUser(senderId: senderId, displayName: nickName)
+        if let email = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail), let nickName = UserDefaults.standard.string(forKey: UserDefaultKey.userEmail)  {
+            chatUser = ChatUser(senderId: email, displayName: nickName)
             return chatUser!
         }
         return ChatUser(senderId: "", displayName: "")
@@ -501,7 +501,7 @@ class ChatViewController: MessagesViewController, InputBarAccessoryViewDelegate,
            
             //print(urlString)
             //print(self.currentUser.nickName)
-            if(message.sender.senderId == self.currentUser.nickName){
+            if(message.sender.senderId == self.currentUser.email){
                 //print("it's me")
                 SDWebImageManager.shared.loadImage(with: URL(string: urlString), options: .highPriority, progress: nil) { (image, data, error, cacheType, isFinished, imageUrl) in
                     avatarView.image = image
