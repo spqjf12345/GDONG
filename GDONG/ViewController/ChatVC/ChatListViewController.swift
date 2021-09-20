@@ -108,7 +108,8 @@ class ChatListViewController: UIViewController {
     
     public func loadChat(from: String){
         print("load chat called")
-        if(!mychatRoom.isEmpty){ //viewwillapear 시 mychatRoom 비우고 다시 로드
+        if(!mychatRoom.isEmpty){
+            //viewwillapear 시 mychatRoom 비우고 다시 로드
             mychatRoom.removeAll()
         }
         
@@ -118,7 +119,6 @@ class ChatListViewController: UIViewController {
         }
         
 
-        
         //nickName 을 가진 document들을 불러옴
         let db = Firestore.firestore().collection("Chats").whereField("users", arrayContains: myEmail)
         db.getDocuments { (chatQuerySnap, error) in

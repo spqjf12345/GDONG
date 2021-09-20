@@ -312,7 +312,8 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
    
     //kakao login
     @objc func onKakaoLoginByAppTouched(_ sender: Any) {
-        if(UserApi.isKakaoTalkLoginAvailable()){ // 이용가능하다면
+        //print(UserApi.isKakaoTalkLoginAvailable())
+        //if(UserApi.isKakaoTalkLoginAvailable()){ // 카카오톡이 설치되어 있다면
             UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
                     if let error = error {
                         print(error)
@@ -332,7 +333,7 @@ class LoginViewController: UIViewController, ASAuthorizationControllerDelegate, 
                         self.setUserInfo(accessToken: accessToken)
                     }
                 }
-        }
+        //}
     }
     
     func setUserInfo(accessToken: String){

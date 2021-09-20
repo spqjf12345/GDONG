@@ -20,7 +20,7 @@ extension UIView {
     }
     public var bottom: CGFloat {
         return self.frame.size.height + self.frame.origin.y
-    }
+    }a
     public var left: CGFloat {
         return self.frame.origin.x
     }

@@ -9,15 +9,13 @@ import UIKit
 import CoreLocation
 import PhotosUI
 import SDWebImage
+import FirebaseFirestore
 
 class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
-   
-    
-    
+
     var locationManager: CLLocationManager!
-    
-    
     var userInfo = Users()
+    var previousNickName: String = ""
     @IBOutlet weak var imageEditButton: UIImageView!
     @IBOutlet weak var userImage: SDAnimatedImageView!
     
@@ -57,6 +55,7 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
                 if(users.email != ""){
                     self.alertDone(title: "수정 완료", message: "프로필이 수정 되었습니다",  completionHandler: { response in
                         if(response == "OK"){
+                            //update username
                             self.navigationController?.popViewController(animated: true)
                         }
                     })
@@ -70,13 +69,33 @@ class EditProfileViewController: UIViewController, CLLocationManagerDelegate {
                if(users.email != ""){
                    self.alertDone(title: "수정 완료", message: "프로필이 수정 되었습니다",  completionHandler: { response in
                         if(response == "OK"){
+                            //update username
                             self.navigationController?.popViewController(animated: true)
                         }
                    })
                }
            })
         }
+        
     }
+    
+//    func updateUserName(){
+//        if(previousNickName != self.userInfo.nickName){
+//            let db = Firestore.firestore().collection("Chats").getDocuments() { (querySnapshot, err) in
+//                if let err = err {
+//                    print("Error getting documents: \(err)")
+//                } else {
+//                    for document in querySnapshot!.documents {
+////                        print("\(document.documentID) => \(document.data())")
+//
+//                    }
+//                }
+//            }
+//
+//
+//                .whereField("users", arrayContains: myEmail)
+//        }
+//    }
     
     
     @IBAction func backButton(_ sender: Any) {
@@ -326,7 +345,8 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource,
             cell.label.text = "아이디 :"
 //            if let userNickName = UserDefaults.standard.string(forKey: UserDefaultKey.userNickName) {
             cell.textfield.text = self.userInfo.nickName
-            
+            //이전 닉네임 저장
+            previousNickName = cell.textfield.text!
             cell.indexPath = indexPath
             cell.delegate = self
             return cell
